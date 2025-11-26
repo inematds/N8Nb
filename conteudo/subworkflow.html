@@ -3,24 +3,105 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Execute Workflow - N8N Fundamentos</title>
+  <title>Execute Workflow - Guia Completo | N8N Fundamentos</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>body { font-family: 'Inter', sans-serif; }</style>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    .code-block { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem;
+                  overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.5; }
+  </style>
 </head>
-<body class="bg-neutral-50">
-  <nav class="bg-white shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 py-4">
-      <a href="../iniciante.html" class="text-2xl font-bold text-blue-600">← Voltar</a>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../iniciante.html" class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+          <span>←</span><span class="text-3xl">🔄</span><span>Execute Workflow</span>
+        </a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
     </div>
   </nav>
-  <div class="max-w-5xl mx-auto px-4 py-16">
-    <div class="text-center">
-      <div class="text-6xl mb-4">🔄</div>
-      <h1 class="text-4xl font-bold mb-4">Execute Workflow</h1>
-      <p class="text-xl text-neutral-600 mb-8">Conteúdo em desenvolvimento</p>
-      <a href="../iniciante.html" class="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700">← Voltar para Trilha</a>
+
+  <section class="bg-gradient-to-br from-indigo-600 via-indigo-700 to-blue-800 py-20">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="text-7xl mb-6">🔄</div>
+      <h1 class="text-5xl font-bold mb-6">Execute Workflow</h1>
+      <p class="text-2xl mb-8 text-white/90">Modularize e Reutilize Workflows</p>
     </div>
-  </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-4 py-16">
+    <div class="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-10 mb-10">
+      <div class="flex items-center mb-6">
+        <span class="text-5xl mr-4">📚</span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">O que é Execute Workflow?</h2>
+      </div>
+      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6 leading-relaxed">O <strong>Execute Workflow</strong> chama outros workflows como funções. Perfeito para modularização e reutilização de lógica.</p>
+      
+      <div class="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 rounded-xl p-6">
+        <p class="text-lg text-neutral-800 dark:text-neutral-200 font-semibold mb-3">🎯 Casos de Uso Principais:</p>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-indigo-700 dark:text-indigo-400 mb-2">🔧 Funções Reutilizáveis</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Criar workflow de "Enviar Notificação" e reusar</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-indigo-700 dark:text-indigo-400 mb-2">📦 Módulos</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Organizar lógica complexa em workflows menores</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-indigo-700 dark:text-indigo-400 mb-2">🔄 Sub-processos</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Workflow principal chama sub-workflows especializados</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-indigo-700 dark:text-indigo-400 mb-2">🧩 Composição</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Combinar workflows pequenos em sistema maior</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl p-8 mb-10 border-2 border-indigo-200 dark:border-indigo-800">
+      <div class="flex items-center mb-6">
+        <span class="text-5xl mr-4">💡</span>
+        <h3 class="text-3xl font-bold text-indigo-900 dark:text-indigo-300">Exemplo Prático</h3>
+      </div>
+      <div class="bg-white dark:bg-neutral-800 rounded-xl p-6 shadow-lg">
+        <div class="code-block">// Workflow principal
+1. Recebe pedido
+2. Execute Workflow: "Validar Estoque"
+3. Execute Workflow: "Calcular Frete"  
+4. Execute Workflow: "Processar Pagamento"
+5. Finalizar pedido
+
+// Cada sub-workflow é independente e reutilizável</div>
+      </div>
+    </div>
+
+    <div class="bg-gradient-to-br from-indigo-600 to-blue-600 text-white rounded-2xl p-10 text-center shadow-2xl">
+      <span class="text-6xl mb-4 block">🎓</span>
+      <h3 class="text-3xl font-bold mb-4">Domine Execute Workflow!</h3>
+      <div class="flex gap-4 justify-center flex-wrap">
+        <a href="../iniciante.html" class="bg-white text-indigo-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors shadow-lg">← Voltar</a>
+        <a href="../downloads/subworkflow.md" download class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-colors">📥 Download</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-neutral-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-neutral-400">&copy; 2025 N8N Academy - Fundamentos Completos</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark'); themeToggleLightIcon.classList.remove('hidden');
+    } else { themeToggleDarkIcon.classList.remove('hidden'); }
+    themeToggleBtn.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark'); localStorage.setItem('color-theme', 'light');
+      } else { document.documentElement.classList.add('dark'); localStorage.setItem('color-theme', 'dark'); }
+    });
+  </script>
 </body>
 </html>

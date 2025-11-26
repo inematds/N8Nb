@@ -3,24 +3,104 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wait - N8N Fundamentos</title>
+  <title>Wait - Guia Completo | N8N Fundamentos</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>body { font-family: 'Inter', sans-serif; }</style>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    .code-block { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem;
+                  overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.5; }
+  </style>
 </head>
-<body class="bg-neutral-50">
-  <nav class="bg-white shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 py-4">
-      <a href="../iniciante.html" class="text-2xl font-bold text-blue-600">← Voltar</a>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../iniciante.html" class="text-2xl font-bold text-orange-600 dark:text-orange-400 flex items-center gap-2">
+          <span>←</span><span class="text-3xl">⏸️</span><span>Wait</span>
+        </a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
     </div>
   </nav>
-  <div class="max-w-5xl mx-auto px-4 py-16">
-    <div class="text-center">
-      <div class="text-6xl mb-4">⏸️</div>
-      <h1 class="text-4xl font-bold mb-4">Wait</h1>
-      <p class="text-xl text-neutral-600 mb-8">Conteúdo em desenvolvimento</p>
-      <a href="../iniciante.html" class="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700">← Voltar para Trilha</a>
+
+  <section class="bg-gradient-to-br from-orange-600 via-orange-700 to-amber-800 py-20">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="text-7xl mb-6">⏸️</div>
+      <h1 class="text-5xl font-bold mb-6">Wait</h1>
+      <p class="text-2xl mb-8 text-white/90">Adicione Delays Inteligentes</p>
     </div>
-  </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-4 py-16">
+    <div class="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-10 mb-10">
+      <div class="flex items-center mb-6">
+        <span class="text-5xl mr-4">📚</span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">O que é Wait?</h2>
+      </div>
+      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6 leading-relaxed">O <strong>Wait</strong> pausa o workflow por um tempo específico ou até uma data/hora. Essencial para sequências temporais.</p>
+      
+      <div class="bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-900/20 dark:to-amber-900/20 rounded-xl p-6">
+        <p class="text-lg text-neutral-800 dark:text-neutral-200 font-semibold mb-3">🎯 Casos de Uso Principais:</p>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-orange-700 dark:text-orange-400 mb-2">⏰ Follow-ups</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Aguardar 3 dias após cadastro para enviar email</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-orange-700 dark:text-orange-400 mb-2">🔄 Retry Logic</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Aguardar antes de tentar novamente</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-orange-700 dark:text-orange-400 mb-2">📅 Agendamentos</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Aguardar até data específica</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-orange-700 dark:text-orange-400 mb-2">⚡ Rate Limiting</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Pausar entre chamadas de API</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-2xl p-8 mb-10 border-2 border-orange-200 dark:border-orange-800">
+      <div class="flex items-center mb-6">
+        <span class="text-5xl mr-4">💡</span>
+        <h3 class="text-3xl font-bold text-orange-900 dark:text-orange-300">Exemplo Prático</h3>
+      </div>
+      <div class="bg-white dark:bg-neutral-800 rounded-xl p-6 shadow-lg">
+        <div class="code-block">// Aguardar 24h após lead
+Wait: 1 day
+↓
+Then: Enviar email de follow-up
+
+// Ou aguardar até data
+Wait until: 2025-12-25 09:00</div>
+      </div>
+    </div>
+
+    <div class="bg-gradient-to-br from-orange-600 to-amber-600 text-white rounded-2xl p-10 text-center shadow-2xl">
+      <span class="text-6xl mb-4 block">🎓</span>
+      <h3 class="text-3xl font-bold mb-4">Domine Wait!</h3>
+      <div class="flex gap-4 justify-center flex-wrap">
+        <a href="../iniciante.html" class="bg-white text-orange-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors shadow-lg">← Voltar</a>
+        <a href="../downloads/wait.md" download class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-colors">📥 Download</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-neutral-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-neutral-400">&copy; 2025 N8N Academy - Fundamentos Completos</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark'); themeToggleLightIcon.classList.remove('hidden');
+    } else { themeToggleDarkIcon.classList.remove('hidden'); }
+    themeToggleBtn.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark'); localStorage.setItem('color-theme', 'light');
+      } else { document.documentElement.classList.add('dark'); localStorage.setItem('color-theme', 'dark'); }
+    });
+  </script>
 </body>
 </html>
