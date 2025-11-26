@@ -1,104 +1,208 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Switch - Guia Completo | N8N Fundamentos</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script>tailwind.config = { darkMode: 'class' }</script>
-  <style>
-    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
-    .code-block { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem;
-                  overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.5; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Switch - n8n Cheatsheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 35px;
+        }
+        .section h2 {
+            color: #FF9800;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #FF9800;
+        }
+        .section h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+        .section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        ul li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 5px solid #FF9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .steps {
+            background: #e8f4f8;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .steps ol {
+            padding-left: 25px;
+        }
+        .steps li {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        .example {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        strong {
+            color: #FF9800;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+    </style>
 </head>
-<body class="bg-neutral-50 dark:bg-neutral-900">
-  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
-        <a href="../iniciante.html" class="text-2xl font-bold text-violet-600 dark:text-violet-400 flex items-center gap-2">
-          <span>←</span><span class="text-3xl">🎛️</span><span>Switch</span>
-        </a>
-        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
-          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-          </svg>
-          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </nav>
-
-  <section class="bg-gradient-to-br from-violet-600 via-violet-700 to-purple-800 py-20">
-    <div class="max-w-7xl mx-auto px-4 text-center text-white">
-      <div class="text-7xl mb-6">🎛️</div>
-      <h1 class="text-5xl font-bold mb-6">Switch</h1>
-      <p class="text-2xl mb-8 text-white/90">Múltiplas Condições, Múltiplos Caminhos</p>
-    </div>
-  </section>
-
-  <section class="max-w-6xl mx-auto px-4 py-16">
-    <div class="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-10 mb-10">
-      <div class="flex items-center mb-6">
-        <span class="text-5xl mr-4">📚</span>
-        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">O que é Switch?</h2>
-      </div>
-      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6 leading-relaxed">O <strong>Switch</strong> é como um IF com múltiplas opções. Roteie dados para diferentes caminhos baseado em valores.</p>
-      
-      <div class="bg-gradient-to-r from-violet-50 to-purple-50 dark:from-violet-900/20 dark:to-purple-900/20 rounded-xl p-6">
-        <p class="text-lg text-neutral-800 dark:text-neutral-200 font-semibold mb-3">🎯 Casos de Uso Principais:</p>
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-violet-700 dark:text-violet-400 mb-2">📋 Roteamento por Status</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Processar diferente baseado em: pending, approved, rejected</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-violet-700 dark:text-violet-400 mb-2">🏷️ Categorização</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Enviar para diferentes destinos por categoria</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-violet-700 dark:text-violet-400 mb-2">🌍 Multi-region</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Rotear por país, idioma, moeda</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-violet-700 dark:text-violet-400 mb-2">⚡ Priority Handling</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Tratar prioridades: low, medium, high, urgent</p></div>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Switch</h1>
+            <div class="subtitle">IF Turbinado para Múltiplos Caminhos</div>
         </div>
-      </div>
-    </div>
 
-    <div class="bg-gradient-to-br from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 rounded-2xl p-8 mb-10 border-2 border-violet-200 dark:border-violet-800">
-      <div class="flex items-center mb-6">
-        <span class="text-5xl mr-4">💡</span>
-        <h3 class="text-3xl font-bold text-violet-900 dark:text-violet-300">Exemplo Prático</h3>
-      </div>
-      <div class="bg-white dark:bg-neutral-800 rounded-xl p-6 shadow-lg">
-        <div class="code-block">// Switch por status do pedido
-Case 1: status = "pending" → Enviar lembrete
-Case 2: status = "paid" → Processar envio
-Case 3: status = "cancelled" → Notificar estorno
-Default: Log erro</div>
-      </div>
-    </div>
+        <div class="content">
+            <div class="section">
+                <h2>O que o Switch Faz</h2>
+                <p>O nó Switch no n8n é como um nó IF turbinado, permitindo que seus workflows se ramifiquem em muitos caminhos diferentes, não apenas dois, baseado em regras de roteamento customizadas que você define.</p>
 
-    <div class="bg-gradient-to-br from-violet-600 to-purple-600 text-white rounded-2xl p-10 text-center shadow-2xl">
-      <span class="text-6xl mb-4 block">🎓</span>
-      <h3 class="text-3xl font-bold mb-4">Domine Switch!</h3>
-      <div class="flex gap-4 justify-center flex-wrap">
-        <a href="../iniciante.html" class="bg-white text-violet-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors shadow-lg">← Voltar</a>
-        <a href="../downloads/switch.md" download class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-colors">📥 Download</a>
-      </div>
-    </div>
-  </section>
+                <ul>
+                    <li><strong>Roteia itens recebidos</strong> para um de vários ramos de saída, dependendo do valor de um campo ou do resultado de uma expressão</li>
+                    <li><strong>Substitui longas cadeias de nós IF</strong> ou lógica complexa com um único nó para clareza e manutenibilidade</li>
+                    <li><strong>Suporta quantas saídas você precisar</strong>, cada uma com sua própria regra de correspondência (ex: 10 códigos de status possíveis, 5 cidades ou quaisquer categorias que desejar)</li>
+                </ul>
+            </div>
 
-  <footer class="bg-neutral-900 text-white py-12">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <p class="text-neutral-400">&copy; 2025 N8N Academy - Fundamentos Completos</p>
-    </div>
-  </footer>
+            <div class="section">
+                <h2>Principais Casos de Uso</h2>
+                <ul>
+                    <li><strong>Roteamento Multi-direcional:</strong> Enviar faturas para diferentes endereços de email/nós de email baseado no ID do departamento</li>
+                    <li><strong>Alternância de Ações:</strong> Acionar diferentes ações para cada evento possível ou papel de usuário</li>
+                    <li><strong>Categorização de Dados:</strong> Categorizar automaticamente requisições, mensagens ou tarefas recebidas por tipo ou urgência</li>
+                    <li><strong>Simplificar Lógica:</strong> Substituir múltiplos nós IF conectados em sequência com um único Switch para workflows muito mais limpos</li>
+                </ul>
+            </div>
 
-  <script>
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark'); themeToggleLightIcon.classList.remove('hidden');
-    } else { themeToggleDarkIcon.classList.remove('hidden'); }
-    themeToggleBtn.addEventListener('click', function() {
-      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
-      if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark'); localStorage.setItem('color-theme', 'light');
-      } else { document.documentElement.classList.add('dark'); localStorage.setItem('color-theme', 'dark'); }
-    });
-  </script>
+            <div class="section">
+                <h2>Como Configurar e Usar</h2>
+                <div class="steps">
+                    <ol>
+                        <li><strong>Inserir o Nó:</strong> Posicione-o em qualquer ponto onde seu workflow precisa se ramificar por mais de duas possibilidades</li>
+
+                        <li><strong>Configurar Regras:</strong> Para cada saída, defina uma comparação, pode ser uma verificação de valor, correspondência a uma string, número ou uma expressão
+                            <ul>
+                                <li><strong>Exemplo:</strong> Saída 1 pode corresponder a "status = 'pending'", Saída 2 "status = 'approved'", etc.</li>
+                                <li>Você pode adicionar quantas saídas ("rotas") forem necessárias e dar a cada uma um rótulo customizado para clareza</li>
+                            </ul>
+                        </li>
+
+                        <li><strong>Tratamento de Fallback:</strong> Opcionalmente defina uma rota padrão para "sem correspondência", útil para logging ou tratamento de erros</li>
+
+                        <li><strong>Ações Downstream:</strong> Conecte um pipeline de processamento diferente, notificação ou chamada externa sob cada ramo para lidar com dados roteados apropriadamente</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Melhores Práticas e Dicas</h2>
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>Use nós Switch</strong> para manter a lógica de ramificação legível e visual, especialmente quando há várias condições para corresponder</li>
+                        <li><strong>Rotule claramente cada saída</strong> para manutenção e debugging de workflow mais fáceis</li>
+                        <li><strong>Para condições complexas</strong> (como "amount > 1000 and status = 'pending'"), use expressões nas regras de correspondência</li>
+                        <li><strong>Combine com nós IF</strong> para lógica hierárquica ou aninhada, mas deixe o Switch lidar com todos os casos multi-direcionais para prevenir expansão de lógica</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Exemplo Prático</h2>
+                <div class="example">
+                    <h3>Cenário: Roteamento de Pedidos por Tipo</h3>
+                    <p>Um webhook envia pedidos com um campo "order_type".</p>
+
+                    <p><strong>O nó Switch produz saídas para diferentes ramos:</strong></p>
+                    <ul>
+                        <li><strong>"retail"</strong> - Rota para sistema de varejo</li>
+                        <li><strong>"wholesale"</strong> - Rota para sistema de atacado</li>
+                        <li><strong>"international"</strong> - Rota para processamento internacional</li>
+                        <li><strong>"fallback"</strong> - Se order_type for qualquer outra coisa</li>
+                    </ul>
+
+                    <p>Cada ramo então envia dados para sua própria cadeia de automação de atendimento ou relatórios.</p>
+
+                    <p><strong>Resultado:</strong> O nó Switch é essencial para automação expressiva e modular no n8n, permitindo que você roteie, classifique e processe dados através de uma ampla gama de cenários de workflow, tudo a partir de um nó.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>n8n Cheatsheet - Switch Node | Baseado em "Master n8n with 17 Nodes" by Nate Herk</p>
+        </div>
+    </div>
 </body>
 </html>

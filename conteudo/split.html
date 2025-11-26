@@ -1,105 +1,206 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Split Out - Guia Completo | N8N Fundamentos</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script>tailwind.config = { darkMode: 'class' }</script>
-  <style>
-    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
-    .code-block { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem;
-                  overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.5; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split Out - n8n Cheatsheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 35px;
+        }
+        .section h2 {
+            color: #FF6B6B;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #FF6B6B;
+        }
+        .section h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+        .section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        ul li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 5px solid #FF6B6B;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .steps {
+            background: #e8f4f8;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .steps ol {
+            padding-left: 25px;
+        }
+        .steps li {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        .example {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        strong {
+            color: #FF6B6B;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+    </style>
 </head>
-<body class="bg-neutral-50 dark:bg-neutral-900">
-  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
-        <a href="../iniciante.html" class="text-2xl font-bold text-cyan-600 dark:text-cyan-400 flex items-center gap-2">
-          <span>←</span><span class="text-3xl">✂️</span><span>Split Out</span>
-        </a>
-        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
-          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-          </svg>
-          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </nav>
-
-  <section class="bg-gradient-to-br from-cyan-600 via-cyan-700 to-teal-800 py-20">
-    <div class="max-w-7xl mx-auto px-4 text-center text-white">
-      <div class="text-7xl mb-6">✂️</div>
-      <h1 class="text-5xl font-bold mb-6">Split Out</h1>
-      <p class="text-2xl mb-8 text-white/90">Divida Arrays em Itens Individuais</p>
-    </div>
-  </section>
-
-  <section class="max-w-6xl mx-auto px-4 py-16">
-    <div class="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-10 mb-10">
-      <div class="flex items-center mb-6">
-        <span class="text-5xl mr-4">📚</span>
-        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">O que é Split Out?</h2>
-      </div>
-      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6 leading-relaxed">O <strong>Split Out</strong> transforma um array em múltiplos itens individuais. Essencial para processar listas (pedidos, produtos, contatos).</p>
-      
-      <div class="bg-gradient-to-r from-cyan-50 to-teal-50 dark:from-cyan-900/20 dark:to-teal-900/20 rounded-xl p-6">
-        <p class="text-lg text-neutral-800 dark:text-neutral-200 font-semibold mb-3">🎯 Casos de Uso Principais:</p>
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-cyan-700 dark:text-cyan-400 mb-2">📦 Processar Pedidos</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Dividir lista de pedidos para processar um por um</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-cyan-700 dark:text-cyan-400 mb-2">👥 Enviar Emails</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Split de contatos para enviar email individual</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-cyan-700 dark:text-cyan-400 mb-2">📊 Processar Linhas</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Dividir CSV em linhas individuais</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-cyan-700 dark:text-cyan-400 mb-2">🔄 Batch Operations</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Transformar array em operações individuais</p></div>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Split Out</h1>
+            <div class="subtitle">Transforme Arrays em Itens Individuais</div>
         </div>
-      </div>
-    </div>
 
-    <div class="bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 rounded-2xl p-8 mb-10 border-2 border-cyan-200 dark:border-cyan-800">
-      <div class="flex items-center mb-6">
-        <span class="text-5xl mr-4">💡</span>
-        <h3 class="text-3xl font-bold text-cyan-900 dark:text-cyan-300">Exemplo Prático</h3>
-      </div>
-      <div class="bg-white dark:bg-neutral-800 rounded-xl p-6 shadow-lg">
-        <div class="code-block">// Entrada: {products: [{id: 1}, {id: 2}, {id: 3}]}
-// Após Split Out no campo "products"
-// Saída: 3 itens separados
-Item 1: {id: 1}
-Item 2: {id: 2}
-Item 3: {id: 3}</div>
-      </div>
-    </div>
+        <div class="content">
+            <div class="section">
+                <h2>O que o Split Out Faz</h2>
+                <p>O nó Split Out no n8n permite que você pegue qualquer campo de array nos seus dados e o divida, fazendo com que cada elemento do array se torne seu próprio item para processamento individual, funcionando como o nó "iterator" em outras ferramentas de automação.</p>
 
-    <div class="bg-gradient-to-br from-cyan-600 to-teal-600 text-white rounded-2xl p-10 text-center shadow-2xl">
-      <span class="text-6xl mb-4 block">🎓</span>
-      <h3 class="text-3xl font-bold mb-4">Domine Split Out!</h3>
-      <div class="flex gap-4 justify-center flex-wrap">
-        <a href="../iniciante.html" class="bg-white text-cyan-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors shadow-lg">← Voltar</a>
-        <a href="../downloads/split.md" download class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-colors">📥 Download</a>
-      </div>
-    </div>
-  </section>
+                <ul>
+                    <li>Recebe um item (por exemplo, com um campo chamado "customers", que é um array: [{"name":"Alice"},{"name":"Bob"},{"name":"Carlos"}])</li>
+                    <li>O nó produz um item separado para cada entrada nesse array, expandindo o array agrupado em múltiplos itens de workflow para processar individualmente</li>
+                    <li>Isso significa que você pode enviar emails personalizados para cada cliente, processar registros separados de respostas de API ou lidar com cada linha de uma planilha isoladamente</li>
+                </ul>
+            </div>
 
-  <footer class="bg-neutral-900 text-white py-12">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <p class="text-neutral-400">&copy; 2025 N8N Academy - Fundamentos Completos</p>
-    </div>
-  </footer>
+            <div class="section">
+                <h2>Principais Casos de Uso</h2>
+                <ul>
+                    <li><strong>Dividir registros de respostas de API</strong> para que cada um seja processado separadamente</li>
+                    <li><strong>Separar linhas de uma tabela</strong>, como Google Sheets ou consulta de banco de dados, para aplicar ações individuais</li>
+                    <li><strong>Iterar sobre saídas de modelos de IA</strong>, para que você possa tratar cada resultado gerado individualmente</li>
+                    <li><strong>Ações de automação granulares</strong>, como enviar mensagens para cada contato de uma lista de contatos</li>
+                </ul>
+            </div>
 
-  <script>
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark'); themeToggleLightIcon.classList.remove('hidden');
-    } else { themeToggleDarkIcon.classList.remove('hidden'); }
-    themeToggleBtn.addEventListener('click', function() {
-      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
-      if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark'); localStorage.setItem('color-theme', 'light');
-      } else { document.documentElement.classList.add('dark'); localStorage.setItem('color-theme', 'dark'); }
-    });
-  </script>
+            <div class="section">
+                <h2>Como Configurar e Usar</h2>
+                <div class="steps">
+                    <ol>
+                        <li><strong>Inserir o Nó:</strong> Adicione o nó Split Out diretamente após um nó que gera um array (ex: HTTP Request, Sheets, AI, etc.)</li>
+
+                        <li><strong>Campo para Dividir:</strong> Especifique o campo que contém o array que você deseja dividir (ex: "data.customers")</li>
+
+                        <li><strong>Configurações de Inclusão:</strong> Decida se deseja manter outros campos do item original com cada resultado dividido:
+                            <ul>
+                                <li>"No Other Fields" (apenas o campo principal)</li>
+                                <li>"All Other Fields" (preservar contexto)</li>
+                                <li>"Selected Other Fields" (lista customizada)</li>
+                            </ul>
+                        </li>
+
+                        <li><strong>Notação de Ponto:</strong> Por padrão, você pode referenciar subcampos usando notação de ponto ("parent.child"). Isso é útil para dados estruturados, desabilite se usar objetos planos</li>
+
+                        <li><strong>Conectar Downstream:</strong> Continue construindo seu workflow, cada novo item agora representa um caminho de execução individual para apenas aquele elemento do array</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Melhores Práticas e Dicas</h2>
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>Use Split Out antes de loops, requisições HTTP ou ações de mensagens</strong> - você garantirá que cada dado seja processado sem manipulação manual de arrays</li>
+                        <li><strong>Se seu array de origem vem de mais profundo no workflow</strong> (não apenas do nó anterior), verifique as conexões dos nós, pois Split Out espera entrada diretamente de seu predecessor, a menos que use nós Merge ou Set</li>
+                        <li><strong>Combine com o nó Aggregate</strong> se precisar reconstruir arrays após o processamento para relatórios, resumos ou envios de API</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Exemplo Prático</h2>
+                <div class="example">
+                    <h3>Cenário: Processar Lista de Contatos</h3>
+                    <p>Suponha que uma API retorne <code>[{"name":"Julie"},{"name":"Sam"},{"name":"Lee"}]</code> em um campo "contacts".</p>
+
+                    <p><strong>Com Split Out:</strong></p>
+                    <ul>
+                        <li>O nó produz três itens separados para Julie, Sam e Lee</li>
+                        <li>Você pode então enviar um email por contato ou registrar cada um em um banco de dados individualmente</li>
+                    </ul>
+
+                    <p><strong>Resultado:</strong> O nó Split Out é crítico para mudar automações de "volume" para "individual", permitindo workflows detalhados, direcionados e poderosos no n8n.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>n8n Cheatsheet - Split Out Node | Baseado em "Master n8n with 17 Nodes" by Nate Herk</p>
+        </div>
+    </div>
 </body>
 </html>

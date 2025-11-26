@@ -1,106 +1,241 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wait - Guia Completo | N8N Fundamentos</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script>tailwind.config = { darkMode: 'class' }</script>
-  <style>
-    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
-    .code-block { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem;
-                  overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.5; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wait - n8n Cheatsheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #795548 0%, #5D4037 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 35px;
+        }
+        .section h2 {
+            color: #795548;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #795548;
+        }
+        .section h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+        .section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        ul li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 5px solid #795548;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .use-cases {
+            background: #e8f4f8;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .example {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        strong {
+            color: #795548;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+    </style>
 </head>
-<body class="bg-neutral-50 dark:bg-neutral-900">
-  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
-        <a href="../iniciante.html" class="text-2xl font-bold text-orange-600 dark:text-orange-400 flex items-center gap-2">
-          <span>←</span><span class="text-3xl">⏸️</span><span>Wait</span>
-        </a>
-        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
-          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-          </svg>
-          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </nav>
-
-  <section class="bg-gradient-to-br from-orange-600 via-orange-700 to-amber-800 py-20">
-    <div class="max-w-7xl mx-auto px-4 text-center text-white">
-      <div class="text-7xl mb-6">⏸️</div>
-      <h1 class="text-5xl font-bold mb-6">Wait</h1>
-      <p class="text-2xl mb-8 text-white/90">Adicione Delays Inteligentes</p>
-    </div>
-  </section>
-
-  <section class="max-w-6xl mx-auto px-4 py-16">
-    <div class="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-10 mb-10">
-      <div class="flex items-center mb-6">
-        <span class="text-5xl mr-4">📚</span>
-        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">O que é Wait?</h2>
-      </div>
-      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6 leading-relaxed">O <strong>Wait</strong> pausa o workflow por um tempo específico ou até uma data/hora. Essencial para sequências temporais.</p>
-      
-      <div class="bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-900/20 dark:to-amber-900/20 rounded-xl p-6">
-        <p class="text-lg text-neutral-800 dark:text-neutral-200 font-semibold mb-3">🎯 Casos de Uso Principais:</p>
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-orange-700 dark:text-orange-400 mb-2">⏰ Follow-ups</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Aguardar 3 dias após cadastro para enviar email</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-orange-700 dark:text-orange-400 mb-2">🔄 Retry Logic</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Aguardar antes de tentar novamente</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-orange-700 dark:text-orange-400 mb-2">📅 Agendamentos</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Aguardar até data específica</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-orange-700 dark:text-orange-400 mb-2">⚡ Rate Limiting</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Pausar entre chamadas de API</p></div>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Wait</h1>
+            <div class="subtitle">Pausas Estratégicas nos Seus Workflows</div>
         </div>
-      </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>O que o Wait Faz</h2>
+                <p>O nó Wait no n8n permite que você pause a execução do workflow por um período de tempo especificado ou até que uma condição externa seja atendida, essencial para throttling, atrasos de tempo e coordenação de processos assíncronos.</p>
+
+                <ul>
+                    <li><strong>Pausa a execução do workflow</strong> por segundos, minutos, horas ou até uma data/hora específica</li>
+                    <li><strong>Pode esperar por eventos externos</strong> como webhooks, notificações ou confirmações antes de continuar</li>
+                    <li><strong>Essencial para respeitar limites de API</strong>, adicionar delays entre ações ou criar workflows com timing preciso</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Principais Casos de Uso</h2>
+                <div class="use-cases">
+                    <ul>
+                        <li><strong>Rate Limiting:</strong> Inserir delays entre chamadas de API para respeitar limites de taxa (ex: esperar 1 segundo entre requisições)</li>
+                        <li><strong>Processos de Aprovação:</strong> Pausar workflow até que um humano aprove ou rejeite via webhook ou formulário</li>
+                        <li><strong>Delays de Tempo:</strong> Aguardar período específico antes de executar próxima ação (ex: esperar 24 horas antes de enviar email de follow-up)</li>
+                        <li><strong>Sincronização:</strong> Coordenar ações que dependem de processos externos ou sistemas que levam tempo para processar</li>
+                        <li><strong>Processamento em Lote:</strong> Combinar com Loop Over Items para controlar velocidade de processamento de grandes volumes de dados</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Modos de Espera</h2>
+                <div class="highlight-box">
+                    <h3>1. Tempo Fixo</h3>
+                    <p>Espera por um período de tempo específico (segundos, minutos, horas)</p>
+                    <ul>
+                        <li>Simples e direto</li>
+                        <li>Ideal para delays previsíveis</li>
+                        <li>Exemplo: esperar 5 segundos entre emails</li>
+                    </ul>
+
+                    <h3 style="margin-top: 20px;">2. Data/Hora Específica</h3>
+                    <p>Pausa até uma data e hora específica</p>
+                    <ul>
+                        <li>Útil para agendamentos precisos</li>
+                        <li>Pode usar expressões dinâmicas</li>
+                        <li>Exemplo: esperar até amanhã às 9h</li>
+                    </ul>
+
+                    <h3 style="margin-top: 20px;">3. Webhook/Evento</h3>
+                    <p>Espera até receber um webhook ou evento externo</p>
+                    <ul>
+                        <li>Permite workflows interativos</li>
+                        <li>Requer URL de retomada</li>
+                        <li>Exemplo: esperar aprovação do usuário</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Melhores Práticas e Dicas</h2>
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>Use com Loop Over Items</strong> para controle preciso de taxa em processamento em lote</li>
+                        <li><strong>Configure timeouts apropriados</strong> quando esperar por eventos externos para evitar workflows travados</li>
+                        <li><strong>Considere timezone</strong> ao usar esperas baseadas em data/hora específica</li>
+                        <li><strong>Não abuse de delays longos</strong> - considere usar Schedule Trigger para ações com dias/semanas de intervalo</li>
+                        <li><strong>Para APIs com rate limiting</strong>, calcule o delay necessário: (60 segundos / limite por minuto)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Exemplos Práticos</h2>
+                <div class="example">
+                    <h3>Exemplo 1: Rate Limiting de API</h3>
+                    <p><strong>Cenário:</strong> API permite 10 requisições por minuto</p>
+                    <ul>
+                        <li>Use Loop Over Items (lote de 1)</li>
+                        <li>Adicione nó Wait com 6 segundos (60s ÷ 10 = 6s)</li>
+                        <li>Isso garante máximo de 10 requisições/minuto</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h3>Exemplo 2: Email de Follow-up</h3>
+                    <p><strong>Cenário:</strong> Enviar email de follow-up 3 dias após primeiro contato</p>
+                    <ul>
+                        <li>Trigger: novo lead no CRM</li>
+                        <li>Enviar email de boas-vindas</li>
+                        <li>Wait: 3 dias (4320 minutos)</li>
+                        <li>Enviar email de follow-up</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h3>Exemplo 3: Aprovação Manual</h3>
+                    <p><strong>Cenário:</strong> Workflow precisa de aprovação humana</p>
+                    <ul>
+                        <li>Processar dados iniciais</li>
+                        <li>Enviar notificação com link de aprovação</li>
+                        <li>Wait (modo webhook) até receber aprovação/rejeição</li>
+                        <li>Continuar baseado na resposta</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Considerações Importantes</h2>
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>Workflows em espera consomem recursos</strong> - planeje sua infraestrutura adequadamente</li>
+                        <li><strong>Defina sempre timeouts</strong> para esperas baseadas em eventos externos</li>
+                        <li><strong>Documente delays longos</strong> no seu workflow para que outros entendam o timing</li>
+                        <li><strong>Para delays muito longos</strong> (dias/semanas), considere usar abordagem com banco de dados + Schedule Trigger</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>n8n Cheatsheet - Wait Node | Baseado em "Master n8n with 17 Nodes" by Nate Herk</p>
+        </div>
     </div>
-
-    <div class="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-2xl p-8 mb-10 border-2 border-orange-200 dark:border-orange-800">
-      <div class="flex items-center mb-6">
-        <span class="text-5xl mr-4">💡</span>
-        <h3 class="text-3xl font-bold text-orange-900 dark:text-orange-300">Exemplo Prático</h3>
-      </div>
-      <div class="bg-white dark:bg-neutral-800 rounded-xl p-6 shadow-lg">
-        <div class="code-block">// Aguardar 24h após lead
-Wait: 1 day
-↓
-Then: Enviar email de follow-up
-
-// Ou aguardar até data
-Wait until: 2025-12-25 09:00</div>
-      </div>
-    </div>
-
-    <div class="bg-gradient-to-br from-orange-600 to-amber-600 text-white rounded-2xl p-10 text-center shadow-2xl">
-      <span class="text-6xl mb-4 block">🎓</span>
-      <h3 class="text-3xl font-bold mb-4">Domine Wait!</h3>
-      <div class="flex gap-4 justify-center flex-wrap">
-        <a href="../iniciante.html" class="bg-white text-orange-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors shadow-lg">← Voltar</a>
-        <a href="../downloads/wait.md" download class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-colors">📥 Download</a>
-      </div>
-    </div>
-  </section>
-
-  <footer class="bg-neutral-900 text-white py-12">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <p class="text-neutral-400">&copy; 2025 N8N Academy - Fundamentos Completos</p>
-    </div>
-  </footer>
-
-  <script>
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark'); themeToggleLightIcon.classList.remove('hidden');
-    } else { themeToggleDarkIcon.classList.remove('hidden'); }
-    themeToggleBtn.addEventListener('click', function() {
-      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
-      if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark'); localStorage.setItem('color-theme', 'light');
-      } else { document.documentElement.classList.add('dark'); localStorage.setItem('color-theme', 'dark'); }
-    });
-  </script>
 </body>
 </html>

@@ -1,107 +1,273 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Error Trigger - Guia Completo | N8N Fundamentos</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script>tailwind.config = { darkMode: 'class' }</script>
-  <style>
-    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
-    .code-block { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem;
-                  overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.5; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Trigger - n8n Cheatsheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #F44336 0%, #D32F2F 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 35px;
+        }
+        .section h2 {
+            color: #F44336;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #F44336;
+        }
+        .section h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+        .section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        ul li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 5px solid #F44336;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .use-cases {
+            background: #e8f4f8;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .example {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .warning {
+            background: #ffebee;
+            border-left: 5px solid #F44336;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        strong {
+            color: #F44336;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+    </style>
 </head>
-<body class="bg-neutral-50 dark:bg-neutral-900">
-  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
-        <a href="../iniciante.html" class="text-2xl font-bold text-red-600 dark:text-red-400 flex items-center gap-2">
-          <span>←</span><span class="text-3xl">⚠️</span><span>Error Trigger</span>
-        </a>
-        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
-          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-          </svg>
-          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </nav>
-
-  <section class="bg-gradient-to-br from-red-600 via-red-700 to-rose-800 py-20">
-    <div class="max-w-7xl mx-auto px-4 text-center text-white">
-      <div class="text-7xl mb-6">⚠️</div>
-      <h1 class="text-5xl font-bold mb-6">Error Trigger</h1>
-      <p class="text-2xl mb-8 text-white/90">Capture e Trate Erros</p>
-    </div>
-  </section>
-
-  <section class="max-w-6xl mx-auto px-4 py-16">
-    <div class="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-10 mb-10">
-      <div class="flex items-center mb-6">
-        <span class="text-5xl mr-4">📚</span>
-        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">O que é Error Trigger?</h2>
-      </div>
-      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6 leading-relaxed">O <strong>Error Trigger</strong> captura erros de outros workflows e permite tratamento centralizado: notificar, logar, retry.</p>
-      
-      <div class="bg-gradient-to-r from-red-50 to-rose-50 dark:from-red-900/20 dark:to-rose-900/20 rounded-xl p-6">
-        <p class="text-lg text-neutral-800 dark:text-neutral-200 font-semibold mb-3">🎯 Casos de Uso Principais:</p>
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-red-700 dark:text-red-400 mb-2">🚨 Alertas de Erro</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Notificar equipe quando workflows falham</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-red-700 dark:text-red-400 mb-2">📝 Logging</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Salvar erros em banco de dados para análise</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-red-700 dark:text-red-400 mb-2">🔄 Retry Automático</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Tentar executar novamente workflows que falharam</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-red-700 dark:text-red-400 mb-2">📊 Monitoramento</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Dashboard de erros e problemas</p></div>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Error Trigger</h1>
+            <div class="subtitle">Tratamento Inteligente de Erros</div>
         </div>
-      </div>
-    </div>
 
-    <div class="bg-gradient-to-br from-rose-50 to-red-50 dark:from-rose-900/20 dark:to-red-900/20 rounded-2xl p-8 mb-10 border-2 border-red-200 dark:border-red-800">
-      <div class="flex items-center mb-6">
-        <span class="text-5xl mr-4">💡</span>
-        <h3 class="text-3xl font-bold text-red-900 dark:text-red-300">Exemplo Prático</h3>
-      </div>
-      <div class="bg-white dark:bg-neutral-800 rounded-xl p-6 shadow-lg">
-        <div class="code-block">// Error Trigger workflow
-Trigger: Error Trigger (global)
-↓
-If error: 
-  - Log no banco de dados
-  - Envia Slack: "Workflow X falhou"
-  - Se crítico: SMS para admin
-  - Se temporário: Retry em 5min</div>
-      </div>
-    </div>
+        <div class="content">
+            <div class="section">
+                <h2>O que o Error Trigger Faz</h2>
+                <p>O nó Error Trigger no n8n permite que você force intencionalmente a falha de um workflow em pontos específicos, útil para validação de dados, tratamento de casos extremos e implementação de lógica de controle de qualidade robusta.</p>
 
-    <div class="bg-gradient-to-br from-red-600 to-rose-600 text-white rounded-2xl p-10 text-center shadow-2xl">
-      <span class="text-6xl mb-4 block">🎓</span>
-      <h3 class="text-3xl font-bold mb-4">Domine Error Trigger!</h3>
-      <div class="flex gap-4 justify-center flex-wrap">
-        <a href="../iniciante.html" class="bg-white text-red-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors shadow-lg">← Voltar</a>
-        <a href="../downloads/error.md" download class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-colors">📥 Download</a>
-      </div>
-    </div>
-  </section>
+                <ul>
+                    <li><strong>Interrompe a execução do workflow</strong> imediatamente quando acionado</li>
+                    <li><strong>Registra mensagem de erro customizada</strong> para debugging e monitoramento</li>
+                    <li><strong>Pode ser capturado por workflows de tratamento de erro</strong> para ações de recuperação</li>
+                    <li><strong>Essencial para validação de dados</strong> e garantia de qualidade em automações críticas</li>
+                </ul>
+            </div>
 
-  <footer class="bg-neutral-900 text-white py-12">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <p class="text-neutral-400">&copy; 2025 N8N Academy - Fundamentos Completos</p>
-    </div>
-  </footer>
+            <div class="section">
+                <h2>Principais Casos de Uso</h2>
+                <div class="use-cases">
+                    <ul>
+                        <li><strong>Validação de Dados:</strong> Falhar o workflow se dados críticos estiverem faltando ou inválidos</li>
+                        <li><strong>Controle de Qualidade:</strong> Verificar se condições específicas são atendidas antes de continuar</li>
+                        <li><strong>Limites de Negócio:</strong> Impor regras de negócio estritas (ex: não processar pedidos acima de certo valor sem aprovação)</li>
+                        <li><strong>Debugging:</strong> Forçar falha em pontos específicos durante desenvolvimento para testar tratamento de erros</li>
+                        <li><strong>Notificações de Alerta:</strong> Acionar alertas quando condições anormais são detectadas</li>
+                    </ul>
+                </div>
+            </div>
 
-  <script>
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark'); themeToggleLightIcon.classList.remove('hidden');
-    } else { themeToggleDarkIcon.classList.remove('hidden'); }
-    themeToggleBtn.addEventListener('click', function() {
-      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
-      if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark'); localStorage.setItem('color-theme', 'light');
-      } else { document.documentElement.classList.add('dark'); localStorage.setItem('color-theme', 'dark'); }
-    });
-  </script>
+            <div class="section">
+                <h2>Como Configurar</h2>
+                <div class="highlight-box">
+                    <h3>Configuração Básica</h3>
+                    <ol style="padding-left: 25px; margin-top: 15px;">
+                        <li><strong>Inserir o Nó:</strong> Adicione após uma condição IF ou Switch que detecta um estado de erro</li>
+                        <li><strong>Mensagem de Erro:</strong> Configure uma mensagem descritiva que explique por que o erro foi acionado</li>
+                        <li><strong>Dados Contextuais:</strong> Opcionalmente inclua dados relevantes para ajudar no debugging</li>
+                        <li><strong>Conectar Tratamento:</strong> Configure workflow de tratamento de erro se quiser recuperação automática</li>
+                    </ol>
+
+                    <h3 style="margin-top: 25px;">Padrão Comum de Uso</h3>
+                    <p style="margin-top: 10px;">O Error Trigger é frequentemente usado em combinação com nós IF:</p>
+                    <ul style="margin-top: 10px;">
+                        <li>IF → condição detecta problema</li>
+                        <li>Ramo FALSE → Error Trigger com mensagem descritiva</li>
+                        <li>Ramo TRUE → continua processamento normal</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Exemplos Práticos</h2>
+                <div class="example">
+                    <h3>Exemplo 1: Validação de Dados Obrigatórios</h3>
+                    <p><strong>Cenário:</strong> Garantir que email e nome estejam presentes</p>
+                    <ul>
+                        <li>IF: verifica se <code>{{ $json.email }}</code> e <code>{{ $json.name }}</code> existem</li>
+                        <li>FALSE → Error Trigger: "Dados obrigatórios ausentes: email ou nome"</li>
+                        <li>TRUE → continua processamento</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h3>Exemplo 2: Limite de Valor</h3>
+                    <p><strong>Cenário:</strong> Bloquear pedidos acima de R$ 10.000 sem aprovação</p>
+                    <ul>
+                        <li>IF: <code>{{ $json.amount > 10000 && !$json.approved }}</code></li>
+                        <li>TRUE → Error Trigger: "Pedido de R$ {{ $json.amount }} requer aprovação manual"</li>
+                        <li>FALSE → processa pedido normalmente</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h3>Exemplo 3: Validação de API Response</h3>
+                    <p><strong>Cenário:</strong> Verificar se API retornou dados válidos</p>
+                    <ul>
+                        <li>HTTP Request → busca dados da API</li>
+                        <li>IF: verifica se <code>{{ $json.data.length > 0 }}</code></li>
+                        <li>FALSE → Error Trigger: "API não retornou dados - possível problema no serviço"</li>
+                        <li>TRUE → processa dados recebidos</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Tratamento de Erros</h2>
+                <div class="highlight-box">
+                    <h3>Workflow de Tratamento de Erro</h3>
+                    <p>Você pode criar workflows dedicados para capturar e tratar erros:</p>
+                    <ul style="margin-top: 10px;">
+                        <li><strong>Error Trigger Workflow:</strong> Crie workflow separado que começa com "When workflow error occurs"</li>
+                        <li><strong>Captura Contexto:</strong> Recebe informações sobre qual workflow falhou e por quê</li>
+                        <li><strong>Ações de Recuperação:</strong> Enviar notificações, logar erros, tentar retry, etc.</li>
+                        <li><strong>Alertas:</strong> Notificar equipe via Slack, email ou sistema de monitoring</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Melhores Práticas</h2>
+                <div class="warning">
+                    <h3>Dicas Importantes</h3>
+                    <ul>
+                        <li><strong>Mensagens Descritivas:</strong> Sempre use mensagens de erro claras e acionáveis</li>
+                        <li><strong>Inclua Contexto:</strong> Adicione dados relevantes que ajudem a identificar a causa</li>
+                        <li><strong>Não Abuse:</strong> Use para casos realmente excepcionais, não para controle de fluxo normal</li>
+                        <li><strong>Configure Alertas:</strong> Implemente notificações para erros críticos</li>
+                        <li><strong>Log Estruturado:</strong> Considere logar erros em banco de dados ou serviço de monitoring</li>
+                        <li><strong>Documente Condições:</strong> Deixe claro no workflow quais condições acionam cada erro</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Padrões Avançados</h2>
+                <div class="highlight-box">
+                    <h3>1. Retry com Limite</h3>
+                    <p>Combinar Error Trigger com lógica de retry:</p>
+                    <ul>
+                        <li>Tentar ação até N vezes</li>
+                        <li>Se todas falharem → Error Trigger</li>
+                        <li>Notificar sobre falha persistente</li>
+                    </ul>
+
+                    <h3 style="margin-top: 20px;">2. Validação em Cascata</h3>
+                    <p>Múltiplas validações em sequência:</p>
+                    <ul>
+                        <li>Validação 1 → IF → Error se falhar</li>
+                        <li>Validação 2 → IF → Error se falhar</li>
+                        <li>Todas passaram → Continua</li>
+                    </ul>
+
+                    <h3 style="margin-top: 20px;">3. Error com Classificação</h3>
+                    <p>Diferentes níveis de severidade:</p>
+                    <ul>
+                        <li>CRITICAL: para workflow imediatamente</li>
+                        <li>WARNING: loga mas continua</li>
+                        <li>INFO: apenas registra para análise</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>n8n Cheatsheet - Error Trigger Node | Baseado em "Master n8n with 17 Nodes" by Nate Herk</p>
+        </div>
+    </div>
 </body>
 </html>

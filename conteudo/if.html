@@ -1,82 +1,237 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IF - Guia Completo | N8N Fundamentos</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script>tailwind.config = { darkMode: 'class' }</script>
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-    .code-block { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IF - n8n Cheatsheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 35px;
+        }
+        .section h2 {
+            color: #9C27B0;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #9C27B0;
+        }
+        .section h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+        .section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        ul li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 5px solid #9C27B0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .steps {
+            background: #e8f4f8;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .steps ol {
+            padding-left: 25px;
+        }
+        .steps li {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        .example {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-examples {
+            background: #f4f4f4;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .code-examples h4 {
+            color: #9C27B0;
+            margin-bottom: 10px;
+        }
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        strong {
+            color: #9C27B0;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+    </style>
 </head>
-<body class="bg-neutral-50 dark:bg-neutral-900">
-  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
-        <a href="../iniciante.html" class="text-2xl font-bold text-green-600 dark:text-green-400 flex items-center gap-2">
-          <span>←</span><span class="text-3xl">🔀</span><span>IF</span>
-        </a>
-        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
-          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-          </svg>
-          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </nav>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>IF</h1>
+            <div class="subtitle">Decisões Inteligentes nos Seus Workflows</div>
+        </div>
 
-  <section class="bg-gradient-to-br from-green-600 via-green-700 to-emerald-800 py-20">
-    <div class="max-w-7xl mx-auto px-4 text-center text-white">
-      <div class="text-7xl mb-6">🔀</div>
-      <h1 class="text-5xl font-bold mb-6">IF</h1>
-      <p class="text-2xl mb-8 text-white/90">Lógica Condicional para Decisões</p>
-    </div>
-  </section>
+        <div class="content">
+            <div class="section">
+                <h2>O que o IF Faz</h2>
+                <p>O nó IF no n8n traz poder de tomada de decisão aos seus workflows, permitindo que automações executem verificações e se ramifiquem com base nas suas condições, seja igualdade, comparação ou lógica customizada.</p>
 
-  <section class="max-w-6xl mx-auto px-4 py-16">
-    <div class="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-10 mb-10">
-      <div class="flex items-center mb-6">
-        <span class="text-5xl mr-4">📚</span>
-        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">O que é IF?</h2>
-      </div>
-      <p class="text-xl text-neutral-700 dark:text-neutral-300 leading-relaxed">O <strong>IF</strong> node adiciona lógica ao workflow: execute ações diferentes baseado em condições. É como um "if/else" de programação, mas visual.</p>
-    </div>
+                <ul>
+                    <li><strong>Avalia uma condição lógica</strong> contra seus dados (ex: "status = active", "amount > 1000", "email includes @company.com")</li>
+                    <li><strong>Envia a execução do workflow por dois ramos:</strong> "true" (se a condição for atendida), ou "false" (se não for)</li>
+                    <li><strong>Usado para filtragem avançada</strong>, tratamento de erros, lógica de negócio e roteamento de diferentes ações baseadas em entradas</li>
+                </ul>
+            </div>
 
-    <div class="bg-gradient-to-br from-green-600 to-emerald-600 text-white rounded-2xl p-10 text-center shadow-2xl">
-      <span class="text-6xl mb-4 block">🎓</span>
-      <h3 class="text-3xl font-bold mb-4">Domine IF!</h3>
-      <div class="flex gap-4 justify-center flex-wrap">
-        <a href="../iniciante.html" class="bg-white text-green-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors shadow-lg">← Voltar</a>
-        <a href="../downloads/if.md" download class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-colors">📥 Download</a>
-      </div>
-    </div>
-  </section>
+            <div class="section">
+                <h2>Principais Casos de Uso</h2>
+                <ul>
+                    <li><strong>Filtragem:</strong> Continuar apenas com itens que atendem um critério específico, como "score > 80" ou "order_status = shipped"</li>
+                    <li><strong>Portões de Qualidade:</strong> Validar registros recebidos, processar apenas aqueles que passam nas verificações</li>
+                    <li><strong>Processamento Condicional:</strong> Rotear dados para diferentes integrações ou notificações dependendo de status/valores</li>
+                    <li><strong>Gerenciamento de Erros:</strong> Ramificar transações falhadas para lógica de retry ou sistemas de alerta</li>
+                    <li><strong>Lógica de Negócio:</strong> Lidar com clientes premium vs. básicos, alertas de alta prioridade ou casos especiais com caminhos separados</li>
+                </ul>
+            </div>
 
-  <footer class="bg-neutral-900 text-white py-12">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <p class="text-neutral-400">&copy; 2025 N8N Academy</p>
-    </div>
-  </footer>
+            <div class="section">
+                <h2>Como Configurar e Usar</h2>
+                <div class="steps">
+                    <ol>
+                        <li><strong>Inserir o Nó:</strong> Adicione após qualquer nó onde ramificação baseada em lógica é necessária (ex: Set, HTTP Request)</li>
 
-  <script>
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark'); themeToggleLightIcon.classList.remove('hidden');
-    } else { themeToggleDarkIcon.classList.remove('hidden'); }
-    themeToggleBtn.addEventListener('click', function() {
-      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
-      if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark'); localStorage.setItem('color-theme', 'light');
-      } else { document.documentElement.classList.add('dark'); localStorage.setItem('color-theme', 'dark'); }
-    });
-  </script>
+                        <li><strong>Configurar Condições:</strong>
+                            <ul>
+                                <li>Escolha "Field to Evaluate", então defina "Comparison Operation" (igual a, diferente, maior que, contém, começa com, termina com, etc.)</li>
+                                <li>Para casos avançados, use expressões, lógica baseada em JavaScript para avaliar condições complexas (ex: "score > 90 && status == 'active'")</li>
+                            </ul>
+                        </li>
+
+                        <li><strong>Ramos True/False:</strong>
+                            <ul>
+                                <li>Saídas no conector "true" se a condição corresponder, conector "false" caso contrário</li>
+                                <li>Adicione diferentes nós/ações a cada ramo, automações se adaptam a qualquer entrada de dados</li>
+                            </ul>
+                        </li>
+
+                        <li><strong>Testar Execução:</strong> Use dados de teste no desenvolvimento para confirmar comportamento de ramificação antes de ativar seu workflow</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Melhores Práticas e Dicas</h2>
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>Divida lógica complexa</strong> usando múltiplos nós IF ou combine com nós Switch para ramificação multi-direcional</li>
+                        <li><strong>Agrupe verificações relacionadas</strong> em blocos lógicos para debugging e manutenção mais fáceis</li>
+                        <li><strong>Para verificar existência de campos</strong>, use verificações de objeto como <code>{{ $json.items.length > 0 }}</code></li>
+                        <li><strong>Use em loops</strong> para terminar iterações sob certas condições (ex: quando "nextPage" é false)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Padrões de Exemplo</h2>
+                <div class="code-examples">
+                    <h4>Igualdade básica:</h4>
+                    <code>{{ $json.status === "active" }}</code>
+
+                    <h4>Comparação numérica:</h4>
+                    <code>{{ $json.amount > 1000 }}</code>
+
+                    <h4>String contém:</h4>
+                    <code>{{ $json.email.includes("@company.com") }}</code>
+
+                    <h4>Testes de array/objeto:</h4>
+                    <code>{{ $json.items.length > 0 }}</code>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Exemplo Prático</h2>
+                <div class="example">
+                    <h3>Cenário: Filtrar Pedidos por Valor</h3>
+                    <p>Você quer processar pedidos de forma diferente baseado no valor:</p>
+
+                    <ul>
+                        <li><strong>Condição:</strong> <code>{{ $json.amount > 1000 }}</code></li>
+                        <li><strong>Ramo TRUE:</strong> Enviar para aprovação manual e notificar gerente</li>
+                        <li><strong>Ramo FALSE:</strong> Aprovar automaticamente e processar imediatamente</li>
+                    </ul>
+
+                    <p><strong>Resultado:</strong> O nó IF é essencial para automação inteligente de workflows, transformando o n8n de um sistema estático em uma plataforma responsiva que pode adaptar, filtrar e lidar com regras de negócio dinamicamente.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>n8n Cheatsheet - IF Node | Baseado em "Master n8n with 17 Nodes" by Nate Herk</p>
+        </div>
+    </div>
 </body>
 </html>

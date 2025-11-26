@@ -1,109 +1,366 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Agent - Guia Completo | N8N Fundamentos</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script>tailwind.config = { darkMode: 'class' }</script>
-  <style>
-    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
-    .code-block { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem;
-                  overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.5; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent - n8n Cheatsheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #6A1B9A 0%, #4A148C 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 35px;
+        }
+        .section h2 {
+            color: #6A1B9A;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #6A1B9A;
+        }
+        .section h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+        .section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        ul li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 5px solid #6A1B9A;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .steps {
+            background: #e8f4f8;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .example {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .advanced {
+            background: #e1f5fe;
+            border-left: 5px solid #0288d1;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        strong {
+            color: #6A1B9A;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+    </style>
 </head>
-<body class="bg-neutral-50 dark:bg-neutral-900">
-  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
-        <a href="../iniciante.html" class="text-2xl font-bold text-fuchsia-600 dark:text-fuchsia-400 flex items-center gap-2">
-          <span>←</span><span class="text-3xl">🤖</span><span>AI Agent</span>
-        </a>
-        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
-          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-          </svg>
-          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </nav>
-
-  <section class="bg-gradient-to-br from-fuchsia-600 via-fuchsia-700 to-purple-800 py-20">
-    <div class="max-w-7xl mx-auto px-4 text-center text-white">
-      <div class="text-7xl mb-6">🤖</div>
-      <h1 class="text-5xl font-bold mb-6">AI Agent</h1>
-      <p class="text-2xl mb-8 text-white/90">IA que age e decide</p>
-    </div>
-  </section>
-
-  <section class="max-w-6xl mx-auto px-4 py-16">
-    <div class="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-10 mb-10">
-      <div class="flex items-center mb-6">
-        <span class="text-5xl mr-4">📚</span>
-        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">O que é AI Agent?</h2>
-      </div>
-      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6 leading-relaxed">O <strong>AI Agent</strong> não apenas conversa, mas <em>age</em>: pode chamar ferramentas, tomar decisões e executar sub-workflows.</p>
-      
-      <div class="bg-gradient-to-r from-fuchsia-50 to-purple-50 dark:from-fuchsia-900/20 dark:to-purple-900/20 rounded-xl p-6">
-        <p class="text-lg text-neutral-800 dark:text-neutral-200 font-semibold mb-3">🎯 Casos de Uso Principais:</p>
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-fuchsia-700 dark:text-fuchsia-400 mb-2">🤖 Assistente Inteligente</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Agent que busca dados, cria tickets, envia emails</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-fuchsia-700 dark:text-fuchsia-400 mb-2">📞 Atendimento Automatizado</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Responde perguntas E executa ações</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-fuchsia-700 dark:text-fuchsia-400 mb-2">🔍 Pesquisa + Ação</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Busca informações e age baseado nelas</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-fuchsia-700 dark:text-fuchsia-400 mb-2">🧠 Decisões Complexas</p><p class="text-sm text-neutral-600 dark:text-neutral-400">IA decide qual ação tomar baseado em contexto</p></div>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AI Agent</h1>
+            <div class="subtitle">Automação Inteligente com LLMs</div>
         </div>
-      </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>O que o AI Agent Faz</h2>
+                <p>O nó AI Agent no n8n é uma das ferramentas mais poderosas para automação de workflow, permitindo que você integre modelos de chat avançados (como OpenAI, Gemini, Anthropic, etc.), aproveite memória e encadeie uso dinâmico de ferramentas, tudo dentro de seus workflows visuais.</p>
+
+                <ul>
+                    <li><strong>Serve como um motor de raciocínio autônomo</strong>, conectando-se a modelos de chat que podem receber prompts, lembrar contexto prévio e invocar "ferramentas" externas (outros nós) para coletar dados, tomar decisões ou automatizar processos multi-etapa</li>
+                    <li><strong>Capacita workflows complexos e conscientes de contexto</strong> - seu agente pode responder perguntas, transformar dados, buscar informações de APIs, atualizar bancos de dados e muito mais, tudo guiado por suas instruções e engenharia de prompt</li>
+                    <li><strong>Suporta uso modular de ferramentas</strong>: conecte sub-nós de ferramentas para dar ao agente habilidades como consultas de banco de dados, buscas web ou até mesmo invocar sub-workflows</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Principais Casos de Uso</h2>
+                <ul>
+                    <li><strong>Assistentes Conversacionais:</strong> Construir chatbots capazes de manter contexto, responder perguntas ou executar lógica sofisticada ao longo de muitas etapas</li>
+                    <li><strong>Processamento Automatizado de Dados:</strong> Permitir que um agente transforme, analise, resuma ou gere insights de dados de negócio, CRMs, tickets de suporte e muito mais</li>
+                    <li><strong>Automação Multi-etapa:</strong> Deixar o agente decidir quais ações tomar e em que ordem, buscando, modificando e sintetizando informações através do seu stack de tecnologia</li>
+                    <li><strong>Supercarregando Integração:</strong> Combinar modelos de chat com memória e ferramentas externas, como APIs, arquivos ou bancos de dados, para automações dirigidas por IA que você não poderia construir apenas com regras</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Como Usar Efetivamente</h2>
+                <div class="steps">
+                    <ol>
+                        <li><strong>Adicionar o Nó:</strong> Insira um nó AI Agent no seu workflow; anexe um modelo de chat (ex: OpenAI, Gemini, Claude) como o modelo para raciocínio</li>
+
+                        <li><strong>Conectar Ferramentas:</strong> Adicione sub-nós de "ferramenta", estes expõem habilidades extras ou APIs (como requisições HTTP, lookups de banco de dados, ações Slack/Notion, etc.) que seu agente pode chamar durante a conversa para resolver consultas de usuários</li>
+
+                        <li><strong>Engenharia de Prompt:</strong>
+                            <ul>
+                                <li>Crie instruções claras e específicas ("mensagens de sistema") e templates para suas saídas desejadas</li>
+                                <li>Use seções estruturadas (papel, instruções, ferramentas, formato) para guiar e restringir respostas do agente, garantindo precisão e relevância</li>
+                                <li>Itere, teste vários estilos de prompt, documente o que funciona e ajuste para confiabilidade de produção</li>
+                            </ul>
+                        </li>
+
+                        <li><strong>Adicionar Memória:</strong> Configure definições de memória (vector store, workflow memory ou histórico de conversação) para que seus agentes possam lembrar contexto prévio e agir coerentemente através de etapas</li>
+
+                        <li><strong>Configurar Opções Avançadas:</strong>
+                            <ul>
+                                <li>Defina formatos de saída, modelos de fallback, limites de taxa ou passthrough binário para cenários complexos</li>
+                                <li>Retorne passos intermediários se transparência ou debugging for importante</li>
+                            </ul>
+                        </li>
+
+                        <li><strong>Trigger e Roteamento:</strong> Combine com nós Webhook ou chat trigger para UIs conversacionais ou com endpoints de API para agentes programáticos</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Componentes Principais</h2>
+                <div class="highlight-box">
+                    <h3>1. Chat Model</h3>
+                    <p>O "cérebro" do agente - modelos suportados:</p>
+                    <ul>
+                        <li><strong>OpenAI:</strong> GPT-4, GPT-3.5-turbo</li>
+                        <li><strong>Anthropic:</strong> Claude 3 (Opus, Sonnet, Haiku)</li>
+                        <li><strong>Google:</strong> Gemini Pro, Gemini Ultra</li>
+                        <li><strong>Local Models:</strong> Ollama, LM Studio</li>
+                    </ul>
+
+                    <h3 style="margin-top: 25px;">2. Tools</h3>
+                    <p>Ferramentas que o agente pode usar:</p>
+                    <ul>
+                        <li><strong>HTTP Request Tool:</strong> Fazer chamadas de API</li>
+                        <li><strong>Database Tools:</strong> Consultar bancos de dados</li>
+                        <li><strong>Calculator Tool:</strong> Realizar cálculos</li>
+                        <li><strong>Webhook Tool:</strong> Acionar outros workflows</li>
+                        <li><strong>Custom Tools:</strong> Criar ferramentas customizadas</li>
+                    </ul>
+
+                    <h3 style="margin-top: 25px;">3. Memory</h3>
+                    <p>Como o agente lembra informações:</p>
+                    <ul>
+                        <li><strong>Buffer Memory:</strong> Lembra N últimas mensagens</li>
+                        <li><strong>Window Memory:</strong> Janela deslizante de contexto</li>
+                        <li><strong>Summary Memory:</strong> Resume conversas longas</li>
+                        <li><strong>Vector Store Memory:</strong> Busca semântica em histórico</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Engenharia de Prompt</h2>
+                <div class="highlight-box">
+                    <h3>Estrutura Recomendada</h3>
+                    <p>Um prompt efetivo deve conter:</p>
+
+                    <h4 style="margin-top: 15px;">1. Papel/Identidade</h4>
+                    <code style="display: block; margin: 10px 0; padding: 10px; background: white;">
+                        Você é um assistente especializado em análise de dados de vendas.
+                    </code>
+
+                    <h4 style="margin-top: 15px;">2. Contexto e Objetivo</h4>
+                    <code style="display: block; margin: 10px 0; padding: 10px; background: white;">
+                        Seu objetivo é ajudar usuários a entender suas métricas de vendas e gerar relatórios.
+                    </code>
+
+                    <h4 style="margin-top: 15px;">3. Ferramentas Disponíveis</h4>
+                    <code style="display: block; margin: 10px 0; padding: 10px; background: white;">
+                        Você tem acesso a: 1) Banco de dados de vendas, 2) API de CRM, 3) Gerador de gráficos
+                    </code>
+
+                    <h4 style="margin-top: 15px;">4. Formato de Resposta</h4>
+                    <code style="display: block; margin: 10px 0; padding: 10px; background: white;">
+                        Sempre responda em JSON com: {"analysis": "...", "recommendation": "..."}
+                    </code>
+
+                    <h4 style="margin-top: 15px;">5. Restrições e Regras</h4>
+                    <code style="display: block; margin: 10px 0; padding: 10px; background: white;">
+                        Nunca compartilhe dados confidenciais. Se não tiver certeza, peça esclarecimento.
+                    </code>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Exemplos Práticos</h2>
+                <div class="example">
+                    <h3>Exemplo 1: Assistente de Suporte ao Cliente</h3>
+                    <p><strong>Cenário:</strong> Chatbot que responde perguntas e cria tickets</p>
+                    <ul>
+                        <li><strong>Chat Model:</strong> GPT-4</li>
+                        <li><strong>Tools:</strong> Buscar FAQ, Criar Ticket no Zendesk, Consultar Status de Pedido</li>
+                        <li><strong>Memory:</strong> Buffer Memory para lembrar conversa</li>
+                        <li><strong>Prompt:</strong> "Você é um agente de suporte. Ajude clientes e crie tickets quando necessário."</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h3>Exemplo 2: Análise Automatizada de Dados</h3>
+                    <p><strong>Cenário:</strong> Agente que analisa dados de vendas e gera insights</p>
+                    <ul>
+                        <li><strong>Chat Model:</strong> Claude 3</li>
+                        <li><strong>Tools:</strong> Consultar DB de Vendas, Gerar Gráficos, Enviar Email</li>
+                        <li><strong>Memory:</strong> Window Memory para contexto de análise</li>
+                        <li><strong>Output:</strong> Structured Output Parser para JSON consistente</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h3>Exemplo 3: Assistente de Pesquisa</h3>
+                    <p><strong>Cenário:</strong> Agente que pesquisa informações e compila relatórios</p>
+                    <ul>
+                        <li><strong>Chat Model:</strong> Gemini Pro</li>
+                        <li><strong>Tools:</strong> Web Search, Consultar Base de Conhecimento, Criar Documento</li>
+                        <li><strong>Memory:</strong> Vector Store para lembrar pesquisas anteriores</li>
+                        <li><strong>Workflow:</strong> Webhook → Agent → Respond to Webhook com relatório</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Melhores Práticas</h2>
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>Sempre defina o propósito, papel e estrutura de resposta</strong> na mensagem de sistema para resultados repetíveis e de alta qualidade</li>
+                        <li><strong>Use ferramentas para lidar com qualquer lógica ou processamento</strong> que seja não confiável ou caro via LLM - busque dados, lide com cálculos ou armazene saídas com sub-nós</li>
+                        <li><strong>Ajuste memória ao caso de uso:</strong> stateless para tarefas únicas, conversacional para suporte/chat, ou global para raciocínio persistente</li>
+                        <li><strong>Teste com entrada do mundo real</strong> e itere na estrutura de prompt e composição de ferramentas para performance de agente grau produção</li>
+                        <li><strong>IA é mais forte quando pode "pensar"</strong> mas use ferramentas determinísticas para web scraping, cálculos ou integrações</li>
+                        <li><strong>Monitore custos</strong> - LLMs consomem tokens, otimize prompts e use memória apropriada</li>
+                        <li><strong>Implemente fallbacks</strong> - tenha plano B se modelo falhar ou não responder adequadamente</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Recursos Avançados</h2>
+                <div class="advanced">
+                    <h3>1. Structured Output Parser</h3>
+                    <p>Force o agente a sempre retornar JSON estruturado:</p>
+                    <ul>
+                        <li>Define schema exato de resposta</li>
+                        <li>Elimina parsing imprevisível</li>
+                        <li>Perfeito para integrações com outros sistemas</li>
+                    </ul>
+
+                    <h3 style="margin-top: 20px;">2. Multi-Agent Systems</h3>
+                    <p>Combine múltiplos agentes especializados:</p>
+                    <ul>
+                        <li>Agente pesquisador + Agente escritor</li>
+                        <li>Agente de triagem + Agentes especialistas</li>
+                        <li>Orquestrador + Agentes executores</li>
+                    </ul>
+
+                    <h3 style="margin-top: 20px;">3. RAG (Retrieval Augmented Generation)</h3>
+                    <p>Combine agente com base de conhecimento:</p>
+                    <ul>
+                        <li>Vector Store com documentos da empresa</li>
+                        <li>Agente busca informações relevantes</li>
+                        <li>Gera respostas baseadas em conhecimento real</li>
+                    </ul>
+
+                    <h3 style="margin-top: 20px;">4. Function Calling</h3>
+                    <p>Deixe o agente decidir quando chamar funções:</p>
+                    <ul>
+                        <li>Define funções disponíveis</li>
+                        <li>Agente escolhe qual usar baseado no contexto</li>
+                        <li>Pode encadear múltiplas funções</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Considerações de Performance e Custo</h2>
+                <div class="highlight-box">
+                    <h3>Otimização de Custos</h3>
+                    <ul>
+                        <li><strong>Use modelos apropriados:</strong> GPT-3.5 para tarefas simples, GPT-4 para complexas</li>
+                        <li><strong>Limite tamanho de contexto:</strong> Não envie mais informação do que necessário</li>
+                        <li><strong>Cache quando possível:</strong> Reutilize respostas para perguntas similares</li>
+                        <li><strong>Implemente rate limiting:</strong> Controle número de requisições</li>
+                    </ul>
+
+                    <h3 style="margin-top: 20px;">Performance</h3>
+                    <ul>
+                        <li><strong>Streaming:</strong> Habilite para respostas mais rápidas em UIs</li>
+                        <li><strong>Async Processing:</strong> Para tarefas longas, processe em background</li>
+                        <li><strong>Timeout Apropriado:</strong> Configure timeouts baseado no modelo</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <p style="text-align: center; font-size: 1.1em; margin-top: 30px;">
+                    <strong>O nó AI Agent verdadeiramente "supercarrega" workflows</strong>, mesclando raciocínio LLM, memória e uso dinâmico de ferramentas em um único motor de automação flexível no n8n.
+                </p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>n8n Cheatsheet - AI Agent Node | Baseado em "Master n8n with 17 Nodes" by Nate Herk</p>
+        </div>
     </div>
-
-    <div class="bg-gradient-to-br from-purple-50 to-fuchsia-50 dark:from-purple-900/20 dark:to-fuchsia-900/20 rounded-2xl p-8 mb-10 border-2 border-fuchsia-200 dark:border-fuchsia-800">
-      <div class="flex items-center mb-6">
-        <span class="text-5xl mr-4">💡</span>
-        <h3 class="text-3xl font-bold text-fuchsia-900 dark:text-fuchsia-300">Exemplo Prático</h3>
-      </div>
-      <div class="bg-white dark:bg-neutral-800 rounded-xl p-6 shadow-lg">
-        <div class="code-block">// Agent com ferramentas
-Agent: GPT-4
-System Prompt: "Você é assistente de vendas"
-Tools:
-  - Buscar cliente no CRM
-  - Criar ticket no Zendesk
-  - Enviar email
-
-User: "Cliente X está com problema Y"
-Agent: Busca cliente → Cria ticket → Notifica</div>
-      </div>
-    </div>
-
-    <div class="bg-gradient-to-br from-fuchsia-600 to-purple-600 text-white rounded-2xl p-10 text-center shadow-2xl">
-      <span class="text-6xl mb-4 block">🎓</span>
-      <h3 class="text-3xl font-bold mb-4">Domine AI Agent!</h3>
-      <div class="flex gap-4 justify-center flex-wrap">
-        <a href="../iniciante.html" class="bg-white text-fuchsia-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors shadow-lg">← Voltar</a>
-        <a href="../downloads/agent.md" download class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-colors">📥 Download</a>
-      </div>
-    </div>
-  </section>
-
-  <footer class="bg-neutral-900 text-white py-12">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <p class="text-neutral-400">&copy; 2025 N8N Academy - Fundamentos Completos</p>
-    </div>
-  </footer>
-
-  <script>
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark'); themeToggleLightIcon.classList.remove('hidden');
-    } else { themeToggleDarkIcon.classList.remove('hidden'); }
-    themeToggleBtn.addEventListener('click', function() {
-      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
-      if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark'); localStorage.setItem('color-theme', 'light');
-      } else { document.documentElement.classList.add('dark'); localStorage.setItem('color-theme', 'dark'); }
-    });
-  </script>
 </body>
 </html>

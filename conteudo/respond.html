@@ -1,109 +1,315 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Respond to Webhook - Guia Completo | N8N Fundamentos</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script>tailwind.config = { darkMode: 'class' }</script>
-  <style>
-    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
-    .code-block { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem;
-                  overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.5; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Respond to Webhook - n8n Cheatsheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #3F51B5 0%, #303F9F 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 35px;
+        }
+        .section h2 {
+            color: #3F51B5;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3F51B5;
+        }
+        .section h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+        .section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        ul li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 5px solid #3F51B5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .steps {
+            background: #e8f4f8;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .example {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        strong {
+            color: #3F51B5;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+    </style>
 </head>
-<body class="bg-neutral-50 dark:bg-neutral-900">
-  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
-        <a href="../iniciante.html" class="text-2xl font-bold text-lime-600 dark:text-lime-400 flex items-center gap-2">
-          <span>←</span><span class="text-3xl">📤</span><span>Respond to Webhook</span>
-        </a>
-        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
-          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-          </svg>
-          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </nav>
-
-  <section class="bg-gradient-to-br from-lime-600 via-lime-700 to-green-800 py-20">
-    <div class="max-w-7xl mx-auto px-4 text-center text-white">
-      <div class="text-7xl mb-6">📤</div>
-      <h1 class="text-5xl font-bold mb-6">Respond to Webhook</h1>
-      <p class="text-2xl mb-8 text-white/90">Responda Requisições HTTP</p>
-    </div>
-  </section>
-
-  <section class="max-w-6xl mx-auto px-4 py-16">
-    <div class="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-10 mb-10">
-      <div class="flex items-center mb-6">
-        <span class="text-5xl mr-4">📚</span>
-        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">O que é Respond to Webhook?</h2>
-      </div>
-      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6 leading-relaxed">O <strong>Respond to Webhook</strong> envia resposta customizada para quem chamou o webhook. Essencial para criar APIs com N8N.</p>
-      
-      <div class="bg-gradient-to-r from-lime-50 to-green-50 dark:from-lime-900/20 dark:to-green-900/20 rounded-xl p-6">
-        <p class="text-lg text-neutral-800 dark:text-neutral-200 font-semibold mb-3">🎯 Casos de Uso Principais:</p>
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-lime-700 dark:text-lime-400 mb-2">✅ Confirmações</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Retornar "Sucesso" após processar formulário</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-lime-700 dark:text-lime-400 mb-2">🔗 APIs</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Criar endpoints REST que retornam dados</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-lime-700 dark:text-lime-400 mb-2">📋 Status Updates</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Informar status da operação</p></div>\n<div class="bg-white dark:bg-neutral-800 p-4 rounded-lg"><p class="font-bold text-lime-700 dark:text-lime-400 mb-2">❌ Mensagens de Erro</p><p class="text-sm text-neutral-600 dark:text-neutral-400">Retornar erros formatados</p></div>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Respond to Webhook</h1>
+            <div class="subtitle">Envie Respostas Customizadas de Volta ao Cliente</div>
         </div>
-      </div>
-    </div>
 
-    <div class="bg-gradient-to-br from-green-50 to-lime-50 dark:from-green-900/20 dark:to-lime-900/20 rounded-2xl p-8 mb-10 border-2 border-lime-200 dark:border-lime-800">
-      <div class="flex items-center mb-6">
-        <span class="text-5xl mr-4">💡</span>
-        <h3 class="text-3xl font-bold text-lime-900 dark:text-lime-300">Exemplo Prático</h3>
-      </div>
-      <div class="bg-white dark:bg-neutral-800 rounded-xl p-6 shadow-lg">
-        <div class="code-block">// Formulário → Webhook → Respond
-Webhook: Recebe dados
-↓
-Salva no banco
-↓
-Respond: 
-  Status: 200
-  Body: {"success": true, "id": 123}
-  
-// Cliente recebe resposta imediata</div>
-      </div>
-    </div>
+        <div class="content">
+            <div class="section">
+                <h2>O que o Respond to Webhook Faz</h2>
+                <p>O nó Respond to Webhook permite que seu workflow envie uma resposta HTTP customizada de volta à fonte que acionou o webhook, transformando seus workflows n8n em APIs completas e bidirecionais.</p>
 
-    <div class="bg-gradient-to-br from-lime-600 to-green-600 text-white rounded-2xl p-10 text-center shadow-2xl">
-      <span class="text-6xl mb-4 block">🎓</span>
-      <h3 class="text-3xl font-bold mb-4">Domine Respond to Webhook!</h3>
-      <div class="flex gap-4 justify-center flex-wrap">
-        <a href="../iniciante.html" class="bg-white text-lime-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors shadow-lg">← Voltar</a>
-        <a href="../downloads/respond.md" download class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-colors">📥 Download</a>
-      </div>
-    </div>
-  </section>
+                <ul>
+                    <li><strong>Envia respostas HTTP customizadas</strong> de volta ao cliente que chamou o webhook</li>
+                    <li><strong>Suporta múltiplos formatos de resposta</strong>: JSON, texto, HTML, redirect, binary (arquivos)</li>
+                    <li><strong>Permite configurar status codes</strong>, headers customizados e estruturas complexas</li>
+                    <li><strong>Essencial para criar APIs</strong>, integrações bidirecionais e workflows interativos</li>
+                </ul>
+            </div>
 
-  <footer class="bg-neutral-900 text-white py-12">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <p class="text-neutral-400">&copy; 2025 N8N Academy - Fundamentos Completos</p>
-    </div>
-  </footer>
+            <div class="section">
+                <h2>Como Funciona com Webhook</h2>
+                <div class="highlight-box">
+                    <p>O nó Respond to Webhook deve ser usado em conjunto com o nó Webhook:</p>
+                    <ol style="padding-left: 25px; margin-top: 15px;">
+                        <li><strong>Webhook Trigger:</strong> Configure o nó Webhook com modo de resposta "Using 'Respond to Webhook' Node"</li>
+                        <li><strong>Processamento:</strong> Adicione nós intermediários para processar dados, fazer cálculos, consultar bancos de dados, etc.</li>
+                        <li><strong>Respond to Webhook:</strong> No final do workflow, adicione este nó para enviar a resposta</li>
+                        <li><strong>Cliente Recebe:</strong> O cliente que chamou o webhook recebe a resposta imediatamente</li>
+                    </ol>
+                </div>
+            </div>
 
-  <script>
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark'); themeToggleLightIcon.classList.remove('hidden');
-    } else { themeToggleDarkIcon.classList.remove('hidden'); }
-    themeToggleBtn.addEventListener('click', function() {
-      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
-      if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark'); localStorage.setItem('color-theme', 'light');
-      } else { document.documentElement.classList.add('dark'); localStorage.setItem('color-theme', 'dark'); }
-    });
-  </script>
+            <div class="section">
+                <h2>Principais Casos de Uso</h2>
+                <ul>
+                    <li><strong>APIs Customizadas:</strong> Criar endpoints de API completos com lógica de negócio complexa</li>
+                    <li><strong>Integrações Bidirecionais:</strong> Receber dados, processar e retornar resultados ao sistema chamador</li>
+                    <li><strong>Validação de Formulários:</strong> Validar dados de formulário e retornar sucesso/erro</li>
+                    <li><strong>Processamento Síncrono:</strong> Processar solicitação e retornar resultado na mesma chamada</li>
+                    <li><strong>Retorno de Cálculos:</strong> Executar cálculos complexos e retornar resultados</li>
+                    <li><strong>Webhooks de Confirmação:</strong> Confirmar recebimento e processamento de dados</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Opções de Resposta</h2>
+                <div class="steps">
+                    <h3>1. Tipos de Resposta</h3>
+                    <ul>
+                        <li><strong>All Input Data:</strong> Retorna todos os dados de entrada</li>
+                        <li><strong>First Entry JSON:</strong> Retorna apenas o primeiro item como JSON</li>
+                        <li><strong>Text:</strong> Retorna texto simples</li>
+                        <li><strong>JSON:</strong> Retorna JSON customizado</li>
+                        <li><strong>HTML:</strong> Retorna página HTML</li>
+                        <li><strong>Redirect:</strong> Redireciona para outra URL</li>
+                        <li><strong>Binary File:</strong> Retorna arquivo (PDF, imagem, etc.)</li>
+                    </ul>
+
+                    <h3 style="margin-top: 25px;">2. Status Codes HTTP</h3>
+                    <ul>
+                        <li><strong>200 OK:</strong> Sucesso padrão</li>
+                        <li><strong>201 Created:</strong> Recurso criado com sucesso</li>
+                        <li><strong>400 Bad Request:</strong> Erro de validação</li>
+                        <li><strong>404 Not Found:</strong> Recurso não encontrado</li>
+                        <li><strong>500 Internal Server Error:</strong> Erro no servidor</li>
+                    </ul>
+
+                    <h3 style="margin-top: 25px;">3. Headers Customizados</h3>
+                    <ul>
+                        <li><strong>Content-Type:</strong> Especifica tipo de conteúdo</li>
+                        <li><strong>Authorization:</strong> Tokens JWT ou outros</li>
+                        <li><strong>Cache-Control:</strong> Controle de cache</li>
+                        <li><strong>Custom Headers:</strong> Qualquer header necessário</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Como Configurar</h2>
+                <div class="highlight-box">
+                    <h3>Configuração Passo a Passo</h3>
+                    <ol style="padding-left: 25px; margin-top: 15px;">
+                        <li><strong>No Webhook Trigger:</strong> Defina "Respond" como "Using 'Respond to Webhook' Node"</li>
+                        <li><strong>Adicione Processamento:</strong> Insira nós para sua lógica de negócio</li>
+                        <li><strong>Adicione Respond to Webhook:</strong> No final, adicione este nó</li>
+                        <li><strong>Escolha Tipo de Resposta:</strong> Selecione JSON, texto, HTML, etc.</li>
+                        <li><strong>Configure Dados:</strong> Defina o conteúdo da resposta usando expressões</li>
+                        <li><strong>Defina Status Code:</strong> Configure código HTTP apropriado (200, 400, etc.)</li>
+                        <li><strong>Headers (opcional):</strong> Adicione headers customizados se necessário</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Exemplos Práticos</h2>
+                <div class="example">
+                    <h3>Exemplo 1: API de Validação de Email</h3>
+                    <p><strong>Cenário:</strong> Criar API que valida se email é válido</p>
+                    <ul>
+                        <li><strong>Webhook:</strong> POST /validate-email</li>
+                        <li><strong>IF Node:</strong> Verifica se email é válido com regex</li>
+                        <li><strong>Respond (TRUE):</strong> Status 200, <code>{"valid": true, "email": "..."}</code></li>
+                        <li><strong>Respond (FALSE):</strong> Status 400, <code>{"valid": false, "error": "Invalid email"}</code></li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h3>Exemplo 2: API de Cálculo</h3>
+                    <p><strong>Cenário:</strong> Calcular preço com desconto e impostos</p>
+                    <ul>
+                        <li><strong>Webhook:</strong> POST /calculate-price com {price, quantity, discount}</li>
+                        <li><strong>Code Node:</strong> Calcula total com descontos e impostos</li>
+                        <li><strong>Respond to Webhook:</strong> Status 200, retorna:
+                            <code>{"subtotal": 100, "discount": 10, "tax": 9, "total": 99}</code>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h3>Exemplo 3: Formulário de Contato</h3>
+                    <p><strong>Cenário:</strong> Processar formulário e retornar confirmação</p>
+                    <ul>
+                        <li><strong>Webhook:</strong> POST /contact com dados do formulário</li>
+                        <li><strong>Set Node:</strong> Valida e limpa dados</li>
+                        <li><strong>Email Node:</strong> Envia email para equipe</li>
+                        <li><strong>Respond to Webhook:</strong> Status 200, <code>{"success": true, "message": "Obrigado! Entraremos em contato."}</code></li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h3>Exemplo 4: Download de Relatório</h3>
+                    <p><strong>Cenário:</strong> Gerar e retornar PDF</p>
+                    <ul>
+                        <li><strong>Webhook:</strong> GET /report/{id}</li>
+                        <li><strong>Database Query:</strong> Busca dados do relatório</li>
+                        <li><strong>Code Node:</strong> Gera PDF com dados</li>
+                        <li><strong>Respond to Webhook:</strong> Tipo Binary File, retorna PDF</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Melhores Práticas</h2>
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>Use Status Codes Apropriados:</strong> 2xx para sucesso, 4xx para erros do cliente, 5xx para erros do servidor</li>
+                        <li><strong>Estruture Respostas Consistentes:</strong> Mantenha formato padrão para todas as APIs</li>
+                        <li><strong>Inclua Mensagens de Erro Claras:</strong> Sempre retorne mensagens descritivas em caso de erro</li>
+                        <li><strong>Configure Content-Type Correto:</strong> application/json para JSON, text/html para HTML, etc.</li>
+                        <li><strong>Trate Todos os Caminhos:</strong> Use IF/Switch para garantir que sempre há uma resposta</li>
+                        <li><strong>Valide Entrada:</strong> Sempre valide dados recebidos antes de processar</li>
+                        <li><strong>Log Adequado:</strong> Registre requests e responses para debugging</li>
+                        <li><strong>Timeout Razoável:</strong> Garanta que processamento não demore muito</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Padrões de Resposta Comuns</h2>
+                <div class="highlight-box">
+                    <h3>Sucesso Padrão (200)</h3>
+                    <code style="display: block; margin: 10px 0; padding: 10px; background: white;">
+                        {"success": true, "data": {...}, "message": "Operação concluída"}
+                    </code>
+
+                    <h3 style="margin-top: 20px;">Erro de Validação (400)</h3>
+                    <code style="display: block; margin: 10px 0; padding: 10px; background: white;">
+                        {"success": false, "error": "Validation failed", "details": ["Email inválido"]}
+                    </code>
+
+                    <h3 style="margin-top: 20px;">Não Encontrado (404)</h3>
+                    <code style="display: block; margin: 10px 0; padding: 10px; background: white;">
+                        {"success": false, "error": "Resource not found", "resource": "user", "id": 123}
+                    </code>
+
+                    <h3 style="margin-top: 20px;">Erro Interno (500)</h3>
+                    <code style="display: block; margin: 10px 0; padding: 10px; background: white;">
+                        {"success": false, "error": "Internal server error", "requestId": "abc123"}
+                    </code>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Importante Lembrar</h2>
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>Apenas Primeiro Item:</strong> Por padrão, retorna apenas o primeiro item, configure "All Input Data" se precisar de todos</li>
+                        <li><strong>Timeout do Cliente:</strong> Cliente pode ter timeout próprio, processe rapidamente ou use processamento assíncrono</li>
+                        <li><strong>Segurança:</strong> Adicione autenticação no Webhook se endpoint for público</li>
+                        <li><strong>CORS:</strong> Configure headers CORS se API será chamada de browsers</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>n8n Cheatsheet - Respond to Webhook Node | Baseado em "Master n8n with 17 Nodes" by Nate Herk</p>
+        </div>
+    </div>
 </body>
 </html>

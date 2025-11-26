@@ -4,662 +4,226 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Schedule Trigger - Guia Completo | N8N Fundamentos</title>
-
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-    }
-  </script>
-
+  <script>tailwind.config = { darkMode: 'class' }</script>
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .code-block {
-      background: #1e293b;
-      color: #e2e8f0;
-      padding: 1rem;
-      border-radius: 0.5rem;
-      overflow-x: auto;
-      font-family: 'Courier New', monospace;
-      font-size: 0.875rem;
-      line-height: 1.5;
-    }
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    .code-block { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 0.75rem;
+                  overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.7; }
+    .gradient-text { background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                     -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   </style>
 </head>
 <body class="bg-neutral-50 dark:bg-neutral-900">
-
-  <!-- Navegação -->
   <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
         <a href="../iniciante.html" class="text-2xl font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
-          <span>←</span>
-          <span class="text-3xl">⏰</span>
-          <span>Schedule Trigger</span>
+          <span>←</span><span class="text-3xl">⏰</span><span>Schedule Trigger</span>
         </a>
-
-        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-600">
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
           <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
             <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
           </svg>
           <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
           </svg>
         </button>
       </div>
     </div>
   </nav>
 
-  <!-- Hero -->
-  <section class="bg-gradient-to-br from-emerald-600 via-emerald-700 to-green-700 py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-      <div class="text-7xl mb-6">⏰</div>
-      <h1 class="text-5xl sm:text-6xl font-bold mb-6">
-        Schedule Trigger
-      </h1>
-      <p class="text-2xl mb-8 text-white/90 max-w-3xl mx-auto">
-        O Maestro das Automações Temporais
-      </p>
-      <div class="flex gap-4 justify-center flex-wrap">
-        <span class="px-5 py-2 bg-white/20 rounded-lg backdrop-blur-sm text-lg">⏰ Trigger Node</span>
-        <span class="px-5 py-2 bg-white/20 rounded-lg backdrop-blur-sm text-lg">📅 Time-Based</span>
-        <span class="px-5 py-2 bg-white/20 rounded-lg backdrop-blur-sm text-lg">🔄 Recorrente</span>
-      </div>
+  <section class="bg-gradient-to-br from-emerald-600 via-emerald-700 to-green-800 py-24">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="text-8xl mb-8 animate-pulse">⏰</div>
+      <h1 class="text-6xl font-bold mb-6 gradient-text-white">Schedule Trigger</h1>
+      <p class="text-3xl mb-4 text-white/90">Automação hands-free que funciona enquanto você dorme</p>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto">Dispare workflows em horários fixos ou intervalos personalizados - como o cron do Unix, integrado ao n8n</p>
     </div>
   </section>
 
-  <!-- Conteúdo Principal -->
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+  <section class="max-w-7xl mx-auto px-4 py-20">
 
-    <!-- Intro Expandida -->
-    <div class="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-10 mb-10">
-      <div class="flex items-center mb-6">
-        <span class="text-5xl mr-4">📚</span>
-        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">O que é Schedule Trigger?</h2>
+    <!-- O QUE FAZ -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📚</span>
+        <h2 class="text-5xl font-bold text-neutral-900 dark:text-neutral-100">O que o Schedule Trigger faz?</h2>
       </div>
-
-      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6 leading-relaxed">
-        O <strong class="text-emerald-600 dark:text-emerald-400">Schedule Trigger</strong> é o ponto de partida para workflows baseados em tempo. Ele atua como um <em>alarme inteligente</em> que dispara suas automações em horários específicos ou em intervalos regulares, <strong>sem necessidade de intervenção manual</strong>.
+      <p class="text-2xl text-neutral-700 dark:text-neutral-300 mb-8 leading-relaxed">
+        O <strong>Schedule Trigger</strong> dispara workflows baseados em um cronograma que você define, como:
       </p>
-
-      <div class="bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 rounded-xl p-6 mb-6">
-        <p class="text-lg text-neutral-800 dark:text-neutral-200 font-semibold mb-3">
-          🎯 Casos de Uso Principais:
-        </p>
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg">
-            <p class="font-bold text-emerald-700 dark:text-emerald-400 mb-2">📊 Relatórios Automáticos</p>
-            <p class="text-sm text-neutral-600 dark:text-neutral-400">Envie relatórios diários, semanais ou mensais automaticamente</p>
-          </div>
-          <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg">
-            <p class="font-bold text-emerald-700 dark:text-emerald-400 mb-2">💾 Backups Programados</p>
-            <p class="text-sm text-neutral-600 dark:text-neutral-400">Execute backups noturnos de dados críticos</p>
-          </div>
-          <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg">
-            <p class="font-bold text-emerald-700 dark:text-emerald-400 mb-2">🔄 Sincronizações</p>
-            <p class="text-sm text-neutral-600 dark:text-neutral-400">Sincronize dados entre sistemas a cada hora</p>
-          </div>
-          <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg">
-            <p class="font-bold text-emerald-700 dark:text-emerald-400 mb-2">📧 Notificações Recorrentes</p>
-            <p class="text-sm text-neutral-600 dark:text-neutral-400">Lembretes, follow-ups e check-ins automáticos</p>
-          </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
+        <div class="bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 p-6 rounded-xl border-2 border-emerald-200 dark:border-emerald-800">
+          <p class="text-lg font-semibold text-emerald-900 dark:text-emerald-300 mb-2">⏰ Todo dia às 8h</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Horário fixo diário</p>
+        </div>
+        <div class="bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 p-6 rounded-xl border-2 border-emerald-200 dark:border-emerald-800">
+          <p class="text-lg font-semibold text-emerald-900 dark:text-emerald-300 mb-2">📅 Toda Segunda às 9h</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Semanal específico</p>
+        </div>
+        <div class="bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 p-6 rounded-xl border-2 border-emerald-200 dark:border-emerald-800">
+          <p class="text-lg font-semibold text-emerald-900 dark:text-emerald-300 mb-2">⚡ A cada 10 minutos</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Intervalos curtos</p>
+        </div>
+        <div class="bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 p-6 rounded-xl border-2 border-emerald-200 dark:border-emerald-800">
+          <p class="text-lg font-semibold text-emerald-900 dark:text-emerald-300 mb-2">🔧 Expressões CRON</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Padrões customizados</p>
         </div>
       </div>
-
-      <p class="text-neutral-700 dark:text-neutral-300 leading-relaxed">
-        Diferente de triggers baseados em eventos (como Webhooks), o Schedule Trigger <strong>não depende de ações externas</strong>. Ele funciona de forma autônoma, sendo ideal para tarefas previsíveis e repetitivas.
+      <p class="text-xl text-neutral-700 dark:text-neutral-300 leading-relaxed">
+        Funciona como o utilitário Unix cron, mas integrado ao ambiente de workflows do n8n.
       </p>
     </div>
 
-    <!-- Seção: Modos de Operação -->
-    <div class="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl p-8 mb-10 border-2 border-indigo-200 dark:border-indigo-800">
-      <div class="flex items-center mb-6">
-        <span class="text-5xl mr-4">⚙️</span>
-        <h3 class="text-3xl font-bold text-indigo-900 dark:text-indigo-300">Modos de Operação</h3>
+    <!-- CASOS DE USO -->
+    <div class="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-3xl p-12 mb-12 border-2 border-emerald-200 dark:border-emerald-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🎯</span>
+        <h3 class="text-4xl font-bold text-emerald-900 dark:text-emerald-300">Casos de Uso Principais</h3>
       </div>
-
-      <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-6">
-        O Schedule Trigger oferece <strong>3 modos principais</strong> de configuração:
-      </p>
-
-      <!-- Modo 1: Intervalos -->
-      <div class="bg-white dark:bg-neutral-800 rounded-xl p-6 mb-6 shadow-lg">
-        <div class="flex items-center mb-4">
-          <span class="text-3xl mr-3">1️⃣</span>
-          <h4 class="text-2xl font-bold text-purple-700 dark:text-purple-400">Modo Interval (Intervalos)</h4>
-        </div>
-
-        <p class="text-neutral-700 dark:text-neutral-300 mb-4">
-          Executa o workflow <strong>repetidamente</strong> após um período fixo de tempo.
-        </p>
-
-        <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 mb-4">
-          <p class="font-semibold text-purple-900 dark:text-purple-300 mb-3">📋 Configurações Disponíveis:</p>
-          <ul class="space-y-2 text-sm text-neutral-700 dark:text-neutral-300">
-            <li class="flex items-start">
-              <span class="text-purple-500 mr-2">•</span>
-              <span><strong>Segundos:</strong> Para testes rápidos (mínimo: 5 segundos)</span>
-            </li>
-            <li class="flex items-start">
-              <span class="text-purple-500 mr-2">•</span>
-              <span><strong>Minutos:</strong> Monitoramentos frequentes (ex: a cada 15 min)</span>
-            </li>
-            <li class="flex items-start">
-              <span class="text-purple-500 mr-2">•</span>
-              <span><strong>Horas:</strong> Sincronizações regulares (ex: a cada 2 horas)</span>
-            </li>
-            <li class="flex items-start">
-              <span class="text-purple-500 mr-2">•</span>
-              <span><strong>Dias:</strong> Tarefas diárias (ex: todo dia às 9h)</span>
-            </li>
-            <li class="flex items-start">
-              <span class="text-purple-500 mr-2">•</span>
-              <span><strong>Semanas:</strong> Relatórios semanais (ex: toda segunda-feira)</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="bg-neutral-100 dark:bg-neutral-700 rounded-lg p-4">
-          <p class="text-xs text-neutral-600 dark:text-neutral-400 mb-2">💡 <strong>Exemplo de Configuração:</strong></p>
-          <div class="code-block">
-Mode: Interval
-Interval: 30
-Unit: Minutes
-
-// Resultado: Executa a cada 30 minutos
-          </div>
-        </div>
-      </div>
-
-      <!-- Modo 2: Days/Hours/Minutes -->
-      <div class="bg-white dark:bg-neutral-800 rounded-xl p-6 mb-6 shadow-lg">
-        <div class="flex items-center mb-4">
-          <span class="text-3xl mr-3">2️⃣</span>
-          <h4 class="text-2xl font-bold text-purple-700 dark:text-purple-400">Modo Days/Hours/Minutes</h4>
-        </div>
-
-        <p class="text-neutral-700 dark:text-neutral-300 mb-4">
-          Permite especificar <strong>horários exatos</strong> com precisão total.
-        </p>
-
-        <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 mb-4">
-          <p class="font-semibold text-purple-900 dark:text-purple-300 mb-3">🎯 Ideal para:</p>
-          <ul class="space-y-2 text-sm text-neutral-700 dark:text-neutral-300">
-            <li class="flex items-start">
-              <span class="text-emerald-500 mr-2">✓</span>
-              <span>Executar <strong>todo dia às 8h da manhã</strong></span>
-            </li>
-            <li class="flex items-start">
-              <span class="text-emerald-500 mr-2">✓</span>
-              <span>Rodar <strong>apenas em dias úteis (segunda a sexta)</strong></span>
-            </li>
-            <li class="flex items-start">
-              <span class="text-emerald-500 mr-2">✓</span>
-              <span>Executar <strong>múltiplos horários no mesmo dia</strong> (ex: 9h, 14h, 18h)</span>
-            </li>
-            <li class="flex items-start">
-              <span class="text-emerald-500 mr-2">✓</span>
-              <span>Combinar <strong>dias específicos da semana</strong> com horários</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="bg-neutral-100 dark:bg-neutral-700 rounded-lg p-4">
-          <p class="text-xs text-neutral-600 dark:text-neutral-400 mb-2">💡 <strong>Exemplo de Configuração:</strong></p>
-          <div class="code-block">
-Mode: Days/Hours/Minutes
-Days: Monday, Tuesday, Wednesday, Thursday, Friday
-Hour: 8
-Minute: 0
-
-// Resultado: Executa segunda a sexta às 8:00
-          </div>
-        </div>
-      </div>
-
-      <!-- Modo 3: CRON -->
-      <div class="bg-white dark:bg-neutral-800 rounded-xl p-6 shadow-lg">
-        <div class="flex items-center mb-4">
-          <span class="text-3xl mr-3">3️⃣</span>
-          <h4 class="text-2xl font-bold text-purple-700 dark:text-purple-400">Modo CRON (Avançado)</h4>
-        </div>
-
-        <p class="text-neutral-700 dark:text-neutral-300 mb-4">
-          Usa <strong>expressões CRON</strong> para padrões complexos e personalizados.
-        </p>
-
-        <div class="bg-amber-50 dark:bg-amber-900/20 rounded-lg p-4 mb-4 border-l-4 border-amber-500">
-          <p class="font-semibold text-amber-900 dark:text-amber-300 mb-2">⚡ Poder Máximo</p>
-          <p class="text-sm text-neutral-700 dark:text-neutral-300">
-            CRON oferece controle total sobre agendamentos, permitindo padrões impossíveis nos outros modos.
-          </p>
-        </div>
-
-        <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 mb-4">
-          <p class="font-semibold text-purple-900 dark:text-purple-300 mb-3">📖 Sintaxe CRON (5 campos):</p>
-          <div class="code-block mb-3">
-* * * * *
-│ │ │ │ │
-│ │ │ │ └─ Dia da Semana (0-6) [0 = Domingo]
-│ │ │ └─── Mês (1-12)
-│ │ └───── Dia do Mês (1-31)
-│ └─────── Hora (0-23)
-└───────── Minuto (0-59)
-          </div>
-
-          <p class="text-xs text-neutral-600 dark:text-neutral-400 mb-2"><strong>Caracteres Especiais:</strong></p>
-          <ul class="space-y-1 text-xs text-neutral-700 dark:text-neutral-300">
-            <li><code class="bg-neutral-200 dark:bg-neutral-700 px-2 py-0.5 rounded">*</code> = Qualquer valor</li>
-            <li><code class="bg-neutral-200 dark:bg-neutral-700 px-2 py-0.5 rounded">,</code> = Lista de valores (ex: 1,15,30)</li>
-            <li><code class="bg-neutral-200 dark:bg-neutral-700 px-2 py-0.5 rounded">-</code> = Intervalo (ex: 1-5)</li>
-            <li><code class="bg-neutral-200 dark:bg-neutral-700 px-2 py-0.5 rounded">/</code> = Step values (ex: */5 = a cada 5)</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <!-- Exemplos CRON Práticos -->
-    <div class="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-2xl p-8 mb-10 border-2 border-blue-200 dark:border-blue-800">
-      <div class="flex items-center mb-6">
-        <span class="text-5xl mr-4">💡</span>
-        <h3 class="text-3xl font-bold text-blue-900 dark:text-blue-300">Expressões CRON - Exemplos Práticos</h3>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-4">
-
-        <!-- Exemplo 1 -->
-        <div class="bg-white dark:bg-neutral-800 rounded-lg p-5 shadow">
-          <div class="flex items-center justify-between mb-3">
-            <p class="font-bold text-blue-900 dark:text-blue-300">A cada 5 minutos</p>
-            <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded text-xs font-semibold">BÁSICO</span>
-          </div>
-          <div class="code-block mb-3">
-*/5 * * * *
-          </div>
-          <p class="text-xs text-neutral-600 dark:text-neutral-400">Útil para: Monitoramento constante, scraping, checagens frequentes</p>
-        </div>
-
-        <!-- Exemplo 2 -->
-        <div class="bg-white dark:bg-neutral-800 rounded-lg p-5 shadow">
-          <div class="flex items-center justify-between mb-3">
-            <p class="font-bold text-blue-900 dark:text-blue-300">Todo dia às 9h</p>
-            <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded text-xs font-semibold">COMUM</span>
-          </div>
-          <div class="code-block mb-3">
-0 9 * * *
-          </div>
-          <p class="text-xs text-neutral-600 dark:text-neutral-400">Útil para: Relatórios diários, envio de e-mails matinais</p>
-        </div>
-
-        <!-- Exemplo 3 -->
-        <div class="bg-white dark:bg-neutral-800 rounded-lg p-5 shadow">
-          <div class="flex items-center justify-between mb-3">
-            <p class="font-bold text-blue-900 dark:text-blue-300">Segunda a Sexta às 8h</p>
-            <span class="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded text-xs font-semibold">ÚTIL</span>
-          </div>
-          <div class="code-block mb-3">
-0 8 * * 1-5
-          </div>
-          <p class="text-xs text-neutral-600 dark:text-neutral-400">Útil para: Automações de trabalho, apenas dias úteis</p>
-        </div>
-
-        <!-- Exemplo 4 -->
-        <div class="bg-white dark:bg-neutral-800 rounded-lg p-5 shadow">
-          <div class="flex items-center justify-between mb-3">
-            <p class="font-bold text-blue-900 dark:text-blue-300">Todo domingo às 3h</p>
-            <span class="px-2 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 rounded text-xs font-semibold">BACKUP</span>
-          </div>
-          <div class="code-block mb-3">
-0 3 * * 0
-          </div>
-          <p class="text-xs text-neutral-600 dark:text-neutral-400">Útil para: Backups semanais, manutenções programadas</p>
-        </div>
-
-        <!-- Exemplo 5 -->
-        <div class="bg-white dark:bg-neutral-800 rounded-lg p-5 shadow">
-          <div class="flex items-center justify-between mb-3">
-            <p class="font-bold text-blue-900 dark:text-blue-300">Dia 1 de cada mês às 00h</p>
-            <span class="px-2 py-1 bg-pink-100 dark:bg-pink-900/30 text-pink-800 dark:text-pink-300 rounded text-xs font-semibold">MENSAL</span>
-          </div>
-          <div class="code-block mb-3">
-0 0 1 * *
-          </div>
-          <p class="text-xs text-neutral-600 dark:text-neutral-400">Útil para: Relatórios mensais, renovações, cobranças</p>
-        </div>
-
-        <!-- Exemplo 6 -->
-        <div class="bg-white dark:bg-neutral-800 rounded-lg p-5 shadow">
-          <div class="flex items-center justify-between mb-3">
-            <p class="font-bold text-blue-900 dark:text-blue-300">A cada 30 min, 9h-18h</p>
-            <span class="px-2 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 rounded text-xs font-semibold">AVANÇADO</span>
-          </div>
-          <div class="code-block mb-3">
-*/30 9-18 * * *
-          </div>
-          <p class="text-xs text-neutral-600 dark:text-neutral-400">Útil para: Monitoramento durante horário comercial</p>
-        </div>
-
-      </div>
-
-      <div class="mt-6 bg-blue-100 dark:bg-blue-900/30 rounded-lg p-4">
-        <p class="text-sm text-blue-900 dark:text-blue-300 mb-2">
-          <strong>🔗 Ferramentas Úteis:</strong>
-        </p>
-        <ul class="space-y-1 text-xs text-neutral-700 dark:text-neutral-300">
-          <li>• <a href="https://crontab.guru" target="_blank" class="text-blue-600 dark:text-blue-400 underline">crontab.guru</a> - Editor visual de CRON</li>
-          <li>• <a href="https://crontab-generator.org" target="_blank" class="text-blue-600 dark:text-blue-400 underline">crontab-generator.org</a> - Gerador de expressões</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Timezone -->
-    <div class="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-8 mb-10">
-      <div class="flex items-center mb-6">
-        <span class="text-5xl mr-4">🌍</span>
-        <h3 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100">Timezone: A Configuração Crítica</h3>
-      </div>
-
-      <div class="bg-red-50 dark:bg-red-900/20 rounded-lg p-6 mb-6 border-l-4 border-red-500">
-        <p class="text-lg font-bold text-red-900 dark:text-red-300 mb-2">⚠️ ATENÇÃO: Problema Comum</p>
-        <p class="text-neutral-700 dark:text-neutral-300">
-          <strong>Servidores N8N geralmente rodam em UTC</strong>. Se você configurar para executar às "9h" sem especificar timezone, pode executar às 6h (UTC-3 Brasil) ou outro horário inesperado!
-        </p>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-6 mb-6">
-        <div class="bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-lg p-5 border-2 border-red-200 dark:border-red-800">
-          <p class="font-semibold text-red-700 dark:text-red-400 mb-3 flex items-center">
-            <span class="text-2xl mr-2">❌</span> Sem Timezone
-          </p>
-          <div class="code-block mb-3">
-Mode: CRON
-Expression: 0 9 * * *
-Timezone: (vazio)
-
-// Executa às 9h UTC
-// No Brasil: 6h (UTC-3)
-          </div>
-          <p class="text-xs text-neutral-600 dark:text-neutral-400">Resultado: Execução em horário errado!</p>
-        </div>
-
-        <div class="bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 rounded-lg p-5 border-2 border-emerald-200 dark:border-emerald-800">
-          <p class="font-semibold text-emerald-700 dark:text-emerald-400 mb-3 flex items-center">
-            <span class="text-2xl mr-2">✅</span> Com Timezone
-          </p>
-          <div class="code-block mb-3">
-Mode: CRON
-Expression: 0 9 * * *
-Timezone: America/Sao_Paulo
-
-// Executa às 9h horário de Brasília
-// Sempre no horário local
-          </div>
-          <p class="text-xs text-neutral-600 dark:text-neutral-400">Resultado: Execução precisa!</p>
-        </div>
-      </div>
-
-      <div class="bg-neutral-100 dark:bg-neutral-700 rounded-lg p-5">
-        <p class="font-semibold text-neutral-900 dark:text-neutral-100 mb-3">🌐 Principais Timezones:</p>
-        <div class="grid md:grid-cols-3 gap-3 text-sm">
-          <div>
-            <p class="font-medium text-neutral-700 dark:text-neutral-300">🇧🇷 Brasil:</p>
-            <ul class="text-xs text-neutral-600 dark:text-neutral-400 space-y-1">
-              <li>• America/Sao_Paulo</li>
-              <li>• America/Manaus</li>
-              <li>• America/Recife</li>
-            </ul>
-          </div>
-          <div>
-            <p class="font-medium text-neutral-700 dark:text-neutral-300">🇺🇸 USA:</p>
-            <ul class="text-xs text-neutral-600 dark:text-neutral-400 space-y-1">
-              <li>• America/New_York</li>
-              <li>• America/Chicago</li>
-              <li>• America/Los_Angeles</li>
-            </ul>
-          </div>
-          <div>
-            <p class="font-medium text-neutral-700 dark:text-neutral-300">🌍 Europa:</p>
-            <ul class="text-xs text-neutral-600 dark:text-neutral-400 space-y-1">
-              <li>• Europe/London</li>
-              <li>• Europe/Paris</li>
-              <li>• Europe/Berlin</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Caso de Uso Real -->
-    <div class="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-2xl p-8 mb-10 border-2 border-purple-200 dark:border-purple-800">
-      <div class="flex items-center mb-6">
-        <span class="text-5xl mr-4">🎯</span>
-        <h3 class="text-3xl font-bold text-purple-900 dark:text-purple-300">Caso de Uso Real: Relatório de Vendas</h3>
-      </div>
-
-      <div class="bg-white dark:bg-neutral-800 rounded-xl p-6 mb-6">
-        <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">📊 Cenário:</p>
-        <p class="text-neutral-700 dark:text-neutral-300 mb-4">
-          Você precisa enviar um <strong>relatório de vendas do dia anterior</strong> todo dia útil às 8h da manhã para sua equipe.
-        </p>
-
-        <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-5 mb-4">
-          <p class="font-semibold text-purple-900 dark:text-purple-300 mb-3">⚙️ Configuração do Schedule Trigger:</p>
-          <div class="code-block">
-Trigger: Schedule Trigger
-Mode: CRON Expression
-Expression: 0 8 * * 1-5
-Timezone: America/Sao_Paulo
-
-// Tradução: Todo dia útil (seg-sex) às 8h (horário de Brasília)
-          </div>
-        </div>
-
-        <p class="font-semibold text-neutral-900 dark:text-neutral-100 mb-2">🔄 Fluxo do Workflow:</p>
-        <ol class="space-y-3 text-sm text-neutral-700 dark:text-neutral-300">
-          <li class="flex items-start">
-            <span class="font-bold text-purple-600 mr-3 min-w-[24px]">1.</span>
-            <span><strong>Schedule Trigger</strong> dispara às 8h</span>
-          </li>
-          <li class="flex items-start">
-            <span class="font-bold text-purple-600 mr-3 min-w-[24px]">2.</span>
-            <span><strong>HTTP Request</strong> busca dados de vendas do dia anterior na API</span>
-          </li>
-          <li class="flex items-start">
-            <span class="font-bold text-purple-600 mr-3 min-w-[24px]">3.</span>
-            <span><strong>Aggregate</strong> soma totais por produto, vendedor, região</span>
-          </li>
-          <li class="flex items-start">
-            <span class="font-bold text-purple-600 mr-3 min-w-[24px]">4.</span>
-            <span><strong>Code</strong> formata dados em tabela HTML</span>
-          </li>
-          <li class="flex items-start">
-            <span class="font-bold text-purple-600 mr-3 min-w-[24px]">5.</span>
-            <span><strong>Gmail</strong> envia e-mail com relatório para equipe</span>
-          </li>
-        </ol>
-      </div>
-
-      <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-lg p-5">
-        <p class="font-semibold text-emerald-900 dark:text-emerald-300 mb-2">✨ Benefícios:</p>
-        <ul class="space-y-2 text-sm text-neutral-700 dark:text-neutral-300">
-          <li class="flex items-start">
-            <span class="text-emerald-500 mr-2">✓</span>
-            <span><strong>Zero esforço manual:</strong> Equipe recebe relatório automaticamente</span>
-          </li>
-          <li class="flex items-start">
-            <span class="text-emerald-500 mr-2">✓</span>
-            <span><strong>Consistência:</strong> Sempre no mesmo horário, todo dia útil</span>
-          </li>
-          <li class="flex items-start">
-            <span class="text-emerald-500 mr-2">✓</span>
-            <span><strong>Confiabilidade:</strong> Nunca esquece, mesmo em feriados</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Dicas e Best Practices -->
-    <div class="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-8 mb-10">
-      <div class="flex items-center mb-6">
-        <span class="text-5xl mr-4">💎</span>
-        <h3 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100">Best Practices</h3>
-      </div>
-
       <div class="grid md:grid-cols-2 gap-6">
-
-        <div class="bg-green-50 dark:bg-green-900/20 rounded-lg p-5 border-l-4 border-green-500">
-          <p class="font-bold text-green-900 dark:text-green-300 mb-2">✅ FAÇA</p>
-          <ul class="space-y-2 text-sm text-neutral-700 dark:text-neutral-300">
-            <li>• Sempre configure <strong>timezone</strong></li>
-            <li>• Use CRON para padrões complexos</li>
-            <li>• Teste com intervalos curtos primeiro</li>
-            <li>• Documente expressões CRON no workflow</li>
-            <li>• Configure error handling</li>
-          </ul>
+        <div class="bg-white dark:bg-neutral-800 p-8 rounded-2xl shadow-lg">
+          <p class="text-2xl font-bold text-emerald-700 dark:text-emerald-400 mb-3">🔄 Data Syncs Noturnos</p>
+          <p class="text-lg text-neutral-600 dark:text-neutral-400">Sincronizar com Google Sheets, Notion e outras plataformas durante a madrugada</p>
         </div>
-
-        <div class="bg-red-50 dark:bg-red-900/20 rounded-lg p-5 border-l-4 border-red-500">
-          <p class="font-bold text-red-900 dark:text-red-300 mb-2">❌ NÃO FAÇA</p>
-          <ul class="space-y-2 text-sm text-neutral-700 dark:text-neutral-300">
-            <li>• Não use intervalos muito curtos (&lt; 5s) em produção</li>
-            <li>• Não ignore timezone (vai dar problema!)</li>
-            <li>• Não esqueça de desativar em testes</li>
-            <li>• Não use para eventos externos (use Webhook)</li>
-            <li>• Não crie workflows pesados de processamento</li>
-          </ul>
+        <div class="bg-white dark:bg-neutral-800 p-8 rounded-2xl shadow-lg">
+          <p class="text-2xl font-bold text-emerald-700 dark:text-emerald-400 mb-3">📊 Reports Automáticos</p>
+          <p class="text-lg text-neutral-600 dark:text-neutral-400">Relatórios diários, semanais ou mensais de vendas e analytics</p>
         </div>
-
-      </div>
-
-      <div class="mt-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg p-5">
-        <p class="font-semibold text-blue-900 dark:text-blue-300 mb-3">🚀 Performance Tips:</p>
-        <ul class="space-y-2 text-sm text-neutral-700 dark:text-neutral-300">
-          <li class="flex items-start">
-            <span class="text-blue-500 mr-2">•</span>
-            <span><strong>Evite horários de pico:</strong> Execute backups pesados de madrugada (3h-5h)</span>
-          </li>
-          <li class="flex items-start">
-            <span class="text-blue-500 mr-2">•</span>
-            <span><strong>Distribua carga:</strong> Se tem 10 workflows diários, espalhe entre 8h-10h</span>
-          </li>
-          <li class="flex items-start">
-            <span class="text-blue-500 mr-2">•</span>
-            <span><strong>Use batching:</strong> Melhor processar 1000 itens 1x/dia que 10 itens 100x/dia</span>
-          </li>
-        </ul>
+        <div class="bg-white dark:bg-neutral-800 p-8 rounded-2xl shadow-lg">
+          <p class="text-2xl font-bold text-emerald-700 dark:text-emerald-400 mb-3">📬 Lembretes Agendados</p>
+          <p class="text-lg text-neutral-600 dark:text-neutral-400">Notificações, lembretes ou emails em lote programados</p>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-8 rounded-2xl shadow-lg">
+          <p class="text-2xl font-bold text-emerald-700 dark:text-emerald-400 mb-3">🧹 Tarefas de Manutenção</p>
+          <p class="text-lg text-neutral-600 dark:text-neutral-400">Limpeza de banco de dados, arquivamento recorrente</p>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-8 rounded-2xl shadow-lg">
+          <p class="text-2xl font-bold text-emerald-700 dark:text-emerald-400 mb-3">🤖 AI Agents & Bots</p>
+          <p class="text-lg text-neutral-600 dark:text-neutral-400">Busca regular de informações ou postagens automatizadas</p>
+        </div>
       </div>
     </div>
 
-    <!-- Troubleshooting -->
-    <div class="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-2xl p-8 mb-10 border-2 border-amber-200 dark:border-amber-800">
-      <div class="flex items-center mb-6">
-        <span class="text-5xl mr-4">🔧</span>
-        <h3 class="text-3xl font-bold text-amber-900 dark:text-amber-300">Troubleshooting</h3>
+    <!-- COMO CONFIGURAR -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">⚙️</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Como Configurar (Passo a Passo)</h3>
       </div>
-
-      <div class="space-y-4">
-
-        <div class="bg-white dark:bg-neutral-800 rounded-lg p-5">
-          <p class="font-bold text-amber-900 dark:text-amber-300 mb-2">❓ Problema: Workflow não executa no horário esperado</p>
-          <p class="text-sm text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Timezone incorreto ou não configurado</p>
-          <p class="text-sm text-emerald-700 dark:text-emerald-400"><strong>Solução:</strong> Verifique e configure o timezone correto (ex: America/Sao_Paulo)</p>
+      <div class="space-y-6">
+        <div class="border-l-4 border-emerald-500 pl-6 py-4">
+          <p class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">1. Adicionar o Node</p>
+          <p class="text-lg text-neutral-600 dark:text-neutral-400">No seu workflow, procure por "Schedule Trigger" e adicione ao canvas</p>
         </div>
-
-        <div class="bg-white dark:bg-neutral-800 rounded-lg p-5">
-          <p class="font-bold text-amber-900 dark:text-amber-300 mb-2">❓ Problema: Execuções duplicadas</p>
-          <p class="text-sm text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Múltiplas instâncias do workflow ativas</p>
-          <p class="text-sm text-emerald-700 dark:text-emerald-400"><strong>Solução:</strong> Desative workflows duplicados, mantenha apenas 1 ativo</p>
+        <div class="border-l-4 border-emerald-500 pl-6 py-4">
+          <p class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">2. Configurar Intervalos</p>
+          <p class="text-lg text-neutral-600 dark:text-neutral-400">Escolha entre intervalos (minutos, horas, dias, semanas) ou use padrão CRON para agendamentos avançados (como "toda terça às 5h")</p>
         </div>
-
-        <div class="bg-white dark:bg-neutral-800 rounded-lg p-5">
-          <p class="font-bold text-amber-900 dark:text-amber-300 mb-2">❓ Problema: CRON não funciona como esperado</p>
-          <p class="text-sm text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Sintaxe incorreta ou má interpretação</p>
-          <p class="text-sm text-emerald-700 dark:text-emerald-400"><strong>Solução:</strong> Valide em crontab.guru antes de usar</p>
+        <div class="border-l-4 border-emerald-500 pl-6 py-4">
+          <p class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">3. Definir Timezone</p>
+          <p class="text-lg text-neutral-600 dark:text-neutral-400">O node usa o timezone do workflow ou do servidor n8n - CONFIRA para evitar execuções no horário errado!</p>
         </div>
-
+        <div class="border-l-4 border-emerald-500 pl-6 py-4">
+          <p class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">4. Conectar o Workflow</p>
+          <p class="text-lg text-neutral-600 dark:text-neutral-400">Anexe o Schedule Trigger aos outros nodes (HTTP requests, processamento de dados, emails)</p>
+        </div>
+        <div class="border-l-4 border-emerald-500 pl-6 py-4">
+          <p class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">5. Ativar o Workflow</p>
+          <p class="text-lg text-neutral-600 dark:text-neutral-400">O workflow DEVE estar ativado para o trigger funcionar. Teste com execuções manuais primeiro!</p>
+        </div>
       </div>
     </div>
 
-    <!-- CTA Final -->
-    <div class="bg-gradient-to-br from-emerald-600 to-green-600 text-white rounded-2xl p-10 text-center shadow-2xl">
-      <span class="text-6xl mb-4 block">🎓</span>
-      <h3 class="text-3xl font-bold mb-4">Domine o Schedule Trigger!</h3>
-      <p class="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
-        Com este conhecimento, você pode automatizar <strong>90% das tarefas repetitivas</strong> do seu dia a dia.
-      </p>
+    <!-- EXEMPLO REAL -->
+    <div class="bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 rounded-3xl p-12 mb-12 border-2 border-emerald-200 dark:border-emerald-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">💡</span>
+        <h3 class="text-4xl font-bold text-emerald-900 dark:text-emerald-300">Exemplo Prático: Automação Toda Segunda às 9h</h3>
+      </div>
+      <div class="bg-white dark:bg-neutral-800 rounded-2xl p-8 shadow-lg">
+        <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6 font-semibold">Cenário: Executar workflow toda segunda-feira às 9h da manhã</p>
+        <div class="code-block mb-6">
+<span class="text-emerald-400">// Configuração do Schedule Trigger</span>
 
-      <div class="flex gap-4 justify-center flex-wrap mb-6">
-        <div class="bg-white/10 backdrop-blur-sm rounded-lg px-6 py-3">
-          <p class="text-2xl font-bold">17</p>
-          <p class="text-sm text-white/80">Nodes Essenciais</p>
+<span class="text-blue-400">Modo:</span> Weekly (Semanal)
+<span class="text-blue-400">Weeks Between Triggers:</span> 1
+<span class="text-blue-400">Weekday:</span> Monday (Segunda-feira)
+<span class="text-blue-400">Hour:</span> 9
+<span class="text-blue-400">Minute:</span> 0
+<span class="text-blue-400">Timezone:</span> America/Sao_Paulo
+
+<span class="text-emerald-400">// Conecte aos próximos nodes:</span>
+Schedule Trigger → HTTP Request → Edit Fields → Send Email
         </div>
-        <div class="bg-white/10 backdrop-blur-sm rounded-lg px-6 py-3">
-          <p class="text-2xl font-bold">∞</p>
-          <p class="text-sm text-white/80">Possibilidades</p>
+        <p class="text-lg text-neutral-600 dark:text-neutral-400">⚡ <strong>Resultado:</strong> O workflow dispara automaticamente toda segunda-feira às 9h, sem intervenção manual!</p>
+      </div>
+    </div>
+
+    <!-- BEST PRACTICES -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">✨</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Best Practices & Dicas</h3>
+      </div>
+      <div class="space-y-6">
+        <div class="bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 p-6 rounded-xl border-l-4 border-emerald-500">
+          <p class="text-xl font-bold text-emerald-900 dark:text-emerald-300 mb-2">🔧 Lógica Dinâmica de Horário</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300">Se precisa de lógica baseada em valores do banco (ex: executar baseado em data no DB), configure trigger frequente (a cada minuto) e use node IF para decidir se deve prosseguir</p>
         </div>
-        <div class="bg-white/10 backdrop-blur-sm rounded-lg px-6 py-3">
-          <p class="text-2xl font-bold">0</p>
-          <p class="text-sm text-white/80">Esforço Manual</p>
+        <div class="bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 p-6 rounded-xl border-l-4 border-emerald-500">
+          <p class="text-xl font-bold text-emerald-900 dark:text-emerald-300 mb-2">🌍 Sempre Verifique o Timezone</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300">Dupla-verificação do timezone PREVINE execuções fora do horário esperado</p>
+        </div>
+        <div class="bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 p-6 rounded-xl border-l-4 border-emerald-500">
+          <p class="text-xl font-bold text-emerald-900 dark:text-emerald-300 mb-2">⚠️ Cuidado com Frequências Excessivas</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300">Intervalos muito curtos (a cada minuto) podem impactar os recursos da instância n8n</p>
+        </div>
+        <div class="bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 p-6 rounded-xl border-l-4 border-emerald-500">
+          <p class="text-xl font-bold text-emerald-900 dark:text-emerald-300 mb-2">🎯 Teste Primeiro!</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300">Sempre execute manualmente antes de ativar - confirme que todo o workflow funciona corretamente</p>
         </div>
       </div>
+    </div>
 
-      <div class="flex gap-4 justify-center flex-wrap">
-        <a href="../iniciante.html" class="bg-white text-emerald-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors shadow-lg">
-          ← Voltar para Trilha
+    <!-- CTA FINAL -->
+    <div class="bg-gradient-to-br from-emerald-600 to-green-600 text-white rounded-3xl p-12 text-center shadow-2xl">
+      <span class="text-7xl mb-6 block">🎓</span>
+      <h3 class="text-4xl font-bold mb-6">Domine o Schedule Trigger!</h3>
+      <p class="text-xl mb-8 max-w-3xl mx-auto">O Schedule Trigger é a ferramenta essencial para automações confiáveis e recorrentes, permitindo que seus processos de negócio operem no piloto automático.</p>
+      <div class="flex gap-6 justify-center flex-wrap">
+        <a href="../iniciante.html" class="bg-white text-emerald-600 px-10 py-5 rounded-2xl font-bold text-xl hover:bg-neutral-100 transition-all shadow-lg transform hover:scale-105">
+          ← Voltar ao Curso
         </a>
-        <a href="../downloads/schedule.md" download class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-colors">
-          📥 Download MD
+        <a href="../downloads/schedule.md" download class="bg-white/20 backdrop-blur-sm text-white px-10 py-5 rounded-2xl font-bold text-xl hover:bg-white/30 transition-all border-2 border-white/50">
+          📥 Download Material
         </a>
       </div>
     </div>
-
   </section>
 
-  <!-- Footer -->
-  <footer class="bg-neutral-900 dark:bg-black text-white py-12 mt-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <p class="text-neutral-400">&copy; 2025 N8N Academy - Fundamentos Completos</p>
-      <p class="text-sm text-neutral-500 mt-2">Baseado em "Master n8n with 17 Nodes" por Nate Herk</p>
+  <footer class="bg-neutral-900 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-neutral-400 text-lg">&copy; 2025 N8N Academy - Fundamentos Completos</p>
+      <p class="text-neutral-500 mt-2">Conteúdo baseado no n8n Cheatsheet 2026 by Nate Herk</p>
     </div>
   </footer>
 
-  <!-- JavaScript -->
   <script>
-    // Dark Mode
     const themeToggleBtn = document.getElementById('theme-toggle');
     const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
     const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-
-    if (localStorage.getItem('color-theme') === 'dark' ||
-        (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark');
-      themeToggleLightIcon.classList.remove('hidden');
-    } else {
-      themeToggleDarkIcon.classList.remove('hidden');
-    }
-
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark'); themeToggleLightIcon.classList.remove('hidden');
+    } else { themeToggleDarkIcon.classList.remove('hidden'); }
     themeToggleBtn.addEventListener('click', function() {
-      themeToggleDarkIcon.classList.toggle('hidden');
-      themeToggleLightIcon.classList.toggle('hidden');
-
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
       if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('color-theme', 'light');
-      } else {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('color-theme', 'dark');
-      }
+        document.documentElement.classList.remove('dark'); localStorage.setItem('color-theme', 'light');
+      } else { document.documentElement.classList.add('dark'); localStorage.setItem('color-theme', 'dark'); }
     });
   </script>
-
 </body>
 </html>
