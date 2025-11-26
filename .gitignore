@@ -1,0 +1,5 @@
+node_modules/
+.bmad-core/
+*.backup
+*-old-backup.html
+.claude/

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>N8N - Nível Técnico (Em Desenvolvimento)</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+
+  <!-- Navegação -->
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="index.html" class="text-2xl font-bold text-blue-600 dark:text-blue-400 flex items-center gap-2">
+          <span>←</span>
+          <span class="text-3xl">🔗</span>
+          <span>N8N Academy</span>
+        </a>
+
+        <div class="flex items-center gap-4">
+          <span class="px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-sm font-bold">
+            ⚡ Nível Técnico
+          </span>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-600">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-700 py-24 min-h-[60vh] flex items-center">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+      <div class="text-8xl mb-6 animate-pulse">🚧</div>
+      <h1 class="text-4xl sm:text-5xl font-bold mb-4">
+        Nível Técnico
+      </h1>
+      <p class="text-xl mb-8 text-white/90 max-w-3xl mx-auto">
+        Esta seção está em desenvolvimento
+      </p>
+
+      <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 max-w-2xl mx-auto border border-white/20">
+        <h2 class="text-2xl font-bold mb-4">Em breve você terá acesso a:</h2>
+        <ul class="text-left space-y-3 text-lg">
+          <li class="flex items-start gap-3">
+            <span class="text-2xl">🔧</span>
+            <span>Técnicas avançadas de workflows</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-2xl">⚡</span>
+            <span>Otimização e performance</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-2xl">🔐</span>
+            <span>Segurança e boas práticas</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-2xl">🎯</span>
+            <span>Padrões de arquitetura</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-2xl">📊</span>
+            <span>Monitoramento e debugging</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="mt-12 flex gap-4 justify-center flex-wrap">
+        <a href="iniciante.html" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-bold hover:bg-neutral-100 transition-colors inline-flex items-center gap-2">
+          <span>← Revisar Fundamentos</span>
+        </a>
+        <a href="index.html" class="bg-white/20 backdrop-blur-sm text-white px-8 py-3 rounded-lg font-bold hover:bg-white/30 transition-colors">
+          Voltar ao Início
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Informações Adicionais -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-lg p-8 border-2 border-neutral-200 dark:border-neutral-700">
+      <h3 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+        📚 Enquanto isso...
+      </h3>
+      <p class="text-neutral-700 dark:text-neutral-300 mb-6">
+        Aproveite para consolidar seu conhecimento dos 17 nodes fundamentais!
+        A melhor forma de aprender N8N é praticando e criando workflows reais.
+      </p>
+
+      <h4 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">
+        💡 Sugestões de prática:
+      </h4>
+      <ul class="space-y-2 text-neutral-700 dark:text-neutral-300">
+        <li class="flex items-start gap-2">
+          <span class="text-emerald-600 font-bold">✓</span>
+          <span>Crie um workflow que combine Schedule Trigger + HTTP Request + Google Sheets</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-emerald-600 font-bold">✓</span>
+          <span>Experimente usar IF e Switch para criar lógica de roteamento</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-emerald-600 font-bold">✓</span>
+          <span>Configure um Webhook e teste com Respond to Webhook</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-emerald-600 font-bold">✓</span>
+          <span>Crie um AI Agent simples com Tools customizadas</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-emerald-600 font-bold">✓</span>
+          <span>Use Loop Over Items para processar grandes volumes de dados</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-neutral-900 dark:bg-black text-white py-12 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-neutral-400">&copy; 2025 N8N Academy - Em Desenvolvimento</p>
+      <p class="text-sm text-neutral-500 mt-2">Conteúdo técnico em breve!</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Dark Mode
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+    if (localStorage.getItem('color-theme') === 'dark' ||
+        (!('color-theme') in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    } else {
+      themeToggleDarkIcon.classList.remove('hidden');
+    }
+
+    themeToggleBtn.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1359 @@
+
+    <!-- Node 1: Schedule Trigger -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">⏰</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">1. Schedule Trigger</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Automações programadas em horários fixos</p>
+          </div>
+        </div>
+        <span class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 rounded-full text-xs font-semibold">
+          Trigger
+        </span>
+      </div>
+
+      <ul class="topics-list space-y-0.5">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Intervalos e CRON
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-emerald-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-emerald-600">O que é:</strong> Execute workflows a cada X minutos, horas, dias ou use CRON para agendamentos complexos.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-emerald-600">Por que aprender:</strong> Automatize tarefas repetitivas sem intervenção manual (relatórios, backups, sincronizações).
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-emerald-600">Conceitos chave:</strong> Intervalos fixos, expressões CRON, timezone, polling schedule.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Configuração de Timezone
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-emerald-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-emerald-600">O que é:</strong> Definir o fuso horário correto para garantir execuções no horário local desejado.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-emerald-600">Por que aprender:</strong> Evitar execuções em horários errados, especialmente em equipes globais ou servidores em outras regiões.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-emerald-600">Conceitos chave:</strong> UTC, GMT, timezone local, horário de verão.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Casos de Uso Práticos
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border-l-4 border-emerald-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-emerald-600">O que é:</strong> Exemplos reais de automações com Schedule Trigger.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-emerald-600">Por que aprender:</strong> Inspirar suas próprias automações vendo aplicações práticas.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-emerald-600">Conceitos chave:</strong> Relatórios diários, backups automáticos, newsletters semanais, monitoramento contínuo.
+            </p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700 flex gap-2">
+        <button onclick="openModal('modal-schedule')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📖 Ver em Modal
+        </button>
+        <a href="conteudo/schedule.html" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📄 Página Completa
+        </a>
+        <a href="downloads/schedule.md" download class="bg-neutral-600 hover:bg-neutral-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📥 Download MD
+        </a>
+      </div>
+    </div>
+
+
+    <!-- Node 2: Event Trigger -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">📧</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">2. Event Trigger</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Reaja a eventos em tempo real</p>
+          </div>
+        </div>
+        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-xs font-semibold">
+          Trigger
+        </span>
+      </div>
+
+      <ul class="topics-list space-y-0.5">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Event vs Schedule Trigger
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border-l-4 border-blue-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-blue-600">O que é:</strong> Event reage a ALGO que acontece (novo email, mensagem); Schedule executa em HORÁRIO fixo.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-blue-600">Por que aprender:</strong> Entender quando usar cada tipo de trigger é fundamental para automações eficientes.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-blue-600">Conceitos chave:</strong> Event-driven vs time-based, reatividade, triggers condicionais.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Polling vs Webhook
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border-l-4 border-blue-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-blue-600">O que é:</strong> Polling verifica periodicamente (1 min); Webhook recebe notificação instantânea.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-blue-600">Por que aprender:</strong> Polling consome execuções; webhook é mais rápido e eficiente.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-blue-600">Conceitos chave:</strong> Intervalo de polling, execuções, latência, push vs pull.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Apps e Integrações
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border-l-4 border-blue-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-blue-600">O que é:</strong> Gmail, Slack, Google Sheets, Trello e centenas de apps suportados.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-blue-600">Por que aprender:</strong> Conectar com apps que você já usa diariamente para criar automações poderosas.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-blue-600">Conceitos chave:</strong> OAuth, credenciais, filtros de eventos, conditions.
+            </p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700 flex gap-2">
+        <button onclick="openModal('modal-event')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📖 Ver em Modal
+        </button>
+        <a href="conteudo/event.html" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📄 Página Completa
+        </a>
+        <a href="downloads/event.md" download class="bg-neutral-600 hover:bg-neutral-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📥 Download MD
+        </a>
+      </div>
+    </div>
+
+
+    <!-- Node 3: Webhook -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">🪝</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">3. Webhook</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Receba dados via HTTP POST/GET</p>
+          </div>
+        </div>
+        <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 rounded-full text-xs font-semibold">
+          API
+        </span>
+      </div>
+
+      <ul class="topics-list space-y-0.5">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 O que são Webhooks
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border-l-4 border-indigo-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">O que é:</strong> Uma URL única que recebe dados de sistemas externos via requisições HTTP.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Por que aprender:</strong> Integrar N8N com qualquer ferramenta que suporte webhooks, sem polling.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Conceitos chave:</strong> URL endpoint, métodos HTTP (GET, POST), payload JSON, headers.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Production vs Test URL
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border-l-4 border-indigo-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">O que é:</strong> Test URL muda a cada ativação do workflow; Production URL é fixa e permanente.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Por que aprender:</strong> Usar Production URL para integrações reais, Test URL apenas para desenvolvimento.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Conceitos chave:</strong> Workflow ativo vs inativo, URL persistente, ambiente de teste vs produção.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Respond to Webhook
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border-l-4 border-indigo-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">O que é:</strong> Enviar resposta de volta para quem chamou o webhook (status 200, dados JSON, etc).
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Por que aprender:</strong> Criar APIs customizadas ou confirmar recebimento de dados.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Conceitos chave:</strong> Status codes (200, 400, 500), response body, headers customizados.
+            </p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700 flex gap-2">
+        <button onclick="openModal('modal-webhook')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📖 Ver em Modal
+        </button>
+        <a href="conteudo/webhook.html" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📄 Página Completa
+        </a>
+        <a href="downloads/webhook.md" download class="bg-neutral-600 hover:bg-neutral-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📥 Download MD
+        </a>
+      </div>
+    </div>
+
+
+    <!-- Node 4: Split Out -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">✂️</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">4. Split Out</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Divida arrays em items individuais</p>
+          </div>
+        </div>
+        <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full text-xs font-semibold">
+          Data
+        </span>
+      </div>
+
+      <ul class="topics-list space-y-0.5">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 De Array para Items
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">O que é:</strong> Transformar 1 item com array de 10 elementos em 10 items separados.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">Por que aprender:</strong> Processar cada elemento individualmente (enviar email para cada pessoa, criar registro por item).
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">Conceitos chave:</strong> Field to split out, array destructuring, item count.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Quando Usar
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">O que é:</strong> Sempre que API retornar lista e você quiser processar cada elemento individualmente.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">Por que aprender:</strong> Evitar loops manuais, aproveitar processamento paralelo do N8N.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">Conceitos chave:</strong> Batch processing, item-level operations, data normalization.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Split Out vs Loop
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">O que é:</strong> Split Out processa todos items em paralelo; Loop processa um por vez sequencialmente.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">Por que aprender:</strong> Escolher a ferramenta certa: paralelo (Split) vs sequencial (Loop).
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">Conceitos chave:</strong> Parallel execution, sequential processing, performance trade-offs.
+            </p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700 flex gap-2">
+        <button onclick="openModal('modal-split')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📖 Ver em Modal
+        </button>
+        <a href="conteudo/split.html" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📄 Página Completa
+        </a>
+        <a href="downloads/split.md" download class="bg-neutral-600 hover:bg-neutral-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📥 Download MD
+        </a>
+      </div>
+    </div>
+
+
+    <!-- Node 5: Aggregate -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">🎯</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">5. Aggregate</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Agrupe múltiplos items em um só</p>
+          </div>
+        </div>
+        <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full text-xs font-semibold">
+          Data
+        </span>
+      </div>
+
+      <ul class="topics-list space-y-0.5">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 De Items para Array
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">O que é:</strong> Oposto do Split Out - combina 100 items em 1 item com array de 100 elementos.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">Por que aprender:</strong> Enviar dados em lote para APIs, criar relatórios consolidados, reduzir número de items.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">Conceitos chave:</strong> Array aggregation, batch operations, data consolidation.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Aggregate All vs By Field
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">O que é:</strong> All junta todos em 1; By Field agrupa por categoria (vendas por região, usuários por status).
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">Por que aprender:</strong> Criar relatórios agrupados, segmentar dados por critérios específicos.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">Conceitos chave:</strong> Grouping, aggregation strategies, field-based partitioning.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Casos de Uso
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">O que é:</strong> Bulk insert em banco de dados, enviar 1000 registros de uma vez, gerar CSV completo.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">Por que aprender:</strong> Otimizar chamadas de API, reduzir custos, melhorar performance.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">Conceitos chave:</strong> Batch API calls, bulk operations, performance optimization.
+            </p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700 flex gap-2">
+        <button onclick="openModal('modal-aggregate')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📖 Ver em Modal
+        </button>
+        <a href="conteudo/aggregate.html" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📄 Página Completa
+        </a>
+        <a href="downloads/aggregate.md" download class="bg-neutral-600 hover:bg-neutral-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📥 Download MD
+        </a>
+      </div>
+    </div>
+
+
+    <!-- Node 6: Edit Fields (Set) -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">✏️</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">6. Edit Fields (Set)</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Crie ou modifique campos de dados</p>
+          </div>
+        </div>
+        <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full text-xs font-semibold">
+          Data
+        </span>
+      </div>
+
+      <ul class="topics-list space-y-0.5">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Criar e Modificar Campos
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">O que é:</strong> Adicionar novos campos, renomear existentes, calcular valores, formatar dados.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">Por que aprender:</strong> Preparar dados para próximos nodes, transformar estrutura de dados, limpar informações.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">Conceitos chave:</strong> Field mapping, data transformation, value assignment.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Expressões e Valores Fixos
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">O que é:</strong> Usar valores fixos ("aprovado") ou expressões dinâmicas ({{$json.nome.toUpperCase()}}).
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">Por que aprender:</strong> Criar campos calculados, concatenar strings, formatar datas, aplicar lógica.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">Conceitos chave:</strong> Expression editor, $json variable, string manipulation, date formatting.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Keep Only Set vs Include Other Fields
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">O que é:</strong> Keep Only mantém APENAS campos criados; Include Other preserva campos originais também.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">Por que aprender:</strong> Limpar dados desnecessários ou enriquecer dados existentes.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-green-600">Conceitos chave:</strong> Field filtering, data pruning, schema transformation.
+            </p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700 flex gap-2">
+        <button onclick="openModal('modal-set')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📖 Ver em Modal
+        </button>
+        <a href="conteudo/set.html" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📄 Página Completa
+        </a>
+        <a href="downloads/set.md" download class="bg-neutral-600 hover:bg-neutral-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📥 Download MD
+        </a>
+      </div>
+    </div>
+
+
+    <!-- Node 7: IF -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">🔀</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">7. IF</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Lógica condicional (se/então)</p>
+          </div>
+        </div>
+        <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 rounded-full text-xs font-semibold">
+          Logic
+        </span>
+      </div>
+
+      <ul class="topics-list space-y-0.5">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 True e False Outputs
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg border-l-4 border-orange-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-orange-600">O que é:</strong> Direcionar items que atendem condição para True, os demais para False.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-orange-600">Por que aprender:</strong> Criar fluxos diferentes baseados em critérios (valor > 100, status == "aprovado", etc).
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-orange-600">Conceitos chave:</strong> Boolean logic, conditional routing, branching workflows.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Tipos de Condições
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg border-l-4 border-orange-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-orange-600">O que é:</strong> String (contains, equals), Number (maior, menor, igual), Boolean, Date comparisons.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-orange-600">Por que aprender:</strong> Validar dados, filtrar registros, aplicar regras de negócio.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-orange-600">Conceitos chave:</strong> Operators (==, !=, >, <, contains), data type comparisons, regex matching.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Múltiplas Condições (AND/OR)
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg border-l-4 border-orange-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-orange-600">O que é:</strong> Combinar condições - AND (todas devem ser verdade), OR (pelo menos uma verdadeira).
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-orange-600">Por que aprender:</strong> Criar filtros complexos (status == "ativo" AND valor > 1000).
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-orange-600">Conceitos chave:</strong> Logical AND, logical OR, condition groups, complex filters.
+            </p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700 flex gap-2">
+        <button onclick="openModal('modal-if')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📖 Ver em Modal
+        </button>
+        <a href="conteudo/if.html" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📄 Página Completa
+        </a>
+        <a href="downloads/if.md" download class="bg-neutral-600 hover:bg-neutral-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📥 Download MD
+        </a>
+      </div>
+    </div>
+
+
+    <!-- Node 8: Switch -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">🎚️</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">8. Switch</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Roteamento com múltiplas saídas</p>
+          </div>
+        </div>
+        <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 rounded-full text-xs font-semibold">
+          Logic
+        </span>
+      </div>
+
+      <ul class="topics-list space-y-0.5">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Switch vs IF
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg border-l-4 border-orange-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-orange-600">O que é:</strong> IF tem 2 saídas (True/False); Switch tem N saídas (0, 1, 2, 3...).
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-orange-600">Por que aprender:</strong> Rotear para caminhos diferentes baseado em categoria, status, prioridade.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-orange-600">Conceitos chave:</strong> Multi-way branching, routing rules, fallback output.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Modos de Operação
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg border-l-4 border-orange-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-orange-600">O que é:</strong> Rules (condições complexas) ou Expression (retorna número da saída 0-3).
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-orange-600">Por que aprender:</strong> Rules para lógica visual; Expression para cálculos dinâmicos.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-orange-600">Conceitos chave:</strong> Rule-based routing, expression evaluation, dynamic output selection.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Fallback Output
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg border-l-4 border-orange-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-orange-600">O que é:</strong> Saída padrão quando item não atende nenhuma regra.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-orange-600">Por que aprender:</strong> Garantir que todos items sejam processados, tratar casos não previstos.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-orange-600">Conceitos chave:</strong> Default routing, error handling, catch-all logic.
+            </p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700 flex gap-2">
+        <button onclick="openModal('modal-switch')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📖 Ver em Modal
+        </button>
+        <a href="conteudo/switch.html" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📄 Página Completa
+        </a>
+        <a href="downloads/switch.md" download class="bg-neutral-600 hover:bg-neutral-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📥 Download MD
+        </a>
+      </div>
+    </div>
+
+
+    <!-- Node 9: Merge -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">🔗</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">9. Merge</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Combine dados de múltiplas fontes</p>
+          </div>
+        </div>
+        <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 rounded-full text-xs font-semibold">
+          Flow
+        </span>
+      </div>
+
+      <ul class="topics-list space-y-0.5">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Modos de Merge
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border-l-4 border-indigo-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">O que é:</strong> Append (juntar tudo), Combine (mesclar por posição), Match (join por campo-chave).
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Por que aprender:</strong> Enriquecer dados, unir resultados de APIs diferentes, criar datasets completos.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Conceitos chave:</strong> Append mode, combine by position, key-based matching, left/inner join.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Múltiplas Entradas
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border-l-4 border-indigo-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">O que é:</strong> Conectar 2+ nodes anteriores ao Merge para combinar seus dados.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Por que aprender:</strong> Processar dados em paralelo e depois unir resultados.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Conceitos chave:</strong> Multiple inputs, parallel processing, data synchronization.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Match Fields (JOIN)
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border-l-4 border-indigo-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">O que é:</strong> Combinar registros que possuem mesmo valor em campo-chave (como SQL JOIN).
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Por que aprender:</strong> Enriquecer dados de clientes com informações de vendas, unir tabelas relacionadas.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Conceitos chave:</strong> Key fields, inner join, left join, data enrichment.
+            </p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700 flex gap-2">
+        <button onclick="openModal('modal-merge')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📖 Ver em Modal
+        </button>
+        <a href="conteudo/merge.html" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📄 Página Completa
+        </a>
+        <a href="downloads/merge.md" download class="bg-neutral-600 hover:bg-neutral-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📥 Download MD
+        </a>
+      </div>
+    </div>
+
+
+    <!-- Node 10: Loop Over Items -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">🔁</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">10. Loop Over Items</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Processe items sequencialmente em loop</p>
+          </div>
+        </div>
+        <span class="px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 rounded-full text-xs font-semibold">
+          Advanced
+        </span>
+      </div>
+
+      <ul class="topics-list space-y-0.5">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Loop vs Split Out
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border-l-4 border-yellow-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">O que é:</strong> Loop processa 1 item por vez em sequência; Split Out processa todos em paralelo.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">Por que aprender:</strong> Use Loop quando ordem importa ou quando precisa de rate limiting.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">Conceitos chave:</strong> Sequential processing, iteration, rate limiting, order preservation.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Batching
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border-l-4 border-yellow-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">O que é:</strong> Processar X items por vez (ex: 100 de cada vez) ao invés de 1 por 1.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">Por que aprender:</strong> Otimizar performance com batch processing, respeitar limites de API.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">Conceitos chave:</strong> Batch size, pagination, API limits, performance optimization.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Casos de Uso
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border-l-4 border-yellow-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">O que é:</strong> Rate limiting (max 1 request/segundo), processamento ordenado, wait entre items.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">Por que aprender:</strong> Evitar bloqueios de API, processar grandes volumes gradualmente.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">Conceitos chave:</strong> Throttling, sequential execution, controlled processing.
+            </p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700 flex gap-2">
+        <button onclick="openModal('modal-loop')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📖 Ver em Modal
+        </button>
+        <a href="conteudo/loop.html" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📄 Página Completa
+        </a>
+        <a href="downloads/loop.md" download class="bg-neutral-600 hover:bg-neutral-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📥 Download MD
+        </a>
+      </div>
+    </div>
+
+
+    <!-- Node 11: Wait -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">⏸️</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">11. Wait</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Pause workflow temporariamente</p>
+          </div>
+        </div>
+        <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 rounded-full text-xs font-semibold">
+          Flow
+        </span>
+      </div>
+
+      <ul class="topics-list space-y-0.5">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Tipos de Wait
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border-l-4 border-indigo-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">O que é:</strong> Duração fixa (5 segundos), Até data específica, Aguardar webhook/evento.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Por que aprender:</strong> Rate limiting, aguardar processamento externo, workflows multi-etapa.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Conceitos chave:</strong> Time-based wait, event-based wait, resumable workflows.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Wait for Webhook
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border-l-4 border-indigo-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">O que é:</strong> Pausar workflow até receber resposta via webhook (aprovação, confirmação).
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Por que aprender:</strong> Criar workflows com interação humana, processos de aprovação.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Conceitos chave:</strong> Human-in-the-loop, approval workflows, webhook resume.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Limites e Timeouts
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border-l-4 border-indigo-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">O que é:</strong> Máximo de espera (timeout após 7 dias), limites de execuções simultâneas aguardando.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Por que aprender:</strong> Planejar workflows de longa duração, entender custos e limites.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Conceitos chave:</strong> Execution limits, timeout handling, long-running workflows.
+            </p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700 flex gap-2">
+        <button onclick="openModal('modal-wait')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📖 Ver em Modal
+        </button>
+        <a href="conteudo/wait.html" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📄 Página Completa
+        </a>
+        <a href="downloads/wait.md" download class="bg-neutral-600 hover:bg-neutral-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📥 Download MD
+        </a>
+      </div>
+    </div>
+
+
+    <!-- Node 12: HTTP Request -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">🌐</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">12. HTTP Request</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Conecte com qualquer API REST</p>
+          </div>
+        </div>
+        <span class="px-3 py-1 bg-pink-100 dark:bg-pink-900/30 text-pink-800 dark:text-pink-300 rounded-full text-xs font-semibold">
+          API
+        </span>
+      </div>
+
+      <ul class="topics-list space-y-0.5">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Métodos HTTP
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-pink-50 dark:bg-pink-900/20 rounded-lg border-l-4 border-pink-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-pink-600">O que é:</strong> GET (buscar), POST (criar), PUT/PATCH (atualizar), DELETE (remover).
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-pink-600">Por que aprender:</strong> Integrar com qualquer API REST do mercado.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-pink-600">Conceitos chave:</strong> REST methods, CRUD operations, idempotency.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Autenticação
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-pink-50 dark:bg-pink-900/20 rounded-lg border-l-4 border-pink-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-pink-600">O que é:</strong> Bearer Token, API Key, Basic Auth, OAuth2.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-pink-600">Por que aprender:</strong> Acessar APIs protegidas com segurança.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-pink-600">Conceitos chave:</strong> Authentication methods, API keys, OAuth flows, headers.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Headers e Body
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-pink-50 dark:bg-pink-900/20 rounded-lg border-l-4 border-pink-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-pink-600">O que é:</strong> Headers (Content-Type, Authorization), Body (JSON, Form, Raw).
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-pink-600">Por que aprender:</strong> Configurar requisições corretamente, enviar dados estruturados.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-pink-600">Conceitos chave:</strong> HTTP headers, request body, JSON payload, content types.
+            </p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700 flex gap-2">
+        <button onclick="openModal('modal-http')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📖 Ver em Modal
+        </button>
+        <a href="conteudo/http.html" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📄 Página Completa
+        </a>
+        <a href="downloads/http.md" download class="bg-neutral-600 hover:bg-neutral-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📥 Download MD
+        </a>
+      </div>
+    </div>
+
+
+    <!-- Node 13: Code -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">💻</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">13. Code</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Execute JavaScript/Python custom</p>
+          </div>
+        </div>
+        <span class="px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 rounded-full text-xs font-semibold">
+          Advanced
+        </span>
+      </div>
+
+      <ul class="topics-list space-y-0.5">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 JavaScript e Python
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border-l-4 border-yellow-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">O que é:</strong> Executar código customizado quando nodes visuais não são suficientes.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">Por que aprender:</strong> Fazer transformações complexas, cálculos avançados, lógica personalizada.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">Conceitos chave:</strong> JavaScript runtime, Python support, custom logic.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Run Once vs Run for Each Item
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border-l-4 border-yellow-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">O que é:</strong> Run Once para todos items; Run for Each processa item por item.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">Por que aprender:</strong> Escolher modo correto conforme necessidade (agregação vs transformação individual).
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">Conceitos chave:</strong> Execution modes, $input.all() vs $input.item, item iteration.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Bibliotecas e Limitações
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border-l-4 border-yellow-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">O que é:</strong> Bibliotecas incluídas (luxon, axios), sandbox seguro, timeout de execução.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">Por que aprender:</strong> Entender capacidades e restrições do ambiente de execução.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">Conceitos chave:</strong> Built-in libraries, sandbox environment, execution timeout.
+            </p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700 flex gap-2">
+        <button onclick="openModal('modal-code')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📖 Ver em Modal
+        </button>
+        <a href="conteudo/code.html" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📄 Página Completa
+        </a>
+        <a href="downloads/code.md" download class="bg-neutral-600 hover:bg-neutral-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📥 Download MD
+        </a>
+      </div>
+    </div>
+
+
+    <!-- Node 14: Execute Workflow -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">🔄</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">14. Execute Workflow</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Chame outros workflows</p>
+          </div>
+        </div>
+        <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 rounded-full text-xs font-semibold">
+          Flow
+        </span>
+      </div>
+
+      <ul class="topics-list space-y-0.5">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Modularização
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border-l-4 border-indigo-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">O que é:</strong> Dividir workflows grandes em módulos menores reutilizáveis.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Por que aprender:</strong> Manter código organizado, reutilizar lógica comum, facilitar manutenção.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Conceitos chave:</strong> Sub-workflows, reusability, modular design.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Passagem de Dados
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border-l-4 border-indigo-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">O que é:</strong> Enviar dados para workflow filho, receber resultado de volta.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Por que aprender:</strong> Criar workflows parametrizáveis, implementar funções reutilizáveis.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Conceitos chave:</strong> Input data, return values, workflow parameters.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Wait for Completion
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border-l-4 border-indigo-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">O que é:</strong> Aguardar workflow terminar (síncrono) ou disparar e continuar (assíncrono).
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Por que aprender:</strong> Controlar execução, processar resultados ou disparar fire-and-forget.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-indigo-600">Conceitos chave:</strong> Synchronous execution, asynchronous calls, workflow orchestration.
+            </p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700 flex gap-2">
+        <button onclick="openModal('modal-execute')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📖 Ver em Modal
+        </button>
+        <a href="conteudo/execute.html" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📄 Página Completa
+        </a>
+        <a href="downloads/execute.md" download class="bg-neutral-600 hover:bg-neutral-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📥 Download MD
+        </a>
+      </div>
+    </div>
+
+
+    <!-- Node 15: Error Trigger -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">⚠️</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">15. Error Trigger</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Capture e trate erros de workflows</p>
+          </div>
+        </div>
+        <span class="px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 rounded-full text-xs font-semibold">
+          Advanced
+        </span>
+      </div>
+
+      <ul class="topics-list space-y-0.5">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Workflow de Tratamento
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border-l-4 border-yellow-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">O que é:</strong> Workflow separado que é executado quando outro workflow falha.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">Por que aprender:</strong> Log de erros, notificações, retry automático, monitoramento centralizado.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">Conceitos chave:</strong> Error handling, workflow monitoring, failure recovery.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Dados do Erro
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border-l-4 border-yellow-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">O que é:</strong> Recebe informações sobre erro (mensagem, stack trace, workflow, node).
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">Por que aprender:</strong> Debug eficiente, criar alertas contextualizados, análise de falhas.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">Conceitos chave:</strong> Error metadata, stack traces, execution context.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Casos de Uso
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border-l-4 border-yellow-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">O que é:</strong> Enviar email quando workflow falha, salvar log em banco, notificar Slack.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">Por que aprender:</strong> Monitoramento proativo, SLA compliance, operação profissional.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-yellow-600">Conceitos chave:</strong> Error notifications, logging, incident management.
+            </p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700 flex gap-2">
+        <button onclick="openModal('modal-error')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📖 Ver em Modal
+        </button>
+        <a href="conteudo/error.html" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📄 Página Completa
+        </a>
+        <a href="downloads/error.md" download class="bg-neutral-600 hover:bg-neutral-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📥 Download MD
+        </a>
+      </div>
+    </div>
+
+
+    <!-- Node 16: Respond to Webhook -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">↩️</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">16. Respond to Webhook</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Envie resposta de volta ao webhook</p>
+          </div>
+        </div>
+        <span class="px-3 py-1 bg-pink-100 dark:bg-pink-900/30 text-pink-800 dark:text-pink-300 rounded-full text-xs font-semibold">
+          API
+        </span>
+      </div>
+
+      <ul class="topics-list space-y-0.5">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Status Codes
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-pink-50 dark:bg-pink-900/20 rounded-lg border-l-4 border-pink-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-pink-600">O que é:</strong> Retornar status HTTP correto (200 sucesso, 400 erro, 500 falha).
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-pink-600">Por que aprender:</strong> Comunicar resultado da operação para sistema chamador.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-pink-600">Conceitos chave:</strong> HTTP status codes, success/error responses, API standards.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Response Body e Headers
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-pink-50 dark:bg-pink-900/20 rounded-lg border-l-4 border-pink-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-pink-600">O que é:</strong> Enviar dados JSON, configurar headers customizados (Content-Type, CORS).
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-pink-600">Por que aprender:</strong> Criar APIs completas com N8N, integrações bidirecionais.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-pink-600">Conceitos chave:</strong> Response payload, custom headers, CORS configuration.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Respond Imediatamente vs Após Processamento
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-pink-50 dark:bg-pink-900/20 rounded-lg border-l-4 border-pink-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-pink-600">O que é:</strong> Responder antes de processar (202 Accepted) ou após completar workflow.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-pink-600">Por que aprender:</strong> Evitar timeouts, implementar processamento assíncrono.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-pink-600">Conceitos chave:</strong> Async processing, early response, timeout prevention.
+            </p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700 flex gap-2">
+        <button onclick="openModal('modal-respond')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📖 Ver em Modal
+        </button>
+        <a href="conteudo/respond.html" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📄 Página Completa
+        </a>
+        <a href="downloads/respond.md" download class="bg-neutral-600 hover:bg-neutral-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📥 Download MD
+        </a>
+      </div>
+    </div>
+
+
+    <!-- Node 17: AI Agent -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">🤖</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">17. AI Agent</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Crie agentes inteligentes com ferramentas</p>
+          </div>
+        </div>
+        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-full text-xs font-semibold">
+          AI
+        </span>
+      </div>
+
+      <ul class="topics-list space-y-0.5">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Agent vs Chat Model
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-purple-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-purple-600">O que é:</strong> Chat Model apenas conversa; Agent pode usar TOOLS (buscar dados, executar ações).
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-purple-600">Por que aprender:</strong> Criar assistentes que interagem com sistemas reais, não só conversam.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-purple-600">Conceitos chave:</strong> Tool calling, function calling, agentic behavior.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Tools (Ferramentas)
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-purple-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-purple-600">O que é:</strong> Conectar sub-workflows que AI pode chamar (buscar cliente, criar ticket, enviar email).
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-purple-600">Por que aprender:</strong> Dar superpoderes para AI interagir com seus sistemas.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-purple-600">Conceitos chave:</strong> Tool definition, workflow tools, AI function calling.
+            </p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-1 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 System Prompt e Configuração
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-purple-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-purple-600">O que é:</strong> Instruções de comportamento, escolha de modelo (GPT-4, Claude), temperatura, tokens.
+            </p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300">
+              <strong class="text-purple-600">Por que aprender:</strong> Controlar personalidade e capacidades do agent.
+            </p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300">
+              <strong class="text-purple-600">Conceitos chave:</strong> System prompts, model selection, temperature, max tokens.
+            </p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700 flex gap-2">
+        <button onclick="openModal('modal-agent')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📖 Ver em Modal
+        </button>
+        <a href="conteudo/agent.html" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📄 Página Completa
+        </a>
+        <a href="downloads/agent.md" download class="bg-neutral-600 hover:bg-neutral-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+          📥 Download MD
+        </a>
+      </div>
+    </div>
