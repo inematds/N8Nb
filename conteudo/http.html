@@ -3,24 +3,250 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HTTP Request - N8N Fundamentos</title>
+  <title>HTTP Request - Guia Completo | N8N Fundamentos</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>body { font-family: 'Inter', sans-serif; }</style>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    .code-block { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem;
+                  overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.5; }
+  </style>
 </head>
-<body class="bg-neutral-50">
-  <nav class="bg-white shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 py-4">
-      <a href="../iniciante.html" class="text-2xl font-bold text-blue-600">← Voltar</a>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../iniciante.html" class="text-2xl font-bold text-blue-600 dark:text-blue-400 flex items-center gap-2">
+          <span>←</span><span class="text-3xl">🌍</span><span>HTTP Request</span>
+        </a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
     </div>
   </nav>
-  <div class="max-w-5xl mx-auto px-4 py-16">
-    <div class="text-center">
-      <div class="text-6xl mb-4">🌍</div>
-      <h1 class="text-4xl font-bold mb-4">HTTP Request</h1>
-      <p class="text-xl text-neutral-600 mb-8">Conteúdo em desenvolvimento</p>
-      <a href="../iniciante.html" class="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700">← Voltar para Trilha</a>
+
+  <section class="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 py-20">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="text-7xl mb-6">🌍</div>
+      <h1 class="text-5xl font-bold mb-6">HTTP Request</h1>
+      <p class="text-2xl mb-8 text-white/90">O Conector Universal da Web</p>
+      <div class="flex gap-4 justify-center flex-wrap">
+        <span class="px-5 py-2 bg-white/20 rounded-lg backdrop-blur-sm text-lg">🔗 Core Node</span>
+        <span class="px-5 py-2 bg-white/20 rounded-lg backdrop-blur-sm text-lg">🌐 API Calls</span>
+        <span class="px-5 py-2 bg-white/20 rounded-lg backdrop-blur-sm text-lg">⚡ Universal</span>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-4 py-16">
+    <div class="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-10 mb-10">
+      <div class="flex items-center mb-6">
+        <span class="text-5xl mr-4">📚</span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">O que é HTTP Request?</h2>
+      </div>
+      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-blue-600 dark:text-blue-400">HTTP Request</strong> é o node mais versátil do N8N. Ele permite fazer requisições HTTP/HTTPS para <em>qualquer API REST do mundo</em>, transformando N8N em um hub universal de integração.
+      </p>
+      <div class="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-xl p-6 mb-6">
+        <p class="text-lg text-neutral-800 dark:text-neutral-200 font-semibold mb-3">🎯 Casos de Uso Principais:</p>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg">
+            <p class="font-bold text-blue-700 dark:text-blue-400 mb-2">🔗 Integração com APIs</p>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Conecte-se a qualquer API REST (OpenAI, Stripe, Notion, Google, etc)</p>
+          </div>
+          <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg">
+            <p class="font-bold text-blue-700 dark:text-blue-400 mb-2">📊 Buscar Dados</p>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Obtenha informações de APIs públicas ou privadas</p>
+          </div>
+          <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg">
+            <p class="font-bold text-blue-700 dark:text-blue-400 mb-2">📤 Enviar Dados</p>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">POST/PUT dados para sistemas externos via API</p>
+          </div>
+          <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg">
+            <p class="font-bold text-blue-700 dark:text-blue-400 mb-2">🔄 Sincronizações</p>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Mantenha sistemas diferentes sincronizados</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl p-8 mb-10 border-2 border-indigo-200 dark:border-indigo-800">
+      <div class="flex items-center mb-6">
+        <span class="text-5xl mr-4">⚙️</span>
+        <h3 class="text-3xl font-bold text-indigo-900 dark:text-indigo-300">Métodos HTTP</h3>
+      </div>
+      <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-6">Os <strong>5 métodos principais</strong> que você vai usar:</p>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-white dark:bg-neutral-800 rounded-lg p-5 shadow">
+          <div class="flex items-center mb-3">
+            <span class="text-3xl mr-3">📖</span>
+            <h4 class="text-xl font-bold text-green-700 dark:text-green-400">GET</h4>
+          </div>
+          <p class="text-sm text-neutral-700 dark:text-neutral-300 mb-2"><strong>Uso:</strong> Buscar/ler dados</p>
+          <p class="text-xs text-neutral-600 dark:text-neutral-400">Exemplo: Buscar lista de clientes, obter clima, consultar estoque</p>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 rounded-lg p-5 shadow">
+          <div class="flex items-center mb-3">
+            <span class="text-3xl mr-3">✍️</span>
+            <h4 class="text-xl font-bold text-blue-700 dark:text-blue-400">POST</h4>
+          </div>
+          <p class="text-sm text-neutral-700 dark:text-neutral-300 mb-2"><strong>Uso:</strong> Criar novos recursos</p>
+          <p class="text-xs text-neutral-600 dark:text-neutral-400">Exemplo: Criar cliente, enviar mensagem, gerar documento</p>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 rounded-lg p-5 shadow">
+          <div class="flex items-center mb-3">
+            <span class="text-3xl mr-3">♻️</span>
+            <h4 class="text-xl font-bold text-amber-700 dark:text-amber-400">PUT</h4>
+          </div>
+          <p class="text-sm text-neutral-700 dark:text-neutral-300 mb-2"><strong>Uso:</strong> Atualizar recurso completo</p>
+          <p class="text-xs text-neutral-600 dark:text-neutral-400">Exemplo: Substituir dados de cliente inteiro</p>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 rounded-lg p-5 shadow">
+          <div class="flex items-center mb-3">
+            <span class="text-3xl mr-3">🔧</span>
+            <h4 class="text-xl font-bold text-purple-700 dark:text-purple-400">PATCH</h4>
+          </div>
+          <p class="text-sm text-neutral-700 dark:text-neutral-300 mb-2"><strong>Uso:</strong> Atualizar campos específicos</p>
+          <p class="text-xs text-neutral-600 dark:text-neutral-400">Exemplo: Mudar apenas email do cliente</p>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 rounded-lg p-5 shadow col-span-2">
+          <div class="flex items-center mb-3">
+            <span class="text-3xl mr-3">🗑️</span>
+            <h4 class="text-xl font-bold text-red-700 dark:text-red-400">DELETE</h4>
+          </div>
+          <p class="text-sm text-neutral-700 dark:text-neutral-300 mb-2"><strong>Uso:</strong> Remover recursos</p>
+          <p class="text-xs text-neutral-600 dark:text-neutral-400">Exemplo: Deletar cliente, remover arquivo, cancelar pedido</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-2xl p-8 mb-10 border-2 border-blue-200 dark:border-blue-800">
+      <div class="flex items-center mb-6">
+        <span class="text-5xl mr-4">💡</span>
+        <h3 class="text-3xl font-bold text-blue-900 dark:text-blue-300">Exemplos Práticos</h3>
+      </div>
+      <div class="grid gap-6">
+        <div class="bg-white dark:bg-neutral-800 rounded-lg p-5 shadow">
+          <div class="flex items-center justify-between mb-3">
+            <p class="font-bold text-blue-900 dark:text-blue-300">GET: Buscar CEP (ViaCEP)</p>
+            <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded text-xs font-semibold">BÁSICO</span>
+          </div>
+          <div class="code-block mb-3">
+Method: GET
+URL: https://viacep.com.br/ws/{{$json.cep}}/json/
+
+// Retorna: logradouro, bairro, cidade, estado</div>
+          <p class="text-xs text-neutral-600 dark:text-neutral-400">Útil para: Autocompletar endereços em formulários</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 rounded-lg p-5 shadow">
+          <div class="flex items-center justify-between mb-3">
+            <p class="font-bold text-blue-900 dark:text-blue-300">POST: Enviar Mensagem Slack</p>
+            <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded text-xs font-semibold">COMUM</span>
+          </div>
+          <div class="code-block mb-3">
+Method: POST
+URL: https://hooks.slack.com/services/YOUR/WEBHOOK/URL
+Headers:
+  Content-Type: application/json
+Body (JSON):
+{
+  "text": "🚀 Novo lead: {{$json.name}}",
+  "channel": "#vendas"
+}</div>
+          <p class="text-xs text-neutral-600 dark:text-neutral-400">Útil para: Notificações em tempo real</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 rounded-lg p-5 shadow">
+          <div class="flex items-center justify-between mb-3">
+            <p class="font-bold text-blue-900 dark:text-blue-300">POST: Criar Tarefa no Notion</p>
+            <span class="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded text-xs font-semibold">AVANÇADO</span>
+          </div>
+          <div class="code-block mb-3">
+Method: POST
+URL: https://api.notion.com/v1/pages
+Headers:
+  Authorization: Bearer {{$credentials.notionApiKey}}
+  Notion-Version: 2022-06-28
+Body (JSON):
+{
+  "parent": {"database_id": "{{$json.dbId}}"},
+  "properties": {
+    "Name": {"title": [{"text": {"content": "{{$json.task}}"}}]},
+    "Status": {"select": {"name": "To Do"}}
+  }
+}</div>
+          <p class="text-xs text-neutral-600 dark:text-neutral-400">Útil para: Automação de projeto management</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-8 mb-10">
+      <div class="flex items-center mb-6">
+        <span class="text-5xl mr-4">💎</span>
+        <h3 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100">Best Practices</h3>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-green-50 dark:bg-green-900/20 rounded-lg p-5 border-l-4 border-green-500">
+          <p class="font-bold text-green-900 dark:text-green-300 mb-2">✅ FAÇA</p>
+          <ul class="space-y-2 text-sm text-neutral-700 dark:text-neutral-300">
+            <li>• Use <strong>Credentials</strong> para API keys</li>
+            <li>• Configure <strong>timeout</strong> adequado</li>
+            <li>• Ative <strong>retry on fail</strong> (3x)</li>
+            <li>• Valide responses com IF</li>
+            <li>• Teste com dados reais</li>
+          </ul>
+        </div>
+        <div class="bg-red-50 dark:bg-red-900/20 rounded-lg p-5 border-l-4 border-red-500">
+          <p class="font-bold text-red-900 dark:text-red-300 mb-2">❌ NÃO FAÇA</p>
+          <ul class="space-y-2 text-sm text-neutral-700 dark:text-neutral-300">
+            <li>• Não exponha API keys no código</li>
+            <li>• Não ignore erros de autenticação</li>
+            <li>• Não use GET para modificar dados</li>
+            <li>• Não esqueça rate limits</li>
+            <li>• Não faça loops infinitos</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-gradient-to-br from-blue-600 to-indigo-600 text-white rounded-2xl p-10 text-center shadow-2xl">
+      <span class="text-6xl mb-4 block">🎓</span>
+      <h3 class="text-3xl font-bold mb-4">Domine HTTP Request!</h3>
+      <p class="text-xl mb-8 text-white/90">Com este node, você conecta N8N a <strong>qualquer API do mundo</strong>!</p>
+      <div class="flex gap-4 justify-center flex-wrap">
+        <a href="../iniciante.html" class="bg-white text-blue-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors shadow-lg">← Voltar</a>
+        <a href="../downloads/http.md" download class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-colors">📥 Download</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-neutral-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-neutral-400">&copy; 2025 N8N Academy</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark'); themeToggleLightIcon.classList.remove('hidden');
+    } else { themeToggleDarkIcon.classList.remove('hidden'); }
+    themeToggleBtn.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark'); localStorage.setItem('color-theme', 'light');
+      } else { document.documentElement.classList.add('dark'); localStorage.setItem('color-theme', 'dark'); }
+    });
+  </script>
 </body>
 </html>
