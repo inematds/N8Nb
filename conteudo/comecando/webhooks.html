@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webhooks - Tempo Real | N8N Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>body { font-family: 'Inter', sans-serif; } .code-block { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 0.75rem; font-family: monospace; }</style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../../comecando.html" class="text-2xl font-bold text-amber-600 dark:text-amber-400 flex items-center gap-2">
+          <span>←</span><span class="text-3xl">🪝</span><span>Webhooks</span>
+        </a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0z" fill-rule="evenodd"></path></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-gradient-to-br from-pink-600 via-rose-600 to-red-600 py-24">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="text-8xl mb-8">🪝</div>
+      <h1 class="text-6xl font-bold mb-6">Webhooks</h1>
+      <p class="text-3xl mb-4 text-white/90">Comunicação em Tempo Real</p>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto">Receba notificações instantâneas quando eventos acontecem</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 py-20">
+
+    <!-- O QUE SÃO WEBHOOKS -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📚</span>
+        <h2 class="text-5xl font-bold text-neutral-900 dark:text-neutral-100">O que são Webhooks?</h2>
+      </div>
+      <p class="text-2xl text-neutral-700 dark:text-neutral-300 mb-8">
+        Uma <strong>URL que recebe dados quando algo acontece</strong>. O sistema te AVISA, você não precisa perguntar.
+      </p>
+      <div class="bg-pink-50 dark:bg-pink-900/20 p-8 rounded-xl border-2 border-pink-200 dark:border-pink-800">
+        <p class="text-xl text-neutral-700 dark:text-neutral-300">
+          <strong>Analogia:</strong> É como receber uma notificação no celular. Você não fica verificando o app toda hora - ele te avisa quando algo novo acontece.
+        </p>
+      </div>
+    </div>
+
+    <!-- PUSH VS PULL -->
+    <div class="bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-900/20 dark:to-rose-900/20 rounded-3xl p-12 mb-12 border-2 border-pink-200 dark:border-pink-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🔄</span>
+        <h3 class="text-4xl font-bold text-pink-900 dark:text-pink-300">Push vs Pull</h3>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-white dark:bg-neutral-800 p-8 rounded-2xl shadow-lg">
+          <p class="text-3xl mb-4">📥</p>
+          <p class="text-2xl font-bold text-green-700 dark:text-green-400 mb-3">PUSH (Webhook)</p>
+          <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-4">Sistema te avisa quando algo muda</p>
+          <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+            <li>✅ Instantâneo</li>
+            <li>✅ Eficiente</li>
+            <li>✅ Não gasta execuções</li>
+          </ul>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-8 rounded-2xl shadow-lg">
+          <p class="text-3xl mb-4">🔍</p>
+          <p class="text-2xl font-bold text-yellow-700 dark:text-yellow-400 mb-3">PULL (Polling)</p>
+          <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-4">Você pergunta repetidamente se algo mudou</p>
+          <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+            <li>⚠️ Delay (1-15 min típico)</li>
+            <li>⚠️ Consome recursos</li>
+            <li>⚠️ Gasta execuções</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEBHOOK VS POLLING -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">💰</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Impacto no Custo</h3>
+      </div>
+      <div class="bg-red-50 dark:bg-red-900/20 p-8 rounded-xl mb-6">
+        <p class="text-xl font-bold text-red-800 dark:text-red-300 mb-2">❌ Polling a cada 1 minuto:</p>
+        <p class="text-lg text-neutral-700 dark:text-neutral-300">60 execuções/hora × 24h = <strong>1.440 execuções/dia</strong></p>
+        <p class="text-sm text-neutral-600 dark:text-neutral-400">Por mês: ~43.200 execuções (só para verificar!)</p>
+      </div>
+      <div class="bg-green-50 dark:bg-green-900/20 p-8 rounded-xl">
+        <p class="text-xl font-bold text-green-800 dark:text-green-300 mb-2">✅ Webhook:</p>
+        <p class="text-lg text-neutral-700 dark:text-neutral-300">Executa <strong>apenas quando evento acontece</strong></p>
+        <p class="text-sm text-neutral-600 dark:text-neutral-400">10 eventos/dia = 10 execuções. 4.320x mais eficiente!</p>
+      </div>
+    </div>
+
+    <!-- SEGURANÇA -->
+    <div class="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 rounded-3xl p-12 mb-12 border-2 border-amber-200 dark:border-amber-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🔐</span>
+        <h3 class="text-4xl font-bold text-amber-900 dark:text-amber-300">Segurança de Webhooks</h3>
+      </div>
+      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6">
+        ⚠️ <strong>Qualquer pessoa pode chamar seu webhook!</strong> Sempre valide:
+      </p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-amber-800 dark:text-amber-300 mb-3">🔑 Métodos de Validação</p>
+          <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+            <li>→ <strong>Secret Token:</strong> Header com token secreto</li>
+            <li>→ <strong>HMAC Signature:</strong> Assinatura criptográfica</li>
+            <li>→ <strong>IP Whitelist:</strong> Aceitar só IPs conhecidos</li>
+            <li>→ <strong>Validar Payload:</strong> Checar estrutura dos dados</li>
+          </ul>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-800 dark:text-red-300 mb-3">⚠️ Riscos sem Validação</p>
+          <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+            <li>→ Dados falsos injetados</li>
+            <li>→ Spam de requisições</li>
+            <li>→ Ataques de replay</li>
+            <li>→ Execuções desnecessárias</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASOS DE USO -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🎯</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Casos de Uso Práticos</h3>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="p-6 bg-pink-50 dark:bg-pink-900/20 rounded-xl">
+          <p class="text-xl font-bold text-pink-800 dark:text-pink-300 mb-2">📝 Formulários Web</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Usuário submete form → webhook recebe → processa dados</p>
+        </div>
+        <div class="p-6 bg-green-50 dark:bg-green-900/20 rounded-xl">
+          <p class="text-xl font-bold text-green-800 dark:text-green-300 mb-2">💳 Pagamentos (Stripe)</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Pagamento confirmado → webhook notifica → atualiza sistema</p>
+        </div>
+        <div class="p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
+          <p class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-2">💬 Mensagens (Slack)</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Nova mensagem → webhook dispara → automação executa</p>
+        </div>
+        <div class="p-6 bg-purple-50 dark:bg-purple-900/20 rounded-xl">
+          <p class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-2">🔧 CI/CD (GitHub)</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Push no repo → webhook avisa → deploy automático</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="bg-gradient-to-br from-pink-600 to-rose-600 text-white rounded-3xl p-12 text-center">
+      <h3 class="text-4xl font-bold mb-4">🎯 Pronto para o próximo passo?</h3>
+      <p class="text-xl mb-8">Agora aprenda sobre Lógica e Condicionais - como tomar decisões nos workflows.</p>
+      <a href="logica.html" class="inline-block bg-white text-pink-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors">
+        Próximo: Lógica →
+      </a>
+    </div>
+
+  </section>
+
+  <footer class="bg-neutral-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-neutral-400">&copy; 2025 N8N Academy - Webhooks</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const d = document.getElementById('theme-toggle-dark-icon');
+    const l = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) { document.documentElement.classList.add('dark'); l.classList.remove('hidden'); } else { d.classList.remove('hidden'); }
+    themeToggleBtn.addEventListener('click', function() { d.classList.toggle('hidden'); l.classList.toggle('hidden'); document.documentElement.classList.toggle('dark'); localStorage.setItem('color-theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light'); });
+  </script>
+</body>
+</html>

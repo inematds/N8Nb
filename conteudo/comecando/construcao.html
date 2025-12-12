@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Construção e Testes | N8N Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>body { font-family: 'Inter', sans-serif; } .code-block { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 0.75rem; font-family: monospace; }</style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../../comecando.html" class="text-2xl font-bold text-amber-600 dark:text-amber-400 flex items-center gap-2">
+          <span>←</span><span class="text-3xl">🔧</span><span>Construção</span>
+        </a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0z" fill-rule="evenodd"></path></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-gradient-to-br from-orange-600 via-red-500 to-pink-600 py-24">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="text-8xl mb-8">🔧</div>
+      <h1 class="text-6xl font-bold mb-6">Construção e Testes</h1>
+      <p class="text-3xl mb-4 text-white/90">Falhe rápido, aprenda rápido</p>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto">Teste cedo, descubra problemas cedo, corrija barato</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 py-20">
+
+    <!-- FALHAR RÁPIDO -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">⚡</span>
+        <h2 class="text-5xl font-bold text-neutral-900 dark:text-neutral-100">Falhar Rápido</h2>
+      </div>
+      <p class="text-2xl text-neutral-700 dark:text-neutral-300 mb-8">
+        <strong>Teste cedo, descubra problemas cedo.</strong> Não espere workflow "perfeito" para testar.
+      </p>
+      <div class="grid md:grid-cols-2 gap-8 mb-8">
+        <div class="bg-red-50 dark:bg-red-900/20 p-8 rounded-xl border-l-4 border-red-500">
+          <p class="text-xl font-bold text-red-800 dark:text-red-300 mb-2">❌ Abordagem Ruim</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Construir workflow inteiro → testar no final → descobrir que a base está errada</p>
+        </div>
+        <div class="bg-green-50 dark:bg-green-900/20 p-8 rounded-xl border-l-4 border-green-500">
+          <p class="text-xl font-bold text-green-800 dark:text-green-300 mb-2">✅ Abordagem Boa</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Construir 1 node → testar → funciona? → próximo node → testar → repetir</p>
+        </div>
+      </div>
+      <div class="p-6 bg-amber-100 dark:bg-amber-900/30 rounded-xl">
+        <p class="text-lg font-semibold text-amber-900 dark:text-amber-200">
+          💡 Erro no início é fácil de corrigir. Erro no final é caro e frustrante.
+        </p>
+      </div>
+    </div>
+
+    <!-- TESTAR LIMITES -->
+    <div class="bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 rounded-3xl p-12 mb-12 border-2 border-orange-200 dark:border-orange-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🧪</span>
+        <h3 class="text-4xl font-bold text-orange-900 dark:text-orange-300">Testar Limites</h3>
+      </div>
+      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6">
+        Produção sempre traz casos que teste básico não pega. <strong>Antecipe!</strong>
+      </p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-orange-800 dark:text-orange-300 mb-3">🔍 O que testar?</p>
+          <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+            <li>→ Dados vazios ou nulos</li>
+            <li>→ Caracteres especiais (ç, é, emoji)</li>
+            <li>→ Volumes grandes (10.000 items)</li>
+            <li>→ Timeouts e lentidão</li>
+            <li>→ APIs fora do ar</li>
+          </ul>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-800 dark:text-red-300 mb-3">⚠️ Edge Cases Comuns</p>
+          <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+            <li>→ Email sem assunto</li>
+            <li>→ Nome com apenas 1 palavra</li>
+            <li>→ Preço negativo ou zero</li>
+            <li>→ Data em formato errado</li>
+            <li>→ Campo obrigatório faltando</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- USAR LOGS -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📝</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Usar Logs Efetivamente</h3>
+      </div>
+      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6">
+        Logs são sua <strong>câmera de segurança</strong>. Sem logs, debug é adivinhação.
+      </p>
+      <div class="bg-neutral-100 dark:bg-neutral-700 p-8 rounded-xl mb-8">
+        <p class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-4">No N8N:</p>
+        <ul class="space-y-2 text-lg text-neutral-700 dark:text-neutral-300">
+          <li>✅ <strong>Execution Log:</strong> Histórico de todas as execuções</li>
+          <li>✅ <strong>Node Output:</strong> Dados de saída de cada node</li>
+          <li>✅ <strong>Error Messages:</strong> Detalhes quando falha</li>
+          <li>✅ <strong>Pin Data:</strong> Fixar dados para debug</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- DEBUG PASSO A PASSO -->
+    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-3xl p-12 mb-12 border-2 border-blue-200 dark:border-blue-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🔍</span>
+        <h3 class="text-4xl font-bold text-blue-900 dark:text-blue-300">Debug Passo a Passo</h3>
+      </div>
+      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6">
+        Executar node por node, verificando output de cada um:
+      </p>
+      <div class="space-y-4">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl border-l-4 border-blue-500">
+          <p class="text-lg font-bold text-blue-800 dark:text-blue-300">1. Execute só o primeiro node</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Verifique se os dados estão corretos</p>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl border-l-4 border-blue-500">
+          <p class="text-lg font-bold text-blue-800 dark:text-blue-300">2. Use "Pin Data"</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Fixe os dados para não precisar re-executar</p>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl border-l-4 border-blue-500">
+          <p class="text-lg font-bold text-blue-800 dark:text-blue-300">3. Execute o próximo node</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Compare: esperado vs resultado real</p>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl border-l-4 border-blue-500">
+          <p class="text-lg font-bold text-blue-800 dark:text-blue-300">4. Repita até encontrar o problema</p>
+          <p class="text-neutral-600 dark:text-neutral-400">O erro está entre o último que funcionou e o primeiro que falhou</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MELHORIA CONTÍNUA -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🔄</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Melhoria Contínua</h3>
+      </div>
+      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6">
+        Workflow nunca está "pronto". <strong>Monitore, colete feedback, itere.</strong>
+      </p>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">📊</p>
+          <p class="text-lg font-bold text-green-800 dark:text-green-300">Monitore</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Taxa de sucesso, tempo de execução, erros</p>
+        </div>
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">💬</p>
+          <p class="text-lg font-bold text-blue-800 dark:text-blue-300">Feedback</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Usuários reportam problemas e sugestões</p>
+        </div>
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">🔧</p>
+          <p class="text-lg font-bold text-purple-800 dark:text-purple-300">Itere</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Melhore baseado em dados reais</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="bg-gradient-to-br from-orange-600 to-red-600 text-white rounded-3xl p-12 text-center">
+      <h3 class="text-4xl font-bold mb-4">🎯 Pronto para o último módulo?</h3>
+      <p class="text-xl mb-8">Agora aprenda sobre Monetização e ROI - como vender resultados.</p>
+      <a href="monetizacao.html" class="inline-block bg-white text-orange-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors">
+        Próximo: Monetização →
+      </a>
+    </div>
+
+  </section>
+
+  <footer class="bg-neutral-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-neutral-400">&copy; 2025 N8N Academy - Construção e Testes</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const d = document.getElementById('theme-toggle-dark-icon');
+    const l = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) { document.documentElement.classList.add('dark'); l.classList.remove('hidden'); } else { d.classList.remove('hidden'); }
+    themeToggleBtn.addEventListener('click', function() { d.classList.toggle('hidden'); l.classList.toggle('hidden'); document.documentElement.classList.toggle('dark'); localStorage.setItem('color-theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light'); });
+  </script>
+</body>
+</html>

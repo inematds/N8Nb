@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APIs - Conectando Sistemas | N8N Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .code-block { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 0.75rem; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.7; }
+  </style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../../comecando.html" class="text-2xl font-bold text-amber-600 dark:text-amber-400 flex items-center gap-2">
+          <span>←</span><span class="text-3xl">🌐</span><span>APIs</span>
+        </a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-gradient-to-br from-indigo-600 via-blue-600 to-cyan-600 py-24">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="text-8xl mb-8">🌐</div>
+      <h1 class="text-6xl font-bold mb-6">APIs</h1>
+      <p class="text-3xl mb-4 text-white/90">A Ponte Entre Sistemas</p>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto">N8N é basicamente um orquestrador de APIs. Entender APIs é entender automação.</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 py-20">
+
+    <!-- O QUE SÃO APIs -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📚</span>
+        <h2 class="text-5xl font-bold text-neutral-900 dark:text-neutral-100">O que são APIs?</h2>
+      </div>
+      <p class="text-2xl text-neutral-700 dark:text-neutral-300 mb-8 leading-relaxed">
+        <strong>Application Programming Interface</strong> - forma padronizada de sistemas conversarem entre si.
+      </p>
+      <div class="bg-indigo-50 dark:bg-indigo-900/20 p-8 rounded-xl border-2 border-indigo-200 dark:border-indigo-800 mb-8">
+        <p class="text-xl text-neutral-700 dark:text-neutral-300">
+          <strong>Analogia:</strong> API é como o garçom de um restaurante. Você (cliente) faz um pedido, o garçom (API) leva para a cozinha (servidor) e traz a resposta (dados).
+        </p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">📤</p>
+          <p class="text-lg font-semibold text-blue-800 dark:text-blue-300">Requisição</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Você pede algo</p>
+        </div>
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">⚙️</p>
+          <p class="text-lg font-semibold text-purple-800 dark:text-purple-300">Processamento</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Servidor processa</p>
+        </div>
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">📥</p>
+          <p class="text-lg font-semibold text-green-800 dark:text-green-300">Resposta</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Dados retornam</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MÉTODOS HTTP -->
+    <div class="bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 rounded-3xl p-12 mb-12 border-2 border-indigo-200 dark:border-indigo-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🔧</span>
+        <h3 class="text-4xl font-bold text-indigo-900 dark:text-indigo-300">Métodos HTTP</h3>
+      </div>
+      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6">
+        Cada método indica uma <strong>ação diferente</strong>. Use o método certo!
+      </p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <div class="flex items-center mb-3">
+            <span class="px-3 py-1 bg-green-500 text-white font-bold rounded mr-3">GET</span>
+            <span class="text-xl font-bold text-neutral-900 dark:text-neutral-100">Buscar dados</span>
+          </div>
+          <p class="text-neutral-600 dark:text-neutral-400 mb-2">Lê informações sem modificar nada</p>
+          <code class="text-sm bg-neutral-100 dark:bg-neutral-700 px-2 py-1 rounded">GET /usuarios</code>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <div class="flex items-center mb-3">
+            <span class="px-3 py-1 bg-blue-500 text-white font-bold rounded mr-3">POST</span>
+            <span class="text-xl font-bold text-neutral-900 dark:text-neutral-100">Criar registro</span>
+          </div>
+          <p class="text-neutral-600 dark:text-neutral-400 mb-2">Envia dados para criar algo novo</p>
+          <code class="text-sm bg-neutral-100 dark:bg-neutral-700 px-2 py-1 rounded">POST /usuarios</code>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <div class="flex items-center mb-3">
+            <span class="px-3 py-1 bg-yellow-500 text-white font-bold rounded mr-3">PUT/PATCH</span>
+            <span class="text-xl font-bold text-neutral-900 dark:text-neutral-100">Atualizar</span>
+          </div>
+          <p class="text-neutral-600 dark:text-neutral-400 mb-2">Modifica um registro existente</p>
+          <code class="text-sm bg-neutral-100 dark:bg-neutral-700 px-2 py-1 rounded">PUT /usuarios/123</code>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <div class="flex items-center mb-3">
+            <span class="px-3 py-1 bg-red-500 text-white font-bold rounded mr-3">DELETE</span>
+            <span class="text-xl font-bold text-neutral-900 dark:text-neutral-100">Remover</span>
+          </div>
+          <p class="text-neutral-600 dark:text-neutral-400 mb-2">Apaga um registro</p>
+          <code class="text-sm bg-neutral-100 dark:bg-neutral-700 px-2 py-1 rounded">DELETE /usuarios/123</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- HEADERS E AUTH -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🔐</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Headers e Autenticação</h3>
+      </div>
+      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6">
+        Headers carregam metadados importantes como tipo de conteúdo e credenciais:
+      </p>
+      <div class="code-block mb-8">
+// Headers comuns
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
+Accept: application/json
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl">
+          <p class="text-lg font-bold text-purple-800 dark:text-purple-300 mb-3">🔑 Tipos de Autenticação</p>
+          <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+            <li>→ <strong>Bearer Token:</strong> Token no header Authorization</li>
+            <li>→ <strong>API Key:</strong> Chave no header ou query param</li>
+            <li>→ <strong>Basic Auth:</strong> Usuário:senha em base64</li>
+            <li>→ <strong>OAuth 2.0:</strong> Fluxo completo de autorização</li>
+          </ul>
+        </div>
+        <div class="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl">
+          <p class="text-lg font-bold text-amber-800 dark:text-amber-300 mb-3">⚠️ Erros Comuns</p>
+          <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+            <li>→ Esquecer o "Bearer " antes do token</li>
+            <li>→ Content-Type errado (form vs json)</li>
+            <li>→ Token expirado</li>
+            <li>→ Escopo insuficiente</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATUS CODES -->
+    <div class="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-3xl p-12 mb-12 border-2 border-green-200 dark:border-green-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📊</span>
+        <h3 class="text-4xl font-bold text-green-900 dark:text-green-300">Status Codes</h3>
+      </div>
+      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6">
+        O código de status diz o que aconteceu. Debug sempre começa aqui:
+      </p>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-2xl font-bold text-green-600 mb-2">2xx - Sucesso</p>
+          <ul class="space-y-1 text-neutral-600 dark:text-neutral-400">
+            <li><strong>200</strong> - OK</li>
+            <li><strong>201</strong> - Criado</li>
+            <li><strong>204</strong> - Sem conteúdo</li>
+          </ul>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-2xl font-bold text-yellow-600 mb-2">4xx - Erro do Cliente</p>
+          <ul class="space-y-1 text-neutral-600 dark:text-neutral-400">
+            <li><strong>400</strong> - Requisição inválida</li>
+            <li><strong>401</strong> - Não autorizado</li>
+            <li><strong>403</strong> - Proibido</li>
+            <li><strong>404</strong> - Não encontrado</li>
+            <li><strong>429</strong> - Muitas requisições</li>
+          </ul>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-2xl font-bold text-red-600 mb-2">5xx - Erro do Servidor</p>
+          <ul class="space-y-1 text-neutral-600 dark:text-neutral-400">
+            <li><strong>500</strong> - Erro interno</li>
+            <li><strong>502</strong> - Gateway ruim</li>
+            <li><strong>503</strong> - Serviço indisponível</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-8 p-6 bg-blue-100 dark:bg-blue-900/30 rounded-xl">
+        <p class="text-lg font-semibold text-blue-900 dark:text-blue-200">
+          💡 Regra geral: 2xx = seu código está OK | 4xx = erro seu | 5xx = erro do servidor
+        </p>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="bg-gradient-to-br from-indigo-600 to-blue-600 text-white rounded-3xl p-12 text-center">
+      <h3 class="text-4xl font-bold mb-4">🎯 Pronto para o próximo passo?</h3>
+      <p class="text-xl mb-8">Agora aprenda sobre Webhooks - como receber dados em tempo real.</p>
+      <a href="webhooks.html" class="inline-block bg-white text-indigo-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors">
+        Próximo: Webhooks →
+      </a>
+    </div>
+
+  </section>
+
+  <footer class="bg-neutral-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-neutral-400">&copy; 2025 N8N Academy - APIs</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    } else { themeToggleDarkIcon.classList.remove('hidden'); }
+    themeToggleBtn.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('color-theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monetização e ROI | N8N Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>body { font-family: 'Inter', sans-serif; } .code-block { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 0.75rem; font-family: monospace; }</style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../../comecando.html" class="text-2xl font-bold text-amber-600 dark:text-amber-400 flex items-center gap-2">
+          <span>←</span><span class="text-3xl">💰</span><span>Monetização</span>
+        </a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0z" fill-rule="evenodd"></path></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-gradient-to-br from-yellow-500 via-amber-500 to-orange-500 py-24">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="text-8xl mb-8">💰</div>
+      <h1 class="text-6xl font-bold mb-6">Monetização e ROI</h1>
+      <p class="text-3xl mb-4 text-white/90">Venda resultados, não tecnologia</p>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto">Cliente não quer "automação N8N". Quer economizar tempo e dinheiro.</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 py-20">
+
+    <!-- VENDER RESULTADOS -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🎯</span>
+        <h2 class="text-5xl font-bold text-neutral-900 dark:text-neutral-100">Vender Resultados</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 mb-8">
+        <div class="bg-red-50 dark:bg-red-900/20 p-8 rounded-xl border-l-4 border-red-500">
+          <p class="text-xl font-bold text-red-800 dark:text-red-300 mb-4">❌ Como NÃO vender</p>
+          <p class="text-lg text-neutral-600 dark:text-neutral-400">"Vou criar um workflow no N8N com webhook trigger, HTTP request e nodes de transformação..."</p>
+          <p class="text-sm text-red-600 dark:text-red-400 mt-2">Cliente: "🤷 O quê?"</p>
+        </div>
+        <div class="bg-green-50 dark:bg-green-900/20 p-8 rounded-xl border-l-4 border-green-500">
+          <p class="text-xl font-bold text-green-800 dark:text-green-300 mb-4">✅ Como vender</p>
+          <p class="text-lg text-neutral-600 dark:text-neutral-400">"Vou eliminar 20 horas/semana de trabalho manual e reduzir erros em 90%."</p>
+          <p class="text-sm text-green-600 dark:text-green-400 mt-2">Cliente: "💵 Quanto custa?"</p>
+        </div>
+      </div>
+      <div class="p-6 bg-amber-100 dark:bg-amber-900/30 rounded-xl">
+        <p class="text-lg font-semibold text-amber-900 dark:text-amber-200">
+          💡 Falar em resultados fecha negócios. Falar em tecnologia confunde e afasta.
+        </p>
+      </div>
+    </div>
+
+    <!-- CALCULAR TEMPO -->
+    <div class="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-3xl p-12 mb-12 border-2 border-green-200 dark:border-green-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">⏱️</span>
+        <h3 class="text-4xl font-bold text-green-900 dark:text-green-300">Calcular Tempo Economizado</h3>
+      </div>
+      <div class="bg-white dark:bg-neutral-800 p-8 rounded-xl mb-8">
+        <p class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">Fórmula:</p>
+        <div class="code-block text-center text-xl">
+Economia = Horas Manuais/Semana × Valor/Hora × 52 semanas
+        </div>
+      </div>
+      <div class="bg-white dark:bg-neutral-800 p-8 rounded-xl">
+        <p class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">Exemplo Real:</p>
+        <ul class="space-y-2 text-lg text-neutral-700 dark:text-neutral-300">
+          <li>→ Tarefa manual: <strong>10 horas/semana</strong></li>
+          <li>→ Valor da hora do funcionário: <strong>R$ 50</strong></li>
+          <li>→ Economia semanal: <strong>R$ 500</strong></li>
+          <li>→ Economia anual: <strong>R$ 26.000</strong></li>
+        </ul>
+        <p class="mt-4 text-xl font-bold text-green-600">Se a automação custou R$ 5.000, ROI = 420% no primeiro ano!</p>
+      </div>
+    </div>
+
+    <!-- CALCULAR DINHEIRO -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">💵</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Calcular Dinheiro Economizado</h3>
+      </div>
+      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6">
+        Além de tempo, automação economiza dinheiro de várias formas:
+      </p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">📉 Redução de Erros</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Menos refunds, retrabalho, reclamações. Erro humano custa caro.</p>
+        </div>
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-3">⚡ Velocidade</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Processos mais rápidos = mais vendas, melhor atendimento, clientes satisfeitos.</p>
+        </div>
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-3">👥 Escalabilidade</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Crescer sem contratar proporcionalmenate. 10x volume ≠ 10x funcionários.</p>
+        </div>
+        <div class="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-amber-800 dark:text-amber-300 mb-3">🎯 Consistência</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Mesmo resultado toda vez. Qualidade previsível = marca confiável.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MÉTRICAS DE QUALIDADE -->
+    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-3xl p-12 mb-12 border-2 border-blue-200 dark:border-blue-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📊</span>
+        <h3 class="text-4xl font-bold text-blue-900 dark:text-blue-300">Métricas de Qualidade</h3>
+      </div>
+      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6">
+        Qualidade nem sempre é R$ direto, mas evita problemas caros:
+      </p>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl text-center">
+          <p class="text-4xl font-bold text-green-600 mb-2">0,1%</p>
+          <p class="text-lg font-semibold text-neutral-800 dark:text-neutral-200">Taxa de Erro</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">vs 15% manual</p>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl text-center">
+          <p class="text-4xl font-bold text-blue-600 mb-2">5 min</p>
+          <p class="text-lg font-semibold text-neutral-800 dark:text-neutral-200">Tempo Resposta</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">vs 24h manual</p>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl text-center">
+          <p class="text-4xl font-bold text-purple-600 mb-2">24/7</p>
+          <p class="text-lg font-semibold text-neutral-800 dark:text-neutral-200">Disponibilidade</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">vs horário comercial</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- APRESENTAR VALOR -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📈</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Apresentar Valor ao Cliente</h3>
+      </div>
+      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6">
+        Cliente esquece valor se você não mostrar. <strong>Prove que funcionou!</strong>
+      </p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl">
+          <p class="text-lg font-bold text-amber-800 dark:text-amber-300 mb-3">📊 Dashboard</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Números em tempo real: execuções, economia, erros evitados</p>
+        </div>
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl">
+          <p class="text-lg font-bold text-green-800 dark:text-green-300 mb-3">📋 Relatório Mensal</p>
+          <p class="text-neutral-600 dark:text-neutral-400">"Este mês: 200 horas economizadas, R$ 10.000 de economia"</p>
+        </div>
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl">
+          <p class="text-lg font-bold text-blue-800 dark:text-blue-300 mb-3">📸 Antes/Depois</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Comparativo visual do processo antigo vs novo</p>
+        </div>
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl">
+          <p class="text-lg font-bold text-purple-800 dark:text-purple-300 mb-3">💬 Testimonial</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Depoimento do time: "Antes levava 2h, agora 5min"</p>
+        </div>
+      </div>
+      <div class="mt-8 p-6 bg-green-100 dark:bg-green-900/30 rounded-xl">
+        <p class="text-lg font-semibold text-green-900 dark:text-green-200">
+          💡 Reter cliente é mais barato que conquistar. Mostre valor constantemente!
+        </p>
+      </div>
+    </div>
+
+    <!-- CTA FINAL -->
+    <div class="bg-gradient-to-br from-amber-500 to-orange-500 text-white rounded-3xl p-12 text-center">
+      <h3 class="text-4xl font-bold mb-4">🎉 Parabéns! Você completou a trilha!</h3>
+      <p class="text-xl mb-8">Agora você tem os fundamentos. Próximo passo: dominar os 17 nodes essenciais.</p>
+      <a href="../../iniciante.html" class="inline-block bg-white text-amber-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors">
+        Ir para: 17 Nodes Essenciais →
+      </a>
+    </div>
+
+  </section>
+
+  <footer class="bg-neutral-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-neutral-400">&copy; 2025 N8N Academy - Monetização e ROI</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const d = document.getElementById('theme-toggle-dark-icon');
+    const l = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) { document.documentElement.classList.add('dark'); l.classList.remove('hidden'); } else { d.classList.remove('hidden'); }
+    themeToggleBtn.addEventListener('click', function() { d.classList.toggle('hidden'); l.classList.toggle('hidden'); document.documentElement.classList.toggle('dark'); localStorage.setItem('color-theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light'); });
+  </script>
+</body>
+</html>

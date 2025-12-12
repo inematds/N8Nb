@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>N8N Academy - Começando: Fundamentos de Automação</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .module-card { transition: all 0.3s ease; }
+    .module-card:hover { transform: translateY(-2px); }
+    /* Modal Styles */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .modal-container { background: white; border-radius: 1rem; width: 95%; max-width: 1200px; height: 90vh; display: flex; flex-direction: column; transform: scale(0.95); transition: transform 0.3s ease; }
+    .modal-overlay.active .modal-container { transform: scale(1); }
+    .dark .modal-container { background: #1f2937; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; border-bottom: 1px solid #e5e7eb; }
+    .dark .modal-header { border-color: #374151; }
+    .modal-title { font-size: 1.25rem; font-weight: 700; color: #111827; }
+    .dark .modal-title { color: #f3f4f6; }
+    .modal-close { background: #f3f4f6; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+    .modal-close:hover { background: #e5e7eb; }
+    .dark .modal-close { background: #374151; color: #f3f4f6; }
+    .dark .modal-close:hover { background: #4b5563; }
+    .modal-body { flex: 1; overflow: hidden; }
+    .modal-body iframe { width: 100%; height: 100%; border: none; }
+  </style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+
+  <!-- Navegação -->
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="index.html" class="text-2xl font-bold text-amber-600 dark:text-amber-400 flex items-center gap-2">
+          <span>←</span>
+          <span class="text-3xl">🚀</span>
+          <span>N8N Academy</span>
+        </a>
+        <div class="flex items-center gap-4">
+          <span class="px-4 py-2 bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 rounded-full text-sm font-bold">
+            🎯 Fundamentos
+          </span>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-600">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+      <div class="text-6xl mb-4">🚀</div>
+      <h1 class="text-4xl sm:text-5xl font-bold mb-4">Começando com Automação</h1>
+      <p class="text-xl mb-6 text-white/90 max-w-3xl mx-auto">
+        Aprenda os fundamentos essenciais antes de construir seu primeiro workflow
+      </p>
+      <div class="flex gap-4 justify-center flex-wrap">
+        <span class="px-4 py-2 bg-white/20 rounded-lg backdrop-blur-sm">🧠 10 Módulos</span>
+        <span class="px-4 py-2 bg-white/20 rounded-lg backdrop-blur-sm">📚 Conceitos Base</span>
+        <span class="px-4 py-2 bg-white/20 rounded-lg backdrop-blur-sm">💡 Mindset Certo</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Módulos -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-8">
+
+    <!-- Módulo 1: Mindset de Automação -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">🧠</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">1. Mindset de Automação</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">A mentalidade certa para começar</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="openModal('conteudo/comecando/mindset.html', '🧠 Mindset de Automação')" class="px-3 py-1 bg-amber-500 hover:bg-amber-600 text-white rounded-full text-xs font-semibold transition-colors">Ver Completo</button>
+          <span class="px-3 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 rounded-full text-xs font-semibold">Fundamento</span>
+        </div>
+      </div>
+      <ul class="topics-list space-y-1">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Por que automatizar?
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border-l-4 border-amber-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-amber-600">O que é:</strong> Automação elimina tarefas repetitivas, liberando tempo para trabalho estratégico e criativo.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-amber-600">Por que aprender:</strong> Empresas que automatizam têm ROI de 30% a 200% no primeiro ano.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-amber-600">Conceitos chave:</strong> ROI, eficiência operacional, escalabilidade, redução de erros humanos.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 O que NÃO automatizar
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border-l-4 border-amber-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-amber-600">O que é:</strong> Nem tudo deve ser automatizado - processos instáveis, tarefas únicas ou que exigem julgamento humano.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-amber-600">Por que aprender:</strong> Automatizar errado gera mais trabalho e frustração do que fazer manual.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-amber-600">Conceitos chave:</strong> Processos estáveis vs instáveis, frequência, complexidade de decisão.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 O ciclo do aprendizado
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border-l-4 border-amber-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-amber-600">O que é:</strong> Todo iniciante passa por: empolgação → frustração → crise → confiança. É normal!</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-amber-600">Por que aprender:</strong> Saber que frustração faz parte evita desistência prematura.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-amber-600">Conceitos chave:</strong> Curva de aprendizado, persistência, celebrar pequenas vitórias.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Pensamento de engenheiro de processos
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border-l-4 border-amber-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-amber-600">O que é:</strong> Antes de automatizar, documente o processo manual. Entenda inputs, outputs e exceções.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-amber-600">Por que aprender:</strong> Automatizar processo mal definido = automatizar o caos.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-amber-600">Conceitos chave:</strong> Mapeamento de processos, fluxogramas, edge cases, documentação.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 ROI de automações
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border-l-4 border-amber-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-amber-600">O que é:</strong> Calcule: (tempo economizado × valor/hora) - custo da automação = ROI.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-amber-600">Por que aprender:</strong> ROI justifica investimento e prioriza quais automações fazer primeiro.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-amber-600">Conceitos chave:</strong> Tempo economizado, custo de oportunidade, payback period.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Módulo 2: As 3 Camadas da Automação -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">🏗️</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">2. As 3 Camadas da Automação</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Workflows, IA e Agentes</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="openModal('conteudo/comecando/camadas.html', '🏗️ As 3 Camadas da Automação')" class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-full text-xs font-semibold transition-colors">Ver Completo</button>
+          <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-xs font-semibold">Arquitetura</span>
+        </div>
+      </div>
+      <ul class="topics-list space-y-1">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Camada 1: Workflows
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border-l-4 border-blue-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-blue-600">O que é:</strong> Automações com regras fixas e determinísticas. Se X acontece, faça Y. Sempre previsível.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-blue-600">Por que aprender:</strong> 80% das automações são workflows simples. Alto ROI, baixa manutenção.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-blue-600">Conceitos chave:</strong> Triggers, condicionais, transformações, integrações determinísticas.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Camada 2: Automações com IA
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border-l-4 border-blue-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-blue-600">O que é:</strong> Workflows com pequenas decisões inteligentes. IA classifica, extrai ou sugere, mas workflow controla.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-blue-600">Por que aprender:</strong> Atende maioria dos casos de uso com IA de forma controlada e previsível.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-blue-600">Conceitos chave:</strong> LLM como ferramenta, classificação, extração de dados, validação humana.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Camada 3: Agentes de IA
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border-l-4 border-blue-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-blue-600">O que é:</strong> IA decide O QUE fazer, não apenas COMO. Poderoso mas não-determinístico.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-blue-600">Por que aprender:</strong> Entender limitações evita frustrações. Agentes são difíceis de manter.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-blue-600">Conceitos chave:</strong> Autonomia, tools, raciocínio, imprevisibilidade, guardrails.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Quando usar cada camada
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border-l-4 border-blue-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-blue-600">O que é:</strong> Workflows para regras claras, IA para decisões simples, Agentes para tarefas complexas abertas.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-blue-600">Por que aprender:</strong> Escolher camada errada = complexidade desnecessária ou limitação.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-blue-600">Conceitos chave:</strong> Complexidade vs controle, custo de manutenção, previsibilidade.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Por que começar por workflows
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border-l-4 border-blue-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-blue-600">O que é:</strong> Workflows ensinam fundamentos: triggers, dados, lógica, integrações. Base para tudo.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-blue-600">Por que aprender:</strong> Pular para agentes sem dominar workflows = frustração garantida.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-blue-600">Conceitos chave:</strong> Fundamentos primeiro, complexidade gradual, domínio técnico.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Módulo 3: JSON -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">📊</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">3. JSON - A Linguagem dos Dados</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Entenda como dados fluem</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="openModal('conteudo/comecando/json.html', '📊 JSON - A Linguagem dos Dados')" class="px-3 py-1 bg-green-500 hover:bg-green-600 text-white rounded-full text-xs font-semibold transition-colors">Ver Completo</button>
+          <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full text-xs font-semibold">Técnico</span>
+        </div>
+      </div>
+      <ul class="topics-list space-y-1">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 O que é JSON
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-green-600">O que é:</strong> JavaScript Object Notation - formato universal para trocar dados entre sistemas.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-green-600">Por que aprender:</strong> 99% das APIs usam JSON. Sem entender JSON, você não entende dados.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-green-600">Conceitos chave:</strong> Formato texto, legível por humanos e máquinas, padrão da web.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Estrutura chave-valor
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-green-600">O que é:</strong> {"nome": "João", "idade": 30} - chave identifica, valor armazena.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-green-600">Por que aprender:</strong> Acessar dados no N8N usa notação de chave: {{ $json.nome }}</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-green-600">Conceitos chave:</strong> Chaves únicas, valores tipados, aspas duplas obrigatórias.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Arrays e Objetos
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-green-600">O que é:</strong> Arrays são listas [...], Objetos são estruturas {...}. Podem ser aninhados.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-green-600">Por que aprender:</strong> APIs retornam arrays de objetos. Entender estrutura = acessar dados certos.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-green-600">Conceitos chave:</strong> Índices [0], [1], aninhamento, {{ $json.usuarios[0].nome }}</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 JSON no N8N
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-green-600">O que é:</strong> Cada item no N8N é um objeto JSON. Dados fluem como JSON entre nodes.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-green-600">Por que aprender:</strong> Debug = entender JSON. Transformações = manipular JSON.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-green-600">Conceitos chave:</strong> $json, $input, expressões, output panel, JSON view.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Validação e debug
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border-l-4 border-green-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-green-600">O que é:</strong> JSON inválido quebra tudo. Use ferramentas para validar antes de usar.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-green-600">Por que aprender:</strong> Erros de JSON são comuns. Saber debugar economiza horas.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-green-600">Conceitos chave:</strong> JSONLint, console do N8N, vírgulas extras, aspas faltando.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Módulo 4: APIs -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">🌐</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">4. APIs - Conectando Sistemas</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">A ponte entre aplicações</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="openModal('conteudo/comecando/apis.html', '🌐 APIs - Conectando Sistemas')" class="px-3 py-1 bg-indigo-500 hover:bg-indigo-600 text-white rounded-full text-xs font-semibold transition-colors">Ver Completo</button>
+          <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 rounded-full text-xs font-semibold">Técnico</span>
+        </div>
+      </div>
+      <ul class="topics-list space-y-1">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 O que são APIs
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border-l-4 border-indigo-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-indigo-600">O que é:</strong> Application Programming Interface - forma padronizada de sistemas conversarem.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-indigo-600">Por que aprender:</strong> Toda integração usa API. N8N é basicamente um orquestrador de APIs.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-indigo-600">Conceitos chave:</strong> Endpoints, requisições, respostas, documentação de API.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 REST - O padrão dominante
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border-l-4 border-indigo-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-indigo-600">O que é:</strong> Representational State Transfer - arquitetura mais comum para APIs web.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-indigo-600">Por que aprender:</strong> 95% das APIs que você usará são REST. É o padrão da indústria.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-indigo-600">Conceitos chave:</strong> Recursos, URLs, stateless, JSON como formato.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Métodos HTTP
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border-l-4 border-indigo-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-indigo-600">O que é:</strong> GET (buscar), POST (criar), PUT/PATCH (atualizar), DELETE (remover).</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-indigo-600">Por que aprender:</strong> Método errado = erro ou ação inesperada. GET não cria, POST não busca.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-indigo-600">Conceitos chave:</strong> Idempotência, CRUD, body vs query params.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Headers e Autenticação
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border-l-4 border-indigo-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-indigo-600">O que é:</strong> Headers carregam metadados (tipo de conteúdo, autenticação, etc).</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-indigo-600">Por que aprender:</strong> Sem auth correta = 401 Unauthorized. Headers errados = 400 Bad Request.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-indigo-600">Conceitos chave:</strong> Bearer Token, API Key, Basic Auth, Content-Type, Authorization.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Status Codes
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border-l-4 border-indigo-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-indigo-600">O que é:</strong> 200 (OK), 201 (Criado), 400 (Erro cliente), 401 (Não autorizado), 500 (Erro servidor).</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-indigo-600">Por que aprender:</strong> Status code diz o que aconteceu. Debug começa pelo código.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-indigo-600">Conceitos chave:</strong> 2xx sucesso, 4xx erro seu, 5xx erro do servidor.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Módulo 5: Webhooks -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">🪝</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">5. Webhooks - Tempo Real</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Receba notificações instantâneas</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="openModal('conteudo/comecando/webhooks.html', '🪝 Webhooks - Tempo Real')" class="px-3 py-1 bg-pink-500 hover:bg-pink-600 text-white rounded-full text-xs font-semibold transition-colors">Ver Completo</button>
+          <span class="px-3 py-1 bg-pink-100 dark:bg-pink-900/30 text-pink-800 dark:text-pink-300 rounded-full text-xs font-semibold">Técnico</span>
+        </div>
+      </div>
+      <ul class="topics-list space-y-1">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 O que são webhooks
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-pink-50 dark:bg-pink-900/20 rounded-lg border-l-4 border-pink-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-pink-600">O que é:</strong> URL que recebe dados quando algo acontece. O sistema AVISA você, não você pergunta.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-pink-600">Por que aprender:</strong> Webhooks são instantâneos e eficientes. Não gastam execuções verificando.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-pink-600">Conceitos chave:</strong> Endpoint, payload, eventos, callback URL.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Push vs Pull
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-pink-50 dark:bg-pink-900/20 rounded-lg border-l-4 border-pink-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-pink-600">O que é:</strong> Push (webhook) = sistema te avisa. Pull (polling) = você pergunta repetidamente.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-pink-600">Por que aprender:</strong> Push é mais eficiente e rápido. Polling gasta recursos e tem delay.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-pink-600">Conceitos chave:</strong> Latência, consumo de recursos, real-time vs near-real-time.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Webhook vs Polling
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-pink-50 dark:bg-pink-900/20 rounded-lg border-l-4 border-pink-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-pink-600">O que é:</strong> Webhook: 1 execução quando evento ocorre. Polling: N execuções verificando se algo mudou.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-pink-600">Por que aprender:</strong> Polling a cada minuto = 1440 execuções/dia. Webhook = só quando necessário.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-pink-600">Conceitos chave:</strong> Custo de execução, limite de plano, eficiência.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Segurança de webhooks
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-pink-50 dark:bg-pink-900/20 rounded-lg border-l-4 border-pink-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-pink-600">O que é:</strong> Qualquer um pode chamar seu webhook. Valide origem, use secrets, verifique assinaturas.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-pink-600">Por que aprender:</strong> Webhook público sem validação = vulnerabilidade. Podem injetar dados falsos.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-pink-600">Conceitos chave:</strong> HMAC signature, secret tokens, IP whitelist, validação de payload.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Casos de uso práticos
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-pink-50 dark:bg-pink-900/20 rounded-lg border-l-4 border-pink-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-pink-600">O que é:</strong> Formulários, pagamentos (Stripe), commits (GitHub), mensagens (Slack), CRM (HubSpot).</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-pink-600">Por que aprender:</strong> Maioria dos SaaS oferece webhooks. É a forma padrão de integração moderna.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-pink-600">Conceitos chave:</strong> Event-driven architecture, integrações nativas, automação reativa.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Módulo 6: Lógica e Condicionais -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">🔀</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">6. Lógica e Condicionais</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Decisões no seu workflow</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="openModal('conteudo/comecando/logica.html', '🔀 Lógica e Condicionais')" class="px-3 py-1 bg-purple-500 hover:bg-purple-600 text-white rounded-full text-xs font-semibold transition-colors">Ver Completo</button>
+          <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-full text-xs font-semibold">Técnico</span>
+        </div>
+      </div>
+      <ul class="topics-list space-y-1">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 IF/ELSE básico
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-purple-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-purple-600">O que é:</strong> Se condição verdadeira, vai por um caminho. Senão, vai por outro.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-purple-600">Por que aprender:</strong> Workflows sem condicionais são lineares e limitados. IF adiciona inteligência.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-purple-600">Conceitos chave:</strong> Condição, true branch, false branch, comparações.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Múltiplas condições
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-purple-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-purple-600">O que é:</strong> Combinar condições com AND (todas verdadeiras) ou OR (pelo menos uma).</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-purple-600">Por que aprender:</strong> Lógica real raramente é simples. Combinações permitem regras complexas.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-purple-600">Conceitos chave:</strong> AND, OR, NOT, precedência, parênteses.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Switch/Case
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-purple-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-purple-600">O que é:</strong> Múltiplos caminhos baseados em valor. Se "A" vai pra 1, se "B" vai pra 2, etc.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-purple-600">Por que aprender:</strong> Mais limpo que vários IFs aninhados quando há muitas opções.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-purple-600">Conceitos chave:</strong> Casos, fallback/default, routing, categorização.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Operadores lógicos
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-purple-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-purple-600">O que é:</strong> == (igual), != (diferente), > < (maior/menor), contains, startsWith, isEmpty.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-purple-600">Por que aprender:</strong> Operador errado = condição errada. === vs == pode mudar tudo.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-purple-600">Conceitos chave:</strong> Comparação estrita, type coercion, null checks.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Tratamento de erros
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border-l-4 border-purple-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-purple-600">O que é:</strong> O que fazer quando algo falha? Retry, notificar, log, fallback.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-purple-600">Por que aprender:</strong> Workflows sem error handling quebram silenciosamente. Você nunca sabe que falhou.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-purple-600">Conceitos chave:</strong> Try/catch, error workflow, retry logic, alertas.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Módulo 7: Context Engineering -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">🎯</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">7. Context Engineering</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">IA depende de contexto, não magia</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="openModal('conteudo/comecando/context.html', '🎯 Context Engineering')" class="px-3 py-1 bg-violet-500 hover:bg-violet-600 text-white rounded-full text-xs font-semibold transition-colors">Ver Completo</button>
+          <span class="px-3 py-1 bg-violet-100 dark:bg-violet-900/30 text-violet-800 dark:text-violet-300 rounded-full text-xs font-semibold">IA</span>
+        </div>
+      </div>
+      <ul class="topics-list space-y-1">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 IA não é mágica
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-violet-50 dark:bg-violet-900/20 rounded-lg border-l-4 border-violet-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-violet-600">O que é:</strong> LLMs são pattern matching sofisticado. Garbage in = garbage out.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-violet-600">Por que aprender:</strong> Expectativas realistas evitam frustrações. IA é ferramenta, não solução mágica.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-violet-600">Conceitos chave:</strong> Limitações, alucinações, dependência de dados, validação de output.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Importância do contexto
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-violet-50 dark:bg-violet-900/20 rounded-lg border-l-4 border-violet-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-violet-600">O que é:</strong> Contexto = informação que a IA precisa para dar boa resposta. Sem contexto, chuta.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-violet-600">Por que aprender:</strong> 90% da qualidade do output depende da qualidade do input/contexto.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-violet-600">Conceitos chave:</strong> Context window, relevância, completude, formatação.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Prompts vs Contexto
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-violet-50 dark:bg-violet-900/20 rounded-lg border-l-4 border-violet-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-violet-600">O que é:</strong> Prompt = instrução. Contexto = dados/informações. Ambos são necessários.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-violet-600">Por que aprender:</strong> Prompt perfeito com contexto ruim = resultado ruim. Foque nos dois.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-violet-600">Conceitos chave:</strong> System prompt, user message, few-shot examples, RAG.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Dados estruturados para IA
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-violet-50 dark:bg-violet-900/20 rounded-lg border-l-4 border-violet-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-violet-600">O que é:</strong> Fornecer dados limpos e organizados. JSON, tabelas, listas formatadas.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-violet-600">Por que aprender:</strong> IA entende melhor dados estruturados. Texto bagunçado = interpretação errada.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-violet-600">Conceitos chave:</strong> Pré-processamento, limpeza de dados, formatação consistente.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Boas práticas de contexto
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-violet-50 dark:bg-violet-900/20 rounded-lg border-l-4 border-violet-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-violet-600">O que é:</strong> Seja específico, dê exemplos, defina formato esperado, limite escopo.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-violet-600">Por que aprender:</strong> Técnicas simples melhoram drasticamente resultados de IA.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-violet-600">Conceitos chave:</strong> Few-shot, chain of thought, output format, constraints.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Módulo 8: Planejamento de Processos -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">📋</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">8. Planejamento de Processos</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Mapeie antes de construir</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="openModal('conteudo/comecando/planejamento.html', '📋 Planejamento de Processos')" class="px-3 py-1 bg-teal-500 hover:bg-teal-600 text-white rounded-full text-xs font-semibold transition-colors">Ver Completo</button>
+          <span class="px-3 py-1 bg-teal-100 dark:bg-teal-900/30 text-teal-800 dark:text-teal-300 rounded-full text-xs font-semibold">Metodologia</span>
+        </div>
+      </div>
+      <ul class="topics-list space-y-1">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Mapear antes de construir
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-teal-50 dark:bg-teal-900/20 rounded-lg border-l-4 border-teal-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-teal-600">O que é:</strong> Documentar processo manual completo antes de abrir o N8N.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-teal-600">Por que aprender:</strong> Construir sem plano = descobrir problemas no meio. Retrabalho caro.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-teal-600">Conceitos chave:</strong> Fluxogramas, documentação, entrevistas, observação.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Identificar inputs e outputs
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-teal-50 dark:bg-teal-900/20 rounded-lg border-l-4 border-teal-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-teal-600">O que é:</strong> O que entra no processo? O que sai? Quais transformações acontecem?</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-teal-600">Por que aprender:</strong> Input/output claros = workflow claro. Ambiguidade = bugs.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-teal-600">Conceitos chave:</strong> Data flow, transformations, validações, formato esperado.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Documentar fluxo no papel
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-teal-50 dark:bg-teal-900/20 rounded-lg border-l-4 border-teal-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-teal-600">O que é:</strong> Desenhar workflow antes de construir. Papel, Miro, Excalidraw - qualquer ferramenta.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-teal-600">Por que aprender:</strong> Visualizar ajuda a encontrar problemas. Mais barato errar no papel.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-teal-600">Conceitos chave:</strong> Wireframes, diagramas, swimlanes, decision trees.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Validar com stakeholders
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-teal-50 dark:bg-teal-900/20 rounded-lg border-l-4 border-teal-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-teal-600">O que é:</strong> Mostrar plano para quem vai usar/ser afetado antes de construir.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-teal-600">Por que aprender:</strong> Usuário final sempre sabe de exceções que você não pensou.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-teal-600">Conceitos chave:</strong> Feedback loop, edge cases, requisitos ocultos, buy-in.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Evitar retrabalho
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-teal-50 dark:bg-teal-900/20 rounded-lg border-l-4 border-teal-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-teal-600">O que é:</strong> 1 hora planejando economiza 10 horas refazendo.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-teal-600">Por que aprender:</strong> Retrabalho é frustrante e caro. Planejar é investimento.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-teal-600">Conceitos chave:</strong> Custo de mudança, iteração planejada, MVP, escopo.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Módulo 9: Construção e Testes -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">🔧</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">9. Construção e Testes</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Falhe rápido, aprenda rápido</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="openModal('conteudo/comecando/construcao.html', '🔧 Construção e Testes')" class="px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-full text-xs font-semibold transition-colors">Ver Completo</button>
+          <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 rounded-full text-xs font-semibold">Prática</span>
+        </div>
+      </div>
+      <ul class="topics-list space-y-1">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Falhar rápido
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg border-l-4 border-orange-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-orange-600">O que é:</strong> Teste cedo, descubra problemas cedo. Não espere workflow "perfeito" para testar.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-orange-600">Por que aprender:</strong> Erro no início é fácil de corrigir. Erro no final é caro.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-orange-600">Conceitos chave:</strong> Iteração rápida, testes incrementais, feedback loop curto.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Testar limites
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg border-l-4 border-orange-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-orange-600">O que é:</strong> O que acontece com dados vazios? Com 10.000 registros? Com caracteres especiais?</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-orange-600">Por que aprender:</strong> Produção sempre traz casos que teste básico não pega.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-orange-600">Conceitos chave:</strong> Edge cases, stress test, dados malformados, timeouts.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Usar logs efetivamente
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg border-l-4 border-orange-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-orange-600">O que é:</strong> Logs são sua câmera de segurança. Registre o que entra, sai e falha.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-orange-600">Por que aprender:</strong> Sem logs, debug é adivinhação. Com logs, é investigação.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-orange-600">Conceitos chave:</strong> Execution log, node output, error messages, timestamps.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Debug passo a passo
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg border-l-4 border-orange-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-orange-600">O que é:</strong> Executar node por node, verificando output de cada um.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-orange-600">Por que aprender:</strong> Localizar exatamente onde o problema está. Não adivinhe, investigue.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-orange-600">Conceitos chave:</strong> Pin data, execute node, output panel, comparar expected vs actual.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Melhoria contínua
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg border-l-4 border-orange-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-orange-600">O que é:</strong> Workflow nunca está "pronto". Monitore, colete feedback, itere.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-orange-600">Por que aprender:</strong> Processos mudam, APIs mudam, requisitos mudam. Adapte-se.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-orange-600">Conceitos chave:</strong> Monitoramento, métricas, feedback loop, versionamento.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Módulo 10: Monetização e ROI -->
+    <div class="module-card bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">💰</span>
+          <div>
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">10. Monetização e ROI</h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Venda resultados, não tecnologia</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="openModal('conteudo/comecando/monetizacao.html', '💰 Monetização e ROI')" class="px-3 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded-full text-xs font-semibold transition-colors">Ver Completo</button>
+          <span class="px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 rounded-full text-xs font-semibold">Negócio</span>
+        </div>
+      </div>
+      <ul class="topics-list space-y-1">
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Vender resultados
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border-l-4 border-yellow-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-yellow-600">O que é:</strong> Cliente não quer "automação N8N". Quer economizar 20h/semana ou R$10k/mês.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-yellow-600">Por que aprender:</strong> Falar em resultados fecha negócios. Falar em tecnologia confunde.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-yellow-600">Conceitos chave:</strong> Value proposition, ROI, benefícios vs features, linguagem do cliente.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Calcular tempo economizado
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border-l-4 border-yellow-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-yellow-600">O que é:</strong> Tarefa manual = X horas/semana. Automação = 0 horas. Economia = X horas.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-yellow-600">Por que aprender:</strong> Tempo economizado × valor/hora = economia em R$. Número concreto.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-yellow-600">Conceitos chave:</strong> Time tracking, custo de oportunidade, horas liberadas.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Calcular dinheiro economizado
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border-l-4 border-yellow-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-yellow-600">O que é:</strong> Menos erros = menos refunds. Mais rápido = mais vendas. Menos funcionário = menos custo.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-yellow-600">Por que aprender:</strong> R$ é linguagem universal. CFO entende R$, não "eficiência".</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-yellow-600">Conceitos chave:</strong> Redução de custo, aumento de receita, prevenção de perda.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Métricas de qualidade
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border-l-4 border-yellow-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-yellow-600">O que é:</strong> Taxa de erro caiu de 15% para 0,1%. Tempo de resposta de 24h para 5min.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-yellow-600">Por que aprender:</strong> Qualidade nem sempre é R$ direto, mas evita problemas caros.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-yellow-600">Conceitos chave:</strong> SLA, error rate, response time, customer satisfaction.</p>
+          </div>
+        </li>
+        <li class="topic-item">
+          <button class="topic-button w-full text-left px-4 py-2 bg-neutral-50 dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-800 dark:text-neutral-200">
+            📌 Apresentar valor ao cliente
+          </button>
+          <div class="topic-explanation hidden ml-6 mt-2 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border-l-4 border-yellow-500">
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-yellow-600">O que é:</strong> Dashboard, relatório mensal, antes/depois. Prove que funcionou.</p>
+            <p class="text-sm mb-1.5 text-neutral-700 dark:text-neutral-300"><strong class="text-yellow-600">Por que aprender:</strong> Cliente esquece valor se você não mostrar. Reter > conquistar.</p>
+            <p class="text-sm text-neutral-700 dark:text-neutral-300"><strong class="text-yellow-600">Conceitos chave:</strong> Reporting, KPIs, business review, case studies.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </section>
+
+  <!-- CTA Final -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <div class="bg-gradient-to-br from-amber-500 to-orange-500 text-white rounded-xl shadow-lg p-8 text-center">
+      <h2 class="text-3xl font-bold mb-4">🎯 Pronto para o Próximo Passo?</h2>
+      <p class="text-lg mb-6">
+        Com estes fundamentos, você está preparado para dominar os 17 nodes essenciais do N8N!
+      </p>
+      <div class="flex gap-4 justify-center flex-wrap">
+        <a href="iniciante.html" class="bg-white text-amber-600 px-8 py-3 rounded-lg font-bold hover:bg-neutral-100 transition-colors inline-flex items-center gap-2">
+          <span>🚀 Próximo: 17 Nodes Essenciais</span>
+          <span>→</span>
+        </a>
+        <a href="index.html" class="bg-white/20 backdrop-blur-sm text-white px-8 py-3 rounded-lg font-bold hover:bg-white/30 transition-colors">
+          ← Voltar ao Início
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal -->
+  <div id="content-modal" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <span id="modal-title" class="modal-title">Conteúdo</span>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <iframe id="modal-iframe" src=""></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-neutral-900 dark:bg-black text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-neutral-400">&copy; 2025 N8N Academy - Fundamentos de Automação</p>
+      <p class="text-sm text-neutral-500 mt-2">Baseado em "How I'd Learn n8n If I Were Starting Again in 2026"</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Dark Mode
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    } else {
+      themeToggleDarkIcon.classList.remove('hidden');
+    }
+
+    themeToggleBtn.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+      }
+    });
+
+    // Accordion
+    document.addEventListener('click', function(e) {
+      const topicButton = e.target.closest('.topic-button');
+      if (topicButton) {
+        const topicItem = topicButton.closest('.topic-item');
+        const explanation = topicItem.querySelector('.topic-explanation');
+        if (explanation) {
+          const moduleCard = topicItem.closest('.module-card');
+          moduleCard.querySelectorAll('.topic-explanation').forEach(exp => {
+            if (exp !== explanation) exp.classList.add('hidden');
+          });
+          explanation.classList.toggle('hidden');
+        }
+      }
+    });
+
+    // Modal Functions
+    function openModal(url, title) {
+      const modal = document.getElementById('content-modal');
+      const iframe = document.getElementById('modal-iframe');
+      const modalTitle = document.getElementById('modal-title');
+      modalTitle.textContent = title;
+      iframe.src = url;
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('content-modal');
+      const iframe = document.getElementById('modal-iframe');
+      modal.classList.remove('active');
+      iframe.src = '';
+      document.body.style.overflow = '';
+    }
+
+    // Close modal on overlay click
+    document.getElementById('content-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+
+</body>
+</html>

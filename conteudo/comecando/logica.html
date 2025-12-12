@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lógica e Condicionais | N8N Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>body { font-family: 'Inter', sans-serif; } .code-block { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 0.75rem; font-family: monospace; overflow-x: auto; }</style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../../comecando.html" class="text-2xl font-bold text-amber-600 dark:text-amber-400 flex items-center gap-2">
+          <span>←</span><span class="text-3xl">🔀</span><span>Lógica</span>
+        </a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0z" fill-rule="evenodd"></path></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-gradient-to-br from-purple-600 via-violet-600 to-indigo-600 py-24">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="text-8xl mb-8">🔀</div>
+      <h1 class="text-6xl font-bold mb-6">Lógica e Condicionais</h1>
+      <p class="text-3xl mb-4 text-white/90">Decisões no seu Workflow</p>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto">Adicione inteligência aos seus workflows com IF/ELSE, Switch e operadores lógicos</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 py-20">
+
+    <!-- IF/ELSE -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🔀</span>
+        <h2 class="text-5xl font-bold text-neutral-900 dark:text-neutral-100">IF/ELSE Básico</h2>
+      </div>
+      <p class="text-2xl text-neutral-700 dark:text-neutral-300 mb-8">
+        Se condição é <strong>verdadeira</strong>, vai por um caminho. Senão, vai por outro.
+      </p>
+      <div class="grid md:grid-cols-2 gap-8 mb-8">
+        <div class="bg-green-50 dark:bg-green-900/20 p-8 rounded-xl border-l-4 border-green-500">
+          <p class="text-xl font-bold text-green-800 dark:text-green-300 mb-2">✅ TRUE</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Condição verdadeira → executa este caminho</p>
+        </div>
+        <div class="bg-red-50 dark:bg-red-900/20 p-8 rounded-xl border-l-4 border-red-500">
+          <p class="text-xl font-bold text-red-800 dark:text-red-300 mb-2">❌ FALSE</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Condição falsa → executa este outro caminho</p>
+        </div>
+      </div>
+      <div class="code-block">
+// Exemplo: valor > 100
+Se valor = 150 → TRUE → desconto de 10%
+Se valor = 80  → FALSE → sem desconto
+      </div>
+    </div>
+
+    <!-- OPERADORES -->
+    <div class="bg-gradient-to-br from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 rounded-3xl p-12 mb-12 border-2 border-purple-200 dark:border-purple-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🔧</span>
+        <h3 class="text-4xl font-bold text-purple-900 dark:text-purple-300">Operadores de Comparação</h3>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-white dark:bg-neutral-800 p-4 rounded-xl">
+          <code class="text-purple-600 font-bold">==</code>
+          <span class="ml-3 text-neutral-700 dark:text-neutral-300">Igual a</span>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-4 rounded-xl">
+          <code class="text-purple-600 font-bold">!=</code>
+          <span class="ml-3 text-neutral-700 dark:text-neutral-300">Diferente de</span>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-4 rounded-xl">
+          <code class="text-purple-600 font-bold">&gt;</code>
+          <span class="ml-3 text-neutral-700 dark:text-neutral-300">Maior que</span>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-4 rounded-xl">
+          <code class="text-purple-600 font-bold">&lt;</code>
+          <span class="ml-3 text-neutral-700 dark:text-neutral-300">Menor que</span>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-4 rounded-xl">
+          <code class="text-purple-600 font-bold">&gt;=</code>
+          <span class="ml-3 text-neutral-700 dark:text-neutral-300">Maior ou igual</span>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-4 rounded-xl">
+          <code class="text-purple-600 font-bold">&lt;=</code>
+          <span class="ml-3 text-neutral-700 dark:text-neutral-300">Menor ou igual</span>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-4 rounded-xl">
+          <code class="text-purple-600 font-bold">contains</code>
+          <span class="ml-3 text-neutral-700 dark:text-neutral-300">Contém texto</span>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-4 rounded-xl">
+          <code class="text-purple-600 font-bold">isEmpty</code>
+          <span class="ml-3 text-neutral-700 dark:text-neutral-300">Está vazio</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MÚLTIPLAS CONDIÇÕES -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🔗</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Múltiplas Condições</h3>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 mb-8">
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-8 rounded-xl">
+          <p class="text-2xl font-bold text-blue-800 dark:text-blue-300 mb-4">AND (E)</p>
+          <p class="text-neutral-600 dark:text-neutral-400 mb-4">TODAS as condições devem ser verdadeiras</p>
+          <div class="code-block text-sm">
+idade >= 18 AND pais == "Brasil"
+// Verdadeiro só se AMBAS forem true
+          </div>
+        </div>
+        <div class="bg-orange-50 dark:bg-orange-900/20 p-8 rounded-xl">
+          <p class="text-2xl font-bold text-orange-800 dark:text-orange-300 mb-4">OR (OU)</p>
+          <p class="text-neutral-600 dark:text-neutral-400 mb-4">PELO MENOS UMA deve ser verdadeira</p>
+          <div class="code-block text-sm">
+status == "urgente" OR prioridade == 1
+// Verdadeiro se QUALQUER uma for true
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SWITCH -->
+    <div class="bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 rounded-3xl p-12 mb-12 border-2 border-indigo-200 dark:border-indigo-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🔀</span>
+        <h3 class="text-4xl font-bold text-indigo-900 dark:text-indigo-300">Switch/Case</h3>
+      </div>
+      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6">
+        Quando você tem <strong>muitas opções</strong>, Switch é mais limpo que vários IFs:
+      </p>
+      <div class="bg-white dark:bg-neutral-800 p-8 rounded-xl">
+        <div class="code-block">
+switch(departamento):
+  case "vendas"    → enviar para CRM
+  case "suporte"   → criar ticket
+  case "financeiro"→ notificar CFO
+  default          → email genérico
+        </div>
+      </div>
+    </div>
+
+    <!-- TRATAMENTO DE ERROS -->
+    <div class="bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-3xl p-12 mb-12 border-2 border-red-200 dark:border-red-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">⚠️</span>
+        <h3 class="text-4xl font-bold text-red-900 dark:text-red-300">Tratamento de Erros</h3>
+      </div>
+      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6">
+        O que fazer quando algo falha? Sem error handling, você nunca sabe que quebrou.
+      </p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-800 dark:text-red-300 mb-3">🔄 Estratégias</p>
+          <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+            <li>→ <strong>Retry:</strong> Tentar novamente X vezes</li>
+            <li>→ <strong>Fallback:</strong> Usar valor padrão</li>
+            <li>→ <strong>Notificar:</strong> Enviar alerta</li>
+            <li>→ <strong>Log:</strong> Registrar para análise</li>
+          </ul>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-green-800 dark:text-green-300 mb-3">✅ No N8N</p>
+          <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+            <li>→ Error Workflow (workflow separado)</li>
+            <li>→ Continue on Error (node config)</li>
+            <li>→ Try/Catch com IF node</li>
+            <li>→ Error Trigger node</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="bg-gradient-to-br from-purple-600 to-violet-600 text-white rounded-3xl p-12 text-center">
+      <h3 class="text-4xl font-bold mb-4">🎯 Pronto para o próximo passo?</h3>
+      <p class="text-xl mb-8">Agora aprenda sobre Context Engineering - como fazer IA funcionar de verdade.</p>
+      <a href="context.html" class="inline-block bg-white text-purple-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors">
+        Próximo: Context Engineering →
+      </a>
+    </div>
+
+  </section>
+
+  <footer class="bg-neutral-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-neutral-400">&copy; 2025 N8N Academy - Lógica e Condicionais</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const d = document.getElementById('theme-toggle-dark-icon');
+    const l = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) { document.documentElement.classList.add('dark'); l.classList.remove('hidden'); } else { d.classList.remove('hidden'); }
+    themeToggleBtn.addEventListener('click', function() { d.classList.toggle('hidden'); l.classList.toggle('hidden'); document.documentElement.classList.toggle('dark'); localStorage.setItem('color-theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light'); });
+  </script>
+</body>
+</html>
