@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Suite - Gmail, Sheets, Drive, Calendar | N8N Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .code-block { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 0.75rem; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.7; }
+    .step-number { width: 3rem; height: 3rem; background: linear-gradient(135deg, #4285f4, #34a853); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.25rem; flex-shrink: 0; }
+  </style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../../tecnico.html" class="text-2xl font-bold text-blue-600 dark:text-blue-400 flex items-center gap-2">
+          <span>←</span><span class="text-3xl">🔗</span><span>Google Suite</span>
+        </a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-gradient-to-br from-blue-500 via-green-500 to-yellow-500 py-24">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="flex justify-center gap-4 text-6xl mb-8">
+        <span>📧</span><span>📊</span><span>📁</span><span>📅</span>
+      </div>
+      <h1 class="text-6xl font-bold mb-6">Google Suite</h1>
+      <p class="text-3xl mb-4 text-white/90">Gmail • Sheets • Drive • Calendar</p>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto">Guia completo para configurar OAuth 2.0 no Google Cloud Console e conectar todos os serviços Google ao N8N.</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 py-20">
+
+    <!-- VISÃO GERAL -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🎯</span>
+        <h2 class="text-5xl font-bold text-neutral-900 dark:text-neutral-100">Visão Geral</h2>
+      </div>
+      <p class="text-2xl text-neutral-700 dark:text-neutral-300 mb-8 leading-relaxed">
+        O Google usa <strong>OAuth 2.0</strong> para autenticação. Isso significa que você precisa criar um "App" no Google Cloud Console, configurar credenciais e autorizar o N8N a acessar sua conta.
+      </p>
+      <div class="grid md:grid-cols-4 gap-6">
+        <div class="bg-red-50 dark:bg-red-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">📧</p>
+          <p class="text-lg font-semibold text-red-800 dark:text-red-300">Gmail</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Enviar, ler, organizar emails</p>
+        </div>
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">📊</p>
+          <p class="text-lg font-semibold text-green-800 dark:text-green-300">Sheets</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">CRUD em planilhas</p>
+        </div>
+        <div class="bg-yellow-50 dark:bg-yellow-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">📁</p>
+          <p class="text-lg font-semibold text-yellow-800 dark:text-yellow-300">Drive</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Upload, download, compartilhar</p>
+        </div>
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">📅</p>
+          <p class="text-lg font-semibold text-blue-800 dark:text-blue-300">Calendar</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Eventos, agendamentos</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 1: CRIAR PROJETO -->
+    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-3xl p-12 mb-12 border-2 border-blue-200 dark:border-blue-800">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">1</div>
+        <h3 class="text-4xl font-bold text-blue-900 dark:text-blue-300">Criar Projeto no Google Cloud Console</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">1.1 Acessar o Console</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">→</span>
+              <span>Acesse <strong>console.cloud.google.com</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">→</span>
+              <span>Faça login com sua conta Google (use a conta que terá acesso aos dados)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">→</span>
+              <span>Se for a primeira vez, aceite os termos de serviço</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">1.2 Criar Novo Projeto</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">→</span>
+              <span>Clique no <strong>dropdown no topo</strong> (ao lado do logo Google Cloud)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">→</span>
+              <span>Clique em <strong>"Novo Projeto"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">→</span>
+              <span>Nome do projeto: <code class="bg-neutral-100 dark:bg-neutral-700 px-2 py-1 rounded">n8n-automacoes</code> (ou qualquer nome descritivo)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">→</span>
+              <span>Organização: deixe como está (ou selecione se tiver)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">→</span>
+              <span>Clique em <strong>"Criar"</strong> e aguarde (pode levar 30 segundos)</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-amber-100 dark:bg-amber-900/30 p-6 rounded-xl border-2 border-amber-300 dark:border-amber-700">
+          <p class="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-2">⚠️ Importante</p>
+          <p class="text-neutral-700 dark:text-neutral-300">Após criar o projeto, certifique-se de que ele está <strong>selecionado</strong> no dropdown do topo. Todas as configurações seguintes devem ser feitas DENTRO deste projeto.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 2: ATIVAR APIs -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">2</div>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Ativar as APIs Necessárias</h3>
+      </div>
+
+      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6">
+        Cada serviço Google tem sua própria API que precisa ser ativada individualmente:
+      </p>
+
+      <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl mb-6">
+        <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Como ativar:</p>
+        <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+          <li class="flex items-start gap-3">
+            <span class="text-green-500 font-bold">1.</span>
+            <span>No menu lateral, clique em <strong>"APIs e Serviços"</strong> → <strong>"Biblioteca"</strong></span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-green-500 font-bold">2.</span>
+            <span>Na barra de pesquisa, digite o nome da API</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-green-500 font-bold">3.</span>
+            <span>Clique na API desejada e depois em <strong>"Ativar"</strong></span>
+          </li>
+        </ol>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-red-50 dark:bg-red-900/20 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-800 dark:text-red-300 mb-3">📧 Para Gmail:</p>
+          <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+            <li>→ Pesquise: <strong>Gmail API</strong></li>
+            <li>→ Clique e ative</li>
+          </ul>
+        </div>
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl">
+          <p class="text-lg font-bold text-green-800 dark:text-green-300 mb-3">📊 Para Sheets:</p>
+          <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+            <li>→ Pesquise: <strong>Google Sheets API</strong></li>
+            <li>→ Clique e ative</li>
+          </ul>
+        </div>
+        <div class="bg-yellow-50 dark:bg-yellow-900/20 p-6 rounded-xl">
+          <p class="text-lg font-bold text-yellow-800 dark:text-yellow-300 mb-3">📁 Para Drive:</p>
+          <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+            <li>→ Pesquise: <strong>Google Drive API</strong></li>
+            <li>→ Clique e ative</li>
+          </ul>
+        </div>
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl">
+          <p class="text-lg font-bold text-blue-800 dark:text-blue-300 mb-3">📅 Para Calendar:</p>
+          <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+            <li>→ Pesquise: <strong>Google Calendar API</strong></li>
+            <li>→ Clique e ative</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-6 p-4 bg-blue-100 dark:bg-blue-900/30 rounded-xl">
+        <p class="text-blue-900 dark:text-blue-200">💡 <strong>Dica:</strong> Ative todas as APIs que você pretende usar agora. Não precisa voltar depois.</p>
+      </div>
+    </div>
+
+    <!-- PASSO 3: TELA DE CONSENTIMENTO -->
+    <div class="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-3xl p-12 mb-12 border-2 border-purple-200 dark:border-purple-800">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">3</div>
+        <h3 class="text-4xl font-bold text-purple-900 dark:text-purple-300">Configurar Tela de Consentimento OAuth</h3>
+      </div>
+
+      <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg mb-6">
+        <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">3.1 Acessar Configuração</p>
+        <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+          <li class="flex items-start gap-3">
+            <span class="text-purple-500 font-bold">→</span>
+            <span>No menu lateral: <strong>"APIs e Serviços"</strong> → <strong>"Tela de consentimento OAuth"</strong></span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-purple-500 font-bold">→</span>
+            <span>Tipo de usuário: selecione <strong>"Externo"</strong> (a menos que tenha Google Workspace)</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-purple-500 font-bold">→</span>
+            <span>Clique em <strong>"Criar"</strong></span>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg mb-6">
+        <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">3.2 Preencher Informações do App</p>
+        <div class="grid md:grid-cols-2 gap-4 text-neutral-700 dark:text-neutral-300">
+          <div class="bg-neutral-50 dark:bg-neutral-700 p-4 rounded-lg">
+            <p class="font-semibold">Nome do app:</p>
+            <code class="text-sm">N8N Automações</code>
+          </div>
+          <div class="bg-neutral-50 dark:bg-neutral-700 p-4 rounded-lg">
+            <p class="font-semibold">Email de suporte:</p>
+            <code class="text-sm">seu@email.com</code>
+          </div>
+          <div class="bg-neutral-50 dark:bg-neutral-700 p-4 rounded-lg">
+            <p class="font-semibold">Logo:</p>
+            <code class="text-sm">Opcional (pode pular)</code>
+          </div>
+          <div class="bg-neutral-50 dark:bg-neutral-700 p-4 rounded-lg">
+            <p class="font-semibold">Email do desenvolvedor:</p>
+            <code class="text-sm">seu@email.com</code>
+          </div>
+        </div>
+        <p class="mt-4 text-neutral-600 dark:text-neutral-400">Clique em <strong>"Salvar e Continuar"</strong></p>
+      </div>
+
+      <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg mb-6">
+        <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">3.3 Configurar Escopos (Permissões)</p>
+        <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+          <li class="flex items-start gap-3">
+            <span class="text-purple-500 font-bold">→</span>
+            <span>Clique em <strong>"Adicionar ou remover escopos"</strong></span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-purple-500 font-bold">→</span>
+            <span>Pesquise e adicione os escopos necessários (ou pule e deixe o N8N pedir depois)</span>
+          </li>
+        </ol>
+        <div class="mt-4 code-block">
+// Escopos comuns para N8N:
+https://www.googleapis.com/auth/gmail.modify        // Gmail
+https://www.googleapis.com/auth/spreadsheets        // Sheets
+https://www.googleapis.com/auth/drive               // Drive
+https://www.googleapis.com/auth/calendar            // Calendar
+        </div>
+        <p class="mt-4 text-neutral-600 dark:text-neutral-400">Clique em <strong>"Salvar e Continuar"</strong></p>
+      </div>
+
+      <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+        <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">3.4 Adicionar Usuários de Teste</p>
+        <div class="bg-red-100 dark:bg-red-900/30 p-4 rounded-xl mb-4 border-2 border-red-300 dark:border-red-700">
+          <p class="text-red-800 dark:text-red-300 font-semibold">⚠️ CRÍTICO - Não pule este passo!</p>
+          <p class="text-neutral-700 dark:text-neutral-300">Enquanto o app estiver em modo "Teste", APENAS os emails adicionados aqui poderão se conectar.</p>
+        </div>
+        <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+          <li class="flex items-start gap-3">
+            <span class="text-purple-500 font-bold">→</span>
+            <span>Clique em <strong>"Add Users"</strong></span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-purple-500 font-bold">→</span>
+            <span>Adicione o email da conta Google que você vai conectar ao N8N</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-purple-500 font-bold">→</span>
+            <span>Clique em <strong>"Salvar e Continuar"</strong> → <strong>"Voltar ao Painel"</strong></span>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- PASSO 4: CRIAR CREDENCIAIS -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">4</div>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Criar Credenciais OAuth 2.0</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">4.1 Criar ID do Cliente OAuth</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">1.</span>
+              <span>No menu lateral: <strong>"APIs e Serviços"</strong> → <strong>"Credenciais"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">2.</span>
+              <span>Clique em <strong>"+ Criar Credenciais"</strong> → <strong>"ID do cliente OAuth"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">3.</span>
+              <span>Tipo de aplicativo: <strong>"Aplicativo da Web"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">4.</span>
+              <span>Nome: <code class="bg-neutral-100 dark:bg-neutral-600 px-2 py-1 rounded">N8N OAuth</code></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border-2 border-green-300 dark:border-green-700">
+          <p class="text-lg font-semibold text-green-800 dark:text-green-300 mb-4">4.2 Configurar URIs de Redirecionamento (IMPORTANTE!)</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">Em <strong>"URIs de redirecionamento autorizados"</strong>, adicione:</p>
+          <div class="code-block mb-4">
+// Para N8N Cloud:
+https://app.n8n.cloud/rest/oauth2-credential/callback
+
+// Para N8N Self-Hosted (substitua pelo seu domínio):
+https://seu-dominio.com/rest/oauth2-credential/callback
+
+// Para N8N Local (desenvolvimento):
+http://localhost:5678/rest/oauth2-credential/callback
+          </div>
+          <p class="text-amber-700 dark:text-amber-300 font-semibold">⚠️ A URL precisa ser EXATA. Qualquer caractere diferente causa erro.</p>
+        </div>
+
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">4.3 Copiar as Credenciais</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">Após clicar em "Criar", você verá:</p>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg border-2 border-blue-300 dark:border-blue-700">
+              <p class="font-semibold text-blue-800 dark:text-blue-300">Client ID:</p>
+              <code class="text-xs break-all">123456789-xxxxx.apps.googleusercontent.com</code>
+            </div>
+            <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg border-2 border-red-300 dark:border-red-700">
+              <p class="font-semibold text-red-800 dark:text-red-300">Client Secret:</p>
+              <code class="text-xs">GOCSPX-xxxxxxxxxxxxxx</code>
+            </div>
+          </div>
+          <p class="mt-4 text-neutral-600 dark:text-neutral-400">📋 Copie ambos! Você vai precisar no N8N.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 5: CONFIGURAR NO N8N -->
+    <div class="bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 rounded-3xl p-12 mb-12 border-2 border-orange-200 dark:border-orange-800">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">5</div>
+        <h3 class="text-4xl font-bold text-orange-900 dark:text-orange-300">Configurar no N8N</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">5.1 Criar Credencial no N8N</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">1.</span>
+              <span>No N8N, vá em <strong>Credenciais</strong> (menu lateral)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">2.</span>
+              <span>Clique em <strong>"Adicionar Credencial"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">3.</span>
+              <span>Pesquise pelo serviço desejado (ex: <strong>Google Sheets OAuth2 API</strong>)</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">5.2 Preencher os Dados</p>
+          <div class="grid md:grid-cols-2 gap-4 text-neutral-700 dark:text-neutral-300">
+            <div class="bg-neutral-50 dark:bg-neutral-700 p-4 rounded-lg">
+              <p class="font-semibold">Client ID:</p>
+              <p class="text-sm">Cole o Client ID do Google Console</p>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-700 p-4 rounded-lg">
+              <p class="font-semibold">Client Secret:</p>
+              <p class="text-sm">Cole o Client Secret do Google Console</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">5.3 Conectar a Conta</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">1.</span>
+              <span>Clique em <strong>"Sign in with Google"</strong> (ou botão similar)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">2.</span>
+              <span>Uma nova aba abrirá para login no Google</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">3.</span>
+              <span>Selecione a conta (deve ser uma das adicionadas como usuário de teste!)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">4.</span>
+              <span>Vai aparecer um aviso <strong>"App não verificado"</strong> - clique em <strong>"Avançado"</strong> → <strong>"Ir para N8N Automações (não seguro)"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">5.</span>
+              <span>Conceda as permissões solicitadas</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">6.</span>
+              <span>A aba fecha automaticamente e a credencial está conectada!</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXEMPLOS PRÁTICOS -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📋</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Exemplos Práticos no N8N</h3>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Gmail -->
+        <div class="bg-red-50 dark:bg-red-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-red-800 dark:text-red-300 mb-4">📧 Gmail - Enviar Email</p>
+          <div class="code-block text-sm">
+// Node: Gmail
+// Operation: Send
+
+To: cliente@email.com
+Subject: Novo pedido recebido
+Message:
+  Olá {{ $json.nome }},
+  Seu pedido #{{ $json.pedido_id }}
+  foi confirmado!
+          </div>
+        </div>
+
+        <!-- Sheets -->
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-green-800 dark:text-green-300 mb-4">📊 Sheets - Adicionar Linha</p>
+          <div class="code-block text-sm">
+// Node: Google Sheets
+// Operation: Append
+
+Spreadsheet: Leads 2024
+Sheet: Janeiro
+Values:
+  A: {{ $json.nome }}
+  B: {{ $json.email }}
+  C: {{ $json.telefone }}
+  D: {{ $now.format('dd/MM/yyyy') }}
+          </div>
+        </div>
+
+        <!-- Drive -->
+        <div class="bg-yellow-50 dark:bg-yellow-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-yellow-800 dark:text-yellow-300 mb-4">📁 Drive - Upload de Arquivo</p>
+          <div class="code-block text-sm">
+// Node: Google Drive
+// Operation: Upload
+
+File Name: relatorio_{{ $now.format('yyyy-MM') }}.pdf
+Parents: 1ABC...xyz (ID da pasta)
+Binary Property: data
+
+// O arquivo vem de um node anterior
+// como HTTP Request ou Read Binary
+          </div>
+        </div>
+
+        <!-- Calendar -->
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-4">📅 Calendar - Criar Evento</p>
+          <div class="code-block text-sm">
+// Node: Google Calendar
+// Operation: Create
+
+Calendar: primary
+Summary: Reunião com {{ $json.cliente }}
+Start: {{ $json.data_reuniao }}
+End: {{ $json.data_reuniao_fim }}
+Description:
+  Assunto: {{ $json.assunto }}
+Attendees:
+  - {{ $json.email_cliente }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TROUBLESHOOTING -->
+    <div class="bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-3xl p-12 mb-12 border-2 border-red-200 dark:border-red-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🔧</span>
+        <h3 class="text-4xl font-bold text-red-900 dark:text-red-300">Troubleshooting</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ "Error 400: redirect_uri_mismatch"</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> A URL de callback no Google não bate com a do N8N.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Verifique a URL exata nas credenciais do Google Console. Atenção a http vs https e presença de barra no final.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ "Access blocked: This app's request is invalid"</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Tela de consentimento não configurada ou projeto errado selecionado.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Complete a configuração da tela de consentimento OAuth e verifique se o projeto correto está selecionado.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ "Error 403: access_denied"</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> O email não está na lista de usuários de teste.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Adicione o email em "Tela de consentimento OAuth" → "Usuários de teste".</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ Token expira frequentemente</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Apps em modo "teste" têm tokens com validade de 7 dias.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Publique o app (envie para verificação do Google) ou reconecte a credencial periodicamente.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="bg-gradient-to-r from-blue-600 to-green-600 rounded-3xl p-12 text-center text-white">
+      <h3 class="text-4xl font-bold mb-6">Google Suite Configurado!</h3>
+      <p class="text-xl mb-8 text-white/90">Agora você pode automatizar Gmail, Sheets, Drive e Calendar no N8N.</p>
+      <div class="flex gap-4 justify-center flex-wrap">
+        <a href="whatsapp.html" class="bg-white text-blue-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors">
+          Próximo: WhatsApp API →
+        </a>
+        <a href="../../tecnico.html" class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-colors">
+          Ver Todas as Conexões
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <footer class="bg-neutral-900 text-white py-12 mt-16">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-neutral-400">&copy; 2025 N8N Academy</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    } else {
+      themeToggleDarkIcon.classList.remove('hidden');
+    }
+    themeToggleBtn.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html>

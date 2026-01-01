@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Bot | N8N Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-discord { background: linear-gradient(135deg, #5865F2 0%, #7289DA 100%); }
+        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(0,0,0,0.15); }
+        .step-number { width: 48px; height: 48px; background: linear-gradient(135deg, #5865F2, #7289DA); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.25rem; flex-shrink: 0; }
+        pre { background: #1e1e1e; border-radius: 8px; padding: 16px; overflow-x: auto; }
+        code { color: #d4d4d4; font-family: 'Fira Code', monospace; font-size: 14px; }
+        .code-comment { color: #6a9955; }
+        .code-string { color: #ce9178; }
+        .code-key { color: #9cdcfe; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <a href="../../index.html" class="text-2xl font-bold text-gray-800">N8N Academy</a>
+                    <span class="text-gray-400">/</span>
+                    <a href="../tecnico.html" class="text-indigo-600 hover:text-indigo-800">Trilha Tecnico</a>
+                    <span class="text-gray-400">/</span>
+                    <span class="text-gray-600">Discord</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="gradient-discord text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="flex justify-center mb-6">
+                <div class="bg-white/20 p-6 rounded-2xl">
+                    <i class="fab fa-discord text-6xl"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Discord Bot</h1>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto">
+                Crie bots, envie notificacoes e automatize seu servidor Discord
+            </p>
+            <div class="mt-6 flex justify-center gap-4 flex-wrap">
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Bots</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Webhooks</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Notificacoes</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Embeds</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 py-12">
+
+        <!-- Overview -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">Discord + N8N</h2>
+            <p class="text-gray-600 mb-6">
+                O Discord e a plataforma de comunidades mais popular entre devs, gamers e comunidades tech.
+                Com N8N, voce pode criar bots que notificam, moderam e interagem automaticamente.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-indigo-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-indigo-800 mb-2"><i class="fas fa-bell mr-2"></i>Notificacoes</h3>
+                    <p class="text-sm text-gray-600">Alertas de deploys, vendas, errors, novos usuarios</p>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-blue-800 mb-2"><i class="fas fa-robot mr-2"></i>Bots Interativos</h3>
+                    <p class="text-sm text-gray-600">Responda comandos e mensagens dos usuarios</p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-green-800 mb-2"><i class="fas fa-users mr-2"></i>Moderacao</h3>
+                    <p class="text-sm text-gray-600">Detecte spam, de boas-vindas, atribua roles</p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-purple-800 mb-2"><i class="fas fa-share-alt mr-2"></i>Integracao</h3>
+                    <p class="text-sm text-gray-600">Conecte GitHub, Jira, Trello ao seu servidor</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Duas Abordagens -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">Duas Formas de Integrar</h2>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-green-50 p-6 rounded-lg border-2 border-green-200">
+                    <h3 class="font-bold text-green-800 text-lg mb-2">
+                        <i class="fas fa-link mr-2"></i>Webhook (Mais Facil)
+                    </h3>
+                    <p class="text-sm text-gray-600 mb-4">
+                        Para apenas ENVIAR mensagens a um canal.
+                        Nao requer bot, nao recebe mensagens.
+                    </p>
+                    <ul class="text-sm text-gray-700 space-y-1">
+                        <li>✓ Configuracao em 2 minutos</li>
+                        <li>✓ Ideal para notificacoes</li>
+                        <li>✓ Suporta embeds ricos</li>
+                        <li>✗ Nao recebe mensagens</li>
+                        <li>✗ Nao responde comandos</li>
+                    </ul>
+                </div>
+                <div class="bg-indigo-50 p-6 rounded-lg border-2 border-indigo-200">
+                    <h3 class="font-bold text-indigo-800 text-lg mb-2">
+                        <i class="fas fa-robot mr-2"></i>Bot (Mais Poder)
+                    </h3>
+                    <p class="text-sm text-gray-600 mb-4">
+                        Para ENVIAR e RECEBER mensagens.
+                        Necessita criar aplicacao no Discord.
+                    </p>
+                    <ul class="text-sm text-gray-700 space-y-1">
+                        <li>✓ Recebe mensagens e eventos</li>
+                        <li>✓ Responde comandos (slash)</li>
+                        <li>✓ Gerencia membros e roles</li>
+                        <li>✓ Acessa multiplos canais</li>
+                        <li>✗ Configuracao mais complexa</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Webhook -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">1</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Opcao A: Webhook</h2>
+                    <p class="text-gray-600">Enviar notificacoes simples</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4">Criar Webhook no Discord</h3>
+                    <ol class="space-y-3 text-gray-700">
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-indigo-600">1.</span>
+                            <span>Abra as <strong>configuracoes do canal</strong> (engrenagem ao lado do nome)</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-indigo-600">2.</span>
+                            <span>Va em <strong>Integracoes → Webhooks</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-indigo-600">3.</span>
+                            <span>Clique em <strong>Novo Webhook</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-indigo-600">4.</span>
+                            <span>De um nome e (opcional) avatar</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-indigo-600">5.</span>
+                            <span>Clique em <strong>Copiar URL do Webhook</strong></span>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4">Usar no N8N (HTTP Request)</h3>
+                    <pre><code><span class="code-comment">// HTTP Request node</span>
+<span class="code-key">Method</span>: POST
+<span class="code-key">URL</span>: https://discord.com/api/webhooks/XXXXXX/YYYYYY
+<span class="code-key">Body Type</span>: JSON
+
+<span class="code-comment">// Mensagem simples:</span>
+{
+  <span class="code-key">"content"</span>: <span class="code-string">"Hello from N8N!"</span>
+}
+
+<span class="code-comment">// Mensagem com Embed:</span>
+{
+  <span class="code-key">"embeds"</span>: [{
+    <span class="code-key">"title"</span>: <span class="code-string">"Nova Venda!"</span>,
+    <span class="code-key">"description"</span>: <span class="code-string">"Cliente comprou o plano Pro"</span>,
+    <span class="code-key">"color"</span>: 5763719,
+    <span class="code-key">"fields"</span>: [
+      { <span class="code-key">"name"</span>: <span class="code-string">"Valor"</span>, <span class="code-key">"value"</span>: <span class="code-string">"R$ 99"</span>, <span class="code-key">"inline"</span>: true },
+      { <span class="code-key">"name"</span>: <span class="code-string">"Cliente"</span>, <span class="code-key">"value"</span>: <span class="code-string">"joao@email.com"</span>, <span class="code-key">"inline"</span>: true }
+    ],
+    <span class="code-key">"timestamp"</span>: <span class="code-string">"{{ $now.toISO() }}"</span>
+  }]
+}</code></pre>
+                </div>
+
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4">
+                    <p class="font-bold text-blue-800"><i class="fas fa-palette mr-2"></i>Cores de Embed</p>
+                    <p class="text-sm text-blue-700 mt-1">
+                        Use decimal: Verde = 5763719, Vermelho = 15548997, Azul = 5793266, Amarelo = 16776960.
+                        Converta hex para decimal em qualquer conversor online.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bot -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">2</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Opcao B: Bot Completo</h2>
+                    <p class="text-gray-600">Receber e enviar mensagens</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4">Passo 1: Criar Aplicacao</h3>
+                    <ol class="space-y-3 text-gray-700">
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-indigo-600">1.</span>
+                            <span>Acesse <strong>discord.com/developers/applications</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-indigo-600">2.</span>
+                            <span>Clique em <strong>New Application</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-indigo-600">3.</span>
+                            <span>De um nome (ex: "N8N Bot")</span>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4">Passo 2: Criar Bot</h3>
+                    <ol class="space-y-3 text-gray-700">
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-indigo-600">1.</span>
+                            <span>No menu lateral, clique em <strong>Bot</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-indigo-600">2.</span>
+                            <span>Clique em <strong>Add Bot</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-indigo-600">3.</span>
+                            <span>Em <strong>TOKEN</strong>, clique em <strong>Reset Token</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-indigo-600">4.</span>
+                            <span><strong>Copie e guarde o token!</strong> Ele so aparece uma vez.</span>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="bg-red-50 border-l-4 border-red-500 p-4">
+                    <p class="font-bold text-red-800"><i class="fas fa-exclamation-triangle mr-2"></i>NUNCA compartilhe o Token</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        O token do bot da acesso total ao bot. Se vazar, qualquer pessoa pode
+                        usar seu bot. Regenere imediatamente se suspeitar de vazamento.
+                    </p>
+                </div>
+
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4">Passo 3: Privileged Gateway Intents</h3>
+                    <p class="text-gray-600 mb-4">Para receber mensagens, ative os intents necessarios:</p>
+                    <ul class="space-y-2 text-gray-700">
+                        <li class="flex items-center gap-2">
+                            <input type="checkbox" checked disabled class="w-4 h-4">
+                            <span><strong>MESSAGE CONTENT INTENT</strong> - Ler conteudo das mensagens</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <input type="checkbox" checked disabled class="w-4 h-4">
+                            <span><strong>SERVER MEMBERS INTENT</strong> - Ver membros do servidor</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <input type="checkbox" checked disabled class="w-4 h-4">
+                            <span><strong>PRESENCE INTENT</strong> - Ver status online</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4">Passo 4: Adicionar Bot ao Servidor</h3>
+                    <ol class="space-y-3 text-gray-700">
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-indigo-600">1.</span>
+                            <span>Va em <strong>OAuth2 → URL Generator</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-indigo-600">2.</span>
+                            <span>Em <strong>SCOPES</strong>, marque: <code class="bg-gray-200 px-1">bot</code></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-indigo-600">3.</span>
+                            <span>Em <strong>BOT PERMISSIONS</strong>, marque as permissoes necessarias:</span>
+                        </li>
+                    </ol>
+
+                    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
+                        <label class="flex items-center gap-2 bg-white p-2 rounded">
+                            <input type="checkbox" checked disabled> Send Messages
+                        </label>
+                        <label class="flex items-center gap-2 bg-white p-2 rounded">
+                            <input type="checkbox" checked disabled> Read Messages
+                        </label>
+                        <label class="flex items-center gap-2 bg-white p-2 rounded">
+                            <input type="checkbox" checked disabled> Embed Links
+                        </label>
+                        <label class="flex items-center gap-2 bg-white p-2 rounded">
+                            <input type="checkbox" checked disabled> Attach Files
+                        </label>
+                        <label class="flex items-center gap-2 bg-white p-2 rounded">
+                            <input type="checkbox" checked disabled> Manage Roles
+                        </label>
+                        <label class="flex items-center gap-2 bg-white p-2 rounded">
+                            <input type="checkbox" checked disabled> Kick Members
+                        </label>
+                    </div>
+
+                    <p class="text-gray-600 mt-4">
+                        <span class="font-bold text-indigo-600">4.</span>
+                        Copie a URL gerada e acesse no navegador para adicionar ao servidor.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Configurar N8N -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">3</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Configurar no N8N</h2>
+                    <p class="text-gray-600">Adicionar credencial e usar nodes</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4">Criar Credencial</h3>
+                    <ol class="space-y-3 text-gray-700">
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-indigo-600">1.</span>
+                            <span>No N8N, va em <strong>Credentials → Add Credential</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-indigo-600">2.</span>
+                            <span>Busque por <strong>Discord Bot API</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-indigo-600">3.</span>
+                            <span>Cole o <strong>Bot Token</strong> que voce copiou</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-indigo-600">4.</span>
+                            <span>Clique em <strong>Save</strong></span>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4">
+                    <p class="font-bold text-yellow-800"><i class="fas fa-lightbulb mr-2"></i>Como obter IDs</p>
+                    <p class="text-sm text-yellow-700 mt-1">
+                        Ative o <strong>Developer Mode</strong> nas configuracoes do Discord (Advanced).
+                        Depois, clique direito em qualquer canal/usuario/servidor e "Copy ID".
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Operacoes -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">4</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Operacoes Disponiveis</h2>
+                    <p class="text-gray-600">O que voce pode fazer com o Discord node</p>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-gray-800 mb-2"><i class="fas fa-comment mr-2 text-indigo-600"></i>Message</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Send - Enviar mensagem</li>
+                        <li>• Get All - Listar mensagens do canal</li>
+                        <li>• Delete - Apagar mensagem</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-gray-800 mb-2"><i class="fas fa-hashtag mr-2 text-blue-600"></i>Channel</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Get - Informacoes do canal</li>
+                        <li>• Get All - Listar canais do servidor</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-gray-800 mb-2"><i class="fas fa-user mr-2 text-green-600"></i>Member</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Get All - Listar membros</li>
+                        <li>• Role Add - Adicionar role</li>
+                        <li>• Role Remove - Remover role</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-gray-800 mb-2"><i class="fas fa-bolt mr-2 text-purple-600"></i>Webhook</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Send - Enviar via webhook</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exemplos Praticos -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-code mr-2 text-indigo-600"></i>Exemplos Praticos
+            </h2>
+
+            <div class="space-y-8">
+                <!-- Exemplo 1 -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4">1. Alertar deploys do GitHub</h3>
+                    <pre><code><span class="code-comment">// GitHub Trigger: Deployment Status</span>
+<span class="code-comment">// → HTTP Request: Discord Webhook</span>
+
+<span class="code-comment">// Body para Webhook:</span>
+{
+  <span class="code-key">"embeds"</span>: [{
+    <span class="code-key">"title"</span>: <span class="code-string">"{{ $json.deployment_status.state == 'success' ? ':white_check_mark: Deploy Sucesso' : ':x: Deploy Falhou' }}"</span>,
+    <span class="code-key">"description"</span>: <span class="code-string">"{{ $json.repository.full_name }}"</span>,
+    <span class="code-key">"color"</span>: {{ $json.deployment_status.state == 'success' ? 5763719 : 15548997 }},
+    <span class="code-key">"fields"</span>: [
+      { <span class="code-key">"name"</span>: <span class="code-string">"Branch"</span>, <span class="code-key">"value"</span>: <span class="code-string">"{{ $json.deployment.ref }}"</span>, <span class="code-key">"inline"</span>: true },
+      { <span class="code-key">"name"</span>: <span class="code-string">"Ambiente"</span>, <span class="code-key">"value"</span>: <span class="code-string">"{{ $json.deployment.environment }}"</span>, <span class="code-key">"inline"</span>: true }
+    ],
+    <span class="code-key">"url"</span>: <span class="code-string">"{{ $json.deployment_status.target_url }}"</span>
+  }]
+}</code></pre>
+                </div>
+
+                <!-- Exemplo 2 -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4">2. Boas-vindas automaticas</h3>
+                    <pre><code><span class="code-comment">// Discord Trigger: Member Joined</span>
+<span class="code-comment">// → Discord: Send Message</span>
+<span class="code-comment">// → Discord: Role Add (dar role de "membro")</span>
+
+<span class="code-comment">// Mensagem de boas-vindas:</span>
+<span class="code-key">Channel ID</span>: 123456789 <span class="code-comment">// canal #boas-vindas</span>
+<span class="code-key">Message</span>: <span class="code-string">"Bem-vindo(a) <@{{ $json.user.id }}>! :wave:
+Leia as regras em #regras e apresente-se em #geral!"</span>
+
+<span class="code-comment">// Adicionar role:</span>
+<span class="code-key">Guild ID</span>: {{ $json.guild_id }}
+<span class="code-key">User ID</span>: {{ $json.user.id }}
+<span class="code-key">Role ID</span>: 987654321 <span class="code-comment">// role "membro"</span></code></pre>
+                </div>
+
+                <!-- Exemplo 3 -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4">3. Bot de suporte com IA</h3>
+                    <pre><code><span class="code-comment">// Discord Trigger: Message Created</span>
+<span class="code-comment">// → IF: channel == #suporte</span>
+<span class="code-comment">// → OpenAI: Gerar resposta</span>
+<span class="code-comment">// → Discord: Send Reply</span>
+
+<span class="code-comment">// Filtrar apenas canal de suporte:</span>
+<span class="code-key">IF</span>: {{ $json.channel_id }} == "ID_CANAL_SUPORTE"
+
+<span class="code-comment">// Prompt OpenAI:</span>
+<span class="code-string">"Voce e um bot de suporte. Responda a pergunta:
+{{ $json.content }}"</span>
+
+<span class="code-comment">// Enviar resposta no mesmo canal:</span>
+<span class="code-key">Channel ID</span>: {{ $json.channel_id }}
+<span class="code-key">Message</span>: {{ $('OpenAI').item.json.text }}</code></pre>
+                </div>
+
+                <!-- Exemplo 4 -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4">4. Notificar novas vendas (Stripe + Discord)</h3>
+                    <pre><code><span class="code-comment">// Stripe Trigger: payment_intent.succeeded</span>
+<span class="code-comment">// → HTTP Request: Discord Webhook</span>
+
+{
+  <span class="code-key">"content"</span>: <span class="code-string">"@here :moneybag: Nova venda!"</span>,
+  <span class="code-key">"embeds"</span>: [{
+    <span class="code-key">"title"</span>: <span class="code-string">"Pagamento Recebido"</span>,
+    <span class="code-key">"color"</span>: 5763719,
+    <span class="code-key">"fields"</span>: [
+      { <span class="code-key">"name"</span>: <span class="code-string">"Valor"</span>, <span class="code-key">"value"</span>: <span class="code-string">"R$ {{ $json.data.object.amount / 100 }}"</span>, <span class="code-key">"inline"</span>: true },
+      { <span class="code-key">"name"</span>: <span class="code-string">"Cliente"</span>, <span class="code-key">"value"</span>: <span class="code-string">"{{ $json.data.object.receipt_email }}"</span>, <span class="code-key">"inline"</span>: true }
+    ],
+    <span class="code-key">"footer"</span>: { <span class="code-key">"text"</span>: <span class="code-string">"via Stripe"</span> },
+    <span class="code-key">"timestamp"</span>: <span class="code-string">"{{ $now.toISO() }}"</span>
+  }]
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mencoes e Formatacao -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-at mr-2 text-blue-500"></i>Mencoes e Formatacao
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-gray-800 mb-2">Mencoes</h4>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li><code class="bg-gray-200 px-1">&lt;@USER_ID&gt;</code> - Mencionar usuario</li>
+                        <li><code class="bg-gray-200 px-1">&lt;@&ROLE_ID&gt;</code> - Mencionar role</li>
+                        <li><code class="bg-gray-200 px-1">&lt;#CHANNEL_ID&gt;</code> - Link para canal</li>
+                        <li><code class="bg-gray-200 px-1">@everyone</code> - Mencionar todos</li>
+                        <li><code class="bg-gray-200 px-1">@here</code> - Membros online</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-gray-800 mb-2">Formatacao</h4>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li><code class="bg-gray-200 px-1">**texto**</code> - <strong>Negrito</strong></li>
+                        <li><code class="bg-gray-200 px-1">*texto*</code> - <em>Italico</em></li>
+                        <li><code class="bg-gray-200 px-1">__texto__</code> - <u>Sublinhado</u></li>
+                        <li><code class="bg-gray-200 px-1">~~texto~~</code> - <s>Riscado</s></li>
+                        <li><code class="bg-gray-200 px-1">`codigo`</code> - Inline code</li>
+                        <li><code class="bg-gray-200 px-1">```bloco```</code> - Bloco de codigo</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Troubleshooting -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-wrench mr-2 text-orange-500"></i>Troubleshooting
+            </h2>
+
+            <div class="space-y-4">
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">401 Unauthorized</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        Token do bot incorreto ou expirado. Regenere em discord.com/developers.
+                    </p>
+                </div>
+
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">403 Missing Permissions</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        O bot nao tem permissao para essa acao. Verifique as permissoes do bot
+                        no servidor e no canal especifico.
+                    </p>
+                </div>
+
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">Bot nao recebe mensagens</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        Ative o "MESSAGE CONTENT INTENT" nas configuracoes do bot em
+                        discord.com/developers. Sem isso, o bot nao ve o conteudo das mensagens.
+                    </p>
+                </div>
+
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">Webhook retorna 404</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        O webhook foi deletado. Crie um novo nas configuracoes do canal.
+                    </p>
+                </div>
+
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">Rate Limited (429)</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        Muitas requisicoes em pouco tempo. Adicione um node Wait entre mensagens
+                        ou use batch processing.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl shadow-lg p-8 text-white text-center">
+            <h2 class="text-2xl font-bold mb-4">Proximo: HTTP Request</h2>
+            <p class="mb-6 text-white/90">
+                Aprenda a integrar com qualquer API usando HTTP Request
+            </p>
+            <a href="http.html" class="inline-block bg-white text-indigo-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition">
+                Continuar para HTTP Request <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-400">N8N Academy - Dominando automacoes</p>
+        </div>
+    </footer>
+</body>
+</html>

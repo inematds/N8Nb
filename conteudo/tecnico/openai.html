@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenAI / ChatGPT API | N8N Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .code-block { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 0.75rem; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.7; }
+    .step-number { width: 3rem; height: 3rem; background: linear-gradient(135deg, #10a37f, #1a7f64); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.25rem; flex-shrink: 0; }
+  </style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../../tecnico.html" class="text-2xl font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
+          <span>←</span><span class="text-3xl">🤖</span><span>OpenAI API</span>
+        </a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-gradient-to-br from-emerald-500 via-teal-600 to-cyan-600 py-24">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="text-8xl mb-8">🤖</div>
+      <h1 class="text-6xl font-bold mb-6">OpenAI / ChatGPT</h1>
+      <p class="text-3xl mb-4 text-white/90">GPT-4, GPT-4o, DALL-E, Whisper</p>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto">Integre IA generativa aos seus workflows. Chat, geração de imagens, transcrição de áudio e muito mais.</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 py-20">
+
+    <!-- VISÃO GERAL -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🎯</span>
+        <h2 class="text-5xl font-bold text-neutral-900 dark:text-neutral-100">Visão Geral</h2>
+      </div>
+      <p class="text-2xl text-neutral-700 dark:text-neutral-300 mb-8 leading-relaxed">
+        A API da OpenAI permite integrar os modelos mais avançados de IA nos seus workflows. Desde chat (GPT-4) até geração de imagens (DALL-E) e transcrição de áudio (Whisper).
+      </p>
+
+      <div class="grid md:grid-cols-4 gap-6">
+        <div class="bg-emerald-50 dark:bg-emerald-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">💬</p>
+          <p class="text-lg font-semibold text-emerald-800 dark:text-emerald-300">Chat/Completions</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">GPT-4, GPT-4o, GPT-3.5</p>
+        </div>
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">🎨</p>
+          <p class="text-lg font-semibold text-purple-800 dark:text-purple-300">DALL-E</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Geração de imagens</p>
+        </div>
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">🎤</p>
+          <p class="text-lg font-semibold text-blue-800 dark:text-blue-300">Whisper</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Transcrição de áudio</p>
+        </div>
+        <div class="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">📊</p>
+          <p class="text-lg font-semibold text-amber-800 dark:text-amber-300">Embeddings</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Vetores semânticos</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 1: OBTER API KEY -->
+    <div class="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-3xl p-12 mb-12 border-2 border-emerald-200 dark:border-emerald-800">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">1</div>
+        <h3 class="text-4xl font-bold text-emerald-900 dark:text-emerald-300">Obter API Key</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">1.1 Criar Conta e Adicionar Créditos</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-emerald-500 font-bold">1.</span>
+              <span>Acesse <strong>platform.openai.com</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-emerald-500 font-bold">2.</span>
+              <span>Crie uma conta ou faça login</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-emerald-500 font-bold">3.</span>
+              <span>Vá em <strong>Settings</strong> → <strong>Billing</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-emerald-500 font-bold">4.</span>
+              <span>Adicione um método de pagamento e créditos</span>
+            </li>
+          </ol>
+          <div class="mt-4 bg-amber-100 dark:bg-amber-900/30 p-4 rounded-xl">
+            <p class="text-amber-800 dark:text-amber-300">💰 A OpenAI cobra por uso (tokens). GPT-4o custa ~$2.50/1M tokens de input e ~$10/1M tokens de output.</p>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">1.2 Gerar API Key</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-emerald-500 font-bold">1.</span>
+              <span>Vá em <strong>API Keys</strong> (menu lateral)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-emerald-500 font-bold">2.</span>
+              <span>Clique em <strong>"Create new secret key"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-emerald-500 font-bold">3.</span>
+              <span>Dê um nome: <code class="bg-neutral-100 dark:bg-neutral-600 px-2 py-1 rounded">n8n-production</code></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-emerald-500 font-bold">4.</span>
+              <span>Copie a key imediatamente (só aparece uma vez!)</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-red-100 dark:bg-red-900/30 p-6 rounded-xl border-2 border-red-300 dark:border-red-700">
+          <p class="text-lg font-semibold text-red-800 dark:text-red-300 mb-2">⚠️ IMPORTANTE - Segurança da Key</p>
+          <ul class="text-neutral-700 dark:text-neutral-300 space-y-2">
+            <li>→ A key só é mostrada UMA VEZ - copie e guarde!</li>
+            <li>→ NUNCA compartilhe ou commite em código</li>
+            <li>→ Configure limites de uso em Settings → Limits</li>
+            <li>→ Use keys diferentes para dev/prod</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 2: CONFIGURAR NO N8N -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">2</div>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Configurar no N8N</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">2.1 Criar Credencial</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-emerald-500 font-bold">1.</span>
+              <span>No N8N, vá em <strong>Credenciais</strong> → <strong>Adicionar</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-emerald-500 font-bold">2.</span>
+              <span>Pesquise: <strong>"OpenAI"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-emerald-500 font-bold">3.</span>
+              <span>Cole sua <strong>API Key</strong> (começa com sk-...)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-emerald-500 font-bold">4.</span>
+              <span>Clique em <strong>Salvar</strong></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">2.2 Nodes Disponíveis</p>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="bg-emerald-100 dark:bg-emerald-900/30 p-4 rounded-lg">
+              <p class="font-semibold text-emerald-800 dark:text-emerald-300">OpenAI</p>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">Chat, completions, análise</p>
+            </div>
+            <div class="bg-purple-100 dark:bg-purple-900/30 p-4 rounded-lg">
+              <p class="font-semibold text-purple-800 dark:text-purple-300">OpenAI Chat Model</p>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">Para uso com AI Agent</p>
+            </div>
+            <div class="bg-blue-100 dark:bg-blue-900/30 p-4 rounded-lg">
+              <p class="font-semibold text-blue-800 dark:text-blue-300">OpenAI Embeddings</p>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">Vetorização de texto</p>
+            </div>
+            <div class="bg-amber-100 dark:bg-amber-900/30 p-4 rounded-lg">
+              <p class="font-semibold text-amber-800 dark:text-amber-300">AI Agent</p>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">Agentes autônomos com tools</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODELOS DISPONÍVEIS -->
+    <div class="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-3xl p-12 mb-12 border-2 border-purple-200 dark:border-purple-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🧠</span>
+        <h3 class="text-4xl font-bold text-purple-900 dark:text-purple-300">Modelos Disponíveis</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-xl font-bold text-emerald-700 dark:text-emerald-400 mb-4">💬 Chat/Text (Recomendados)</p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-neutral-200 dark:border-neutral-600">
+                  <th class="text-left py-2">Modelo</th>
+                  <th class="text-left py-2">Contexto</th>
+                  <th class="text-left py-2">Melhor para</th>
+                  <th class="text-left py-2">Custo</th>
+                </tr>
+              </thead>
+              <tbody class="text-neutral-600 dark:text-neutral-400">
+                <tr class="border-b border-neutral-100 dark:border-neutral-700">
+                  <td class="py-2 font-semibold text-emerald-600">gpt-4o</td>
+                  <td>128K tokens</td>
+                  <td>Melhor custo-benefício</td>
+                  <td>$$$</td>
+                </tr>
+                <tr class="border-b border-neutral-100 dark:border-neutral-700">
+                  <td class="py-2 font-semibold text-emerald-600">gpt-4o-mini</td>
+                  <td>128K tokens</td>
+                  <td>Tarefas simples, baixo custo</td>
+                  <td>$</td>
+                </tr>
+                <tr class="border-b border-neutral-100 dark:border-neutral-700">
+                  <td class="py-2 font-semibold text-purple-600">gpt-4-turbo</td>
+                  <td>128K tokens</td>
+                  <td>Raciocínio complexo</td>
+                  <td>$$$$</td>
+                </tr>
+                <tr class="border-b border-neutral-100 dark:border-neutral-700">
+                  <td class="py-2 font-semibold text-blue-600">gpt-3.5-turbo</td>
+                  <td>16K tokens</td>
+                  <td>Legado, mais barato</td>
+                  <td>$</td>
+                </tr>
+                <tr>
+                  <td class="py-2 font-semibold text-amber-600">o1-preview</td>
+                  <td>128K tokens</td>
+                  <td>Raciocínio avançado</td>
+                  <td>$$$$$</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-xl font-bold text-purple-700 dark:text-purple-400 mb-4">🎨 Imagens & 🎤 Áudio</p>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg">
+              <p class="font-semibold text-purple-800 dark:text-purple-300">DALL-E 3</p>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">Geração de imagens HD. ~$0.04/imagem</p>
+            </div>
+            <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+              <p class="font-semibold text-blue-800 dark:text-blue-300">Whisper</p>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">Transcrição de áudio. ~$0.006/minuto</p>
+            </div>
+            <div class="bg-amber-50 dark:bg-amber-900/20 p-4 rounded-lg">
+              <p class="font-semibold text-amber-800 dark:text-amber-300">TTS (Text-to-Speech)</p>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">Gerar áudio a partir de texto</p>
+            </div>
+            <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
+              <p class="font-semibold text-green-800 dark:text-green-300">text-embedding-3-large</p>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">Embeddings para RAG/busca</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXEMPLOS PRÁTICOS -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📋</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Exemplos Práticos</h3>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Chat Simples -->
+        <div class="bg-emerald-50 dark:bg-emerald-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-emerald-800 dark:text-emerald-300 mb-4">💬 Chat Simples</p>
+          <div class="code-block text-sm">
+// Node: OpenAI
+// Operation: Message a Model
+
+Model: gpt-4o-mini
+Messages:
+  - Role: system
+    Content: Você é um assistente útil.
+  - Role: user
+    Content: {{ $json.pergunta }}
+
+// Resposta em:
+{{ $json.message.content }}
+          </div>
+        </div>
+
+        <!-- Classificação -->
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-4">📊 Classificar Texto</p>
+          <div class="code-block text-sm">
+// Classificar sentimento de feedback
+
+System Prompt:
+  Classifique o sentimento do texto
+  em: positivo, negativo ou neutro.
+  Responda APENAS com a classificação.
+
+User:
+  {{ $json.feedback }}
+
+// Resposta: "positivo"
+          </div>
+        </div>
+
+        <!-- Extração de Dados -->
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-4">📝 Extrair Dados Estruturados</p>
+          <div class="code-block text-sm">
+// Extrair dados de email
+
+System:
+  Extraia os dados do email em JSON:
+  {
+    "nome": "",
+    "email": "",
+    "assunto": "",
+    "urgencia": "alta|media|baixa"
+  }
+
+User: {{ $json.email_body }}
+
+// Use JSON.parse() na resposta
+          </div>
+        </div>
+
+        <!-- Sumarização -->
+        <div class="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-amber-800 dark:text-amber-300 mb-4">📰 Resumir Conteúdo</p>
+          <div class="code-block text-sm">
+// Resumir artigo/documento
+
+System:
+  Resuma o texto em 3 bullet points
+  principais. Seja conciso e objetivo.
+
+User:
+  {{ $json.artigo }}
+
+// Parâmetros recomendados:
+Temperature: 0.3
+Max Tokens: 300
+          </div>
+        </div>
+
+        <!-- Gerar Imagem -->
+        <div class="bg-pink-50 dark:bg-pink-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-pink-800 dark:text-pink-300 mb-4">🎨 Gerar Imagem (DALL-E)</p>
+          <div class="code-block text-sm">
+// Node: OpenAI
+// Operation: Generate Image
+
+Model: dall-e-3
+Prompt:
+  Um gato programador usando óculos,
+  trabalhando em um laptop,
+  estilo cartoon colorido
+
+Size: 1024x1024
+Quality: standard
+
+// Retorna URL da imagem
+          </div>
+        </div>
+
+        <!-- Transcrição -->
+        <div class="bg-indigo-50 dark:bg-indigo-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-indigo-800 dark:text-indigo-300 mb-4">🎤 Transcrever Áudio (Whisper)</p>
+          <div class="code-block text-sm">
+// Node: OpenAI
+// Operation: Transcribe Audio
+
+Model: whisper-1
+Audio File: {{ $binary.data }}
+Language: pt  // opcional
+
+// Retorna texto transcrito
+// Suporta: mp3, mp4, mpeg, mpga,
+// m4a, wav, webm
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI AGENT -->
+    <div class="bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 rounded-3xl p-12 mb-12 border-2 border-orange-200 dark:border-orange-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🤖</span>
+        <h3 class="text-4xl font-bold text-orange-900 dark:text-orange-300">AI Agent com Tools</h3>
+      </div>
+
+      <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg mb-6">
+        <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">O que são AI Agents?</p>
+        <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+          Agents são modelos de IA que podem usar <strong>ferramentas (tools)</strong> para executar ações. O modelo decide quando e qual ferramenta usar baseado no contexto.
+        </p>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-orange-100 dark:bg-orange-900/30 p-4 rounded-lg text-center">
+            <p class="text-2xl mb-2">🔧</p>
+            <p class="font-semibold text-orange-800 dark:text-orange-300">Tools</p>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Workflows como ferramentas</p>
+          </div>
+          <div class="bg-blue-100 dark:bg-blue-900/30 p-4 rounded-lg text-center">
+            <p class="text-2xl mb-2">🧠</p>
+            <p class="font-semibold text-blue-800 dark:text-blue-300">Memória</p>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Contexto persistente</p>
+          </div>
+          <div class="bg-green-100 dark:bg-green-900/30 p-4 rounded-lg text-center">
+            <p class="text-2xl mb-2">📚</p>
+            <p class="font-semibold text-green-800 dark:text-green-300">RAG</p>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Conhecimento externo</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+        <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Exemplo: Agent com Tool de Busca</p>
+        <div class="code-block">
+// Estrutura do Workflow:
+//
+// [Chat Trigger] → [AI Agent] ← [OpenAI Chat Model]
+//                      ↑
+//                   [Tool: HTTP Request]
+//                   (buscar dados de API)
+
+// Configuração do AI Agent:
+System Message:
+  Você é um assistente que pode buscar
+  informações sobre o clima.
+  Use a tool "buscar_clima" quando
+  perguntarem sobre tempo/temperatura.
+
+// A Tool é um subworkflow que:
+// 1. Recebe cidade como input
+// 2. Faz request para API de clima
+// 3. Retorna dados formatados
+
+// O Agent automaticamente:
+// 1. Identifica a intenção
+// 2. Chama a tool apropriada
+// 3. Formata a resposta final
+        </div>
+      </div>
+    </div>
+
+    <!-- BOAS PRÁTICAS -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">💡</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Boas Práticas</h3>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl">
+          <p class="text-lg font-bold text-green-700 dark:text-green-400 mb-3">✅ Faça</p>
+          <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+            <li>→ Use system prompts claros e específicos</li>
+            <li>→ Ajuste temperature (0 = determinístico, 1 = criativo)</li>
+            <li>→ Use gpt-4o-mini para tarefas simples (10x mais barato)</li>
+            <li>→ Limite max_tokens para controlar custo</li>
+            <li>→ Use JSON mode para outputs estruturados</li>
+            <li>→ Implemente retry com exponential backoff</li>
+          </ul>
+        </div>
+        <div class="bg-red-50 dark:bg-red-900/20 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-3">❌ Evite</p>
+          <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+            <li>→ Enviar dados sensíveis desnecessariamente</li>
+            <li>→ Prompts vagos ou ambíguos</li>
+            <li>→ Ignorar rate limits (causa erros 429)</li>
+            <li>→ Usar modelos caros para tarefas simples</li>
+            <li>→ Confiar cegamente nas respostas</li>
+            <li>→ Não tratar erros de API</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-6 bg-blue-100 dark:bg-blue-900/30 p-6 rounded-xl">
+        <p class="text-lg font-semibold text-blue-800 dark:text-blue-300 mb-2">💰 Dicas de Custo</p>
+        <div class="code-block text-sm">
+// 1. Use modelos apropriados:
+// - Classificação simples → gpt-4o-mini
+// - Análise complexa → gpt-4o
+// - Raciocínio avançado → o1-preview
+
+// 2. Limite tokens:
+max_tokens: 500  // Suficiente para maioria das tarefas
+
+// 3. Cache respostas:
+// Use Redis ou banco de dados para cachear
+// respostas de perguntas frequentes
+
+// 4. Monitore uso:
+// Settings → Usage no dashboard OpenAI
+        </div>
+      </div>
+    </div>
+
+    <!-- TROUBLESHOOTING -->
+    <div class="bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-3xl p-12 mb-12 border-2 border-red-200 dark:border-red-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🔧</span>
+        <h3 class="text-4xl font-bold text-red-900 dark:text-red-300">Troubleshooting</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ "Insufficient quota" / Error 429</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Sem créditos ou rate limit excedido.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Adicione créditos em Billing ou aguarde reset do rate limit (geralmente 1 minuto).</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ "Invalid API key"</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Key incorreta ou revogada.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Verifique a key no dashboard. Gere uma nova se necessário.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ "Context length exceeded"</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Prompt + resposta excedem limite do modelo.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Reduza o prompt, use modelo com mais contexto (128K), ou implemente chunking.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ Resposta vazia ou cortada</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> max_tokens muito baixo ou finish_reason = "length".</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Aumente max_tokens ou verifique o finish_reason na resposta.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-3xl p-12 text-center text-white">
+      <h3 class="text-4xl font-bold mb-6">OpenAI Configurado!</h3>
+      <p class="text-xl mb-8 text-white/90">Agora você pode adicionar IA aos seus workflows.</p>
+      <div class="flex gap-4 justify-center flex-wrap">
+        <a href="llms.html" class="bg-white text-emerald-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors">
+          Ver Outros LLMs (DeepSeek, Mistral) →
+        </a>
+        <a href="../../tecnico.html" class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-colors">
+          Ver Todas as Conexões
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <footer class="bg-neutral-900 text-white py-12 mt-16">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-neutral-400">&copy; 2025 N8N Academy</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    } else {
+      themeToggleDarkIcon.classList.remove('hidden');
+    }
+    themeToggleBtn.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html>

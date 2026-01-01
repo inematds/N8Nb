@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stripe - Pagamentos | N8N Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-stripe { background: linear-gradient(135deg, #635bff 0%, #00d4ff 100%); }
+        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(0,0,0,0.15); }
+        .step-number { width: 48px; height: 48px; background: linear-gradient(135deg, #635bff, #00d4ff); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.25rem; flex-shrink: 0; }
+        pre { background: #1e1e1e; border-radius: 8px; padding: 16px; overflow-x: auto; }
+        code { color: #d4d4d4; font-family: 'Fira Code', monospace; font-size: 14px; }
+        .code-comment { color: #6a9955; }
+        .code-string { color: #ce9178; }
+        .code-key { color: #9cdcfe; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <a href="../../index.html" class="text-2xl font-bold text-gray-800">N8N Academy</a>
+                    <span class="text-gray-400">/</span>
+                    <a href="../tecnico.html" class="text-purple-600 hover:text-purple-800">Trilha Tecnico</a>
+                    <span class="text-gray-400">/</span>
+                    <span class="text-gray-600">Stripe</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="gradient-stripe text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="flex justify-center mb-6">
+                <div class="bg-white/20 p-6 rounded-2xl">
+                    <i class="fab fa-stripe text-6xl"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Stripe - Pagamentos</h1>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto">
+                Configure pagamentos, assinaturas e webhooks para automatizar sua receita
+            </p>
+            <div class="mt-6 flex justify-center gap-4 flex-wrap">
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Pagamentos Unicos</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Assinaturas</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Webhooks</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Checkout</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 py-12">
+
+        <!-- Overview -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">Por Que Stripe + N8N?</h2>
+            <p class="text-gray-600 mb-6">
+                O Stripe e a plataforma de pagamentos mais usada por SaaS, e-commerces e produtos digitais.
+                Com N8N, voce pode automatizar todo o ciclo de vida do cliente pagante.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-purple-800 mb-2"><i class="fas fa-bell mr-2"></i>Notificacoes</h3>
+                    <p class="text-sm text-gray-600">Avise no Slack/Discord quando um pagamento for aprovado ou falhar</p>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-blue-800 mb-2"><i class="fas fa-user-plus mr-2"></i>Provisioning</h3>
+                    <p class="text-sm text-gray-600">Crie contas automaticamente quando assinatura for confirmada</p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-green-800 mb-2"><i class="fas fa-file-invoice mr-2"></i>Notas Fiscais</h3>
+                    <p class="text-sm text-gray-600">Emita NFe automaticamente integrando com Focus NFe ou similares</p>
+                </div>
+                <div class="bg-orange-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-orange-800 mb-2"><i class="fas fa-redo mr-2"></i>Dunning</h3>
+                    <p class="text-sm text-gray-600">Envie lembretes quando cartao falhar ou assinatura estiver para vencer</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 1: Criar Conta -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">1</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Criar Conta Stripe</h2>
+                    <p class="text-gray-600">Cadastro e configuracao inicial</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4">Acesse stripe.com</h3>
+                    <ol class="space-y-3 text-gray-700">
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-purple-600">1.</span>
+                            <span>Acesse <strong>dashboard.stripe.com</strong> e clique em "Start now"</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-purple-600">2.</span>
+                            <span>Crie uma conta com email e senha</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-purple-600">3.</span>
+                            <span>Voce estara em <strong>Test Mode</strong> por padrao (ideal para desenvolvimento)</span>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4">
+                    <p class="font-bold text-yellow-800"><i class="fas fa-lightbulb mr-2"></i>Test Mode vs Live Mode</p>
+                    <p class="text-sm text-yellow-700 mt-1">
+                        Sempre desenvolva em Test Mode primeiro. Cartoes de teste: <code class="bg-yellow-100 px-1">4242 4242 4242 4242</code>
+                        (sucesso) ou <code class="bg-yellow-100 px-1">4000 0000 0000 0002</code> (recusado).
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 2: API Keys -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">2</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Obter API Keys</h2>
+                    <p class="text-gray-600">Chaves para autenticar suas requisicoes</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4">Developers → API Keys</h3>
+                    <ol class="space-y-3 text-gray-700">
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-purple-600">1.</span>
+                            <span>No dashboard, clique em <strong>Developers</strong> no canto superior direito</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-purple-600">2.</span>
+                            <span>Selecione <strong>API Keys</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-purple-600">3.</span>
+                            <span>Voce vera duas chaves:</span>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                        <h4 class="font-bold text-blue-800">Publishable Key</h4>
+                        <p class="text-sm text-gray-600 mt-1">Comeca com <code>pk_test_</code> ou <code>pk_live_</code></p>
+                        <p class="text-xs text-gray-500 mt-2">Usada no frontend (Checkout, Elements)</p>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                        <h4 class="font-bold text-red-800">Secret Key</h4>
+                        <p class="text-sm text-gray-600 mt-1">Comeca com <code>sk_test_</code> ou <code>sk_live_</code></p>
+                        <p class="text-xs text-gray-500 mt-2"><strong>Nunca exponha!</strong> Usada no backend/N8N</p>
+                    </div>
+                </div>
+
+                <div class="bg-red-50 border-l-4 border-red-500 p-4">
+                    <p class="font-bold text-red-800"><i class="fas fa-exclamation-triangle mr-2"></i>CUIDADO com a Secret Key</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        A Secret Key permite fazer cobranças, reembolsos e acessar dados de clientes.
+                        Nunca commite em repositorios ou exponha no frontend.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 3: Configurar N8N -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">3</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Configurar no N8N</h2>
+                    <p class="text-gray-600">Adicionar credencial do Stripe</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4">Criar Credencial</h3>
+                    <ol class="space-y-3 text-gray-700">
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-purple-600">1.</span>
+                            <span>No N8N, va em <strong>Credentials → Add Credential</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-purple-600">2.</span>
+                            <span>Busque por <strong>Stripe API</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-purple-600">3.</span>
+                            <span>Cole a <strong>Secret Key</strong> (começa com <code>sk_</code>)</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-purple-600">4.</span>
+                            <span>Clique em <strong>Save</strong></span>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="bg-green-50 border-l-4 border-green-500 p-4">
+                    <p class="font-bold text-green-800"><i class="fas fa-check-circle mr-2"></i>Pronto!</p>
+                    <p class="text-sm text-green-700 mt-1">
+                        A credencial funciona tanto para Test Mode quanto Live Mode.
+                        Basta trocar a chave quando for para producao.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 4: Webhooks -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">4</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Configurar Webhooks</h2>
+                    <p class="text-gray-600">Receber eventos do Stripe em tempo real</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-purple-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4">Eventos Mais Importantes</h3>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="font-bold text-purple-800 mb-2">Pagamentos</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li><code class="bg-purple-100 px-1">payment_intent.succeeded</code></li>
+                                <li><code class="bg-purple-100 px-1">payment_intent.payment_failed</code></li>
+                                <li><code class="bg-purple-100 px-1">charge.refunded</code></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-purple-800 mb-2">Assinaturas</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li><code class="bg-purple-100 px-1">customer.subscription.created</code></li>
+                                <li><code class="bg-purple-100 px-1">customer.subscription.updated</code></li>
+                                <li><code class="bg-purple-100 px-1">customer.subscription.deleted</code></li>
+                                <li><code class="bg-purple-100 px-1">invoice.payment_failed</code></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4">Opcao A: Stripe Trigger (Recomendado)</h3>
+                    <ol class="space-y-3 text-gray-700">
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-purple-600">1.</span>
+                            <span>Use o node <strong>Stripe Trigger</strong> no N8N</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-purple-600">2.</span>
+                            <span>Selecione os eventos que deseja escutar</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-purple-600">3.</span>
+                            <span>O N8N registra o webhook automaticamente no Stripe</span>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4">Opcao B: Webhook Manual</h3>
+                    <ol class="space-y-3 text-gray-700">
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-purple-600">1.</span>
+                            <span>No Stripe, va em <strong>Developers → Webhooks</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-purple-600">2.</span>
+                            <span>Clique em <strong>Add endpoint</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-purple-600">3.</span>
+                            <span>Cole a URL do Webhook do N8N</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-purple-600">4.</span>
+                            <span>Selecione os eventos e clique em <strong>Add endpoint</strong></span>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4">
+                    <p class="font-bold text-yellow-800"><i class="fas fa-key mr-2"></i>Webhook Signing Secret</p>
+                    <p class="text-sm text-yellow-700 mt-1">
+                        Se criar webhook manual, copie o <strong>Signing Secret</strong> (whsec_...) para validar
+                        que os eventos realmente vem do Stripe. O Stripe Trigger faz isso automaticamente.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 5: Operacoes Comuns -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">5</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Operacoes Comuns no N8N</h2>
+                    <p class="text-gray-600">O que voce pode fazer com o node Stripe</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-gray-800 mb-2"><i class="fas fa-user mr-2 text-blue-600"></i>Customer</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Create - Criar cliente</li>
+                            <li>• Get - Buscar por ID</li>
+                            <li>• Update - Atualizar dados</li>
+                            <li>• Delete - Remover cliente</li>
+                            <li>• Get All - Listar clientes</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-gray-800 mb-2"><i class="fas fa-credit-card mr-2 text-green-600"></i>Charge</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Create - Criar cobranca</li>
+                            <li>• Get - Buscar cobranca</li>
+                            <li>• Update - Atualizar metadata</li>
+                            <li>• Get All - Listar cobranças</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-gray-800 mb-2"><i class="fas fa-sync mr-2 text-purple-600"></i>Subscription</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Create - Criar assinatura</li>
+                            <li>• Get - Buscar assinatura</li>
+                            <li>• Update - Alterar plano</li>
+                            <li>• Delete - Cancelar</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-gray-800 mb-2"><i class="fas fa-file-invoice-dollar mr-2 text-orange-600"></i>Invoice</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Get - Buscar fatura</li>
+                            <li>• Get All - Listar faturas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exemplos Praticos -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-code mr-2 text-purple-600"></i>Exemplos Praticos
+            </h2>
+
+            <div class="space-y-8">
+                <!-- Exemplo 1 -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4">1. Notificar no Slack quando venda for aprovada</h3>
+                    <pre><code><span class="code-comment">// Stripe Trigger: payment_intent.succeeded</span>
+<span class="code-comment">// → Slack: Send Message</span>
+
+<span class="code-comment">// Mensagem do Slack:</span>
+<span class="code-string">":moneybag: Nova venda de R$ {{ $json.data.object.amount / 100 }}"</span>
+<span class="code-string">"Cliente: {{ $json.data.object.receipt_email }}"</span>
+<span class="code-string">"ID: {{ $json.data.object.id }}"</span></code></pre>
+                </div>
+
+                <!-- Exemplo 2 -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4">2. Criar usuario quando assinatura iniciar</h3>
+                    <pre><code><span class="code-comment">// Stripe Trigger: customer.subscription.created</span>
+<span class="code-comment">// → HTTP Request: POST para seu backend</span>
+
+<span class="code-comment">// Body do request:</span>
+{
+  <span class="code-key">"email"</span>: <span class="code-string">"{{ $json.data.object.customer_email }}"</span>,
+  <span class="code-key">"stripe_customer_id"</span>: <span class="code-string">"{{ $json.data.object.customer }}"</span>,
+  <span class="code-key">"subscription_id"</span>: <span class="code-string">"{{ $json.data.object.id }}"</span>,
+  <span class="code-key">"plan"</span>: <span class="code-string">"{{ $json.data.object.items.data[0].price.id }}"</span>,
+  <span class="code-key">"status"</span>: <span class="code-string">"{{ $json.data.object.status }}"</span>
+}</code></pre>
+                </div>
+
+                <!-- Exemplo 3 -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4">3. Enviar email de recuperacao quando pagamento falhar</h3>
+                    <pre><code><span class="code-comment">// Stripe Trigger: invoice.payment_failed</span>
+<span class="code-comment">// → Stripe: Get Customer</span>
+<span class="code-comment">// → Gmail: Send Email</span>
+
+<span class="code-comment">// Buscar cliente pelo ID:</span>
+<span class="code-key">Customer ID</span>: <span class="code-string">{{ $json.data.object.customer }}</span>
+
+<span class="code-comment">// Email de recuperacao:</span>
+<span class="code-key">To</span>: <span class="code-string">{{ $('Stripe').item.json.email }}</span>
+<span class="code-key">Subject</span>: <span class="code-string">"Problema com seu pagamento"</span>
+<span class="code-key">Body</span>: <span class="code-string">"Nao conseguimos processar seu pagamento.
+Atualize seus dados em: {{ $json.data.object.hosted_invoice_url }}"</span></code></pre>
+                </div>
+
+                <!-- Exemplo 4 -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4">4. Emitir nota fiscal via API (Focus NFe)</h3>
+                    <pre><code><span class="code-comment">// Stripe Trigger: payment_intent.succeeded</span>
+<span class="code-comment">// → HTTP Request: POST Focus NFe API</span>
+
+<span class="code-comment">// Body para emissao de NFS-e:</span>
+{
+  <span class="code-key">"prestador"</span>: { <span class="code-key">"cnpj"</span>: <span class="code-string">"SEU_CNPJ"</span> },
+  <span class="code-key">"tomador"</span>: {
+    <span class="code-key">"email"</span>: <span class="code-string">"{{ $json.data.object.receipt_email }}"</span>
+  },
+  <span class="code-key">"servico"</span>: {
+    <span class="code-key">"valor_servicos"</span>: <span class="code-string">{{ $json.data.object.amount / 100 }}</span>,
+    <span class="code-key">"descricao"</span>: <span class="code-string">"Servico de automacao"</span>
+  }
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Checkout Links -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-link mr-2 text-purple-600"></i>Payment Links & Checkout
+            </h2>
+
+            <div class="space-y-6">
+                <p class="text-gray-600">
+                    O Stripe oferece formas de criar pagamentos sem precisar programar uma pagina de checkout:
+                </p>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-purple-50 p-6 rounded-lg">
+                        <h3 class="font-bold text-purple-800 mb-2">Payment Links</h3>
+                        <p class="text-sm text-gray-600 mb-3">
+                            Links prontos para compartilhar. Crie no dashboard sem codigo.
+                        </p>
+                        <p class="text-xs text-gray-500">
+                            Ideal para: vendas simples, links em redes sociais, WhatsApp
+                        </p>
+                    </div>
+                    <div class="bg-blue-50 p-6 rounded-lg">
+                        <h3 class="font-bold text-blue-800 mb-2">Checkout Sessions</h3>
+                        <p class="text-sm text-gray-600 mb-3">
+                            API para criar sessoes de checkout dinamicas via N8N.
+                        </p>
+                        <p class="text-xs text-gray-500">
+                            Ideal para: checkout customizado, precos dinamicos
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4">Criar Checkout Session via HTTP Request</h3>
+                    <pre><code><span class="code-comment">// HTTP Request node</span>
+<span class="code-key">Method</span>: POST
+<span class="code-key">URL</span>: https://api.stripe.com/v1/checkout/sessions
+<span class="code-key">Authentication</span>: Header Auth
+<span class="code-key">Header</span>: Authorization: Bearer sk_test_xxx
+
+<span class="code-comment">// Body (form-urlencoded):</span>
+<span class="code-key">line_items[0][price]</span>: price_xxxxx
+<span class="code-key">line_items[0][quantity]</span>: 1
+<span class="code-key">mode</span>: payment
+<span class="code-key">success_url</span>: https://seusite.com/sucesso
+<span class="code-key">cancel_url</span>: https://seusite.com/cancelado</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Troubleshooting -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-wrench mr-2 text-orange-500"></i>Troubleshooting
+            </h2>
+
+            <div class="space-y-4">
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">401 Unauthorized</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        Chave API incorreta ou usando chave de Test Mode em ambiente Live (ou vice-versa).
+                    </p>
+                </div>
+
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">Webhook nao chega</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        Verifique se o workflow esta ativo. Em Developers → Webhooks, veja os logs de tentativas.
+                        Certifique-se que a URL do N8N e acessivel publicamente.
+                    </p>
+                </div>
+
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">Webhook signature verification failed</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        O Signing Secret (whsec_) esta incorreto ou expirado. Regenere nas configuracoes do webhook.
+                    </p>
+                </div>
+
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">No such customer / subscription</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        Esta buscando um recurso de Test Mode com chave Live ou vice-versa.
+                        IDs de teste comecam com cus_test_, sub_test_, etc.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Webhook Events Reference -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-list mr-2 text-blue-500"></i>Eventos Webhook Essenciais
+            </h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="text-left p-3">Evento</th>
+                            <th class="text-left p-3">Quando Dispara</th>
+                            <th class="text-left p-3">Use Para</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y">
+                        <tr>
+                            <td class="p-3"><code class="bg-gray-100 px-1">checkout.session.completed</code></td>
+                            <td class="p-3">Cliente completou checkout</td>
+                            <td class="p-3">Provisionar acesso, enviar confirmação</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3"><code class="bg-gray-100 px-1">customer.subscription.created</code></td>
+                            <td class="p-3">Nova assinatura criada</td>
+                            <td class="p-3">Criar conta, dar acesso</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3"><code class="bg-gray-100 px-1">customer.subscription.deleted</code></td>
+                            <td class="p-3">Assinatura cancelada</td>
+                            <td class="p-3">Remover acesso, pesquisa de churn</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3"><code class="bg-gray-100 px-1">invoice.payment_succeeded</code></td>
+                            <td class="p-3">Pagamento recorrente OK</td>
+                            <td class="p-3">Renovar acesso, enviar recibo</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3"><code class="bg-gray-100 px-1">invoice.payment_failed</code></td>
+                            <td class="p-3">Pagamento falhou</td>
+                            <td class="p-3">Email de recuperação, dunning</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3"><code class="bg-gray-100 px-1">customer.subscription.trial_will_end</code></td>
+                            <td class="p-3">Trial termina em 3 dias</td>
+                            <td class="p-3">Lembrete de conversão</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl shadow-lg p-8 text-white text-center">
+            <h2 class="text-2xl font-bold mb-4">Proximo: YouTube API</h2>
+            <p class="mb-6 text-white/90">
+                Aprenda a automatizar uploads, gerenciar videos e buscar dados do YouTube
+            </p>
+            <a href="youtube.html" class="inline-block bg-white text-purple-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition">
+                Continuar para YouTube <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-400">N8N Academy - Dominando automacoes</p>
+        </div>
+    </footer>
+</body>
+</html>

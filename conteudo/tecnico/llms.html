@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLMs Alternativos - DeepSeek, Mistral, OpenRouter | N8N Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .code-block { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 0.75rem; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.7; }
+  </style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../../tecnico.html" class="text-2xl font-bold text-purple-600 dark:text-purple-400 flex items-center gap-2">
+          <span>←</span><span class="text-3xl">🧠</span><span>LLMs Alternativos</span>
+        </a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-600 py-24">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="flex justify-center gap-4 text-6xl mb-8">
+        <span>🧠</span><span>🔮</span><span>⚡</span>
+      </div>
+      <h1 class="text-6xl font-bold mb-6">LLMs Alternativos</h1>
+      <p class="text-3xl mb-4 text-white/90">DeepSeek • Mistral • OpenRouter • Perplexity</p>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto">Alternativas ao OpenAI com melhor custo-benefício e recursos especializados.</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 py-20">
+
+    <!-- COMPARATIVO -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📊</span>
+        <h2 class="text-5xl font-bold text-neutral-900 dark:text-neutral-100">Comparativo</h2>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b-2 border-neutral-200 dark:border-neutral-600">
+              <th class="text-left py-4 px-2">Provider</th>
+              <th class="text-left py-4 px-2">Melhor Modelo</th>
+              <th class="text-left py-4 px-2">Custo</th>
+              <th class="text-left py-4 px-2">Destaque</th>
+            </tr>
+          </thead>
+          <tbody class="text-neutral-600 dark:text-neutral-400">
+            <tr class="border-b border-neutral-100 dark:border-neutral-700">
+              <td class="py-4 px-2 font-semibold text-blue-600">DeepSeek</td>
+              <td>DeepSeek-V3</td>
+              <td class="text-green-600 font-bold">$0.14/1M tokens</td>
+              <td>95% mais barato que GPT-4</td>
+            </tr>
+            <tr class="border-b border-neutral-100 dark:border-neutral-700">
+              <td class="py-4 px-2 font-semibold text-orange-600">Mistral</td>
+              <td>Mistral Large</td>
+              <td>$$</td>
+              <td>Europeu, bom em código</td>
+            </tr>
+            <tr class="border-b border-neutral-100 dark:border-neutral-700">
+              <td class="py-4 px-2 font-semibold text-purple-600">OpenRouter</td>
+              <td>Vários</td>
+              <td>Varia</td>
+              <td>Acesso a 100+ modelos</td>
+            </tr>
+            <tr>
+              <td class="py-4 px-2 font-semibold text-cyan-600">Perplexity</td>
+              <td>pplx-70b-online</td>
+              <td>$$</td>
+              <td>Busca web integrada</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- DEEPSEEK -->
+    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-3xl p-12 mb-12 border-2 border-blue-200 dark:border-blue-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🔵</span>
+        <h3 class="text-4xl font-bold text-blue-900 dark:text-blue-300">DeepSeek</h3>
+        <span class="ml-4 px-4 py-1 bg-green-500 text-white text-sm font-bold rounded-full">RECOMENDADO</span>
+      </div>
+
+      <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg mb-6">
+        <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Por que DeepSeek?</p>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-green-100 dark:bg-green-900/30 p-4 rounded-lg text-center">
+            <p class="text-2xl mb-2">💰</p>
+            <p class="font-semibold text-green-800 dark:text-green-300">95% mais barato</p>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">$0.14 vs $2.50/1M tokens</p>
+          </div>
+          <div class="bg-blue-100 dark:bg-blue-900/30 p-4 rounded-lg text-center">
+            <p class="text-2xl mb-2">🎯</p>
+            <p class="font-semibold text-blue-800 dark:text-blue-300">Qualidade similar</p>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Benchmarks próximos ao GPT-4</p>
+          </div>
+          <div class="bg-purple-100 dark:bg-purple-900/30 p-4 rounded-lg text-center">
+            <p class="text-2xl mb-2">📏</p>
+            <p class="font-semibold text-purple-800 dark:text-purple-300">64K contexto</p>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Documentos longos</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Obter API Key</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">1.</span>
+              <span>Acesse <strong>platform.deepseek.com</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">2.</span>
+              <span>Crie uma conta e adicione créditos</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">3.</span>
+              <span>Vá em <strong>API Keys</strong> → <strong>Create API Key</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">4.</span>
+              <span>Copie a key (sk-...)</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Configurar no N8N</p>
+          <div class="code-block">
+// Opção 1: Node OpenAI com Base URL customizada
+// Credencial OpenAI:
+API Key: sk-xxxxxxxx (sua key DeepSeek)
+
+// No node OpenAI, configure:
+Base URL: https://api.deepseek.com
+Model: deepseek-chat  // ou deepseek-coder
+
+// Opção 2: HTTP Request
+POST https://api.deepseek.com/chat/completions
+Headers:
+  Authorization: Bearer sk-xxxxxxxx
+  Content-Type: application/json
+Body:
+{
+  "model": "deepseek-chat",
+  "messages": [
+    {"role": "user", "content": "Olá!"}
+  ]
+}
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Modelos Disponíveis</p>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+              <p class="font-semibold text-blue-800 dark:text-blue-300">deepseek-chat (V3)</p>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">Uso geral, melhor modelo</p>
+            </div>
+            <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
+              <p class="font-semibold text-green-800 dark:text-green-300">deepseek-coder</p>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">Especializado em código</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MISTRAL -->
+    <div class="bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 rounded-3xl p-12 mb-12 border-2 border-orange-200 dark:border-orange-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🟠</span>
+        <h3 class="text-4xl font-bold text-orange-900 dark:text-orange-300">Mistral AI</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Obter API Key</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">1.</span>
+              <span>Acesse <strong>console.mistral.ai</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">2.</span>
+              <span>Crie conta e vá em <strong>API Keys</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">3.</span>
+              <span>Clique em <strong>Create new key</strong></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Configurar no N8N</p>
+          <div class="code-block">
+// HTTP Request
+POST https://api.mistral.ai/v1/chat/completions
+Headers:
+  Authorization: Bearer YOUR_API_KEY
+  Content-Type: application/json
+Body:
+{
+  "model": "mistral-large-latest",
+  "messages": [
+    {"role": "user", "content": "Olá!"}
+  ]
+}
+
+// Modelos disponíveis:
+// mistral-tiny, mistral-small,
+// mistral-medium, mistral-large-latest
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OPENROUTER -->
+    <div class="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-3xl p-12 mb-12 border-2 border-purple-200 dark:border-purple-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🔀</span>
+        <h3 class="text-4xl font-bold text-purple-900 dark:text-purple-300">OpenRouter</h3>
+        <span class="ml-4 px-4 py-1 bg-purple-500 text-white text-sm font-bold rounded-full">100+ MODELOS</span>
+      </div>
+
+      <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg mb-6">
+        <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">O que é OpenRouter?</p>
+        <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+          OpenRouter é um <strong>agregador de LLMs</strong>. Uma API, acesso a 100+ modelos de diferentes providers (OpenAI, Anthropic, Google, Meta, etc).
+        </p>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-purple-100 dark:bg-purple-900/30 p-4 rounded-lg text-center">
+            <p class="text-2xl mb-2">🔄</p>
+            <p class="font-semibold text-purple-800 dark:text-purple-300">Uma API, muitos modelos</p>
+          </div>
+          <div class="bg-blue-100 dark:bg-blue-900/30 p-4 rounded-lg text-center">
+            <p class="text-2xl mb-2">💰</p>
+            <p class="font-semibold text-blue-800 dark:text-blue-300">Fallback automático</p>
+          </div>
+          <div class="bg-green-100 dark:bg-green-900/30 p-4 rounded-lg text-center">
+            <p class="text-2xl mb-2">📊</p>
+            <p class="font-semibold text-green-800 dark:text-green-300">Compare preços</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Obter API Key</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-purple-500 font-bold">1.</span>
+              <span>Acesse <strong>openrouter.ai</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-purple-500 font-bold">2.</span>
+              <span>Crie conta (pode usar Google/GitHub)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-purple-500 font-bold">3.</span>
+              <span>Vá em <strong>Keys</strong> → <strong>Create Key</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-purple-500 font-bold">4.</span>
+              <span>Adicione créditos se necessário</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Configurar no N8N</p>
+          <div class="code-block">
+// OpenRouter é compatível com formato OpenAI!
+
+// Credencial OpenAI:
+API Key: sk-or-v1-xxxxxxxx
+Base URL: https://openrouter.ai/api/v1
+
+// No node, escolha o modelo:
+Model: anthropic/claude-3-opus
+       openai/gpt-4-turbo
+       google/gemini-pro
+       meta-llama/llama-3-70b
+       deepseek/deepseek-chat
+
+// Ou via HTTP Request:
+POST https://openrouter.ai/api/v1/chat/completions
+Headers:
+  Authorization: Bearer sk-or-v1-xxxx
+  HTTP-Referer: https://seu-site.com  // opcional
+  X-Title: Meu App  // opcional
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Modelos Populares</p>
+          <div class="grid md:grid-cols-3 gap-4 text-sm">
+            <div class="bg-neutral-100 dark:bg-neutral-700 p-3 rounded-lg">
+              <p class="font-semibold">anthropic/claude-3-opus</p>
+              <p class="text-neutral-500">Melhor qualidade</p>
+            </div>
+            <div class="bg-neutral-100 dark:bg-neutral-700 p-3 rounded-lg">
+              <p class="font-semibold">openai/gpt-4o</p>
+              <p class="text-neutral-500">OpenAI via OpenRouter</p>
+            </div>
+            <div class="bg-neutral-100 dark:bg-neutral-700 p-3 rounded-lg">
+              <p class="font-semibold">google/gemini-pro-1.5</p>
+              <p class="text-neutral-500">1M tokens contexto</p>
+            </div>
+            <div class="bg-neutral-100 dark:bg-neutral-700 p-3 rounded-lg">
+              <p class="font-semibold">meta-llama/llama-3.1-405b</p>
+              <p class="text-neutral-500">Open source poderoso</p>
+            </div>
+            <div class="bg-neutral-100 dark:bg-neutral-700 p-3 rounded-lg">
+              <p class="font-semibold">deepseek/deepseek-chat</p>
+              <p class="text-neutral-500">Mais barato</p>
+            </div>
+            <div class="bg-neutral-100 dark:bg-neutral-700 p-3 rounded-lg">
+              <p class="font-semibold">mistralai/mistral-large</p>
+              <p class="text-neutral-500">Europeu, bom em código</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PERPLEXITY -->
+    <div class="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 rounded-3xl p-12 mb-12 border-2 border-cyan-200 dark:border-cyan-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🔍</span>
+        <h3 class="text-4xl font-bold text-cyan-900 dark:text-cyan-300">Perplexity</h3>
+        <span class="ml-4 px-4 py-1 bg-cyan-500 text-white text-sm font-bold rounded-full">BUSCA WEB</span>
+      </div>
+
+      <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg mb-6">
+        <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Diferencial</p>
+        <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+          Perplexity combina LLM com <strong>busca web em tempo real</strong>. Perfeito para perguntas que precisam de informações atualizadas.
+        </p>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Obter API Key</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-cyan-500 font-bold">1.</span>
+              <span>Acesse <strong>perplexity.ai/account/api</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-cyan-500 font-bold">2.</span>
+              <span>Faça login e vá em <strong>API Keys</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-cyan-500 font-bold">3.</span>
+              <span>Clique em <strong>Generate</strong></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Configurar no N8N</p>
+          <div class="code-block">
+// HTTP Request
+POST https://api.perplexity.ai/chat/completions
+Headers:
+  Authorization: Bearer pplx-xxxxxxxx
+  Content-Type: application/json
+Body:
+{
+  "model": "llama-3.1-sonar-large-128k-online",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Quais são as últimas notícias sobre IA?"
+    }
+  ]
+}
+
+// Modelos com busca web:
+// llama-3.1-sonar-small-128k-online
+// llama-3.1-sonar-large-128k-online
+// llama-3.1-sonar-huge-128k-online
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUANDO USAR CADA UM -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🎯</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Quando Usar Cada Um?</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-3">🔵 DeepSeek</p>
+          <p class="text-neutral-700 dark:text-neutral-300">Melhor custo-benefício para maioria dos casos. Use quando precisa de qualidade similar ao GPT-4 mas com orçamento limitado.</p>
+        </div>
+        <div class="bg-orange-50 dark:bg-orange-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-orange-800 dark:text-orange-300 mb-3">🟠 Mistral</p>
+          <p class="text-neutral-700 dark:text-neutral-300">Bom para tarefas de código e quando precisa de provider europeu (GDPR compliance).</p>
+        </div>
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-3">🔀 OpenRouter</p>
+          <p class="text-neutral-700 dark:text-neutral-300">Quando quer flexibilidade para testar/trocar modelos facilmente, ou precisa de fallback automático.</p>
+        </div>
+        <div class="bg-cyan-50 dark:bg-cyan-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-cyan-800 dark:text-cyan-300 mb-3">🔍 Perplexity</p>
+          <p class="text-neutral-700 dark:text-neutral-300">Quando precisa de informações atualizadas da web (notícias, preços, eventos recentes).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-3xl p-12 text-center text-white">
+      <h3 class="text-4xl font-bold mb-6">LLMs Configurados!</h3>
+      <p class="text-xl mb-8 text-white/90">Agora você tem opções além do OpenAI para suas automações com IA.</p>
+      <a href="../../tecnico.html" class="inline-block bg-white text-purple-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors">
+        Ver Todas as Conexões
+      </a>
+    </div>
+
+  </section>
+
+  <footer class="bg-neutral-900 text-white py-12 mt-16">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-neutral-400">&copy; 2025 N8N Academy</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    } else {
+      themeToggleDarkIcon.classList.remove('hidden');
+    }
+    themeToggleBtn.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Airtable API | N8N Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .code-block { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 0.75rem; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.7; }
+    .step-number { width: 3rem; height: 3rem; background: linear-gradient(135deg, #18BFFF, #FCB400); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.25rem; flex-shrink: 0; }
+  </style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../../tecnico.html" class="text-2xl font-bold text-cyan-600 dark:text-cyan-400 flex items-center gap-2">
+          <span>←</span><span class="text-3xl">📊</span><span>Airtable</span>
+        </a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-gradient-to-br from-cyan-500 via-blue-500 to-amber-500 py-24">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="text-8xl mb-8">📊</div>
+      <h1 class="text-6xl font-bold mb-6">Airtable</h1>
+      <p class="text-3xl mb-4 text-white/90">Banco de Dados Visual</p>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto">Guia completo para integrar Airtable ao N8N. CRUD completo, automações e webhooks.</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 py-20">
+
+    <!-- VISÃO GERAL -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🎯</span>
+        <h2 class="text-5xl font-bold text-neutral-900 dark:text-neutral-100">Visão Geral</h2>
+      </div>
+      <p class="text-2xl text-neutral-700 dark:text-neutral-300 mb-8 leading-relaxed">
+        Airtable é como um Excel com poderes de banco de dados. Perfeito para CRMs, gestão de projetos, inventários e qualquer dado estruturado. A API permite CRUD completo.
+      </p>
+
+      <div class="grid md:grid-cols-4 gap-6">
+        <div class="bg-cyan-50 dark:bg-cyan-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">📥</p>
+          <p class="text-lg font-semibold text-cyan-800 dark:text-cyan-300">Ler Registros</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Listar, buscar, filtrar</p>
+        </div>
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">➕</p>
+          <p class="text-lg font-semibold text-green-800 dark:text-green-300">Criar</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Novos registros</p>
+        </div>
+        <div class="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">✏️</p>
+          <p class="text-lg font-semibold text-amber-800 dark:text-amber-300">Atualizar</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Modificar existentes</p>
+        </div>
+        <div class="bg-red-50 dark:bg-red-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">🗑️</p>
+          <p class="text-lg font-semibold text-red-800 dark:text-red-300">Deletar</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Remover registros</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 1: OBTER TOKEN -->
+    <div class="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 rounded-3xl p-12 mb-12 border-2 border-cyan-200 dark:border-cyan-800">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">1</div>
+        <h3 class="text-4xl font-bold text-cyan-900 dark:text-cyan-300">Obter Personal Access Token</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">1.1 Acessar Configurações</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-cyan-500 font-bold">1.</span>
+              <span>Acesse <strong>airtable.com</strong> e faça login</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-cyan-500 font-bold">2.</span>
+              <span>Clique no seu avatar (canto superior direito)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-cyan-500 font-bold">3.</span>
+              <span>Vá em <strong>"Developer Hub"</strong></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">1.2 Criar Personal Access Token</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-cyan-500 font-bold">1.</span>
+              <span>Clique em <strong>"Personal access tokens"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-cyan-500 font-bold">2.</span>
+              <span>Clique em <strong>"Create new token"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-cyan-500 font-bold">3.</span>
+              <span>Nome: <code class="bg-neutral-100 dark:bg-neutral-600 px-2 py-1 rounded">n8n-integration</code></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-cyan-500 font-bold">4.</span>
+              <span>Selecione os <strong>Scopes</strong> necessários:</span>
+            </li>
+          </ol>
+          <div class="mt-4 code-block">
+// Scopes recomendados:
+data.records:read        // Ler registros
+data.records:write       // Criar/atualizar/deletar registros
+schema.bases:read        // Ler estrutura das bases
+
+// Selecione as bases que o token pode acessar
+// Ou marque "All current and future bases"
+          </div>
+        </div>
+
+        <div class="bg-green-100 dark:bg-green-900/30 p-6 rounded-xl border-2 border-green-300 dark:border-green-700">
+          <p class="text-lg font-semibold text-green-800 dark:text-green-300 mb-2">✅ Token Gerado!</p>
+          <p class="text-neutral-700 dark:text-neutral-300">Copie o token (começa com <code>pat...</code>). Ele só é mostrado uma vez!</p>
+          <div class="mt-4 bg-white dark:bg-neutral-800 p-4 rounded-xl">
+            <p class="font-semibold text-neutral-900 dark:text-neutral-100">Personal Access Token:</p>
+            <code class="text-sm text-cyan-600 dark:text-cyan-400 break-all">patXXXXXXXXXXXXXX.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</code>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 2: OBTER IDs -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">2</div>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Obter Base ID e Table ID</h3>
+      </div>
+
+      <div class="bg-amber-100 dark:bg-amber-900/30 p-6 rounded-xl border-2 border-amber-300 dark:border-amber-700 mb-6">
+        <p class="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-2">📝 Por que preciso dos IDs?</p>
+        <p class="text-neutral-700 dark:text-neutral-300">Cada base e tabela tem um ID único. Você precisa deles para fazer operações via API.</p>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Método Fácil: Pela URL</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">Abra sua base no Airtable e olhe a URL:</p>
+          <div class="code-block">
+// URL do Airtable:
+https://airtable.com/appXXXXXXXXXXXXXX/tblYYYYYYYYYYYYYY/...
+                      ↑                  ↑
+                      Base ID            Table ID
+
+// Exemplo:
+https://airtable.com/app1234567890abc/tblABCDEF123456/viwXYZ...
+Base ID: app1234567890abc
+Table ID: tblABCDEF123456
+          </div>
+        </div>
+
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Via API (para listar todas as bases)</p>
+          <div class="code-block">
+// Listar todas as bases da conta:
+GET https://api.airtable.com/v0/meta/bases
+Headers:
+  Authorization: Bearer pat...
+
+// Resposta:
+{
+  "bases": [
+    {
+      "id": "app1234567890abc",
+      "name": "Minha Base",
+      "permissionLevel": "create"
+    }
+  ]
+}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 3: CONFIGURAR NO N8N -->
+    <div class="bg-gradient-to-br from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 rounded-3xl p-12 mb-12 border-2 border-green-200 dark:border-green-800">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">3</div>
+        <h3 class="text-4xl font-bold text-green-900 dark:text-green-300">Configurar no N8N</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">3.1 Criar Credencial</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">1.</span>
+              <span>No N8N, vá em <strong>Credenciais</strong> → <strong>Adicionar</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">2.</span>
+              <span>Pesquise: <strong>"Airtable API"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">3.</span>
+              <span>Cole o <strong>Personal Access Token</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">4.</span>
+              <span>Clique em <strong>Salvar</strong></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">3.2 Usar o Node Airtable</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">O N8N detecta automaticamente suas bases e tabelas após conectar:</p>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="bg-cyan-100 dark:bg-cyan-900/30 p-4 rounded-lg">
+              <p class="font-semibold text-cyan-800 dark:text-cyan-300">Base</p>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">Selecione no dropdown</p>
+            </div>
+            <div class="bg-amber-100 dark:bg-amber-900/30 p-4 rounded-lg">
+              <p class="font-semibold text-amber-800 dark:text-amber-300">Table</p>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">Carrega após selecionar base</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXEMPLOS PRÁTICOS -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📋</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Exemplos Práticos</h3>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Listar Registros -->
+        <div class="bg-cyan-50 dark:bg-cyan-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-cyan-800 dark:text-cyan-300 mb-4">📥 Listar Registros</p>
+          <div class="code-block text-sm">
+// Node: Airtable
+// Operation: List
+
+Base: Minha Base
+Table: Clientes
+
+// Opcionais:
+Max Records: 100
+View: Grid view
+Filter by Formula:
+  {Status} = 'Ativo'
+Sort: Name (asc)
+
+// Retorna array de registros
+          </div>
+        </div>
+
+        <!-- Criar Registro -->
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-green-800 dark:text-green-300 mb-4">➕ Criar Registro</p>
+          <div class="code-block text-sm">
+// Node: Airtable
+// Operation: Create
+
+Base: Minha Base
+Table: Clientes
+
+Fields:
+  Name: {{ $json.nome }}
+  Email: {{ $json.email }}
+  Phone: {{ $json.telefone }}
+  Status: Novo
+  Created: {{ $now.format('yyyy-MM-dd') }}
+          </div>
+        </div>
+
+        <!-- Atualizar Registro -->
+        <div class="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-amber-800 dark:text-amber-300 mb-4">✏️ Atualizar Registro</p>
+          <div class="code-block text-sm">
+// Node: Airtable
+// Operation: Update
+
+Base: Minha Base
+Table: Clientes
+Record ID: {{ $json.airtable_id }}
+
+// Atualiza apenas campos especificados:
+Fields:
+  Status: Convertido
+  Last Contact: {{ $now.format('yyyy-MM-dd') }}
+          </div>
+        </div>
+
+        <!-- Buscar por Campo -->
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-4">🔍 Buscar por Campo</p>
+          <div class="code-block text-sm">
+// Node: Airtable
+// Operation: Search
+
+Base: Minha Base
+Table: Clientes
+
+Filter by Formula:
+  {Email} = '{{ $json.email }}'
+
+// Ou busca mais complexa:
+AND(
+  {Status} = 'Ativo',
+  {Created} >= '2024-01-01'
+)
+          </div>
+        </div>
+
+        <!-- Deletar Registro -->
+        <div class="bg-red-50 dark:bg-red-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-red-800 dark:text-red-300 mb-4">🗑️ Deletar Registro</p>
+          <div class="code-block text-sm">
+// Node: Airtable
+// Operation: Delete
+
+Base: Minha Base
+Table: Clientes
+Record ID: {{ $json.airtable_id }}
+
+// ⚠️ Cuidado: não há undo!
+// Considere usar campo "Deleted"
+// em vez de deletar de verdade
+          </div>
+        </div>
+
+        <!-- Upsert -->
+        <div class="bg-indigo-50 dark:bg-indigo-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-indigo-800 dark:text-indigo-300 mb-4">🔄 Upsert (Create or Update)</p>
+          <div class="code-block text-sm">
+// Node: Airtable
+// Operation: Upsert
+
+Base: Minha Base
+Table: Clientes
+
+// Campo para identificar registro:
+Merge Field: Email
+
+Fields:
+  Name: {{ $json.nome }}
+  Email: {{ $json.email }}
+  Phone: {{ $json.telefone }}
+
+// Se email existe → atualiza
+// Se não existe → cria novo
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FÓRMULAS -->
+    <div class="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-3xl p-12 mb-12 border-2 border-purple-200 dark:border-purple-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🧮</span>
+        <h3 class="text-4xl font-bold text-purple-900 dark:text-purple-300">Fórmulas de Filtro</h3>
+      </div>
+
+      <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+        <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Sintaxe de Fórmulas Airtable</p>
+        <div class="code-block">
+// Igualdade:
+{Campo} = 'valor'
+{Numero} = 100
+
+// Comparação:
+{Preco} > 50
+{Data} >= '2024-01-01'
+
+// Texto:
+FIND('busca', {Campo})                    // Contém
+SEARCH('termo', LOWER({Campo}))           // Busca case-insensitive
+
+// Lógica:
+AND({Status} = 'Ativo', {VIP} = TRUE())
+OR({Tipo} = 'A', {Tipo} = 'B')
+NOT({Arquivado})
+
+// Datas:
+IS_AFTER({Data}, TODAY())                 // Data no futuro
+DATEADD(TODAY(), -30, 'days')             // Últimos 30 dias
+
+// Campos vazios:
+{Campo} = BLANK()                         // Campo vazio
+{Campo} != BLANK()                        // Campo preenchido
+
+// Exemplo complexo:
+AND(
+  {Status} = 'Lead',
+  IS_AFTER({Created}, DATEADD(TODAY(), -7, 'days')),
+  {Score} >= 50
+)
+        </div>
+      </div>
+    </div>
+
+    <!-- TROUBLESHOOTING -->
+    <div class="bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-3xl p-12 mb-12 border-2 border-red-200 dark:border-red-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🔧</span>
+        <h3 class="text-4xl font-bold text-red-900 dark:text-red-300">Troubleshooting</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ "INVALID_REQUEST_UNKNOWN"</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Nome de campo incorreto ou tipo de dado errado.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Verifique os nomes dos campos (case sensitive). Use exatamente como aparece no Airtable.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ "INVALID_PERMISSIONS"</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Token não tem permissão para a base/operação.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Regenere o token incluindo a base e os scopes necessários.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ Rate Limit (429)</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Muitas requisições (limite: 5/seg).</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Use batch operations (até 10 registros por request) ou adicione delay entre requisições.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="bg-gradient-to-r from-cyan-600 to-amber-500 rounded-3xl p-12 text-center text-white">
+      <h3 class="text-4xl font-bold mb-6">Airtable Configurado!</h3>
+      <p class="text-xl mb-8 text-white/90">Agora você pode usar Airtable como banco de dados para suas automações.</p>
+      <div class="flex gap-4 justify-center flex-wrap">
+        <a href="notion.html" class="bg-white text-cyan-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors">
+          Próximo: Notion →
+        </a>
+        <a href="../../tecnico.html" class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-colors">
+          Ver Todas as Conexões
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <footer class="bg-neutral-900 text-white py-12 mt-16">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-neutral-400">&copy; 2025 N8N Academy</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    } else {
+      themeToggleDarkIcon.classList.remove('hidden');
+    }
+    themeToggleBtn.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html>

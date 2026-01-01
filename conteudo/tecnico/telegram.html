@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telegram Bot API | N8N Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .code-block { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 0.75rem; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.7; }
+    .step-number { width: 3rem; height: 3rem; background: linear-gradient(135deg, #0088cc, #229ED9); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.25rem; flex-shrink: 0; }
+  </style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../../tecnico.html" class="text-2xl font-bold text-blue-500 dark:text-blue-400 flex items-center gap-2">
+          <span>←</span><span class="text-3xl">✈️</span><span>Telegram Bot</span>
+        </a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 py-24">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="text-8xl mb-8">✈️</div>
+      <h1 class="text-6xl font-bold mb-6">Telegram Bot</h1>
+      <p class="text-3xl mb-4 text-white/90">BotFather & Bot API</p>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto">A configuração mais simples! Crie um bot em minutos e integre com N8N para automação de mensagens.</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 py-20">
+
+    <!-- VISÃO GERAL -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🎯</span>
+        <h2 class="text-5xl font-bold text-neutral-900 dark:text-neutral-100">Visão Geral</h2>
+      </div>
+      <p class="text-2xl text-neutral-700 dark:text-neutral-300 mb-8 leading-relaxed">
+        Telegram tem a API de bot <strong>mais fácil de configurar</strong>. Basta criar um bot com o @BotFather, copiar o token e usar! Sem OAuth, sem aprovações, sem complicação.
+      </p>
+
+      <div class="bg-green-100 dark:bg-green-900/30 p-6 rounded-xl border-2 border-green-300 dark:border-green-700 mb-8">
+        <p class="text-lg font-semibold text-green-800 dark:text-green-300 mb-2">✅ Vantagens do Telegram</p>
+        <div class="grid md:grid-cols-3 gap-4 text-neutral-700 dark:text-neutral-300">
+          <div>→ Setup em 2 minutos</div>
+          <div>→ API 100% gratuita</div>
+          <div>→ Sem limites de mensagens</div>
+          <div>→ Suporte a arquivos grandes</div>
+          <div>→ Webhooks nativos</div>
+          <div>→ Grupos e canais</div>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-6">
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">📨</p>
+          <p class="text-lg font-semibold text-blue-800 dark:text-blue-300">Mensagens</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Texto, mídia, botões</p>
+        </div>
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">👥</p>
+          <p class="text-lg font-semibold text-purple-800 dark:text-purple-300">Grupos</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Até 200k membros</p>
+        </div>
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">📢</p>
+          <p class="text-lg font-semibold text-green-800 dark:text-green-300">Canais</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Broadcast ilimitado</p>
+        </div>
+        <div class="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">🤖</p>
+          <p class="text-lg font-semibold text-amber-800 dark:text-amber-300">Comandos</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">/start, /help, etc</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 1: CRIAR BOT -->
+    <div class="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-3xl p-12 mb-12 border-2 border-blue-200 dark:border-blue-800">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">1</div>
+        <h3 class="text-4xl font-bold text-blue-900 dark:text-blue-300">Criar Bot com @BotFather</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">1.1 Conversar com BotFather</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">1.</span>
+              <span>Abra o Telegram e pesquise por <strong>@BotFather</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">2.</span>
+              <span>Inicie uma conversa (clique em Start)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">3.</span>
+              <span>Envie o comando: <code class="bg-neutral-100 dark:bg-neutral-600 px-2 py-1 rounded">/newbot</code></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">1.2 Configurar o Bot</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">O BotFather vai pedir algumas informações:</p>
+          <div class="code-block">
+BotFather: Alright, a new bot. How are we going to call it?
+           Please choose a name for your bot.
+
+Você: N8N Automation Bot
+
+BotFather: Good. Now let's choose a username for your bot.
+           It must end in 'bot'. Like this, for example: TetrisBot
+
+Você: n8n_automation_bot
+
+BotFather: Done! Congratulations on your new bot.
+           Use this token to access the HTTP API:
+
+           7123456789:AAHxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+           Keep your token secure!
+          </div>
+        </div>
+
+        <div class="bg-green-100 dark:bg-green-900/30 p-6 rounded-xl border-2 border-green-300 dark:border-green-700">
+          <p class="text-lg font-semibold text-green-800 dark:text-green-300 mb-2">✅ Pronto!</p>
+          <p class="text-neutral-700 dark:text-neutral-300">Copie o token que o BotFather enviou. É só isso que você precisa para começar!</p>
+          <div class="mt-4 bg-white dark:bg-neutral-800 p-4 rounded-xl">
+            <p class="font-semibold text-neutral-900 dark:text-neutral-100">Seu Bot Token:</p>
+            <code class="text-sm text-blue-600 dark:text-blue-400">7123456789:AAHxxxxxxxxxxxxxxxxxxxxxxxxxx</code>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 2: OBTER CHAT ID -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">2</div>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Obter Chat ID</h3>
+      </div>
+
+      <div class="bg-amber-100 dark:bg-amber-900/30 p-6 rounded-xl border-2 border-amber-300 dark:border-amber-700 mb-6">
+        <p class="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-2">📝 Por que Chat ID?</p>
+        <p class="text-neutral-700 dark:text-neutral-300">Para enviar mensagens, você precisa do ID do chat (usuário, grupo ou canal). Existem várias formas de obter:</p>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Método 1: Via API (Mais Fácil)</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">1.</span>
+              <span>Envie uma mensagem para seu bot no Telegram</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">2.</span>
+              <span>Acesse no navegador (substitua SEU_TOKEN):</span>
+            </li>
+          </ol>
+          <div class="mt-4 code-block">
+https://api.telegram.org/bot{SEU_TOKEN}/getUpdates
+
+// Resposta:
+{
+  "result": [{
+    "message": {
+      "chat": {
+        "id": 123456789,  // ← Este é seu Chat ID!
+        "first_name": "Seu Nome",
+        "type": "private"
+      }
+    }
+  }]
+}
+          </div>
+        </div>
+
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Método 2: Usar @userinfobot</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">1.</span>
+              <span>Pesquise por <strong>@userinfobot</strong> no Telegram</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">2.</span>
+              <span>Envie qualquer mensagem</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">3.</span>
+              <span>Ele responde com seu User ID</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Chat ID de Grupos</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">1.</span>
+              <span>Adicione seu bot ao grupo</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">2.</span>
+              <span>Envie uma mensagem no grupo</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">3.</span>
+              <span>Use o método getUpdates acima</span>
+            </li>
+          </ol>
+          <div class="mt-4 bg-amber-100 dark:bg-amber-900/30 p-4 rounded-xl">
+            <p class="text-amber-800 dark:text-amber-300">⚠️ IDs de grupos são <strong>negativos</strong> (ex: -1001234567890)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 3: CONFIGURAR NO N8N -->
+    <div class="bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 rounded-3xl p-12 mb-12 border-2 border-orange-200 dark:border-orange-800">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">3</div>
+        <h3 class="text-4xl font-bold text-orange-900 dark:text-orange-300">Configurar no N8N</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">3.1 Criar Credencial</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">1.</span>
+              <span>No N8N, vá em <strong>Credenciais</strong> → <strong>Adicionar</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">2.</span>
+              <span>Pesquise: <strong>"Telegram API"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">3.</span>
+              <span>Cole o <strong>Access Token</strong> do BotFather</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">4.</span>
+              <span>Clique em <strong>Salvar</strong></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">3.2 Usar o Node Telegram</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">O N8N tem nodes específicos para Telegram:</p>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="bg-blue-100 dark:bg-blue-900/30 p-4 rounded-lg">
+              <p class="font-semibold text-blue-800 dark:text-blue-300">Telegram</p>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">Enviar mensagens, mídia, etc.</p>
+            </div>
+            <div class="bg-green-100 dark:bg-green-900/30 p-4 rounded-lg">
+              <p class="font-semibold text-green-800 dark:text-green-300">Telegram Trigger</p>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">Receber mensagens via webhook</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 4: WEBHOOK -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">4</div>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Configurar Webhook (Receber Mensagens)</h3>
+      </div>
+
+      <div class="bg-blue-100 dark:bg-blue-900/30 p-6 rounded-xl border-2 border-blue-300 dark:border-blue-700 mb-6">
+        <p class="text-lg font-semibold text-blue-800 dark:text-blue-300 mb-2">🔔 Telegram Trigger</p>
+        <p class="text-neutral-700 dark:text-neutral-300">O N8N configura o webhook automaticamente quando você usa o node "Telegram Trigger". Basta ativar o workflow!</p>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Usando Telegram Trigger</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">1.</span>
+              <span>Adicione o node <strong>"Telegram Trigger"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">2.</span>
+              <span>Selecione sua credencial</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">3.</span>
+              <span>Escolha os Updates que quer receber:</span>
+            </li>
+          </ol>
+          <div class="mt-4 code-block">
+// Tipos de updates disponíveis:
+message              // Mensagens normais
+edited_message       // Mensagens editadas
+channel_post         // Posts em canais
+callback_query       // Cliques em botões inline
+inline_query         // Consultas inline (@bot query)
+          </div>
+          <p class="mt-4 text-neutral-600 dark:text-neutral-400">Ative o workflow e o webhook é configurado automaticamente!</p>
+        </div>
+
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Webhook Manual (Alternativo)</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">Se precisar configurar manualmente:</p>
+          <div class="code-block">
+// Registrar webhook:
+POST https://api.telegram.org/bot{TOKEN}/setWebhook
+Body: {
+  "url": "https://seu-n8n.com/webhook/telegram"
+}
+
+// Verificar webhook atual:
+GET https://api.telegram.org/bot{TOKEN}/getWebhookInfo
+
+// Remover webhook:
+POST https://api.telegram.org/bot{TOKEN}/deleteWebhook
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXEMPLOS PRÁTICOS -->
+    <div class="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-3xl p-12 mb-12 border-2 border-blue-200 dark:border-blue-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📋</span>
+        <h3 class="text-4xl font-bold text-blue-900 dark:text-blue-300">Exemplos Práticos</h3>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Enviar Mensagem -->
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-4">📨 Enviar Mensagem Simples</p>
+          <div class="code-block text-sm">
+// Node: Telegram
+// Operation: Send Message
+
+Chat ID: 123456789
+Text: Olá! Seu pedido foi confirmado.
+
+// Com formatação Markdown:
+Text: |
+  *Pedido Confirmado* ✅
+
+  Número: #{{ $json.id }}
+  Valor: R$ {{ $json.valor }}
+
+  _Obrigado pela preferência!_
+
+Parse Mode: MarkdownV2
+          </div>
+        </div>
+
+        <!-- Enviar Foto -->
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-xl font-bold text-green-800 dark:text-green-300 mb-4">🖼️ Enviar Foto</p>
+          <div class="code-block text-sm">
+// Node: Telegram
+// Operation: Send Photo
+
+Chat ID: 123456789
+Photo: https://exemplo.com/produto.jpg
+Caption: Novo produto disponível! 🔥
+
+// Ou enviar arquivo binário:
+Photo: {{ $binary.data }}
+          </div>
+        </div>
+
+        <!-- Botões Inline -->
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-4">🔘 Mensagem com Botões</p>
+          <div class="code-block text-sm">
+// Node: Telegram
+// Operation: Send Message
+
+Text: Escolha uma opção:
+
+Reply Markup:
+{
+  "inline_keyboard": [
+    [
+      {"text": "✅ Confirmar", "callback_data": "confirm"},
+      {"text": "❌ Cancelar", "callback_data": "cancel"}
+    ],
+    [
+      {"text": "📞 Falar com Atendente", "callback_data": "human"}
+    ]
+  ]
+}
+          </div>
+        </div>
+
+        <!-- Processar Callback -->
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-xl font-bold text-amber-800 dark:text-amber-300 mb-4">👆 Processar Clique em Botão</p>
+          <div class="code-block text-sm">
+// Trigger: Telegram Trigger
+// Updates: callback_query
+
+// Dados recebidos:
+{
+  "callback_query": {
+    "id": "123456789",
+    "from": { "id": 123456789 },
+    "data": "confirm"  // callback_data do botão
+  }
+}
+
+// Responder ao callback:
+// Node: Telegram
+// Operation: Answer Callback Query
+Callback Query ID: {{ $json.callback_query.id }}
+Text: Opção registrada! ✅
+          </div>
+        </div>
+
+        <!-- Enviar Documento -->
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-xl font-bold text-indigo-800 dark:text-indigo-300 mb-4">📎 Enviar Documento</p>
+          <div class="code-block text-sm">
+// Node: Telegram
+// Operation: Send Document
+
+Chat ID: 123456789
+Document: {{ $binary.data }}
+Filename: relatorio.pdf
+Caption: Segue o relatório solicitado
+          </div>
+        </div>
+
+        <!-- Bot de Notificações -->
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-xl font-bold text-red-800 dark:text-red-300 mb-4">🚨 Bot de Alertas</p>
+          <div class="code-block text-sm">
+// Workflow: Monitoramento
+// Trigger: Schedule (a cada 5 min)
+// → HTTP Request (verificar API)
+// → IF (status != ok)
+// → Telegram
+
+Text: |
+  🚨 *ALERTA DE SISTEMA*
+
+  Serviço: {{ $json.service }}
+  Status: {{ $json.status }}
+  Erro: {{ $json.error }}
+
+  Verificar imediatamente!
+
+Chat ID: -1001234567890  // Grupo de alertas
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMANDOS DO BOTFATHER -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">⚙️</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Comandos Úteis do BotFather</h3>
+      </div>
+
+      <div class="code-block">
+// Gerenciamento do Bot:
+/mybots            // Lista seus bots
+/setname           // Alterar nome do bot
+/setdescription    // Descrição (aparece no perfil)
+/setabouttext      // Texto "Sobre" (no início da conversa)
+/setuserpic        // Foto do bot
+
+// Comandos do Bot:
+/setcommands       // Definir comandos disponíveis
+                   // Ex: start - Iniciar bot
+                   //     help - Ajuda
+                   //     status - Ver status
+
+// Configurações:
+/setjoingroups     // Permitir adicionar em grupos
+/setprivacy        // Modo privacidade (receber todas msgs ou só comandos)
+
+// Pagamentos (Telegram Payments):
+/mybots → Bot Settings → Payments
+      </div>
+
+      <div class="mt-6 bg-blue-100 dark:bg-blue-900/30 p-6 rounded-xl">
+        <p class="text-lg font-semibold text-blue-800 dark:text-blue-300 mb-2">💡 Dica: Configurar Comandos</p>
+        <p class="text-neutral-700 dark:text-neutral-300">Ao usar /setcommands, defina os comandos que seu bot responde. Isso cria um menu de comandos para os usuários!</p>
+      </div>
+    </div>
+
+    <!-- TROUBLESHOOTING -->
+    <div class="bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-3xl p-12 mb-12 border-2 border-red-200 dark:border-red-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🔧</span>
+        <h3 class="text-4xl font-bold text-red-900 dark:text-red-300">Troubleshooting</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ "Bad Request: chat not found"</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Chat ID inválido ou usuário nunca iniciou conversa com o bot.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> O usuário precisa enviar /start para o bot primeiro. Verifique também se o ID está correto.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ "Forbidden: bot was blocked by the user"</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> O usuário bloqueou o bot.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Nada a fazer. O usuário precisa desbloquear manualmente.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ Bot não recebe mensagens de grupo</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Modo privacidade ativado.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Use /setprivacy no BotFather e escolha "Disable" para receber todas as mensagens do grupo.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ Webhook não está recebendo</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> URL não está acessível ou HTTPS inválido.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> O Telegram exige HTTPS válido (não auto-assinado). Use getWebhookInfo para ver erros específicos.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-3xl p-12 text-center text-white">
+      <h3 class="text-4xl font-bold mb-6">Telegram Bot Configurado!</h3>
+      <p class="text-xl mb-8 text-white/90">A integração mais fácil está pronta. Comece a automatizar!</p>
+      <div class="flex gap-4 justify-center flex-wrap">
+        <a href="openai.html" class="bg-white text-blue-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors">
+          Próximo: OpenAI / ChatGPT →
+        </a>
+        <a href="../../tecnico.html" class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-colors">
+          Ver Todas as Conexões
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <footer class="bg-neutral-900 text-white py-12 mt-16">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-neutral-400">&copy; 2025 N8N Academy</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    } else {
+      themeToggleDarkIcon.classList.remove('hidden');
+    }
+    themeToggleBtn.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html>

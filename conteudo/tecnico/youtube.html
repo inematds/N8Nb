@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube API | N8N Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-youtube { background: linear-gradient(135deg, #FF0000 0%, #CC0000 100%); }
+        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(0,0,0,0.15); }
+        .step-number { width: 48px; height: 48px; background: linear-gradient(135deg, #FF0000, #CC0000); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.25rem; flex-shrink: 0; }
+        pre { background: #1e1e1e; border-radius: 8px; padding: 16px; overflow-x: auto; }
+        code { color: #d4d4d4; font-family: 'Fira Code', monospace; font-size: 14px; }
+        .code-comment { color: #6a9955; }
+        .code-string { color: #ce9178; }
+        .code-key { color: #9cdcfe; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <a href="../../index.html" class="text-2xl font-bold text-gray-800">N8N Academy</a>
+                    <span class="text-gray-400">/</span>
+                    <a href="../tecnico.html" class="text-red-600 hover:text-red-800">Trilha Tecnico</a>
+                    <span class="text-gray-400">/</span>
+                    <span class="text-gray-600">YouTube API</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="gradient-youtube text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="flex justify-center mb-6">
+                <div class="bg-white/20 p-6 rounded-2xl">
+                    <i class="fab fa-youtube text-6xl"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">YouTube Data API</h1>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto">
+                Automatize uploads, gerencie videos, playlists e busque dados do seu canal
+            </p>
+            <div class="mt-6 flex justify-center gap-4 flex-wrap">
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Upload de Videos</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Gerenciar Canal</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Analytics</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Playlists</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 py-12">
+
+        <!-- Overview -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">YouTube + N8N</h2>
+            <p class="text-gray-600 mb-6">
+                A YouTube Data API permite automatizar a gestao do seu canal. Com N8N, voce pode
+                criar workflows que publicam videos, atualizam metadados, respondem comentarios e mais.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-red-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-red-800 mb-2"><i class="fas fa-upload mr-2"></i>Upload Automatico</h3>
+                    <p class="text-sm text-gray-600">Publique videos automaticamente de uma pasta do Drive ou servidor</p>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-blue-800 mb-2"><i class="fas fa-chart-bar mr-2"></i>Monitorar Metricas</h3>
+                    <p class="text-sm text-gray-600">Receba alertas quando videos atingirem marcos de visualizacoes</p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-green-800 mb-2"><i class="fas fa-list mr-2"></i>Gerenciar Playlists</h3>
+                    <p class="text-sm text-gray-600">Organize videos em playlists automaticamente por categoria</p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-purple-800 mb-2"><i class="fas fa-comments mr-2"></i>Moderar Comentarios</h3>
+                    <p class="text-sm text-gray-600">Detecte e responda comentarios com IA automaticamente</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- APIs Disponiveis -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">APIs do YouTube</h2>
+
+            <div class="space-y-4">
+                <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-red-500">
+                    <h3 class="font-bold text-gray-800">YouTube Data API v3</h3>
+                    <p class="text-sm text-gray-600 mt-1">
+                        Gerenciar videos, playlists, canais, comentarios. E a API principal que usaremos.
+                    </p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-blue-500">
+                    <h3 class="font-bold text-gray-800">YouTube Analytics API</h3>
+                    <p class="text-sm text-gray-600 mt-1">
+                        Metricas detalhadas: visualizacoes, tempo de exibicao, demografia, retencao.
+                    </p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-green-500">
+                    <h3 class="font-bold text-gray-800">YouTube Reporting API</h3>
+                    <p class="text-sm text-gray-600 mt-1">
+                        Relatorios em massa para grandes canais (exporta CSVs).
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-6 bg-yellow-50 border-l-4 border-yellow-500 p-4">
+                <p class="font-bold text-yellow-800"><i class="fas fa-info-circle mr-2"></i>Quotas</p>
+                <p class="text-sm text-yellow-700 mt-1">
+                    A YouTube API tem limite de 10.000 unidades/dia. Cada operacao tem custo diferente
+                    (listar: 1, upload: 1600). Monitore no Google Cloud Console.
+                </p>
+            </div>
+        </section>
+
+        <!-- Step 1: Google Cloud -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">1</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Configurar Google Cloud</h2>
+                    <p class="text-gray-600">Mesma configuracao do Google APIs</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <p class="text-sm text-blue-800">
+                        <i class="fas fa-arrow-right mr-2"></i>
+                        Se voce ja configurou a <a href="google.html" class="underline font-bold">API do Google</a>,
+                        pule para o passo 2. O YouTube usa o mesmo projeto OAuth.
+                    </p>
+                </div>
+
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4">Criar Projeto (se ainda nao tem)</h3>
+                    <ol class="space-y-3 text-gray-700">
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-red-600">1.</span>
+                            <span>Acesse <strong>console.cloud.google.com</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-red-600">2.</span>
+                            <span>Crie um novo projeto ou selecione existente</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-red-600">3.</span>
+                            <span>Va em <strong>APIs & Services → Library</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-red-600">4.</span>
+                            <span>Busque e ative: <strong>YouTube Data API v3</strong></span>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 2: OAuth -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">2</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Configurar OAuth 2.0</h2>
+                    <p class="text-gray-600">Autorizacao para acessar seu canal</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4">Tela de Consentimento</h3>
+                    <ol class="space-y-3 text-gray-700">
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-red-600">1.</span>
+                            <span>Va em <strong>APIs & Services → OAuth consent screen</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-red-600">2.</span>
+                            <span>Escolha <strong>External</strong> (ou Internal se G Suite)</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-red-600">3.</span>
+                            <span>Preencha: nome do app, email de suporte</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-red-600">4.</span>
+                            <span>Em <strong>Scopes</strong>, adicione:</span>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="bg-red-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-red-800 mb-2">Scopes Necessarios</h4>
+                    <ul class="text-sm text-gray-700 space-y-2">
+                        <li><code class="bg-red-100 px-1">https://www.googleapis.com/auth/youtube</code> - Gerenciar conta (upload, editar)</li>
+                        <li><code class="bg-red-100 px-1">https://www.googleapis.com/auth/youtube.readonly</code> - Somente leitura</li>
+                        <li><code class="bg-red-100 px-1">https://www.googleapis.com/auth/youtube.upload</code> - Apenas upload</li>
+                        <li><code class="bg-red-100 px-1">https://www.googleapis.com/auth/youtube.force-ssl</code> - Comentarios e legendas</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4">Criar Credenciais OAuth</h3>
+                    <ol class="space-y-3 text-gray-700">
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-red-600">1.</span>
+                            <span>Va em <strong>APIs & Services → Credentials</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-red-600">2.</span>
+                            <span>Clique <strong>+ CREATE CREDENTIALS → OAuth client ID</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-red-600">3.</span>
+                            <span>Tipo: <strong>Web application</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-red-600">4.</span>
+                            <span>Authorized redirect URI: <code class="bg-gray-200 px-1">https://seu-n8n.com/rest/oauth2-credential/callback</code></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-red-600">5.</span>
+                            <span>Copie o <strong>Client ID</strong> e <strong>Client Secret</strong></span>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 3: Configurar N8N -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">3</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Configurar no N8N</h2>
+                    <p class="text-gray-600">Adicionar credencial YouTube</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4">Criar Credencial</h3>
+                    <ol class="space-y-3 text-gray-700">
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-red-600">1.</span>
+                            <span>No N8N, va em <strong>Credentials → Add Credential</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-red-600">2.</span>
+                            <span>Busque por <strong>YouTube OAuth2 API</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-red-600">3.</span>
+                            <span>Cole o <strong>Client ID</strong> e <strong>Client Secret</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-red-600">4.</span>
+                            <span>Clique em <strong>Sign in with Google</strong></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="font-bold text-red-600">5.</span>
+                            <span>Autorize o acesso ao canal desejado</span>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4">
+                    <p class="font-bold text-yellow-800"><i class="fas fa-exclamation-triangle mr-2"></i>App em Teste</p>
+                    <p class="text-sm text-yellow-700 mt-1">
+                        Se o app esta em modo "Testing", adicione seu email como Test User nas configuracoes
+                        do OAuth consent screen. Caso contrario, vera erro de "acesso negado".
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 4: Operacoes -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">4</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Operacoes Disponiveis</h2>
+                    <p class="text-gray-600">O que voce pode fazer com o node YouTube</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-gray-800 mb-2"><i class="fas fa-video mr-2 text-red-600"></i>Video</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Upload - Enviar video</li>
+                            <li>• Get - Buscar por ID</li>
+                            <li>• Get All - Listar videos do canal</li>
+                            <li>• Update - Editar titulo, descricao</li>
+                            <li>• Delete - Remover video</li>
+                            <li>• Rate - Dar like/dislike</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-gray-800 mb-2"><i class="fas fa-list mr-2 text-blue-600"></i>Playlist</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Create - Criar playlist</li>
+                            <li>• Get - Buscar por ID</li>
+                            <li>• Get All - Listar playlists</li>
+                            <li>• Update - Editar playlist</li>
+                            <li>• Delete - Remover playlist</li>
+                            <li>• Add Video - Adicionar video</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-gray-800 mb-2"><i class="fas fa-tv mr-2 text-green-600"></i>Channel</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Get - Informacoes do canal</li>
+                            <li>• Get All - Listar canais inscritos</li>
+                            <li>• Update - Atualizar canal</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-gray-800 mb-2"><i class="fas fa-play-circle mr-2 text-purple-600"></i>Playlist Item</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Get - Video em playlist</li>
+                            <li>• Get All - Todos videos da playlist</li>
+                            <li>• Add - Adicionar video</li>
+                            <li>• Delete - Remover video</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exemplos Praticos -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-code mr-2 text-red-600"></i>Exemplos Praticos
+            </h2>
+
+            <div class="space-y-8">
+                <!-- Exemplo 1 -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4">1. Upload automatico do Google Drive</h3>
+                    <pre><code><span class="code-comment">// Google Drive Trigger: New File in Folder</span>
+<span class="code-comment">// → Google Drive: Download File</span>
+<span class="code-comment">// → YouTube: Upload Video</span>
+
+<span class="code-comment">// Configuracao do YouTube node:</span>
+<span class="code-key">Resource</span>: Video
+<span class="code-key">Operation</span>: Upload
+<span class="code-key">Title</span>: <span class="code-string">{{ $json.name.replace('.mp4', '') }}</span>
+<span class="code-key">Description</span>: <span class="code-string">"Video publicado automaticamente"</span>
+<span class="code-key">Category ID</span>: <span class="code-string">22</span> <span class="code-comment">// People & Blogs</span>
+<span class="code-key">Privacy Status</span>: <span class="code-string">private</span> <span class="code-comment">// ou unlisted, public</span>
+<span class="code-key">Binary Property</span>: <span class="code-string">data</span></code></pre>
+                </div>
+
+                <!-- Exemplo 2 -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4">2. Monitorar views e alertar no Slack</h3>
+                    <pre><code><span class="code-comment">// Schedule Trigger: Every hour</span>
+<span class="code-comment">// → YouTube: Get All Videos</span>
+<span class="code-comment">// → IF: viewCount > threshold</span>
+<span class="code-comment">// → Slack: Send Message</span>
+
+<span class="code-comment">// YouTube Get All:</span>
+<span class="code-key">Resource</span>: Video
+<span class="code-key">Operation</span>: Get All
+<span class="code-key">Part</span>: <span class="code-string">snippet,statistics</span>
+<span class="code-key">For Channel</span>: <span class="code-string">true</span>
+
+<span class="code-comment">// Filtrar videos com views > 10000:</span>
+<span class="code-key">IF Condition</span>: {{ $json.statistics.viewCount }} > 10000
+
+<span class="code-comment">// Mensagem Slack:</span>
+<span class="code-string">":fire: {{ $json.snippet.title }} atingiu {{ $json.statistics.viewCount }} views!"</span></code></pre>
+                </div>
+
+                <!-- Exemplo 3 -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4">3. Adicionar video novo a playlist automaticamente</h3>
+                    <pre><code><span class="code-comment">// Schedule Trigger: Every 15 minutes</span>
+<span class="code-comment">// → YouTube: Get All Videos (last 24h)</span>
+<span class="code-comment">// → YouTube: Add to Playlist (each video)</span>
+
+<span class="code-comment">// Listar videos recentes:</span>
+<span class="code-key">Resource</span>: Video
+<span class="code-key">Operation</span>: Get All
+<span class="code-key">Published After</span>: {{ $now.minus({days: 1}).toISO() }}
+
+<span class="code-comment">// Adicionar a playlist:</span>
+<span class="code-key">Resource</span>: Playlist Item
+<span class="code-key">Operation</span>: Add
+<span class="code-key">Playlist ID</span>: <span class="code-string">PLxxxxxxxxxxxxxxxx</span>
+<span class="code-key">Video ID</span>: {{ $json.id }}</code></pre>
+                </div>
+
+                <!-- Exemplo 4 -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4">4. Publicar em multiplas redes ao mesmo tempo</h3>
+                    <pre><code><span class="code-comment">// Google Drive Trigger: New Video</span>
+<span class="code-comment">// → Google Drive: Download</span>
+<span class="code-comment">// → Split: Parallel branches</span>
+<span class="code-comment">//   → YouTube: Upload</span>
+<span class="code-comment">//   → Instagram: Upload Reel (via HTTP)</span>
+<span class="code-comment">//   → TikTok: Upload (via HTTP)</span>
+<span class="code-comment">// → Merge: Wait for all</span>
+<span class="code-comment">// → Slack: "Video publicado em 3 plataformas"</span></code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Category IDs -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-tags mr-2 text-blue-500"></i>Category IDs do YouTube
+            </h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="text-left p-3">ID</th>
+                            <th class="text-left p-3">Categoria</th>
+                            <th class="text-left p-3">ID</th>
+                            <th class="text-left p-3">Categoria</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y">
+                        <tr>
+                            <td class="p-3 font-mono">1</td>
+                            <td class="p-3">Film & Animation</td>
+                            <td class="p-3 font-mono">22</td>
+                            <td class="p-3">People & Blogs</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-mono">10</td>
+                            <td class="p-3">Music</td>
+                            <td class="p-3 font-mono">23</td>
+                            <td class="p-3">Comedy</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-mono">15</td>
+                            <td class="p-3">Pets & Animals</td>
+                            <td class="p-3 font-mono">24</td>
+                            <td class="p-3">Entertainment</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-mono">17</td>
+                            <td class="p-3">Sports</td>
+                            <td class="p-3 font-mono">25</td>
+                            <td class="p-3">News & Politics</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-mono">19</td>
+                            <td class="p-3">Travel & Events</td>
+                            <td class="p-3 font-mono">26</td>
+                            <td class="p-3">Howto & Style</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-mono">20</td>
+                            <td class="p-3">Gaming</td>
+                            <td class="p-3 font-mono">27</td>
+                            <td class="p-3">Education</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-mono">28</td>
+                            <td class="p-3">Science & Technology</td>
+                            <td class="p-3 font-mono">29</td>
+                            <td class="p-3">Nonprofits & Activism</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Troubleshooting -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-wrench mr-2 text-orange-500"></i>Troubleshooting
+            </h2>
+
+            <div class="space-y-4">
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">403 Forbidden / Access Not Configured</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        A YouTube Data API v3 nao esta ativada no projeto. Va em APIs & Services → Library e ative.
+                    </p>
+                </div>
+
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">quotaExceeded / Daily Limit Exceeded</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        Voce atingiu o limite de 10.000 unidades/dia. Upload custa 1.600 unidades.
+                        Aguarde 24h (PST) ou solicite aumento de quota no Google Cloud.
+                    </p>
+                </div>
+
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">uploadLimitExceeded</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        Limite de uploads diarios atingido. Canais novos tem limite mais baixo.
+                        Verifique seu canal e tente novamente amanha.
+                    </p>
+                </div>
+
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">Video nao processa / Stays in "Processing"</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        Arquivo corrompido ou formato nao suportado. Use MP4 com H.264 e AAC.
+                        Limite de 256GB ou 12 horas.
+                    </p>
+                </div>
+
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">User cannot access channel</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        A conta Google nao tem canal YouTube vinculado. Crie um canal em youtube.com
+                        ou use uma Brand Account diferente.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dicas Pro -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-star mr-2 text-yellow-500"></i>Dicas Pro
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-green-800 mb-2">Economize Quota</h4>
+                    <p class="text-sm text-gray-600">
+                        Use <code>part=id</code> em vez de <code>snippet,statistics</code> quando
+                        so precisa verificar se video existe. Cada part extra custa mais.
+                    </p>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-blue-800 mb-2">Upload Resumivel</h4>
+                    <p class="text-sm text-gray-600">
+                        Para videos grandes, use upload resumível via HTTP Request.
+                        Permite retomar se conexao cair.
+                    </p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-purple-800 mb-2">Thumbnail Custom</h4>
+                    <p class="text-sm text-gray-600">
+                        Apos upload, use operacao <code>Set Thumbnail</code> para definir
+                        thumbnail customizada (JPEG, PNG, max 2MB).
+                    </p>
+                </div>
+                <div class="bg-orange-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-orange-800 mb-2">Agendamento</h4>
+                    <p class="text-sm text-gray-600">
+                        Use <code>publishAt</code> no upload para agendar publicacao.
+                        Video fica como "Scheduled" ate a data.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="bg-gradient-to-r from-red-600 to-orange-600 rounded-xl shadow-lg p-8 text-white text-center">
+            <h2 class="text-2xl font-bold mb-4">Proximo: Discord</h2>
+            <p class="mb-6 text-white/90">
+                Configure bots e automatize seu servidor Discord
+            </p>
+            <a href="discord.html" class="inline-block bg-white text-red-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition">
+                Continuar para Discord <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-400">N8N Academy - Dominando automacoes</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notion API | N8N Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .code-block { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 0.75rem; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.7; }
+    .step-number { width: 3rem; height: 3rem; background: linear-gradient(135deg, #000000, #333333); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.25rem; flex-shrink: 0; }
+  </style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../../tecnico.html" class="text-2xl font-bold text-neutral-800 dark:text-neutral-200 flex items-center gap-2">
+          <span>←</span><span class="text-3xl">📝</span><span>Notion</span>
+        </a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-gradient-to-br from-neutral-800 via-neutral-900 to-black py-24">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="text-8xl mb-8">📝</div>
+      <h1 class="text-6xl font-bold mb-6">Notion</h1>
+      <p class="text-3xl mb-4 text-white/90">Workspace All-in-One</p>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto">Guia completo para integrar databases e páginas do Notion ao N8N.</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 py-20">
+
+    <!-- VISÃO GERAL -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🎯</span>
+        <h2 class="text-5xl font-bold text-neutral-900 dark:text-neutral-100">Visão Geral</h2>
+      </div>
+      <p class="text-2xl text-neutral-700 dark:text-neutral-300 mb-8 leading-relaxed">
+        Notion combina notas, databases, wikis e projetos em um só lugar. A API permite manipular páginas e databases programaticamente.
+      </p>
+
+      <div class="grid md:grid-cols-4 gap-6">
+        <div class="bg-neutral-100 dark:bg-neutral-700 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">📄</p>
+          <p class="text-lg font-semibold text-neutral-800 dark:text-neutral-200">Páginas</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Criar e editar conteúdo</p>
+        </div>
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">🗃️</p>
+          <p class="text-lg font-semibold text-blue-800 dark:text-blue-300">Databases</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">CRUD em databases</p>
+        </div>
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">🔍</p>
+          <p class="text-lg font-semibold text-purple-800 dark:text-purple-300">Buscar</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Filtrar e ordenar</p>
+        </div>
+        <div class="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">🧱</p>
+          <p class="text-lg font-semibold text-amber-800 dark:text-amber-300">Blocks</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Adicionar conteúdo</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 1: CRIAR INTEGRATION -->
+    <div class="bg-gradient-to-br from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-900 rounded-3xl p-12 mb-12 border-2 border-neutral-300 dark:border-neutral-700">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">1</div>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Criar Integration</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">1.1 Acessar Developer Portal</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-neutral-500 font-bold">1.</span>
+              <span>Acesse <strong>notion.so/my-integrations</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-neutral-500 font-bold">2.</span>
+              <span>Clique em <strong>"+ New integration"</strong></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">1.2 Configurar a Integration</p>
+          <div class="grid md:grid-cols-2 gap-4 text-neutral-700 dark:text-neutral-300 mb-4">
+            <div class="bg-neutral-50 dark:bg-neutral-700 p-4 rounded-lg">
+              <p class="font-semibold">Name:</p>
+              <code class="text-sm">N8N Automation</code>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-700 p-4 rounded-lg">
+              <p class="font-semibold">Associated workspace:</p>
+              <p class="text-sm">Seu workspace</p>
+            </div>
+          </div>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">Capabilities (marque todas que precisar):</p>
+          <div class="code-block">
+// Capacidades disponíveis:
+✅ Read content           // Ler páginas e databases
+✅ Update content         // Atualizar conteúdo
+✅ Insert content         // Criar novos itens
+✅ Read comments          // Ler comentários
+✅ Create comments        // Criar comentários
+✅ Read user information  // Info de usuários (opcional)
+          </div>
+        </div>
+
+        <div class="bg-green-100 dark:bg-green-900/30 p-6 rounded-xl border-2 border-green-300 dark:border-green-700">
+          <p class="text-lg font-semibold text-green-800 dark:text-green-300 mb-2">✅ Integration Criada!</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">Copie o <strong>Internal Integration Token</strong>:</p>
+          <div class="bg-white dark:bg-neutral-800 p-4 rounded-xl">
+            <code class="text-sm text-neutral-600 dark:text-neutral-400 break-all">secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</code>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 2: CONECTAR PÁGINAS -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">2</div>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Conectar Páginas/Databases</h3>
+      </div>
+
+      <div class="bg-red-100 dark:bg-red-900/30 p-6 rounded-xl border-2 border-red-300 dark:border-red-700 mb-6">
+        <p class="text-lg font-semibold text-red-800 dark:text-red-300 mb-2">⚠️ Passo CRÍTICO!</p>
+        <p class="text-neutral-700 dark:text-neutral-300">A integration <strong>NÃO</strong> tem acesso automático às suas páginas. Você precisa conectar manualmente cada página/database que quer acessar.</p>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Como Conectar:</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-neutral-500 font-bold">1.</span>
+              <span>Abra a página ou database no Notion</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-neutral-500 font-bold">2.</span>
+              <span>Clique nos <strong>3 pontos (...)</strong> no canto superior direito</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-neutral-500 font-bold">3.</span>
+              <span>Role até <strong>"Connections"</strong> ou <strong>"Add connections"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-neutral-500 font-bold">4.</span>
+              <span>Busque e selecione <strong>"N8N Automation"</strong> (sua integration)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-neutral-500 font-bold">5.</span>
+              <span>Confirme a conexão</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Obter Page/Database ID</p>
+          <div class="code-block">
+// URL de uma página:
+https://www.notion.so/Minha-Pagina-abc123def456...
+                                    ↑
+                                    Page ID (32 chars, sem hífens)
+
+// URL de um database:
+https://www.notion.so/abc123def456?v=xyz
+                       ↑
+                       Database ID
+
+// Formato do ID (com hífens):
+abc123de-f456-7890-abcd-ef1234567890
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 3: CONFIGURAR NO N8N -->
+    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-3xl p-12 mb-12 border-2 border-blue-200 dark:border-blue-800">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">3</div>
+        <h3 class="text-4xl font-bold text-blue-900 dark:text-blue-300">Configurar no N8N</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">3.1 Criar Credencial</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">1.</span>
+              <span>No N8N, vá em <strong>Credenciais</strong> → <strong>Adicionar</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">2.</span>
+              <span>Pesquise: <strong>"Notion API"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">3.</span>
+              <span>Cole o <strong>Internal Integration Token</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">4.</span>
+              <span>Clique em <strong>Salvar</strong></span>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXEMPLOS PRÁTICOS -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📋</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Exemplos Práticos</h3>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Query Database -->
+        <div class="bg-neutral-100 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-xl font-bold text-neutral-800 dark:text-neutral-200 mb-4">🗃️ Buscar no Database</p>
+          <div class="code-block text-sm">
+// Node: Notion
+// Operation: Get Many (Database)
+
+Database: Tarefas
+
+Filter:
+{
+  "property": "Status",
+  "select": {
+    "equals": "Em Progresso"
+  }
+}
+
+Sort:
+{
+  "property": "Due Date",
+  "direction": "ascending"
+}
+          </div>
+        </div>
+
+        <!-- Criar Página -->
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-4">➕ Criar Item no Database</p>
+          <div class="code-block text-sm">
+// Node: Notion
+// Operation: Create (Database Page)
+
+Database: Clientes
+
+Properties:
+  Name (title): {{ $json.nome }}
+  Email (email): {{ $json.email }}
+  Status (select): Novo
+  Created (date): {{ $now }}
+          </div>
+        </div>
+
+        <!-- Atualizar Página -->
+        <div class="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-amber-800 dark:text-amber-300 mb-4">✏️ Atualizar Item</p>
+          <div class="code-block text-sm">
+// Node: Notion
+// Operation: Update (Database Page)
+
+Page ID: {{ $json.notion_id }}
+
+Properties:
+  Status (select): Convertido
+  Notes (rich_text): Cliente fechou!
+  Value (number): {{ $json.valor }}
+          </div>
+        </div>
+
+        <!-- Append Blocks -->
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-4">🧱 Adicionar Conteúdo à Página</p>
+          <div class="code-block text-sm">
+// Node: Notion
+// Operation: Append After (Block)
+
+Page ID: abc123...
+
+Blocks:
+[
+  {
+    "type": "heading_2",
+    "heading_2": {
+      "rich_text": [
+        { "text": { "content": "Resumo" } }
+      ]
+    }
+  },
+  {
+    "type": "paragraph",
+    "paragraph": {
+      "rich_text": [
+        { "text": { "content": "Texto aqui..." } }
+      ]
+    }
+  }
+]
+          </div>
+        </div>
+
+        <!-- Ler Página -->
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-green-800 dark:text-green-300 mb-4">📄 Ler Conteúdo de Página</p>
+          <div class="code-block text-sm">
+// Node: Notion
+// Operation: Get (Page)
+
+Page ID: abc123...
+
+// Retorna:
+{
+  "id": "abc123...",
+  "properties": {
+    "Name": {...},
+    "Status": {...}
+  }
+}
+
+// Para ler blocks (conteúdo):
+// Operation: Get All (Block)
+// Block ID: (mesmo ID da página)
+          </div>
+        </div>
+
+        <!-- Search -->
+        <div class="bg-indigo-50 dark:bg-indigo-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-indigo-800 dark:text-indigo-300 mb-4">🔍 Busca Global</p>
+          <div class="code-block text-sm">
+// Node: Notion
+// Operation: Search
+
+Query: termo de busca
+
+Filter:
+{
+  "property": "object",
+  "value": "page"  // ou "database"
+}
+
+// Busca em todas as páginas
+// conectadas à integration
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIPOS DE PROPRIEDADE -->
+    <div class="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-3xl p-12 mb-12 border-2 border-purple-200 dark:border-purple-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🏷️</span>
+        <h3 class="text-4xl font-bold text-purple-900 dark:text-purple-300">Tipos de Propriedade</h3>
+      </div>
+
+      <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+        <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Formato de cada tipo</p>
+        <div class="code-block">
+// Title (obrigatório em todo database):
+"Name": {
+  "title": [{ "text": { "content": "Texto" } }]
+}
+
+// Rich Text:
+"Description": {
+  "rich_text": [{ "text": { "content": "Texto" } }]
+}
+
+// Number:
+"Price": { "number": 99.99 }
+
+// Select:
+"Status": { "select": { "name": "Ativo" } }
+
+// Multi-select:
+"Tags": { "multi_select": [{ "name": "Tag1" }, { "name": "Tag2" }] }
+
+// Date:
+"Due Date": { "date": { "start": "2024-12-31" } }
+
+// Checkbox:
+"Done": { "checkbox": true }
+
+// URL:
+"Link": { "url": "https://exemplo.com" }
+
+// Email:
+"Contact": { "email": "email@exemplo.com" }
+
+// Phone:
+"Phone": { "phone_number": "+55 11 99999-9999" }
+
+// People:
+"Assignee": { "people": [{ "id": "user_id" }] }
+
+// Relation:
+"Project": { "relation": [{ "id": "page_id" }] }
+        </div>
+      </div>
+    </div>
+
+    <!-- TROUBLESHOOTING -->
+    <div class="bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-3xl p-12 mb-12 border-2 border-red-200 dark:border-red-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🔧</span>
+        <h3 class="text-4xl font-bold text-red-900 dark:text-red-300">Troubleshooting</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ "Could not find page/database"</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Integration não está conectada à página.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Conecte a integration à página via menu (...) → Add connections.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ "Invalid property format"</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Formato errado para o tipo de propriedade.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Cada tipo tem formato específico. Consulte a documentação de tipos acima.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ "API token is invalid"</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Token incorreto ou integration deletada.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Verifique o token em notion.so/my-integrations.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="bg-gradient-to-r from-neutral-800 to-neutral-900 rounded-3xl p-12 text-center text-white">
+      <h3 class="text-4xl font-bold mb-6">Notion Configurado!</h3>
+      <p class="text-xl mb-8 text-white/90">Agora você pode automatizar seu workspace Notion.</p>
+      <div class="flex gap-4 justify-center flex-wrap">
+        <a href="llms.html" class="bg-white text-neutral-800 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors">
+          Próximo: Outros LLMs →
+        </a>
+        <a href="../../tecnico.html" class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-colors">
+          Ver Todas as Conexões
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <footer class="bg-neutral-900 text-white py-12 mt-16">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-neutral-400">&copy; 2025 N8N Academy</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    } else {
+      themeToggleDarkIcon.classList.remove('hidden');
+    }
+    themeToggleBtn.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html>

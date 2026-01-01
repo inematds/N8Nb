@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhatsApp Business API | N8N Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .code-block { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 0.75rem; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.7; }
+    .step-number { width: 3rem; height: 3rem; background: linear-gradient(135deg, #25D366, #128C7E); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.25rem; flex-shrink: 0; }
+  </style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../../tecnico.html" class="text-2xl font-bold text-green-600 dark:text-green-400 flex items-center gap-2">
+          <span>←</span><span class="text-3xl">💬</span><span>WhatsApp API</span>
+        </a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-gradient-to-br from-green-500 via-green-600 to-teal-600 py-24">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="text-8xl mb-8">💬</div>
+      <h1 class="text-6xl font-bold mb-6">WhatsApp Business API</h1>
+      <p class="text-3xl mb-4 text-white/90">Meta Cloud API</p>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto">Guia completo para configurar a API oficial do WhatsApp Business via Meta for Developers e integrar ao N8N.</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 py-20">
+
+    <!-- VISÃO GERAL -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🎯</span>
+        <h2 class="text-5xl font-bold text-neutral-900 dark:text-neutral-100">Visão Geral</h2>
+      </div>
+      <p class="text-2xl text-neutral-700 dark:text-neutral-300 mb-8 leading-relaxed">
+        O WhatsApp Business API permite enviar mensagens programáticas, receber mensagens via webhook e automatizar atendimento. A API oficial é gerenciada pela <strong>Meta (Facebook)</strong>.
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">📤</p>
+          <p class="text-lg font-semibold text-green-800 dark:text-green-300">Enviar Mensagens</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Templates e texto livre</p>
+        </div>
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">📥</p>
+          <p class="text-lg font-semibold text-blue-800 dark:text-blue-300">Receber Mensagens</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Webhooks em tempo real</p>
+        </div>
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">🤖</p>
+          <p class="text-lg font-semibold text-purple-800 dark:text-purple-300">Automação</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Chatbots e fluxos</p>
+        </div>
+      </div>
+
+      <div class="bg-amber-100 dark:bg-amber-900/30 p-6 rounded-xl border-2 border-amber-300 dark:border-amber-700">
+        <p class="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-2">⚠️ Importante sobre Custos</p>
+        <p class="text-neutral-700 dark:text-neutral-300">A API do WhatsApp tem custo por conversa (não por mensagem). Conversas iniciadas pelo usuário são mais baratas que as iniciadas pela empresa. Verifique a tabela de preços da Meta.</p>
+      </div>
+    </div>
+
+    <!-- REQUISITOS -->
+    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-3xl p-12 mb-12 border-2 border-blue-200 dark:border-blue-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📋</span>
+        <h3 class="text-4xl font-bold text-blue-900 dark:text-blue-300">Pré-requisitos</h3>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">✅ O que você precisa:</p>
+          <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">→</span>
+              <span>Conta no <strong>Meta Business Suite</strong> (business.facebook.com)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">→</span>
+              <span>Conta de desenvolvedor <strong>Meta for Developers</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">→</span>
+              <span>Número de telefone <strong>não vinculado</strong> ao WhatsApp pessoal</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">→</span>
+              <span>Cartão de crédito para verificação (não é cobrado inicialmente)</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">🆓 Modo de Teste Gratuito:</p>
+          <ul class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">→</span>
+              <span>A Meta oferece um número de teste gratuito</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">→</span>
+              <span>Você pode enviar para até 5 números cadastrados</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">→</span>
+              <span>Perfeito para desenvolvimento e testes</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">→</span>
+              <span>Não precisa de número próprio para começar</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 1: CRIAR CONTA META -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">1</div>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Criar App no Meta for Developers</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">1.1 Acessar o Portal de Desenvolvedores</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">→</span>
+              <span>Acesse <strong>developers.facebook.com</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">→</span>
+              <span>Faça login com sua conta Facebook (pessoal ou empresarial)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">→</span>
+              <span>Se for primeira vez, aceite os termos de desenvolvedor</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">1.2 Criar Novo App</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">1.</span>
+              <span>Clique em <strong>"My Apps"</strong> → <strong>"Create App"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">2.</span>
+              <span>Selecione <strong>"Business"</strong> como tipo de app</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">3.</span>
+              <span>Nome do app: <code class="bg-neutral-100 dark:bg-neutral-600 px-2 py-1 rounded">N8N WhatsApp Bot</code></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">4.</span>
+              <span>Email de contato: seu email</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">5.</span>
+              <span>Business Account: selecione ou crie uma</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">6.</span>
+              <span>Clique em <strong>"Create App"</strong></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">1.3 Adicionar Produto WhatsApp</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">1.</span>
+              <span>Na página do app, role até <strong>"Add products to your app"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">2.</span>
+              <span>Encontre <strong>"WhatsApp"</strong> e clique em <strong>"Set Up"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">3.</span>
+              <span>Siga o wizard inicial (pode pular por enquanto)</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 2: CONFIGURAR WHATSAPP -->
+    <div class="bg-gradient-to-br from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 rounded-3xl p-12 mb-12 border-2 border-green-200 dark:border-green-800">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">2</div>
+        <h3 class="text-4xl font-bold text-green-900 dark:text-green-300">Configurar WhatsApp Business</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">2.1 Obter Access Token Temporário (para testes)</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">1.</span>
+              <span>No menu lateral do app, clique em <strong>"WhatsApp"</strong> → <strong>"API Setup"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">2.</span>
+              <span>Você verá o <strong>"Temporary access token"</strong> - copie este token</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">3.</span>
+              <span>Este token expira em 24h - usaremos um permanente depois</span>
+            </li>
+          </ol>
+          <div class="mt-4 code-block">
+// Token temporário (exemplo):
+EAAxxxxxxxxxx...
+
+// Válido por 24 horas
+// Use para testes iniciais
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">2.2 Obter Phone Number ID e Business Account ID</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">Na mesma página "API Setup", você encontrará:</p>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="bg-green-100 dark:bg-green-900/30 p-4 rounded-lg border-2 border-green-300 dark:border-green-700">
+              <p class="font-semibold text-green-800 dark:text-green-300">Phone Number ID:</p>
+              <code class="text-sm">123456789012345</code>
+              <p class="text-xs text-neutral-600 dark:text-neutral-400 mt-1">ID do número de teste da Meta</p>
+            </div>
+            <div class="bg-blue-100 dark:bg-blue-900/30 p-4 rounded-lg border-2 border-blue-300 dark:border-blue-700">
+              <p class="font-semibold text-blue-800 dark:text-blue-300">WhatsApp Business Account ID:</p>
+              <code class="text-sm">987654321098765</code>
+              <p class="text-xs text-neutral-600 dark:text-neutral-400 mt-1">ID da conta business</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">2.3 Adicionar Números de Teste</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">1.</span>
+              <span>Na seção <strong>"To"</strong>, clique em <strong>"Manage phone number list"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">2.</span>
+              <span>Adicione os números que receberão mensagens de teste</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">3.</span>
+              <span>Formato: código do país + número (ex: <code class="bg-neutral-100 dark:bg-neutral-600 px-2 py-1 rounded">5511999998888</code>)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">4.</span>
+              <span>Cada número receberá um código de verificação</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 3: TOKEN PERMANENTE -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">3</div>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Criar Token de Acesso Permanente</h3>
+      </div>
+
+      <div class="bg-red-100 dark:bg-red-900/30 p-6 rounded-xl border-2 border-red-300 dark:border-red-700 mb-6">
+        <p class="text-lg font-semibold text-red-800 dark:text-red-300 mb-2">⚠️ Por que Token Permanente?</p>
+        <p class="text-neutral-700 dark:text-neutral-300">O token temporário expira em 24h. Para automações em produção, você precisa de um token que não expire.</p>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">3.1 Criar System User</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">1.</span>
+              <span>Acesse <strong>business.facebook.com</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">2.</span>
+              <span>Vá em <strong>"Business Settings"</strong> (engrenagem no canto)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">3.</span>
+              <span>No menu lateral: <strong>"Users"</strong> → <strong>"System Users"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">4.</span>
+              <span>Clique em <strong>"Add"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">5.</span>
+              <span>Nome: <code class="bg-neutral-100 dark:bg-neutral-600 px-2 py-1 rounded">N8N Bot</code></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">6.</span>
+              <span>Role: <strong>Admin</strong></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">3.2 Adicionar Assets ao System User</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">1.</span>
+              <span>Clique no System User criado</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">2.</span>
+              <span>Clique em <strong>"Add Assets"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">3.</span>
+              <span>Selecione <strong>"Apps"</strong> e escolha seu app WhatsApp</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">4.</span>
+              <span>Marque <strong>"Full Control"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">5.</span>
+              <span>Clique em <strong>"Save Changes"</strong></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">3.3 Gerar Token Permanente</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">1.</span>
+              <span>Ainda na página do System User, clique em <strong>"Generate New Token"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">2.</span>
+              <span>Selecione o app</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">3.</span>
+              <span>Marque as permissões necessárias:</span>
+            </li>
+          </ol>
+          <div class="mt-4 code-block">
+// Permissões obrigatórias:
+whatsapp_business_messaging
+whatsapp_business_management
+
+// O token gerado NUNCA expira
+// GUARDE EM LOCAL SEGURO!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 4: WEBHOOK -->
+    <div class="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-3xl p-12 mb-12 border-2 border-purple-200 dark:border-purple-800">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">4</div>
+        <h3 class="text-4xl font-bold text-purple-900 dark:text-purple-300">Configurar Webhook (Receber Mensagens)</h3>
+      </div>
+
+      <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg mb-6">
+        <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">4.1 Criar Webhook no N8N</p>
+        <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+          <li class="flex items-start gap-3">
+            <span class="text-purple-500 font-bold">1.</span>
+            <span>No N8N, crie um novo workflow</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-purple-500 font-bold">2.</span>
+            <span>Adicione um node <strong>Webhook</strong></span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-purple-500 font-bold">3.</span>
+            <span>HTTP Method: <strong>GET</strong> e <strong>POST</strong> (ambos)</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-purple-500 font-bold">4.</span>
+            <span>Path: <code class="bg-neutral-100 dark:bg-neutral-600 px-2 py-1 rounded">whatsapp-webhook</code></span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-purple-500 font-bold">5.</span>
+            <span>Ative o workflow e copie a URL do webhook</span>
+          </li>
+        </ol>
+        <div class="mt-4 code-block">
+// URL será algo como:
+https://seu-n8n.com/webhook/whatsapp-webhook
+
+// Ou se for N8N Cloud:
+https://xxx.app.n8n.cloud/webhook/whatsapp-webhook
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg mb-6">
+        <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">4.2 Configurar Webhook na Meta</p>
+        <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+          <li class="flex items-start gap-3">
+            <span class="text-purple-500 font-bold">1.</span>
+            <span>No app Meta, vá em <strong>"WhatsApp"</strong> → <strong>"Configuration"</strong></span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-purple-500 font-bold">2.</span>
+            <span>Na seção Webhook, clique em <strong>"Edit"</strong></span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-purple-500 font-bold">3.</span>
+            <span>Callback URL: cole a URL do webhook N8N</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-purple-500 font-bold">4.</span>
+            <span>Verify Token: crie uma string qualquer (ex: <code class="bg-neutral-100 dark:bg-neutral-600 px-2 py-1 rounded">meu_token_secreto_123</code>)</span>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+        <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">4.3 Webhook de Verificação no N8N</p>
+        <p class="text-neutral-700 dark:text-neutral-300 mb-4">O Meta envia um GET para verificar. Configure seu webhook assim:</p>
+        <div class="code-block">
+// Node: Webhook (já criado)
+// Depois adicione: IF Node
+
+// Condição: Verificar se é validação
+{{ $json.query['hub.mode'] }} === 'subscribe'
+
+// Se TRUE: Respond to Webhook
+// Response Body: {{ $json.query['hub.challenge'] }}
+
+// Se FALSE: continua processando mensagem normalmente
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 5: CONFIGURAR NO N8N -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">5</div>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Configurar Credencial no N8N</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">5.1 Criar Credencial WhatsApp</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">1.</span>
+              <span>No N8N, vá em <strong>Credenciais</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">2.</span>
+              <span>Clique em <strong>"Adicionar Credencial"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">3.</span>
+              <span>Pesquise: <strong>"WhatsApp Business Cloud API"</strong></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">5.2 Preencher os Dados</p>
+          <div class="grid md:grid-cols-2 gap-4 text-neutral-700 dark:text-neutral-300">
+            <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg border border-neutral-200 dark:border-neutral-600">
+              <p class="font-semibold">Access Token:</p>
+              <p class="text-sm">Token permanente do System User</p>
+            </div>
+            <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg border border-neutral-200 dark:border-neutral-600">
+              <p class="font-semibold">Business Account ID:</p>
+              <p class="text-sm">ID da conta WhatsApp Business</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXEMPLOS PRÁTICOS -->
+    <div class="bg-gradient-to-br from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 rounded-3xl p-12 mb-12 border-2 border-green-200 dark:border-green-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📋</span>
+        <h3 class="text-4xl font-bold text-green-900 dark:text-green-300">Exemplos Práticos no N8N</h3>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Enviar Mensagem Template -->
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-xl font-bold text-green-800 dark:text-green-300 mb-4">📤 Enviar Template (primeira mensagem)</p>
+          <div class="code-block text-sm">
+// Node: WhatsApp Business Cloud
+// Operation: Send Message
+
+Phone Number ID: 123456789012345
+Recipient Phone: 5511999998888
+Message Type: Template
+
+Template Name: hello_world
+Language Code: pt_BR
+          </div>
+          <p class="mt-4 text-sm text-neutral-600 dark:text-neutral-400">⚠️ Primeira mensagem DEVE ser template aprovado</p>
+        </div>
+
+        <!-- Enviar Texto Livre -->
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-4">💬 Responder com Texto (após contato)</p>
+          <div class="code-block text-sm">
+// Node: WhatsApp Business Cloud
+// Operation: Send Message
+
+Message Type: Text
+Text Body:
+  Olá {{ $json.nome }}!
+
+  Recebemos sua mensagem.
+  Em breve retornaremos.
+          </div>
+          <p class="mt-4 text-sm text-neutral-600 dark:text-neutral-400">✅ Texto livre só dentro de 24h após contato do cliente</p>
+        </div>
+
+        <!-- Receber e Processar -->
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-4">📥 Processar Mensagem Recebida</p>
+          <div class="code-block text-sm">
+// Webhook recebe:
+{
+  "entry": [{
+    "changes": [{
+      "value": {
+        "messages": [{
+          "from": "5511999998888",
+          "text": { "body": "Olá!" },
+          "timestamp": "1234567890"
+        }]
+      }
+    }]
+  }]
+}
+
+// Extrair dados:
+{{ $json.entry[0].changes[0]
+   .value.messages[0].text.body }}
+          </div>
+        </div>
+
+        <!-- Enviar Mídia -->
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-xl font-bold text-amber-800 dark:text-amber-300 mb-4">🖼️ Enviar Imagem</p>
+          <div class="code-block text-sm">
+// Node: WhatsApp Business Cloud
+// Operation: Send Message
+
+Message Type: Image
+Image URL: https://exemplo.com/imagem.jpg
+Caption: Confira nossa oferta!
+
+// Ou enviar documento:
+Message Type: Document
+Document URL: https://exemplo.com/doc.pdf
+Filename: proposta.pdf
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEMPLATES -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📝</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Templates de Mensagem</h3>
+      </div>
+
+      <div class="bg-amber-100 dark:bg-amber-900/30 p-6 rounded-xl border-2 border-amber-300 dark:border-amber-700 mb-6">
+        <p class="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-2">⚠️ Regra das 24 Horas</p>
+        <p class="text-neutral-700 dark:text-neutral-300">Você só pode enviar mensagens de texto livre se o cliente te contatou nas últimas 24 horas. Fora dessa janela, APENAS templates aprovados.</p>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Criar Template</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">1.</span>
+              <span>Acesse <strong>business.facebook.com</strong> → <strong>WhatsApp Manager</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">2.</span>
+              <span>Vá em <strong>"Message Templates"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">3.</span>
+              <span>Clique em <strong>"Create Template"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">4.</span>
+              <span>Escolha categoria (Marketing, Utility, Authentication)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">5.</span>
+              <span>Escreva o template com variáveis <code class="bg-neutral-100 dark:bg-neutral-600 px-2 py-1 rounded">{{1}}</code>, <code class="bg-neutral-100 dark:bg-neutral-600 px-2 py-1 rounded">{{2}}</code>, etc.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">6.</span>
+              <span>Envie para aprovação (pode levar até 24h)</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="code-block">
+// Exemplo de template aprovado:
+Nome: confirmacao_pedido
+Categoria: Utility
+Texto:
+  Olá {{1}}!
+
+  Seu pedido #{{2}} foi confirmado.
+  Valor: R$ {{3}}
+
+  Obrigado pela preferência!
+
+// Usar no N8N:
+Template Name: confirmacao_pedido
+Component Parameters:
+  - {{1}}: {{ $json.nome_cliente }}
+  - {{2}}: {{ $json.numero_pedido }}
+  - {{3}}: {{ $json.valor_total }}
+        </div>
+      </div>
+    </div>
+
+    <!-- TROUBLESHOOTING -->
+    <div class="bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-3xl p-12 mb-12 border-2 border-red-200 dark:border-red-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🔧</span>
+        <h3 class="text-4xl font-bold text-red-900 dark:text-red-300">Troubleshooting</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ "Message failed to send" / Error 131030</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Tentando enviar texto fora da janela de 24h.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Use um template aprovado para iniciar conversa.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ "Invalid phone number"</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Formato incorreto do número.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Use formato internacional sem + ou espaços: <code class="bg-neutral-100 dark:bg-neutral-600 px-2 py-1 rounded">5511999998888</code></p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ "Recipient not in allowed list"</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Número não cadastrado como tester (modo desenvolvimento).</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Adicione o número na lista de teste ou vincule um número de produção.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ Webhook não recebe mensagens</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Webhook não verificado ou campos não subscritos.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Na Meta, em Configuration → Webhook, clique em "Manage" e marque "messages" como subscribed.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="bg-gradient-to-r from-green-600 to-teal-600 rounded-3xl p-12 text-center text-white">
+      <h3 class="text-4xl font-bold mb-6">WhatsApp Business Configurado!</h3>
+      <p class="text-xl mb-8 text-white/90">Agora você pode enviar e receber mensagens automaticamente pelo N8N.</p>
+      <div class="flex gap-4 justify-center flex-wrap">
+        <a href="meta.html" class="bg-white text-green-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors">
+          Próximo: Facebook & Instagram →
+        </a>
+        <a href="../../tecnico.html" class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-colors">
+          Ver Todas as Conexões
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <footer class="bg-neutral-900 text-white py-12 mt-16">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-neutral-400">&copy; 2025 N8N Academy</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    } else {
+      themeToggleDarkIcon.classList.remove('hidden');
+    }
+    themeToggleBtn.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html>

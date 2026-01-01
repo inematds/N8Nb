@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTP Request - Qualquer API | N8N Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-http { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(0,0,0,0.15); }
+        .step-number { width: 48px; height: 48px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.25rem; flex-shrink: 0; }
+        pre { background: #1e1e1e; border-radius: 8px; padding: 16px; overflow-x: auto; }
+        code { color: #d4d4d4; font-family: 'Fira Code', monospace; font-size: 14px; }
+        .code-comment { color: #6a9955; }
+        .code-string { color: #ce9178; }
+        .code-key { color: #9cdcfe; }
+        .code-method { color: #dcdcaa; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <a href="../../index.html" class="text-2xl font-bold text-gray-800">N8N Academy</a>
+                    <span class="text-gray-400">/</span>
+                    <a href="../tecnico.html" class="text-purple-600 hover:text-purple-800">Trilha Tecnico</a>
+                    <span class="text-gray-400">/</span>
+                    <span class="text-gray-600">HTTP Request</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="gradient-http text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="flex justify-center mb-6">
+                <div class="bg-white/20 p-6 rounded-2xl">
+                    <i class="fas fa-globe text-6xl"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">HTTP Request</h1>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto">
+                O node mais poderoso do N8N - conecte com QUALQUER API do mundo
+            </p>
+            <div class="mt-6 flex justify-center gap-4 flex-wrap">
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">REST APIs</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">GraphQL</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Webhooks</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Autenticacao</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 py-12">
+
+        <!-- Overview -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">Por Que HTTP Request?</h2>
+            <p class="text-gray-600 mb-6">
+                O N8N tem +400 nodes nativos, mas nem toda API tem node dedicado. O HTTP Request
+                permite conectar com qualquer servico que tenha uma API REST, GraphQL ou webhook.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-purple-800 mb-2"><i class="fas fa-plug mr-2"></i>APIs sem Node</h3>
+                    <p class="text-sm text-gray-600">Integre com servicos que nao tem node nativo no N8N</p>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-blue-800 mb-2"><i class="fas fa-cogs mr-2"></i>Funcoes Avancadas</h3>
+                    <p class="text-sm text-gray-600">Acesse endpoints que nodes nativos nao suportam</p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-green-800 mb-2"><i class="fas fa-server mr-2"></i>APIs Proprias</h3>
+                    <p class="text-sm text-gray-600">Conecte com backends e microservicos internos</p>
+                </div>
+                <div class="bg-orange-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-orange-800 mb-2"><i class="fas fa-webhook mr-2"></i>Webhooks</h3>
+                    <p class="text-sm text-gray-600">Dispare webhooks em servicos externos</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Metodos HTTP -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">1</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Metodos HTTP</h2>
+                    <p class="text-gray-600">Entenda quando usar cada metodo</p>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <div class="flex items-center gap-4 p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+                    <span class="font-mono font-bold text-green-700 w-20">GET</span>
+                    <div>
+                        <p class="font-bold text-gray-800">Buscar dados</p>
+                        <p class="text-sm text-gray-600">Ler recursos. Nao modifica nada. Parametros vao na URL.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                    <span class="font-mono font-bold text-blue-700 w-20">POST</span>
+                    <div>
+                        <p class="font-bold text-gray-800">Criar dados</p>
+                        <p class="text-sm text-gray-600">Criar novo recurso. Dados vao no body.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+                    <span class="font-mono font-bold text-yellow-700 w-20">PUT</span>
+                    <div>
+                        <p class="font-bold text-gray-800">Substituir dados</p>
+                        <p class="text-sm text-gray-600">Substituir recurso completamente.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 bg-orange-50 rounded-lg border-l-4 border-orange-500">
+                    <span class="font-mono font-bold text-orange-700 w-20">PATCH</span>
+                    <div>
+                        <p class="font-bold text-gray-800">Atualizar parcial</p>
+                        <p class="text-sm text-gray-600">Modificar apenas campos especificos.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 bg-red-50 rounded-lg border-l-4 border-red-500">
+                    <span class="font-mono font-bold text-red-700 w-20">DELETE</span>
+                    <div>
+                        <p class="font-bold text-gray-800">Remover dados</p>
+                        <p class="text-sm text-gray-600">Deletar recurso. Cuidado - geralmente irreversivel!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tipos de Autenticacao -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">2</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Tipos de Autenticacao</h2>
+                    <p class="text-gray-600">Como APIs verificam quem voce e</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <!-- API Key -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4 text-purple-800">
+                        <i class="fas fa-key mr-2"></i>API Key
+                    </h3>
+                    <p class="text-gray-600 mb-4">O mais comum. Uma chave secreta enviada em cada request.</p>
+                    <pre><code><span class="code-comment">// Via Header (mais comum):</span>
+<span class="code-key">Header Name</span>: Authorization
+<span class="code-key">Header Value</span>: Bearer sk-xxxxxxxxxxxxx
+
+<span class="code-comment">// Ou:</span>
+<span class="code-key">Header Name</span>: X-API-Key
+<span class="code-key">Header Value</span>: sua-api-key-aqui
+
+<span class="code-comment">// Via Query Parameter (menos seguro):</span>
+<span class="code-key">URL</span>: https://api.exemplo.com/dados?api_key=xxxxx</code></pre>
+                </div>
+
+                <!-- Bearer Token -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4 text-blue-800">
+                        <i class="fas fa-ticket-alt mr-2"></i>Bearer Token
+                    </h3>
+                    <p class="text-gray-600 mb-4">Token temporario obtido via login/OAuth.</p>
+                    <pre><code><span class="code-key">Header Name</span>: Authorization
+<span class="code-key">Header Value</span>: Bearer eyJhbGciOiJIUzI1NiIs...</code></pre>
+                </div>
+
+                <!-- Basic Auth -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4 text-green-800">
+                        <i class="fas fa-user-lock mr-2"></i>Basic Auth
+                    </h3>
+                    <p class="text-gray-600 mb-4">Usuario e senha codificados em base64.</p>
+                    <pre><code><span class="code-comment">// No N8N, selecione "Basic Auth" e preencha:</span>
+<span class="code-key">User</span>: seu_usuario
+<span class="code-key">Password</span>: sua_senha
+
+<span class="code-comment">// Equivale ao header:</span>
+<span class="code-key">Authorization</span>: Basic dXN1YXJpbzpzZW5oYQ==</code></pre>
+                </div>
+
+                <!-- OAuth 2.0 -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-4 text-orange-800">
+                        <i class="fas fa-handshake mr-2"></i>OAuth 2.0
+                    </h3>
+                    <p class="text-gray-600 mb-4">Autorizacao delegada (Google, Facebook, etc).</p>
+                    <pre><code><span class="code-comment">// Use "Generic OAuth2 API" credential no N8N</span>
+<span class="code-key">Client ID</span>: seu-client-id
+<span class="code-key">Client Secret</span>: seu-client-secret
+<span class="code-key">Authorization URL</span>: https://api.exemplo.com/oauth/authorize
+<span class="code-key">Token URL</span>: https://api.exemplo.com/oauth/token
+<span class="code-key">Scope</span>: read write</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Body Types -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">3</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Tipos de Body</h2>
+                    <p class="text-gray-600">Formatos para enviar dados</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <!-- JSON -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2">JSON (application/json)</h3>
+                    <p class="text-sm text-gray-600 mb-4">O mais comum para APIs modernas.</p>
+                    <pre><code><span class="code-key">Content-Type</span>: application/json
+
+{
+  <span class="code-key">"nome"</span>: <span class="code-string">"{{ $json.nome }}"</span>,
+  <span class="code-key">"email"</span>: <span class="code-string">"{{ $json.email }}"</span>,
+  <span class="code-key">"dados"</span>: {
+    <span class="code-key">"plano"</span>: <span class="code-string">"pro"</span>
+  }
+}</code></pre>
+                </div>
+
+                <!-- Form Data -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2">Form URL-Encoded (application/x-www-form-urlencoded)</h3>
+                    <p class="text-sm text-gray-600 mb-4">Formato de formularios HTML tradicionais.</p>
+                    <pre><code><span class="code-key">Content-Type</span>: application/x-www-form-urlencoded
+
+<span class="code-comment">// No N8N, use "Form URL-Encoded" body type</span>
+<span class="code-key">nome</span>=Joao&<span class="code-key">email</span>=joao@email.com&<span class="code-key">plano</span>=pro</code></pre>
+                </div>
+
+                <!-- Multipart -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2">Multipart Form Data (multipart/form-data)</h3>
+                    <p class="text-sm text-gray-600 mb-4">Para upload de arquivos.</p>
+                    <pre><code><span class="code-key">Content-Type</span>: multipart/form-data
+
+<span class="code-comment">// No N8N, selecione "Multipart Form Data"</span>
+<span class="code-comment">// e configure o campo de arquivo com binary data</span>
+<span class="code-key">file</span>: [binary data from previous node]
+<span class="code-key">description</span>: "Meu arquivo"</code></pre>
+                </div>
+
+                <!-- Raw -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2">Raw (text/plain, text/xml, etc)</h3>
+                    <p class="text-sm text-gray-600 mb-4">Texto puro, XML, ou outros formatos.</p>
+                    <pre><code><span class="code-comment">// XML exemplo:</span>
+<span class="code-key">Content-Type</span>: text/xml
+
+&lt;request&gt;
+  &lt;nome&gt;{{ $json.nome }}&lt;/nome&gt;
+  &lt;email&gt;{{ $json.email }}&lt;/email&gt;
+&lt;/request&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exemplos Praticos -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-code mr-2 text-purple-600"></i>Exemplos Praticos
+            </h2>
+
+            <div class="space-y-8">
+                <!-- Exemplo 1: API simples -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4">1. Buscar CEP (GET simples)</h3>
+                    <pre><code><span class="code-method">GET</span> https://viacep.com.br/ws/01310100/json/
+
+<span class="code-comment">// Resposta:</span>
+{
+  <span class="code-key">"cep"</span>: <span class="code-string">"01310-100"</span>,
+  <span class="code-key">"logradouro"</span>: <span class="code-string">"Avenida Paulista"</span>,
+  <span class="code-key">"bairro"</span>: <span class="code-string">"Bela Vista"</span>,
+  <span class="code-key">"localidade"</span>: <span class="code-string">"Sao Paulo"</span>,
+  <span class="code-key">"uf"</span>: <span class="code-string">"SP"</span>
+}</code></pre>
+                </div>
+
+                <!-- Exemplo 2: POST com JSON -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4">2. Criar registro no Supabase (POST + Bearer)</h3>
+                    <pre><code><span class="code-method">POST</span> https://xxx.supabase.co/rest/v1/usuarios
+
+<span class="code-comment">// Headers:</span>
+<span class="code-key">Authorization</span>: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+<span class="code-key">apikey</span>: sua-anon-key
+<span class="code-key">Content-Type</span>: application/json
+<span class="code-key">Prefer</span>: return=representation
+
+<span class="code-comment">// Body (JSON):</span>
+{
+  <span class="code-key">"nome"</span>: <span class="code-string">"{{ $json.nome }}"</span>,
+  <span class="code-key">"email"</span>: <span class="code-string">"{{ $json.email }}"</span>,
+  <span class="code-key">"criado_em"</span>: <span class="code-string">"{{ $now.toISO() }}"</span>
+}</code></pre>
+                </div>
+
+                <!-- Exemplo 3: API com paginacao -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4">3. Buscar todos registros com paginacao</h3>
+                    <pre><code><span class="code-comment">// Use Loop Over Items ou recursao</span>
+
+<span class="code-comment">// Primeira pagina:</span>
+<span class="code-method">GET</span> https://api.exemplo.com/items?page=1&limit=100
+
+<span class="code-comment">// Resposta:</span>
+{
+  <span class="code-key">"data"</span>: [...],
+  <span class="code-key">"page"</span>: 1,
+  <span class="code-key">"total_pages"</span>: 5,
+  <span class="code-key">"next"</span>: <span class="code-string">"https://api.exemplo.com/items?page=2"</span>
+}
+
+<span class="code-comment">// No N8N: use Loop Until para iterar ate next == null</span></code></pre>
+                </div>
+
+                <!-- Exemplo 4: GraphQL -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4">4. Query GraphQL (GitHub API)</h3>
+                    <pre><code><span class="code-method">POST</span> https://api.github.com/graphql
+
+<span class="code-comment">// Headers:</span>
+<span class="code-key">Authorization</span>: Bearer ghp_xxxxxxxxxxxx
+<span class="code-key">Content-Type</span>: application/json
+
+<span class="code-comment">// Body:</span>
+{
+  <span class="code-key">"query"</span>: <span class="code-string">"query { viewer { login repositories(first: 10) { nodes { name stargazerCount } } } }"</span>
+}</code></pre>
+                </div>
+
+                <!-- Exemplo 5: Upload arquivo -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4">5. Upload de arquivo</h3>
+                    <pre><code><span class="code-method">POST</span> https://api.exemplo.com/upload
+
+<span class="code-comment">// Body Type: Multipart Form Data</span>
+<span class="code-comment">// Configure no N8N:</span>
+
+<span class="code-key">Parameter Name</span>: file
+<span class="code-key">Input Data Field Name</span>: data <span class="code-comment">// nome do campo binario</span>
+
+<span class="code-comment">// Campos adicionais:</span>
+<span class="code-key">description</span>: "Arquivo enviado via N8N"</code></pre>
+                </div>
+
+                <!-- Exemplo 6: Webhook externo -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4">6. Disparar webhook externo (Zapier, Make, etc)</h3>
+                    <pre><code><span class="code-method">POST</span> https://hooks.zapier.com/hooks/catch/xxxxx/yyyyyy
+
+<span class="code-comment">// Body:</span>
+{
+  <span class="code-key">"evento"</span>: <span class="code-string">"nova_venda"</span>,
+  <span class="code-key">"valor"</span>: {{ $json.valor }},
+  <span class="code-key">"cliente"</span>: <span class="code-string">"{{ $json.email }}"</span>,
+  <span class="code-key">"timestamp"</span>: <span class="code-string">"{{ $now.toISO() }}"</span>
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Opcoes Avancadas -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-sliders-h mr-2 text-blue-500"></i>Opcoes Avancadas
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-gray-800 mb-2">Timeout</h4>
+                    <p class="text-sm text-gray-600">
+                        Tempo maximo de espera (ms). Padrao: 300000 (5 min).
+                        Aumente para APIs lentas.
+                    </p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-gray-800 mb-2">Retry on Fail</h4>
+                    <p class="text-sm text-gray-600">
+                        Tentar novamente em caso de erro. Configure max retries e wait between.
+                    </p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-gray-800 mb-2">Ignore SSL Issues</h4>
+                    <p class="text-sm text-gray-600">
+                        Ignorar erros de certificado SSL. Use apenas para APIs internas.
+                    </p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-gray-800 mb-2">Proxy</h4>
+                    <p class="text-sm text-gray-600">
+                        Rotear requests atraves de proxy HTTP/HTTPS.
+                    </p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-gray-800 mb-2">Response Format</h4>
+                    <p class="text-sm text-gray-600">
+                        Autodetect, JSON, Text, File (para downloads).
+                    </p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-gray-800 mb-2">Full Response</h4>
+                    <p class="text-sm text-gray-600">
+                        Incluir headers, status code, e body na resposta.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Troubleshooting -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-wrench mr-2 text-orange-500"></i>Troubleshooting
+            </h2>
+
+            <div class="space-y-4">
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">401 Unauthorized</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        Credenciais incorretas ou expiradas. Verifique API key, token, ou usuario/senha.
+                    </p>
+                </div>
+
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">403 Forbidden</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        Autenticado mas sem permissao. Verifique scopes, roles, ou IP whitelisting.
+                    </p>
+                </div>
+
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">404 Not Found</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        URL incorreta ou recurso nao existe. Verifique a documentacao da API.
+                    </p>
+                </div>
+
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">422 Unprocessable Entity</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        Dados invalidos no body. Verifique campos obrigatorios e tipos (string vs number).
+                    </p>
+                </div>
+
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">429 Too Many Requests</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        Rate limit atingido. Adicione node Wait ou reduza frequencia das requisicoes.
+                    </p>
+                </div>
+
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">500 Internal Server Error</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        Erro no servidor da API. Nao e problema seu - tente novamente mais tarde.
+                    </p>
+                </div>
+
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">ETIMEDOUT / Timeout</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        API demorou demais. Aumente o timeout nas opcoes ou verifique conectividade.
+                    </p>
+                </div>
+
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">ECONNREFUSED</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        Servidor recusou conexao. URL incorreta, servidor offline, ou firewall bloqueando.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dicas Pro -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-star mr-2 text-yellow-500"></i>Dicas Pro
+            </h2>
+
+            <div class="space-y-4">
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-green-800 mb-2">Use Credentials Reutilizaveis</h4>
+                    <p class="text-sm text-gray-600">
+                        Crie uma "Header Auth" credential com sua API key e reutilize em multiplos nodes.
+                        Assim, quando trocar a chave, atualiza em um lugar so.
+                    </p>
+                </div>
+
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-blue-800 mb-2">Teste no Postman/Insomnia Primeiro</h4>
+                    <p class="text-sm text-gray-600">
+                        Antes de configurar no N8N, teste a API em um cliente HTTP.
+                        Assim voce sabe exatamente o que funciona.
+                    </p>
+                </div>
+
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-purple-800 mb-2">Sempre Leia a Documentacao</h4>
+                    <p class="text-sm text-gray-600">
+                        Cada API tem suas peculiaridades. Rate limits, formatos, autenticacao.
+                        5 minutos lendo docs economiza horas de debug.
+                    </p>
+                </div>
+
+                <div class="bg-orange-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-orange-800 mb-2">Use "Full Response" para Debug</h4>
+                    <p class="text-sm text-gray-600">
+                        Ative "Full Response" para ver headers e status code.
+                        Util para entender erros ou pegar headers de paginacao.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- APIs Populares sem Node -->
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-list mr-2 text-indigo-500"></i>APIs Populares (Sem Node Nativo)
+            </h2>
+
+            <p class="text-gray-600 mb-6">
+                Estas APIs nao tem node nativo mas funcionam perfeitamente com HTTP Request:
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-4 text-sm">
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <strong>Supabase</strong> - Backend as a Service
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <strong>Firebase</strong> - Realtime Database
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <strong>Twilio</strong> - SMS e Voz
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <strong>SendGrid</strong> - Email transacional
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <strong>Mailchimp</strong> - Email marketing
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <strong>Intercom</strong> - Customer messaging
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <strong>Zendesk</strong> - Suporte
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <strong>HubSpot</strong> - CRM
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <strong>Pipedrive</strong> - CRM de vendas
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <strong>Shopify</strong> - E-commerce
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <strong>WooCommerce</strong> - E-commerce WP
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg">
+                    <strong>Mercado Pago</strong> - Pagamentos
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl shadow-lg p-8 text-white text-center">
+            <h2 class="text-2xl font-bold mb-4">Parabens!</h2>
+            <p class="mb-6 text-white/90">
+                Voce completou a Trilha Tecnico! Agora pode integrar qualquer API.
+            </p>
+            <a href="../tecnico.html" class="inline-block bg-white text-purple-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition">
+                Ver Todas as Conexoes <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-400">N8N Academy - Dominando automacoes</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slack API | N8N Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .code-block { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 0.75rem; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.7; }
+    .step-number { width: 3rem; height: 3rem; background: linear-gradient(135deg, #4A154B, #611f69); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.25rem; flex-shrink: 0; }
+  </style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../../tecnico.html" class="text-2xl font-bold text-purple-600 dark:text-purple-400 flex items-center gap-2">
+          <span>←</span><span class="text-3xl">💼</span><span>Slack API</span>
+        </a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-gradient-to-br from-purple-700 via-purple-800 to-purple-900 py-24">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="text-8xl mb-8">💼</div>
+      <h1 class="text-6xl font-bold mb-6">Slack</h1>
+      <p class="text-3xl mb-4 text-white/90">Comunicação Empresarial</p>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto">Guia completo para criar um Slack App, configurar OAuth e enviar/receber mensagens automaticamente.</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 py-20">
+
+    <!-- VISÃO GERAL -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🎯</span>
+        <h2 class="text-5xl font-bold text-neutral-900 dark:text-neutral-100">Visão Geral</h2>
+      </div>
+      <p class="text-2xl text-neutral-700 dark:text-neutral-300 mb-8 leading-relaxed">
+        Slack oferece uma API robusta para automação empresarial. Você pode enviar mensagens, criar canais, reagir a eventos e muito mais.
+      </p>
+
+      <div class="grid md:grid-cols-4 gap-6">
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">📨</p>
+          <p class="text-lg font-semibold text-purple-800 dark:text-purple-300">Mensagens</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Enviar e receber</p>
+        </div>
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">📢</p>
+          <p class="text-lg font-semibold text-blue-800 dark:text-blue-300">Canais</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Criar e gerenciar</p>
+        </div>
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">🔔</p>
+          <p class="text-lg font-semibold text-green-800 dark:text-green-300">Eventos</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Webhooks em tempo real</p>
+        </div>
+        <div class="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl text-center">
+          <p class="text-4xl mb-2">🤖</p>
+          <p class="text-lg font-semibold text-amber-800 dark:text-amber-300">Bots</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Interações automáticas</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 1: CRIAR APP -->
+    <div class="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-3xl p-12 mb-12 border-2 border-purple-200 dark:border-purple-800">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">1</div>
+        <h3 class="text-4xl font-bold text-purple-900 dark:text-purple-300">Criar Slack App</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">1.1 Acessar o Portal</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-purple-500 font-bold">→</span>
+              <span>Acesse <strong>api.slack.com/apps</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-purple-500 font-bold">→</span>
+              <span>Clique em <strong>"Create New App"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-purple-500 font-bold">→</span>
+              <span>Escolha <strong>"From scratch"</strong></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">1.2 Configurar o App</p>
+          <div class="grid md:grid-cols-2 gap-4 text-neutral-700 dark:text-neutral-300">
+            <div class="bg-neutral-50 dark:bg-neutral-700 p-4 rounded-lg">
+              <p class="font-semibold">App Name:</p>
+              <code class="text-sm">N8N Automation Bot</code>
+            </div>
+            <div class="bg-neutral-50 dark:bg-neutral-700 p-4 rounded-lg">
+              <p class="font-semibold">Workspace:</p>
+              <p class="text-sm">Selecione seu workspace</p>
+            </div>
+          </div>
+          <p class="mt-4 text-neutral-600 dark:text-neutral-400">Clique em <strong>"Create App"</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 2: CONFIGURAR PERMISSÕES -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">2</div>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Configurar Permissões (Scopes)</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">2.1 Adicionar Bot Token Scopes</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-purple-500 font-bold">1.</span>
+              <span>No menu lateral, clique em <strong>"OAuth & Permissions"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-purple-500 font-bold">2.</span>
+              <span>Role até <strong>"Scopes"</strong> → <strong>"Bot Token Scopes"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-purple-500 font-bold">3.</span>
+              <span>Clique em <strong>"Add an OAuth Scope"</strong></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Scopes Recomendados</p>
+          <div class="code-block">
+// Mensagens:
+chat:write              // Enviar mensagens
+chat:write.public       // Enviar em canais públicos
+chat:write.customize    // Customizar nome/avatar do bot
+
+// Canais:
+channels:read           // Listar canais públicos
+channels:join           // Entrar em canais
+groups:read             // Listar canais privados (se adicionado)
+
+// Usuários:
+users:read              // Ler informações de usuários
+users:read.email        // Ler emails de usuários
+
+// Arquivos:
+files:write             // Fazer upload de arquivos
+files:read              // Ler arquivos
+
+// Reações:
+reactions:write         // Adicionar reações
+reactions:read          // Ler reações
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 3: INSTALAR NO WORKSPACE -->
+    <div class="bg-gradient-to-br from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 rounded-3xl p-12 mb-12 border-2 border-green-200 dark:border-green-800">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">3</div>
+        <h3 class="text-4xl font-bold text-green-900 dark:text-green-300">Instalar no Workspace</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">3.1 Gerar Token</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">1.</span>
+              <span>Ainda em "OAuth & Permissions", role até o topo</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">2.</span>
+              <span>Clique em <strong>"Install to Workspace"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-500 font-bold">3.</span>
+              <span>Revise as permissões e clique em <strong>"Permitir"</strong></span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">3.2 Copiar o Token</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">Após instalar, você verá o <strong>Bot User OAuth Token</strong>:</p>
+          <div class="bg-purple-100 dark:bg-purple-900/30 p-4 rounded-xl border-2 border-purple-300 dark:border-purple-700">
+            <p class="font-semibold text-purple-800 dark:text-purple-300">Bot User OAuth Token:</p>
+            <code class="text-sm break-all">xoxb-seu-token-aparece-aqui</code>
+          </div>
+          <p class="mt-4 text-amber-700 dark:text-amber-300">⚠️ Guarde este token em local seguro! Ele dá acesso ao seu workspace.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 4: WEBHOOKS (OPCIONAL) -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">4</div>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Configurar Event Subscriptions (Receber Mensagens)</h3>
+      </div>
+
+      <div class="bg-blue-100 dark:bg-blue-900/30 p-6 rounded-xl border-2 border-blue-300 dark:border-blue-700 mb-6">
+        <p class="text-lg font-semibold text-blue-800 dark:text-blue-300 mb-2">📝 Quando usar?</p>
+        <p class="text-neutral-700 dark:text-neutral-300">Configure eventos se você quiser que o N8N <strong>reaja</strong> a mensagens do Slack (ex: responder automaticamente, processar comandos).</p>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">4.1 Configurar Request URL</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">1.</span>
+              <span>No menu do app, vá em <strong>"Event Subscriptions"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">2.</span>
+              <span>Ative <strong>"Enable Events"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-blue-500 font-bold">3.</span>
+              <span>Em "Request URL", cole a URL do webhook N8N</span>
+            </li>
+          </ol>
+          <div class="mt-4 code-block">
+// URL do webhook N8N:
+https://seu-n8n.com/webhook/slack-events
+
+// O Slack envia um challenge para verificar
+// O N8N precisa responder com o challenge
+          </div>
+        </div>
+
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">4.2 Configurar Webhook no N8N</p>
+          <div class="code-block">
+// Node: Webhook
+// Method: POST
+// Path: slack-events
+
+// Depois do Webhook, adicione um IF:
+// Condição: {{ $json.type }} === 'url_verification'
+
+// Se TRUE: Respond to Webhook
+// Body: { "challenge": "{{ $json.challenge }}" }
+
+// Se FALSE: processar evento normalmente
+          </div>
+        </div>
+
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">4.3 Adicionar Bot Events</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">Em "Subscribe to bot events", adicione:</p>
+          <div class="code-block">
+// Eventos comuns:
+message.channels       // Mensagens em canais públicos
+message.groups         // Mensagens em canais privados
+message.im             // Mensagens diretas para o bot
+app_mention            // Quando alguém @menciona o bot
+reaction_added         // Quando adicionam reação
+          </div>
+          <p class="mt-4 text-neutral-600 dark:text-neutral-400">Clique em <strong>"Save Changes"</strong> após adicionar eventos.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 5: CONFIGURAR NO N8N -->
+    <div class="bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 rounded-3xl p-12 mb-12 border-2 border-orange-200 dark:border-orange-800">
+      <div class="flex items-center mb-8">
+        <div class="step-number mr-6">5</div>
+        <h3 class="text-4xl font-bold text-orange-900 dark:text-orange-300">Configurar no N8N</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">5.1 Criar Credencial</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">1.</span>
+              <span>No N8N, vá em <strong>Credenciais</strong> → <strong>Adicionar</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">2.</span>
+              <span>Pesquise: <strong>"Slack API"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">3.</span>
+              <span>Cole o <strong>Bot User OAuth Token</strong> (xoxb-...)</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-lg">
+          <p class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4">5.2 Alternativa: Incoming Webhook (Mais Simples)</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-4">Para apenas enviar mensagens, você pode usar Incoming Webhooks:</p>
+          <ol class="space-y-3 text-neutral-700 dark:text-neutral-300">
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">1.</span>
+              <span>No app Slack, vá em <strong>"Incoming Webhooks"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">2.</span>
+              <span>Ative e clique em <strong>"Add New Webhook to Workspace"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-500 font-bold">3.</span>
+              <span>Selecione o canal e copie a URL</span>
+            </li>
+          </ol>
+          <div class="mt-4 code-block">
+// URL do Incoming Webhook:
+https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXX
+
+// Use com HTTP Request no N8N:
+POST para a URL acima
+Body: { "text": "Mensagem do N8N!" }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXEMPLOS PRÁTICOS -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📋</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Exemplos Práticos</h3>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Enviar Mensagem -->
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-4">📨 Enviar Mensagem Simples</p>
+          <div class="code-block text-sm">
+// Node: Slack
+// Operation: Send Message
+
+Channel: #geral
+Text: Novo pedido recebido!
+
+// Ou com formatação:
+Text: |
+  *Novo Pedido* #{{ $json.id }}
+  • Cliente: {{ $json.nome }}
+  • Valor: R$ {{ $json.valor }}
+          </div>
+        </div>
+
+        <!-- Mensagem Rica -->
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-4">🎨 Mensagem com Blocks</p>
+          <div class="code-block text-sm">
+// Node: HTTP Request (mais controle)
+// POST: https://slack.com/api/chat.postMessage
+
+{
+  "channel": "C0123456789",
+  "blocks": [
+    {
+      "type": "header",
+      "text": {
+        "type": "plain_text",
+        "text": "🚀 Deploy Realizado"
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "Versão *v2.1.0*"
+      }
+    }
+  ]
+}
+          </div>
+        </div>
+
+        <!-- Reagir a Mensagem -->
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-green-800 dark:text-green-300 mb-4">👍 Adicionar Reação</p>
+          <div class="code-block text-sm">
+// Node: Slack
+// Operation: Add Reaction
+
+Channel: {{ $json.channel }}
+Timestamp: {{ $json.ts }}
+Emoji: white_check_mark
+
+// Emojis comuns:
+// thumbsup, heart, rocket,
+// eyes, fire, tada
+          </div>
+        </div>
+
+        <!-- Listar Canais -->
+        <div class="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-amber-800 dark:text-amber-300 mb-4">📢 Listar Canais</p>
+          <div class="code-block text-sm">
+// Node: Slack
+// Operation: Get All Channels
+
+// Retorna:
+[
+  {
+    "id": "C0123456789",
+    "name": "geral",
+    "is_private": false
+  },
+  ...
+]
+
+// Use o ID para enviar mensagens
+          </div>
+        </div>
+
+        <!-- Upload Arquivo -->
+        <div class="bg-indigo-50 dark:bg-indigo-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-indigo-800 dark:text-indigo-300 mb-4">📎 Upload de Arquivo</p>
+          <div class="code-block text-sm">
+// Node: Slack
+// Operation: File Upload
+
+Channel: #relatorios
+File: {{ $binary.data }}
+Filename: relatorio_{{ $now.format('yyyy-MM-dd') }}.pdf
+Title: Relatório Diário
+          </div>
+        </div>
+
+        <!-- Notificação de Erro -->
+        <div class="bg-red-50 dark:bg-red-900/20 p-6 rounded-xl">
+          <p class="text-xl font-bold text-red-800 dark:text-red-300 mb-4">🚨 Alerta de Erro</p>
+          <div class="code-block text-sm">
+// Workflow de Monitoramento
+// Node: Slack (conectado ao Error Trigger)
+
+Channel: #alertas
+Text: |
+  ⚠️ *ERRO NO WORKFLOW*
+
+  Workflow: {{ $workflow.name }}
+  Erro: {{ $json.error.message }}
+  Node: {{ $json.error.node }}
+
+  <@U0123456789> por favor verificar!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOAS PRÁTICAS -->
+    <div class="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-3xl p-12 mb-12 border-2 border-indigo-200 dark:border-indigo-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">💡</span>
+        <h3 class="text-4xl font-bold text-indigo-900 dark:text-indigo-300">Boas Práticas</h3>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-green-700 dark:text-green-400 mb-3">✅ Faça</p>
+          <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+            <li>→ Use canais específicos para cada tipo de notificação</li>
+            <li>→ Inclua contexto suficiente nas mensagens</li>
+            <li>→ Use threads para manter conversas organizadas</li>
+            <li>→ Adicione botões de ação quando apropriado</li>
+            <li>→ Respeite rate limits (1 msg/seg por canal)</li>
+          </ul>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-3">❌ Evite</p>
+          <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+            <li>→ Spam de mensagens (pode ser silenciado)</li>
+            <li>→ Notificações irrelevantes ou muito frequentes</li>
+            <li>→ @channel ou @here desnecessários</li>
+            <li>→ Mensagens sem formatação (difíceis de ler)</li>
+            <li>→ Expor dados sensíveis em canais públicos</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- TROUBLESHOOTING -->
+    <div class="bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-3xl p-12 mb-12 border-2 border-red-200 dark:border-red-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">🔧</span>
+        <h3 class="text-4xl font-bold text-red-900 dark:text-red-300">Troubleshooting</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ "channel_not_found"</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> O bot não está no canal ou o ID está errado.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Convide o bot para o canal com /invite @nome-do-bot ou use o ID correto do canal (C0123...).</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ "missing_scope"</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Falta permissão para a ação.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Adicione o scope necessário em OAuth & Permissions e reinstale o app.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <p class="text-lg font-bold text-red-700 dark:text-red-400 mb-2">❌ "invalid_auth"</p>
+          <p class="text-neutral-700 dark:text-neutral-300 mb-2"><strong>Causa:</strong> Token inválido ou revogado.</p>
+          <p class="text-neutral-700 dark:text-neutral-300"><strong>Solução:</strong> Reinstale o app no workspace para gerar novo token.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="bg-gradient-to-r from-purple-600 to-pink-600 rounded-3xl p-12 text-center text-white">
+      <h3 class="text-4xl font-bold mb-6">Slack Configurado!</h3>
+      <p class="text-xl mb-8 text-white/90">Agora você pode automatizar a comunicação da sua equipe.</p>
+      <div class="flex gap-4 justify-center flex-wrap">
+        <a href="telegram.html" class="bg-white text-purple-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-neutral-100 transition-colors">
+          Próximo: Telegram →
+        </a>
+        <a href="../../tecnico.html" class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-colors">
+          Ver Todas as Conexões
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <footer class="bg-neutral-900 text-white py-12 mt-16">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-neutral-400">&copy; 2025 N8N Academy</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    } else {
+      themeToggleDarkIcon.classList.remove('hidden');
+    }
+    themeToggleBtn.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html>
