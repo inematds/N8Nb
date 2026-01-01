@@ -156,6 +156,127 @@
       </div>
     </div>
 
+    <!-- EXEMPLOS PRÁTICOS -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📋</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Exemplos Práticos</h3>
+      </div>
+      <div class="space-y-8">
+        <!-- Exemplo 1: Webhook Stripe -->
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl border-2 border-green-200 dark:border-green-800">
+          <p class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">💳 Exemplo 1: Webhook de Pagamento (Stripe)</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Quando pagamento é confirmado, libera acesso ao curso:</p>
+          <div class="code-block">
+// 1. No N8N, criar node "Webhook"
+URL gerada: https://seu-n8n.com/webhook/pagamento-stripe
+
+// 2. No Stripe Dashboard, configurar webhook para essa URL
+Evento: checkout.session.completed
+
+// 3. Stripe envia isso quando alguém paga:
+{
+  "type": "checkout.session.completed",
+  "data": {
+    "object": {
+      "customer_email": "cliente@email.com",
+      "amount_total": 29700,
+      "metadata": { "curso_id": "n8n-pro" }
+    }
+  }
+}
+
+// 4. Workflow no N8N:
+Webhook → Set Node (formatar dados) → Airtable (criar acesso) → Email (boas vindas)
+          </div>
+        </div>
+
+        <!-- Exemplo 2: Formulário TypeForm -->
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border-2 border-blue-200 dark:border-blue-800">
+          <p class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-3">📝 Exemplo 2: Lead de Formulário (Typeform)</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Captura lead automaticamente quando submete formulário:</p>
+          <div class="code-block">
+// 1. Criar webhook no N8N
+URL: https://seu-n8n.com/webhook/leads
+
+// 2. No Typeform → Connect → Webhooks → colar URL
+
+// 3. Typeform envia quando alguém submete:
+{
+  "form_response": {
+    "answers": [
+      { "field": { "ref": "nome" }, "text": "João Silva" },
+      { "field": { "ref": "email" }, "email": "joao@empresa.com" },
+      { "field": { "ref": "empresa" }, "text": "TechCorp" }
+    ]
+  }
+}
+
+// 4. Workflow no N8N:
+Webhook → Set (extrair dados) → HubSpot (criar contato) → Slack (notificar vendas)
+          </div>
+        </div>
+
+        <!-- Exemplo 3: Validação de Segurança -->
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl border-2 border-purple-200 dark:border-purple-800">
+          <p class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-3">🔐 Exemplo 3: Validação de Segurança HMAC</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Verificar se o webhook veio realmente do Stripe:</p>
+          <div class="code-block">
+// Headers que o Stripe envia:
+{
+  "Stripe-Signature": "t=1614556800,v1=5257a869..."
+}
+
+// No N8N - Code Node para validar:
+const crypto = require('crypto');
+const secret = 'whsec_xxx'; // do Stripe Dashboard
+const signature = $input.first().headers['stripe-signature'];
+const payload = JSON.stringify($input.first().json);
+
+const expectedSig = crypto
+  .createHmac('sha256', secret)
+  .update(payload)
+  .digest('hex');
+
+if (signature.includes(expectedSig)) {
+  return { valid: true, data: $input.first().json };
+} else {
+  throw new Error('Assinatura inválida - possível ataque!');
+}
+          </div>
+        </div>
+
+        <!-- Exemplo 4: Webhook com Resposta -->
+        <div class="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl border-2 border-amber-200 dark:border-amber-800">
+          <p class="text-xl font-bold text-amber-800 dark:text-amber-300 mb-3">↩️ Exemplo 4: Webhook que Retorna Dados</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">API customizada que consulta e retorna em tempo real:</p>
+          <div class="code-block">
+// Configuração do Webhook Node:
+HTTP Method: POST
+Response Mode: When Last Node Finishes
+Response Data: All Entries
+
+// Sistema externo chama:
+POST https://seu-n8n.com/webhook/consulta-cpf
+Body: { "cpf": "123.456.789-00" }
+
+// Workflow:
+Webhook → HTTP Request (consulta API externa) → Set (formata) → Respond to Webhook
+
+// Resposta automática:
+{
+  "status": "regular",
+  "nome": "João Silva",
+  "situacao": "Ativo",
+  "consultado_em": "2025-01-15T10:30:00Z"
+}
+
+// Tempo de resposta: ~500ms (síncrono!)
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- CTA -->
     <div class="bg-gradient-to-br from-pink-600 to-rose-600 text-white rounded-3xl p-12 text-center">
       <h3 class="text-4xl font-bold mb-4">🎯 Pronto para o próximo passo?</h3>

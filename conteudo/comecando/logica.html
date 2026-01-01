@@ -180,6 +180,126 @@ switch(departamento):
       </div>
     </div>
 
+    <!-- EXEMPLOS PRÁTICOS -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📋</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Exemplos Práticos</h3>
+      </div>
+      <div class="space-y-8">
+        <!-- Exemplo 1: IF Simples -->
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl border-2 border-green-200 dark:border-green-800">
+          <p class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">🔀 Exemplo 1: IF Simples - Pedido VIP</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Tratamento especial para pedidos acima de R$500:</p>
+          <div class="code-block">
+// Configuração do IF Node:
+Condição: {{ $json.total }} > 500
+
+// Entrada (do node anterior):
+{ "cliente": "Maria", "total": 750, "itens": [...] }
+
+// TRUE (valor > 500):
+├── Enviar email de agradecimento personalizado
+├── Adicionar frete grátis
+└── Notificar gerente de vendas
+
+// FALSE (valor <= 500):
+├── Enviar email padrão
+└── Calcular frete normal
+
+// No N8N, visualmente:
+[Webhook] → [IF: total > 500] → TRUE → [Email VIP] → [Slack]
+                             → FALSE → [Email Padrão]
+          </div>
+        </div>
+
+        <!-- Exemplo 2: Múltiplas Condições -->
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border-2 border-blue-200 dark:border-blue-800">
+          <p class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-3">🔗 Exemplo 2: AND/OR - Lead Qualificado</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Lead é qualificado se: empresa > 50 funcionários E cargo = decisor:</p>
+          <div class="code-block">
+// Configuração do IF Node com AND:
+Condições (ALL devem ser verdadeiras):
+  1. {{ $json.empresa_tamanho }} > 50
+  2. {{ $json.cargo }}.includes("Diretor") OR {{ $json.cargo }}.includes("Gerente")
+
+// Entrada:
+{
+  "nome": "Carlos",
+  "email": "carlos@empresa.com",
+  "cargo": "Diretor de TI",
+  "empresa_tamanho": 150
+}
+
+// TRUE (qualificado):
+├── Criar deal no Pipedrive
+├── Agendar call com SDR
+└── Score = 80
+
+// FALSE (não qualificado):
+├── Adicionar à lista de nurturing
+└── Score = 30
+          </div>
+        </div>
+
+        <!-- Exemplo 3: Switch -->
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl border-2 border-purple-200 dark:border-purple-800">
+          <p class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-3">🔀 Exemplo 3: Switch - Roteamento por Departamento</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Enviar ticket para o canal certo baseado no departamento:</p>
+          <div class="code-block">
+// Configuração do Switch Node:
+Campo: {{ $json.departamento }}
+
+Outputs:
+  0: "vendas"     → Slack #vendas
+  1: "suporte"    → Zendesk criar ticket
+  2: "financeiro" → Email para financeiro@
+  3: "rh"         → Notion adicionar task
+  Fallback        → Email para geral@
+
+// Entrada (de formulário):
+{
+  "assunto": "Problema com cobrança",
+  "departamento": "financeiro",
+  "mensagem": "Fui cobrado duas vezes..."
+}
+
+// Resultado: vai para Output 2 (financeiro)
+// Email enviado automaticamente para financeiro@empresa.com
+          </div>
+        </div>
+
+        <!-- Exemplo 4: Error Handling -->
+        <div class="bg-red-50 dark:bg-red-900/20 p-6 rounded-xl border-2 border-red-200 dark:border-red-800">
+          <p class="text-xl font-bold text-red-800 dark:text-red-300 mb-3">⚠️ Exemplo 4: Error Handling Completo</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">O que fazer quando a API externa falha:</p>
+          <div class="code-block">
+// Configuração do HTTP Request Node:
+Settings:
+  On Error: Continue (On Fail)
+  Retry On Fail: Yes
+  Max Tries: 3
+
+// Depois do HTTP Request, adicionar IF:
+Condição: {{ $json.error }} exists
+
+// Se ERRO:
+├── Log no Airtable (data, erro, payload)
+├── Enviar alerta no Slack: "⚠️ API falhou após 3 tentativas"
+├── Colocar item em fila de retry (Google Sheets)
+└── Notificar desenvolvedor se erro 500
+
+// Se SUCESSO:
+└── Continuar workflow normalmente
+
+// Workflow de Error (separado):
+Error Trigger → Get error info → Slack → Airtable log
+// Captura QUALQUER erro em QUALQUER workflow
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- CTA -->
     <div class="bg-gradient-to-br from-purple-600 to-violet-600 text-white rounded-3xl p-12 text-center">
       <h3 class="text-4xl font-bold mb-4">🎯 Pronto para o próximo passo?</h3>

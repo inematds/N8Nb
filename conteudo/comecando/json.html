@@ -230,6 +230,125 @@
       </div>
     </div>
 
+    <!-- EXEMPLOS PRÁTICOS -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📋</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Exemplos Práticos</h3>
+      </div>
+      <div class="space-y-8">
+        <!-- Exemplo 1: Resposta de API -->
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl border-2 border-green-200 dark:border-green-800">
+          <p class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">🌐 Exemplo 1: Resposta típica de API</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Quando você busca um usuário em uma API, geralmente recebe:</p>
+          <div class="code-block">
+{
+  <span class="code-key">"success"</span>: <span class="code-boolean">true</span>,
+  <span class="code-key">"data"</span>: {
+    <span class="code-key">"id"</span>: <span class="code-number">12345</span>,
+    <span class="code-key">"nome"</span>: <span class="code-string">"Maria Silva"</span>,
+    <span class="code-key">"email"</span>: <span class="code-string">"maria@empresa.com"</span>,
+    <span class="code-key">"ativo"</span>: <span class="code-boolean">true</span>,
+    <span class="code-key">"perfil"</span>: {
+      <span class="code-key">"cargo"</span>: <span class="code-string">"Gerente"</span>,
+      <span class="code-key">"departamento"</span>: <span class="code-string">"Vendas"</span>
+    },
+    <span class="code-key">"telefones"</span>: [<span class="code-string">"11-99999-0000"</span>, <span class="code-string">"11-3333-4444"</span>]
+  }
+}
+
+// Como acessar no N8N:
+{{ $json.data.nome }}                    → "Maria Silva"
+{{ $json.data.perfil.cargo }}            → "Gerente"
+{{ $json.data.telefones[0] }}            → "11-99999-0000"
+          </div>
+        </div>
+
+        <!-- Exemplo 2: Lista de Pedidos -->
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border-2 border-blue-200 dark:border-blue-800">
+          <p class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-3">📦 Exemplo 2: Array de pedidos (muito comum)</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">APIs de e-commerce retornam listas assim:</p>
+          <div class="code-block">
+{
+  <span class="code-key">"pedidos"</span>: [
+    {
+      <span class="code-key">"id"</span>: <span class="code-string">"PED-001"</span>,
+      <span class="code-key">"cliente"</span>: <span class="code-string">"João"</span>,
+      <span class="code-key">"total"</span>: <span class="code-number">150.00</span>,
+      <span class="code-key">"status"</span>: <span class="code-string">"enviado"</span>
+    },
+    {
+      <span class="code-key">"id"</span>: <span class="code-string">"PED-002"</span>,
+      <span class="code-key">"cliente"</span>: <span class="code-string">"Ana"</span>,
+      <span class="code-key">"total"</span>: <span class="code-number">89.90</span>,
+      <span class="code-key">"status"</span>: <span class="code-string">"pendente"</span>
+    }
+  ],
+  <span class="code-key">"total_pedidos"</span>: <span class="code-number">2</span>
+}
+
+// No N8N (após Split In Batches):
+{{ $json.id }}       → Cada item: "PED-001", "PED-002"
+{{ $json.cliente }}  → Cada item: "João", "Ana"
+          </div>
+        </div>
+
+        <!-- Exemplo 3: Webhook Payload -->
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl border-2 border-purple-200 dark:border-purple-800">
+          <p class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-3">🪝 Exemplo 3: Payload de Webhook (Stripe)</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Quando recebe pagamento confirmado:</p>
+          <div class="code-block">
+{
+  <span class="code-key">"event"</span>: <span class="code-string">"payment.succeeded"</span>,
+  <span class="code-key">"data"</span>: {
+    <span class="code-key">"object"</span>: {
+      <span class="code-key">"id"</span>: <span class="code-string">"pi_3ABC123"</span>,
+      <span class="code-key">"amount"</span>: <span class="code-number">9900</span>,
+      <span class="code-key">"currency"</span>: <span class="code-string">"brl"</span>,
+      <span class="code-key">"customer_email"</span>: <span class="code-string">"cliente@email.com"</span>,
+      <span class="code-key">"metadata"</span>: {
+        <span class="code-key">"produto_id"</span>: <span class="code-string">"CURSO-N8N"</span>,
+        <span class="code-key">"cupom"</span>: <span class="code-string">"DESCONTO10"</span>
+      }
+    }
+  }
+}
+
+// Acessando no N8N:
+{{ $json.data.object.amount / 100 }}           → 99.00 (em reais)
+{{ $json.data.object.customer_email }}         → "cliente@email.com"
+{{ $json.data.object.metadata.produto_id }}    → "CURSO-N8N"
+          </div>
+        </div>
+
+        <!-- Exemplo 4: Transformação -->
+        <div class="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl border-2 border-amber-200 dark:border-amber-800">
+          <p class="text-xl font-bold text-amber-800 dark:text-amber-300 mb-3">🔄 Exemplo 4: Transformando JSON no N8N (Set Node)</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Recebe dados bagunçados → Reorganiza para próximo node:</p>
+          <div class="code-block">
+// ENTRADA (do webhook):
+{
+  "first_name": "João",
+  "last_name": "Silva",
+  "email_address": "joao@email.com"
+}
+
+// SET NODE - Configuração:
+nome_completo = {{ $json.first_name }} {{ $json.last_name }}
+email = {{ $json.email_address }}
+data_cadastro = {{ $now.format('yyyy-MM-dd') }}
+
+// SAÍDA (para próximo node):
+{
+  "nome_completo": "João Silva",
+  "email": "joao@email.com",
+  "data_cadastro": "2025-01-15"
+}
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- CTA -->
     <div class="bg-gradient-to-br from-green-600 to-emerald-600 text-white rounded-3xl p-12 text-center">
       <h3 class="text-4xl font-bold mb-4">🎯 Pronto para o próximo passo?</h3>

@@ -175,6 +175,178 @@
       </div>
     </div>
 
+    <!-- EXEMPLOS PRÁTICOS -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📋</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Exemplos Práticos</h3>
+      </div>
+      <div class="space-y-8">
+        <!-- Exemplo 1: Template de Documentação -->
+        <div class="bg-teal-50 dark:bg-teal-900/20 p-6 rounded-xl border-2 border-teal-200 dark:border-teal-800">
+          <p class="text-xl font-bold text-teal-800 dark:text-teal-300 mb-3">📝 Exemplo 1: Template de Documentação de Processo</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Use este template antes de começar qualquer automação:</p>
+          <div class="code-block">
+# DOCUMENTO DE REQUISITOS - [Nome do Processo]
+
+## 1. RESUMO
+Descrição em 1 parágrafo do que será automatizado
+
+## 2. TRIGGER (O que inicia?)
+- [ ] Webhook (formulário, pagamento, etc)
+- [ ] Schedule (diário às X, semanal, etc)
+- [ ] Manual (quando usuário clica)
+- [ ] Outro: ________________
+
+## 3. INPUTS (O que entra?)
+| Campo          | Tipo     | Obrigatório? | Exemplo          |
+|----------------|----------|--------------|------------------|
+| nome           | string   | Sim          | "João Silva"     |
+| email          | email    | Sim          | "joao@email.com" |
+| telefone       | string   | Não          | "11-99999-0000"  |
+
+## 4. PASSOS DO PROCESSO
+1. Receber dados do formulário
+2. Validar campos obrigatórios
+3. Verificar se email já existe no CRM
+4. SE existe → atualizar registro
+5. SE não existe → criar novo lead
+6. Enviar email de boas-vindas
+7. Notificar equipe no Slack
+
+## 5. OUTPUTS (O que sai?)
+- Lead criado/atualizado no HubSpot
+- Email enviado ao lead
+- Mensagem no Slack #novos-leads
+
+## 6. EXCEÇÕES (O que pode dar errado?)
+| Exceção                | Ação                        |
+|------------------------|-----------------------------|
+| Email inválido         | Rejeitar e logar erro       |
+| CRM offline            | Salvar em fila de retry     |
+| Email já existe        | Atualizar ao invés de criar |
+          </div>
+        </div>
+
+        <!-- Exemplo 2: Mapeamento Visual -->
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border-2 border-blue-200 dark:border-blue-800">
+          <p class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-3">🗺️ Exemplo 2: Mapeamento Visual (Fluxograma)</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Desenhe o fluxo antes de abrir o N8N:</p>
+          <div class="code-block">
+┌─────────────────────────────────────────────────────────────────┐
+│                    AUTOMAÇÃO: ONBOARDING DE CLIENTE             │
+└─────────────────────────────────────────────────────────────────┘
+
+        ┌──────────────┐
+        │   Webhook    │  ← Stripe envia pagamento confirmado
+        │  (Trigger)   │
+        └──────┬───────┘
+               ▼
+        ┌──────────────┐
+        │  Extrair     │  ← Pega email, nome, produto comprado
+        │  Dados       │
+        └──────┬───────┘
+               ▼
+        ┌──────────────┐
+        │   Buscar     │  ← Verifica se já é cliente
+        │   Cliente    │
+        └──────┬───────┘
+               ▼
+        ┌──────────────┐     SIM    ┌──────────────┐
+        │  Já existe?  │───────────▶│  Atualizar   │
+        └──────┬───────┘            │  Plano       │
+               │ NÃO                └──────┬───────┘
+               ▼                           │
+        ┌──────────────┐                   │
+        │   Criar      │                   │
+        │   Conta      │                   │
+        └──────┬───────┘                   │
+               │                           │
+               ◀───────────────────────────┘
+               ▼
+        ┌──────────────┐
+        │   Enviar     │  ← Email com credenciais
+        │   Email      │
+        └──────┬───────┘
+               ▼
+        ┌──────────────┐
+        │   Slack      │  ← #vendas: "Novo cliente: João"
+        │   Notificar  │
+        └──────────────┘
+          </div>
+        </div>
+
+        <!-- Exemplo 3: Checklist de Validação -->
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl border-2 border-purple-200 dark:border-purple-800">
+          <p class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-3">✅ Exemplo 3: Checklist de Validação com Stakeholder</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Perguntas para validar antes de construir:</p>
+          <div class="code-block">
+# CHECKLIST DE VALIDAÇÃO - [Nome do Processo]
+
+## Para o DONO do processo:
+□ O fluxo que desenhei representa o processo atual?
+□ Existem exceções que não estão documentadas?
+□ Quem precisa ser notificado quando X acontece?
+□ O que fazer quando Y falha?
+□ Qual a frequência esperada? (10/dia? 1000/dia?)
+
+## Para o TIME de TI:
+□ Temos acesso a todas as APIs necessárias?
+□ Quais credenciais precisamos?
+□ Existe rate limit que devemos respeitar?
+□ Onde ficam os logs de erro?
+
+## Para o CLIENTE/Usuário final:
+□ O resultado esperado está claro?
+□ O tempo de resposta é aceitável?
+□ Precisa de confirmação manual em algum ponto?
+
+## RESPOSTAS OBTIDAS:
+- Exceção não documentada: "Clientes VIP vão para fila separada"
+- Rate limit: "Máximo 100 requisições/minuto na API do CRM"
+- Confirmação: "Pedidos acima de R$10k precisam aprovação"
+          </div>
+        </div>
+
+        <!-- Exemplo 4: Descoberta de Edge Cases -->
+        <div class="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl border-2 border-amber-200 dark:border-amber-800">
+          <p class="text-xl font-bold text-amber-800 dark:text-amber-300 mb-3">🔍 Exemplo 4: Descobrindo Edge Cases Antes de Construir</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Perguntas que revelam problemas escondidos:</p>
+          <div class="code-block">
+# ANÁLISE DE EDGE CASES - Formulário de Contato
+
+PERGUNTA: "O que acontece se..."
+
+1. ...o campo nome estiver vazio?
+   → Rejeitar: "Nome é obrigatório"
+
+2. ...o email for inválido (sem @)?
+   → Rejeitar: "Email inválido"
+
+3. ...a pessoa submeter 100x seguidas?
+   → Rate limit: máx 3 submissões por IP/minuto
+
+4. ...o CRM estiver fora do ar?
+   → Fila de retry: salvar localmente, tentar a cada 5min
+
+5. ...a mensagem contiver emoji?
+   → OK: UTF-8 suportado
+
+6. ...o nome tiver caracteres especiais (José, Müller)?
+   → OK: encoding correto
+
+7. ...for feriado e ninguém responder?
+   → Resposta automática: "Retornamos em até 48h úteis"
+
+# CASOS DESCOBERTOS NA VALIDAÇÃO:
+- Cliente VIP (email @empresa-vip.com) → fila prioritária
+- Reclamação (palavra "problema" ou "urgente") → notifica gerente
+- Spam (links no corpo) → bloquear e logar
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- CTA -->
     <div class="bg-gradient-to-br from-teal-600 to-cyan-600 text-white rounded-3xl p-12 text-center">
       <h3 class="text-4xl font-bold mb-4">🎯 Pronto para o próximo passo?</h3>

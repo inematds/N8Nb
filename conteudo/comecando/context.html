@@ -181,6 +181,168 @@ trocar uma pq veio com defeito"
       </div>
     </div>
 
+    <!-- EXEMPLOS PRÁTICOS -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📋</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Exemplos Práticos</h3>
+      </div>
+      <div class="space-y-8">
+        <!-- Exemplo 1: Prompt Ruim vs Bom -->
+        <div class="bg-gradient-to-r from-red-50 to-green-50 dark:from-red-900/20 dark:to-green-900/20 p-6 rounded-xl border-2 border-neutral-200 dark:border-neutral-700">
+          <p class="text-xl font-bold text-neutral-800 dark:text-neutral-200 mb-3">🔄 Exemplo 1: Evolução de um Prompt</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Classificar emails de suporte:</p>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg">
+              <p class="text-sm font-bold text-red-600 mb-2">❌ Versão 1 (ruim)</p>
+              <div class="code-block text-xs">
+"Classifique este email"
+              </div>
+              <p class="text-xs text-neutral-500 mt-2">Problema: Vago demais</p>
+            </div>
+            <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg">
+              <p class="text-sm font-bold text-yellow-600 mb-2">⚠️ Versão 2 (médio)</p>
+              <div class="code-block text-xs">
+"Classifique este email por prioridade"
+              </div>
+              <p class="text-xs text-neutral-500 mt-2">Problema: Sem categorias definidas</p>
+            </div>
+            <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg md:col-span-2">
+              <p class="text-sm font-bold text-green-600 mb-2">✅ Versão 3 (excelente)</p>
+              <div class="code-block text-xs">
+Você é um classificador de tickets de suporte.
+
+CATEGORIAS VÁLIDAS:
+- URGENTE: Sistema fora do ar, perda de dados, cliente VIP
+- ALTA: Bug que impede uso, prazo próximo
+- NORMAL: Dúvidas gerais, solicitações padrão
+- BAIXA: Feedback, sugestões, melhorias
+
+REGRAS:
+1. Cliente VIP sempre = URGENTE
+2. Palavras "urgente", "crítico" = subir 1 nível
+3. Palavras "quando puder", "sem pressa" = BAIXA
+
+FORMATO DE SAÍDA (JSON apenas):
+{ "categoria": "...", "justificativa": "...", "tags": [...] }
+
+EMAIL A CLASSIFICAR:
+{{ $json.email_body }}
+
+CONTEXTO ADICIONAL:
+- Cliente: {{ $json.cliente_nome }}
+- Plano: {{ $json.plano }}
+- Tickets anteriores: {{ $json.qtd_tickets }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Exemplo 2: Few-Shot Learning -->
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border-2 border-blue-200 dark:border-blue-800">
+          <p class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-3">📚 Exemplo 2: Few-Shot Learning (Exemplos no Prompt)</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Ensinar a IA o formato desejado com exemplos:</p>
+          <div class="code-block">
+Você extrai dados de recibos e retorna JSON estruturado.
+
+EXEMPLOS:
+---
+Input: "Restaurante Bom Sabor - R$ 45,90 - Pagamento Pix - 15/01/2025"
+Output: {"estabelecimento":"Restaurante Bom Sabor","valor":45.90,"metodo":"Pix","data":"2025-01-15"}
+
+Input: "UBER *TRIP - 23.50 BRL - Cartão final 1234"
+Output: {"estabelecimento":"Uber","valor":23.50,"metodo":"Cartão","data":null}
+
+Input: "Farmácia Drogasil - R$ 89,00 - Débito - 10 jan"
+Output: {"estabelecimento":"Farmácia Drogasil","valor":89.00,"metodo":"Débito","data":"2025-01-10"}
+---
+
+REGRAS:
+- Valores SEMPRE como float (89.00, não "R$ 89,00")
+- Datas SEMPRE em formato ISO (2025-01-15)
+- Se dado não existe, use null
+
+EXTRAIR DE:
+{{ $json.recibo_texto }}
+          </div>
+        </div>
+
+        <!-- Exemplo 3: System + User Prompt -->
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl border-2 border-purple-200 dark:border-purple-800">
+          <p class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-3">🧠 Exemplo 3: System Prompt + User Prompt no N8N</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Separando instrução fixa do conteúdo variável:</p>
+          <div class="code-block">
+// No OpenAI Node - System Prompt (fixo):
+Você é um assistente de vendas especializado em SaaS B2B.
+
+PERSONALIDADE:
+- Profissional mas amigável
+- Foca em benefícios, não features
+- Sempre sugere próximo passo
+
+RESTRIÇÕES:
+- NUNCA mencione concorrentes
+- NUNCA dê descontos sem aprovação
+- Limite: 3 parágrafos por resposta
+
+PRODUTOS QUE VENDEMOS:
+- Plano Starter: R$99/mês (até 5 usuários)
+- Plano Pro: R$249/mês (até 20 usuários)
+- Plano Enterprise: sob consulta
+
+// No OpenAI Node - User Prompt (dinâmico):
+PERGUNTA DO CLIENTE:
+{{ $json.mensagem }}
+
+CONTEXTO DO CLIENTE:
+- Nome: {{ $json.cliente_nome }}
+- Empresa: {{ $json.empresa }}
+- Funcionários: {{ $json.num_funcionarios }}
+- Interações anteriores: {{ $json.historico }}
+          </div>
+        </div>
+
+        <!-- Exemplo 4: Contexto de Negócio -->
+        <div class="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl border-2 border-amber-200 dark:border-amber-800">
+          <p class="text-xl font-bold text-amber-800 dark:text-amber-300 mb-3">📊 Exemplo 4: Injetando Contexto de Negócio</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Buscar dados relevantes antes de chamar a IA:</p>
+          <div class="code-block">
+// Workflow completo:
+
+1. Webhook (recebe pergunta do cliente)
+   ↓
+2. Airtable - Get Records (busca histórico do cliente)
+   Query: email = {{ $json.email }}
+   ↓
+3. HTTP Request (busca produtos comprados)
+   API: /api/purchases?customer={{ $json.customer_id }}
+   ↓
+4. Set Node (monta contexto)
+   contexto_cliente = {
+     nome: {{ $('Airtable').first().json.nome }},
+     plano: {{ $('Airtable').first().json.plano }},
+     desde: {{ $('Airtable').first().json.data_cadastro }},
+     produtos: {{ $('HTTP Request').all().map(p => p.nome) }},
+     tickets_abertos: {{ $('Airtable').first().json.tickets_abertos }}
+   }
+   ↓
+5. OpenAI - Chat Completion
+   System: "Você é suporte técnico..."
+   User: "
+     PERGUNTA: {{ $json.pergunta }}
+
+     CONTEXTO DO CLIENTE:
+     {{ JSON.stringify($json.contexto_cliente, null, 2) }}
+   "
+   ↓
+6. Respond to Webhook (retorna resposta)
+
+// Resultado: IA sabe TUDO sobre o cliente antes de responder!
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- CTA -->
     <div class="bg-gradient-to-br from-violet-600 to-purple-600 text-white rounded-3xl p-12 text-center">
       <h3 class="text-4xl font-bold mb-4">🎯 Pronto para o próximo passo?</h3>

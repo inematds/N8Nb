@@ -197,6 +197,127 @@ Accept: application/json
       </div>
     </div>
 
+    <!-- EXEMPLOS PRÁTICOS -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📋</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Exemplos Práticos</h3>
+      </div>
+      <div class="space-y-8">
+        <!-- Exemplo 1: GET Request -->
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl border-2 border-green-200 dark:border-green-800">
+          <p class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">📥 Exemplo 1: GET - Buscar lista de clientes</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Configuração do HTTP Request Node:</p>
+          <div class="code-block">
+Método: GET
+URL: https://api.empresa.com/v1/clientes
+
+Headers:
+  Authorization: Bearer sk_live_abc123...
+  Accept: application/json
+
+Query Parameters (opcional):
+  status=ativo
+  limit=100
+
+// RESPOSTA (200 OK):
+{
+  "clientes": [
+    { "id": 1, "nome": "João", "email": "joao@email.com" },
+    { "id": 2, "nome": "Maria", "email": "maria@email.com" }
+  ],
+  "total": 2
+}
+          </div>
+        </div>
+
+        <!-- Exemplo 2: POST Request -->
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border-2 border-blue-200 dark:border-blue-800">
+          <p class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-3">📤 Exemplo 2: POST - Criar novo lead no CRM</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Enviando dados do formulário para o HubSpot:</p>
+          <div class="code-block">
+Método: POST
+URL: https://api.hubapi.com/crm/v3/objects/contacts
+
+Headers:
+  Authorization: Bearer pat-xxx-yyy-zzz
+  Content-Type: application/json
+
+Body (JSON):
+{
+  "properties": {
+    "firstname": "{{ $json.nome }}",
+    "lastname": "{{ $json.sobrenome }}",
+    "email": "{{ $json.email }}",
+    "phone": "{{ $json.telefone }}",
+    "hs_lead_status": "NEW"
+  }
+}
+
+// RESPOSTA (201 Created):
+{
+  "id": "12345",
+  "properties": { ... },
+  "createdAt": "2025-01-15T10:30:00Z"
+}
+          </div>
+        </div>
+
+        <!-- Exemplo 3: Autenticação -->
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl border-2 border-purple-200 dark:border-purple-800">
+          <p class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-3">🔐 Exemplo 3: OAuth 2.0 - Autenticando no Google</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Fluxo de autenticação configurado via Credentials:</p>
+          <div class="code-block">
+// 1. Configurar Credential no N8N:
+   Tipo: OAuth2
+   Client ID: 1234567890.apps.googleusercontent.com
+   Client Secret: GOCSPX-xxxxx
+   Scope: https://www.googleapis.com/auth/spreadsheets
+   Auth URL: https://accounts.google.com/o/oauth2/auth
+   Token URL: https://oauth2.googleapis.com/token
+
+// 2. Clicar em "Connect" → Redireciona para Google → Autoriza
+
+// 3. N8N guarda o token e renova automaticamente
+
+// 4. Agora pode usar o Google Sheets Node:
+   Operation: Append Row
+   Spreadsheet: "Planilha de Leads"
+   Data: {{ $json }}
+          </div>
+        </div>
+
+        <!-- Exemplo 4: Tratando Erros -->
+        <div class="bg-red-50 dark:bg-red-900/20 p-6 rounded-xl border-2 border-red-200 dark:border-red-800">
+          <p class="text-xl font-bold text-red-800 dark:text-red-300 mb-3">⚠️ Exemplo 4: Tratando erros de API</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Configuração de retry e error handling:</p>
+          <div class="code-block">
+// No HTTP Request Node - Settings:
+   On Error: Continue (On Fail)
+   Retry On Fail: Yes
+   Max Tries: 3
+   Wait Between Tries: 1000ms
+
+// Depois adicione um IF Node para verificar:
+   Condição: {{ $json.statusCode }} != 200
+
+   Se ERRO (4xx ou 5xx):
+     ├── Log erro no Notion/Airtable
+     └── Enviar alerta no Slack
+
+   Se SUCESSO (2xx):
+     └── Continuar workflow normalmente
+
+// Erros comuns e soluções:
+401 → Token expirado, precisa re-autenticar
+403 → Sem permissão, verificar scopes
+429 → Rate limit, adicionar delay entre requests
+500 → Erro do servidor, tentar novamente depois
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- CTA -->
     <div class="bg-gradient-to-br from-indigo-600 to-blue-600 text-white rounded-3xl p-12 text-center">
       <h3 class="text-4xl font-bold mb-4">🎯 Pronto para o próximo passo?</h3>

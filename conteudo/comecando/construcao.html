@@ -171,6 +171,183 @@
       </div>
     </div>
 
+    <!-- EXEMPLOS PRÁTICOS -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📋</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Exemplos Práticos</h3>
+      </div>
+      <div class="space-y-8">
+        <!-- Exemplo 1: Debug Node por Node -->
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl border-2 border-green-200 dark:border-green-800">
+          <p class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">🔍 Exemplo 1: Debug Passo a Passo</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Workflow com erro: dados não chegam ao CRM. Como debugar:</p>
+          <div class="code-block">
+# PROBLEMA: Lead não está sendo criado no HubSpot
+
+# WORKFLOW:
+Webhook → Set Node → HTTP Request (HubSpot) → Slack
+
+# PASSO 1: Executar só o Webhook
+Clique no Webhook → "Execute Node"
+Output: { "nome": "João", "email": "joao@email.com" }
+✅ Dados chegando corretamente
+
+# PASSO 2: Pin Data e executar Set Node
+Clique "Pin Data" no Webhook (fixa os dados)
+Execute Set Node
+Output: { "properties": { "firstname": "João", "email": "joao@email.com" } }
+✅ Transformação correta
+
+# PASSO 3: Executar HTTP Request
+Execute HTTP Request
+Output: { "error": "401 Unauthorized" }
+❌ ERRO ENCONTRADO!
+
+# DIAGNÓSTICO:
+- Status 401 = problema de autenticação
+- Verificar: API Key expirada? Token inválido?
+
+# SOLUÇÃO:
+1. Ir em Credentials
+2. Editar credencial do HubSpot
+3. Gerar novo token na API do HubSpot
+4. Atualizar no N8N
+5. Testar novamente → ✅ 201 Created
+          </div>
+        </div>
+
+        <!-- Exemplo 2: Testando Edge Cases -->
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border-2 border-blue-200 dark:border-blue-800">
+          <p class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-3">🧪 Exemplo 2: Bateria de Testes de Edge Cases</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Checklist de testes antes de ir para produção:</p>
+          <div class="code-block">
+# CHECKLIST DE TESTES - Formulário de Lead
+
+## DADOS VÁLIDOS (happy path)
+□ Teste 1: Nome e email válidos → Lead criado ✅
+□ Teste 2: Todos os campos preenchidos → Lead completo ✅
+
+## DADOS INVÁLIDOS (sad path)
+□ Teste 3: Email sem @ → Erro "Email inválido" ✅
+□ Teste 4: Nome vazio → Erro "Nome obrigatório" ✅
+□ Teste 5: Nome com números → Aceitar (João123 é válido) ✅
+
+## EDGE CASES
+□ Teste 6: Nome com acento (José) → ✅ Aceita UTF-8
+□ Teste 7: Email já existente → ✅ Atualiza ao invés de criar
+□ Teste 8: Nome muito longo (500 chars) → ⚠️ FALHOU! Truncar para 100
+□ Teste 9: Emoji no nome (João 🚀) → ⚠️ FALHOU! Sanitizar
+
+## VOLUME/STRESS
+□ Teste 10: 100 leads simultâneos → ✅ Processou todos
+□ Teste 11: Arquivo CSV com 10.000 linhas → ⚠️ Timeout 60s
+   → Solução: Split In Batches de 100 em 100
+
+## FALHAS EXTERNAS
+□ Teste 12: API HubSpot offline → ✅ Retry 3x + alerta Slack
+□ Teste 13: Rate limit atingido → ✅ Delay automático 1s entre calls
+
+# RESULTADO: 11/13 passaram. 2 ajustes necessários.
+          </div>
+        </div>
+
+        <!-- Exemplo 3: Logs e Monitoramento -->
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl border-2 border-purple-200 dark:border-purple-800">
+          <p class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-3">📊 Exemplo 3: Configurando Logs e Alertas</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Monitoramento para saber quando algo quebra:</p>
+          <div class="code-block">
+# ESTRUTURA DE LOGS E ALERTAS
+
+## 1. LOG DE EXECUÇÕES (Airtable/Notion)
+Campos:
+- workflow_id
+- execution_id
+- status (success/error)
+- timestamp
+- input_data (resumido)
+- error_message (se houver)
+
+## 2. WORKFLOW DE ERROR (separado)
+Trigger: Error Trigger (captura erros de qualquer workflow)
+
+Nodes:
+Error Trigger
+   ↓
+Set Node (formatar dados do erro)
+   {
+     "workflow": {{ $execution.workflow.name }},
+     "erro": {{ $execution.error.message }},
+     "node": {{ $execution.error.node }},
+     "timestamp": {{ $now }}
+   }
+   ↓
+Airtable (log do erro)
+   ↓
+Slack (alerta imediato)
+   Mensagem: "🚨 Erro no workflow {{ workflow }}:
+              Node: {{ node }}
+              Erro: {{ erro }}"
+   ↓
+Email (se crítico)
+   Para: dev@empresa.com
+   Assunto: [CRÍTICO] Workflow falhou
+
+## 3. DASHBOARD DE MONITORAMENTO
+- Google Sheets ou Metabase
+- Gráficos: execuções/dia, taxa de erro, tempo médio
+- Alerta se taxa de erro > 5%
+          </div>
+        </div>
+
+        <!-- Exemplo 4: Checklist de Deploy -->
+        <div class="bg-orange-50 dark:bg-orange-900/20 p-6 rounded-xl border-2 border-orange-200 dark:border-orange-800">
+          <p class="text-xl font-bold text-orange-800 dark:text-orange-300 mb-3">🚀 Exemplo 4: Checklist Pré-Deploy para Produção</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Antes de ativar o workflow:</p>
+          <div class="code-block">
+# CHECKLIST PRÉ-PRODUÇÃO
+
+## TESTES ✓
+□ Todos os happy paths testados
+□ Edge cases validados
+□ Stress test com volume real
+□ Teste de falha de API externa
+
+## CONFIGURAÇÃO ✓
+□ Credenciais de PRODUÇÃO (não dev)
+□ URLs de PRODUÇÃO (não staging)
+□ Variáveis de ambiente corretas
+□ Timezone configurado corretamente
+
+## ERROR HANDLING ✓
+□ Error workflow conectado
+□ Retry configurado em nodes críticos
+□ Alertas de erro funcionando
+□ Fallback para falhas externas
+
+## DOCUMENTAÇÃO ✓
+□ README do workflow atualizado
+□ Comentários nos nodes complexos
+□ Diagrama do fluxo salvo
+□ Contato do responsável documentado
+
+## COMUNICAÇÃO ✓
+□ Stakeholders avisados da data de go-live
+□ Time de suporte sabe que vai ativar
+□ Plano de rollback definido
+
+## GO-LIVE ✓
+□ Ativar workflow
+□ Monitorar primeiras 10 execuções
+□ Verificar logs de erro
+□ Confirmar com stakeholder que está funcionando
+
+# STATUS: Pronto para produção ✅
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- CTA -->
     <div class="bg-gradient-to-br from-orange-600 to-red-600 text-white rounded-3xl p-12 text-center">
       <h3 class="text-4xl font-bold mb-4">🎯 Pronto para o último módulo?</h3>

@@ -247,6 +247,113 @@
       </div>
     </div>
 
+    <!-- EXEMPLOS PRÁTICOS -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6">📋</span>
+        <h3 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Exemplos Práticos</h3>
+      </div>
+      <div class="space-y-8">
+        <!-- Exemplo 1: Workflow Simples -->
+        <div class="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border-2 border-green-200 dark:border-green-800">
+          <p class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">⚙️ Exemplo de Workflow (Camada 1)</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Backup diário de planilha Google Sheets para Dropbox:</p>
+          <div class="code-block text-sm">
+Trigger: Schedule (diário às 23:00)
+   ↓
+Node: Google Sheets - Get Rows (busca todos os dados)
+   ↓
+Node: Dropbox - Upload File (salva como backup_2025-01-01.xlsx)
+   ↓
+Node: Slack - Send Message (notifica: "Backup concluído!")
+
+✅ 100% previsível
+✅ Sempre executa igual
+✅ Zero decisões de IA
+          </div>
+        </div>
+
+        <!-- Exemplo 2: Workflow + IA -->
+        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border-2 border-blue-200 dark:border-blue-800">
+          <p class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-3">🤖 Exemplo de Workflow + IA (Camada 2)</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Triagem automática de emails de suporte:</p>
+          <div class="code-block text-sm">
+Trigger: Gmail - New Email (novos emails em suporte@)
+   ↓
+Node: OpenAI - Classificar email
+      Prompt: "Classifique este email em: URGENTE, NORMAL, SPAM"
+      Retorna: { "categoria": "URGENTE", "confianca": 0.95 }
+   ↓
+Node: IF - Verifica categoria
+      ├── URGENTE → Cria ticket prioritário no Jira
+      ├── NORMAL → Cria ticket normal
+      └── SPAM → Move para lixeira
+
+✅ Workflow controla o fluxo
+✅ IA apenas CLASSIFICA
+✅ Resultado ainda previsível
+          </div>
+        </div>
+
+        <!-- Exemplo 3: Agente -->
+        <div class="bg-gradient-to-br from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 p-6 rounded-xl border-2 border-purple-200 dark:border-purple-800">
+          <p class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-3">🧠 Exemplo de Agente (Camada 3)</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Agente de atendimento ao cliente com acesso a ferramentas:</p>
+          <div class="code-block text-sm">
+Trigger: Webhook (mensagem do cliente via chat)
+   ↓
+Node: AI Agent (n8n Agent)
+      - Prompt do sistema: "Você é um atendente..."
+      - Ferramentas disponíveis:
+        • consultar_pedido(id) → API do e-commerce
+        • verificar_estoque(produto) → API do estoque
+        • criar_devolucao(id, motivo) → API de devoluções
+        • escalar_humano(contexto) → Notifica time
+   ↓
+O agente DECIDE quais ferramentas usar baseado na conversa
+
+⚠️ Não sabemos exatamente o que vai fazer
+⚠️ Pode chamar 1 ou 5 ferramentas
+⚠️ Precisa de guardrails (limites de ações)
+          </div>
+        </div>
+
+        <!-- Exemplo 4: Comparação -->
+        <div class="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl border-2 border-amber-200 dark:border-amber-800">
+          <p class="text-xl font-bold text-amber-800 dark:text-amber-300 mb-3">📊 Comparativo: Mesmo Problema, 3 Abordagens</p>
+          <p class="text-lg text-neutral-700 dark:text-neutral-300 mb-4">Problema: Responder emails de clientes perguntando sobre status do pedido</p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b-2 border-neutral-200 dark:border-neutral-700">
+                  <th class="text-left py-2 px-3">Camada</th>
+                  <th class="text-left py-2 px-3">Implementação</th>
+                  <th class="text-left py-2 px-3">Prós/Contras</th>
+                </tr>
+              </thead>
+              <tbody class="text-neutral-700 dark:text-neutral-300">
+                <tr class="border-b border-neutral-100 dark:border-neutral-700">
+                  <td class="py-2 px-3"><span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded text-xs">Workflow</span></td>
+                  <td class="py-2 px-3">Detecta palavras-chave → busca pedido → envia template fixo</td>
+                  <td class="py-2 px-3">✅ Rápido ⚠️ Só funciona p/ casos previstos</td>
+                </tr>
+                <tr class="border-b border-neutral-100 dark:border-neutral-700">
+                  <td class="py-2 px-3"><span class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded text-xs">Workflow+IA</span></td>
+                  <td class="py-2 px-3">IA extrai ID do pedido → busca → IA gera resposta personalizada</td>
+                  <td class="py-2 px-3">✅ Flexível ✅ Controlado ⚠️ Custo de tokens</td>
+                </tr>
+                <tr>
+                  <td class="py-2 px-3"><span class="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded text-xs">Agente</span></td>
+                  <td class="py-2 px-3">Agente analisa email e decide: consultar, responder, ou escalar</td>
+                  <td class="py-2 px-3">✅ Autônomo ⚠️ Imprevisível ⚠️ Caro</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- CTA -->
     <div class="bg-gradient-to-br from-blue-600 to-indigo-600 text-white rounded-3xl p-12 text-center">
       <h3 class="text-4xl font-bold mb-4">🎯 Pronto para o próximo passo?</h3>
