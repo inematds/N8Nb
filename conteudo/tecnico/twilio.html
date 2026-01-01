@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twilio - SMS e Voz | N8N Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-twilio { background: linear-gradient(135deg, #F22F46 0%, #E81C4F 100%); }
+        .step-number { width: 48px; height: 48px; background: linear-gradient(135deg, #F22F46, #E81C4F); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.25rem; flex-shrink: 0; }
+        pre { background: #1e1e1e; border-radius: 8px; padding: 16px; overflow-x: auto; }
+        code { color: #d4d4d4; font-family: 'Fira Code', monospace; font-size: 14px; }
+        .code-comment { color: #6a9955; }
+        .code-string { color: #ce9178; }
+        .code-key { color: #9cdcfe; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex items-center space-x-4">
+                <a href="../../index.html" class="text-2xl font-bold text-gray-800">N8N Academy</a>
+                <span class="text-gray-400">/</span>
+                <a href="../../tecnico.html" class="text-red-600 hover:text-red-800">Trilha Tecnico</a>
+                <span class="text-gray-400">/</span>
+                <span class="text-gray-600">Twilio</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="gradient-twilio text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="flex justify-center mb-6">
+                <div class="bg-white/20 p-6 rounded-2xl">
+                    <i class="fas fa-sms text-6xl"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Twilio</h1>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto">
+                Envie SMS, WhatsApp e faca chamadas telefonicas via API
+            </p>
+            <div class="mt-6 flex justify-center gap-4 flex-wrap">
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">SMS</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">WhatsApp</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Voz</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Verify</span>
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-4xl mx-auto px-4 py-12">
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">O Que e Twilio?</h2>
+            <p class="text-gray-600 mb-6">
+                Twilio e a plataforma lider em comunicacao programatica. Permite enviar SMS para qualquer
+                numero do mundo, fazer chamadas automatizadas, WhatsApp Business e verificacao por codigo.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-red-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-red-800 mb-2"><i class="fas fa-sms mr-2"></i>SMS</h3>
+                    <p class="text-sm text-gray-600">Envie mensagens para qualquer pais</p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-green-800 mb-2"><i class="fab fa-whatsapp mr-2"></i>WhatsApp</h3>
+                    <p class="text-sm text-gray-600">Alternativa ao Meta Cloud API</p>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-blue-800 mb-2"><i class="fas fa-phone mr-2"></i>Voz</h3>
+                    <p class="text-sm text-gray-600">Chamadas automatizadas com TTS</p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-purple-800 mb-2"><i class="fas fa-shield-alt mr-2"></i>Verify</h3>
+                    <p class="text-sm text-gray-600">2FA e verificacao por SMS/email</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">1</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Criar Conta Twilio</h2>
+                    <p class="text-gray-600">Cadastro e creditos de teste</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                <ol class="space-y-3 text-gray-700">
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-red-600">1.</span>
+                        <span>Acesse <strong>twilio.com</strong> e clique em <strong>Sign up</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-red-600">2.</span>
+                        <span>Preencha nome, email, senha e telefone</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-red-600">3.</span>
+                        <span>Verifique seu numero de telefone (recebera SMS)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-red-600">4.</span>
+                        <span>Voce recebera <strong>$15 de creditos</strong> de teste</span>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="bg-green-50 border-l-4 border-green-500 p-4">
+                <p class="font-bold text-green-800"><i class="fas fa-gift mr-2"></i>Trial Account</p>
+                <p class="text-sm text-green-700 mt-1">
+                    A conta trial permite enviar SMS apenas para numeros verificados.
+                    Para enviar para qualquer numero, faca upgrade (~$20).
+                </p>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">2</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Obter Credenciais</h2>
+                    <p class="text-gray-600">Account SID, Auth Token e Phone Number</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                <h3 class="font-bold text-lg mb-4">No Console</h3>
+                <ol class="space-y-3 text-gray-700">
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-red-600">1.</span>
+                        <span>No dashboard, va em <strong>Account → API keys & tokens</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-red-600">2.</span>
+                        <span>Copie o <strong>Account SID</strong> (comeca com AC)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-red-600">3.</span>
+                        <span>Copie o <strong>Auth Token</strong></span>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <h3 class="font-bold text-lg mb-4">Obter Numero de Telefone</h3>
+                <ol class="space-y-3 text-gray-700">
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-red-600">1.</span>
+                        <span>Va em <strong>Phone Numbers → Manage → Buy a number</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-red-600">2.</span>
+                        <span>Escolha um numero (trial: 1 gratis)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-red-600">3.</span>
+                        <span>O numero sera o remetente dos seus SMS</span>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">3</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Configurar no N8N</h2>
+                    <p class="text-gray-600">Adicionar credencial Twilio</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <ol class="space-y-3 text-gray-700">
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-red-600">1.</span>
+                        <span>No N8N, va em <strong>Credentials → Add Credential</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-red-600">2.</span>
+                        <span>Busque por <strong>Twilio API</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-red-600">3.</span>
+                        <span>Preencha:</span>
+                    </li>
+                </ol>
+
+                <div class="mt-4 bg-white p-4 rounded border">
+                    <pre><code><span class="code-key">Account SID</span>: ACxxxxxxxxxxxxxxxxxxxxxxxx
+<span class="code-key">Auth Token</span>: seu-auth-token</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-code mr-2 text-red-600"></i>Exemplos Praticos
+            </h2>
+
+            <div class="space-y-8">
+                <div>
+                    <h3 class="font-bold text-lg mb-4">1. Enviar SMS simples</h3>
+                    <pre><code><span class="code-comment">// Twilio: Send SMS</span>
+<span class="code-key">From</span>: <span class="code-string">+15551234567</span> <span class="code-comment">// Seu numero Twilio</span>
+<span class="code-key">To</span>: <span class="code-string">+5511999999999</span> <span class="code-comment">// Destino</span>
+<span class="code-key">Message</span>: <span class="code-string">"Ola! Seu pedido foi enviado."</span></code></pre>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-lg mb-4">2. Alerta de venda no SMS</h3>
+                    <pre><code><span class="code-comment">// Stripe Trigger: payment_intent.succeeded</span>
+<span class="code-comment">// → Twilio: Send SMS</span>
+
+<span class="code-key">To</span>: <span class="code-string">+5511999999999</span>
+<span class="code-key">Message</span>: <span class="code-string">"Nova venda! R$ {{ $json.data.object.amount / 100 }} de {{ $json.data.object.receipt_email }}"</span></code></pre>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-lg mb-4">3. Verificacao 2FA</h3>
+                    <pre><code><span class="code-comment">// HTTP Request: POST Twilio Verify</span>
+<span class="code-key">URL</span>: https://verify.twilio.com/v2/Services/VAxxxx/Verifications
+
+<span class="code-comment">// Body:</span>
+{
+  <span class="code-key">"To"</span>: <span class="code-string">"+5511999999999"</span>,
+  <span class="code-key">"Channel"</span>: <span class="code-string">"sms"</span>
+}
+
+<span class="code-comment">// Usuario recebe codigo de 6 digitos</span></code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-dollar-sign mr-2 text-green-500"></i>Precos
+            </h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="text-left p-3">Servico</th>
+                            <th class="text-left p-3">Preco (Brasil)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y">
+                        <tr>
+                            <td class="p-3">SMS Enviado</td>
+                            <td class="p-3">~$0.0575 por msg</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3">SMS Recebido</td>
+                            <td class="p-3">~$0.0075 por msg</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3">WhatsApp</td>
+                            <td class="p-3">~$0.05 por msg</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3">Numero Telefone</td>
+                            <td class="p-3">~$1/mes</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="bg-gradient-to-r from-red-600 to-pink-600 rounded-xl shadow-lg p-8 text-white text-center">
+            <h2 class="text-2xl font-bold mb-4">Proximo: SendGrid</h2>
+            <p class="mb-6 text-white/90">Aprenda a enviar emails transacionais em escala</p>
+            <a href="sendgrid.html" class="inline-block bg-white text-red-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition">
+                Continuar para SendGrid <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-400">N8N Academy - Dominando automacoes</p>
+        </div>
+    </footer>
+</body>
+</html>

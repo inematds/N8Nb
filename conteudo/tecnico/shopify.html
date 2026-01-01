@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopify - E-commerce API | N8N Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-shopify { background: linear-gradient(135deg, #95BF47 0%, #5E8E3E 100%); }
+        .step-number { width: 48px; height: 48px; background: linear-gradient(135deg, #95BF47, #5E8E3E); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.25rem; flex-shrink: 0; }
+        pre { background: #1e1e1e; border-radius: 8px; padding: 16px; overflow-x: auto; }
+        code { color: #d4d4d4; font-family: 'Fira Code', monospace; font-size: 14px; }
+        .code-comment { color: #6a9955; }
+        .code-string { color: #ce9178; }
+        .code-key { color: #9cdcfe; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex items-center space-x-4">
+                <a href="../../index.html" class="text-2xl font-bold text-gray-800">N8N Academy</a>
+                <span class="text-gray-400">/</span>
+                <a href="../../tecnico.html" class="text-green-600 hover:text-green-800">Trilha Tecnico</a>
+                <span class="text-gray-400">/</span>
+                <span class="text-gray-600">Shopify</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="gradient-shopify text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="flex justify-center mb-6">
+                <div class="bg-white/20 p-6 rounded-2xl">
+                    <i class="fab fa-shopify text-6xl"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Shopify</h1>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto">
+                Integre com a maior plataforma de e-commerce do mundo
+            </p>
+            <div class="mt-6 flex justify-center gap-4 flex-wrap">
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Pedidos</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Produtos</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Clientes</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Webhooks</span>
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-4xl mx-auto px-4 py-12">
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">Por Que Shopify?</h2>
+            <p class="text-gray-600 mb-6">
+                Shopify e a plataforma de e-commerce mais popular, usada por milhoes de lojas.
+                Com a API, voce pode automatizar gestao de pedidos, sincronizar estoque,
+                integrar com ERPs e muito mais.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-green-800 mb-2"><i class="fas fa-shopping-cart mr-2"></i>Pedidos</h3>
+                    <p class="text-sm text-gray-600">Acompanhe e processe vendas automaticamente</p>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-blue-800 mb-2"><i class="fas fa-box mr-2"></i>Produtos</h3>
+                    <p class="text-sm text-gray-600">Crie e atualize catalogo via API</p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-purple-800 mb-2"><i class="fas fa-users mr-2"></i>Clientes</h3>
+                    <p class="text-sm text-gray-600">Gerencie base de clientes e tags</p>
+                </div>
+                <div class="bg-yellow-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-yellow-800 mb-2"><i class="fas fa-warehouse mr-2"></i>Estoque</h3>
+                    <p class="text-sm text-gray-600">Sincronize inventario em tempo real</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">1</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Criar Custom App</h2>
+                    <p class="text-gray-600">Apps privados para sua loja</p>
+                </div>
+            </div>
+
+            <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-6">
+                <p class="font-bold text-yellow-800"><i class="fas fa-exclamation-triangle mr-2"></i>Importante</p>
+                <p class="text-sm text-yellow-700 mt-1">
+                    Shopify descontinuou "Private Apps" em janeiro 2022. Use "Custom Apps" agora.
+                </p>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <ol class="space-y-3 text-gray-700">
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-green-600">1.</span>
+                        <span>No admin da loja, va em <strong>Settings → Apps and sales channels</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-green-600">2.</span>
+                        <span>Clique em <strong>Develop apps</strong> (canto superior)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-green-600">3.</span>
+                        <span>Se for a primeira vez, clique em <strong>Allow custom app development</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-green-600">4.</span>
+                        <span>Clique em <strong>Create an app</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-green-600">5.</span>
+                        <span>De um nome (ex: "N8N Integration")</span>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">2</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Configurar Permissoes</h2>
+                    <p class="text-gray-600">Scopes da API Admin</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                <ol class="space-y-3 text-gray-700">
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-green-600">1.</span>
+                        <span>Na aba <strong>Configuration</strong>, clique em <strong>Configure Admin API scopes</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-green-600">2.</span>
+                        <span>Selecione os scopes necessarios:</span>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="bg-white border rounded-lg overflow-hidden">
+                <table class="w-full text-sm">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="text-left p-3">Scope</th>
+                            <th class="text-left p-3">Permite</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y">
+                        <tr>
+                            <td class="p-3 font-mono text-xs">read_orders, write_orders</td>
+                            <td class="p-3">Ler e modificar pedidos</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-mono text-xs">read_products, write_products</td>
+                            <td class="p-3">Ler e modificar produtos</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-mono text-xs">read_customers, write_customers</td>
+                            <td class="p-3">Ler e modificar clientes</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-mono text-xs">read_inventory, write_inventory</td>
+                            <td class="p-3">Gerenciar estoque</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-mono text-xs">read_fulfillments, write_fulfillments</td>
+                            <td class="p-3">Envios e entregas</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-4 bg-blue-50 border-l-4 border-blue-500 p-4">
+                <p class="text-sm text-blue-700">
+                    <strong>Dica:</strong> Selecione apenas os scopes que realmente precisa.
+                    Principio do menor privilegio.
+                </p>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">3</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Obter Access Token</h2>
+                    <p class="text-gray-600">Instalar app e copiar credenciais</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                <ol class="space-y-3 text-gray-700">
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-green-600">1.</span>
+                        <span>Apos configurar scopes, clique em <strong>Save</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-green-600">2.</span>
+                        <span>Va na aba <strong>API credentials</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-green-600">3.</span>
+                        <span>Clique em <strong>Install app</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-green-600">4.</span>
+                        <span>Confirme a instalacao</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-green-600">5.</span>
+                        <span>Copie o <strong>Admin API access token</strong> (aparece apenas UMA vez!)</span>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="bg-red-50 border-l-4 border-red-500 p-4">
+                <p class="font-bold text-red-800"><i class="fas fa-exclamation-circle mr-2"></i>Atencao!</p>
+                <p class="text-sm text-red-700 mt-1">
+                    O Access Token so e mostrado UMA VEZ apos instalar. Se perder,
+                    tera que criar um novo app.
+                </p>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">4</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Configurar no N8N</h2>
+                    <p class="text-gray-600">Adicionar credencial Shopify</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                <ol class="space-y-3 text-gray-700">
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-green-600">1.</span>
+                        <span>No N8N, va em <strong>Credentials → Add Credential</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-green-600">2.</span>
+                        <span>Busque por <strong>Shopify API</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-green-600">3.</span>
+                        <span>Preencha:</span>
+                    </li>
+                </ol>
+
+                <div class="mt-4 bg-white p-4 rounded border">
+                    <pre><code><span class="code-key">Shop Subdomain</span>: <span class="code-string">sua-loja</span> <span class="code-comment">// De sua-loja.myshopify.com</span>
+<span class="code-key">Access Token</span>: <span class="code-string">shpat_xxxxxxxxxxxxxxxxxxxx</span>
+<span class="code-key">API Version</span>: <span class="code-string">2024-01</span> <span class="code-comment">// Use a versao mais recente</span></code></pre>
+                </div>
+            </div>
+
+            <div class="bg-green-50 border-l-4 border-green-500 p-4">
+                <p class="font-bold text-green-800"><i class="fas fa-check-circle mr-2"></i>Pronto!</p>
+                <p class="text-sm text-green-700 mt-1">
+                    Clique em "Test Connection" para verificar. Deve retornar dados da loja.
+                </p>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-bell mr-2 text-green-600"></i>Configurar Webhooks
+            </h2>
+
+            <p class="text-gray-600 mb-6">
+                Use webhooks para reagir a eventos em tempo real (novo pedido, atualizacao de estoque, etc).
+            </p>
+
+            <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                <h3 class="font-bold text-lg mb-4">No Shopify Admin</h3>
+                <ol class="space-y-3 text-gray-700">
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-green-600">1.</span>
+                        <span>Va em <strong>Settings → Notifications</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-green-600">2.</span>
+                        <span>Role ate <strong>Webhooks</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-green-600">3.</span>
+                        <span>Clique em <strong>Create webhook</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-green-600">4.</span>
+                        <span>Selecione o evento e cole a URL do N8N Webhook</span>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="bg-white border rounded-lg overflow-hidden">
+                <table class="w-full text-sm">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="text-left p-3">Evento</th>
+                            <th class="text-left p-3">Dispara Quando</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y">
+                        <tr>
+                            <td class="p-3 font-mono text-xs">orders/create</td>
+                            <td class="p-3">Novo pedido criado</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-mono text-xs">orders/paid</td>
+                            <td class="p-3">Pedido pago</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-mono text-xs">orders/fulfilled</td>
+                            <td class="p-3">Pedido enviado/entregue</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-mono text-xs">products/update</td>
+                            <td class="p-3">Produto atualizado</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-mono text-xs">inventory_levels/update</td>
+                            <td class="p-3">Estoque alterado</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-mono text-xs">customers/create</td>
+                            <td class="p-3">Novo cliente cadastrado</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-code mr-2 text-green-600"></i>Exemplos Praticos
+            </h2>
+
+            <div class="space-y-8">
+                <div>
+                    <h3 class="font-bold text-lg mb-4">1. Notificar novo pedido no Slack</h3>
+                    <pre><code><span class="code-comment">// Shopify Trigger: orders/create</span>
+<span class="code-comment">// → Slack: Send Message</span>
+
+<span class="code-key">Channel</span>: <span class="code-string">#vendas</span>
+<span class="code-key">Message</span>: <span class="code-string">"Nova venda #{{ $json.order_number }}
+Cliente: {{ $json.customer.first_name }} {{ $json.customer.last_name }}
+Valor: R$ {{ $json.total_price }}
+Produtos: {{ $json.line_items.length }} itens"</span></code></pre>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-lg mb-4">2. Sincronizar pedido com Airtable</h3>
+                    <pre><code><span class="code-comment">// Shopify Trigger: orders/paid</span>
+<span class="code-comment">// → Airtable: Create Record</span>
+
+<span class="code-key">Table</span>: <span class="code-string">Pedidos</span>
+<span class="code-key">Fields</span>:
+{
+  <span class="code-key">"Numero"</span>: <span class="code-string">"{{ $json.order_number }}"</span>,
+  <span class="code-key">"Cliente"</span>: <span class="code-string">"{{ $json.customer.email }}"</span>,
+  <span class="code-key">"Valor"</span>: <span class="code-string">{{ $json.total_price }}</span>,
+  <span class="code-key">"Status"</span>: <span class="code-string">"Pago"</span>,
+  <span class="code-key">"Data"</span>: <span class="code-string">"{{ $json.created_at }}"</span>
+}</code></pre>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-lg mb-4">3. Alerta de estoque baixo</h3>
+                    <pre><code><span class="code-comment">// Schedule Trigger (1x por dia)</span>
+<span class="code-comment">// → Shopify: Get Products</span>
+<span class="code-comment">// → Filter: inventory_quantity < 10</span>
+<span class="code-comment">// → Email: Send</span>
+
+<span class="code-key">To</span>: <span class="code-string">estoque@empresa.com</span>
+<span class="code-key">Subject</span>: <span class="code-string">"Alerta: {{ $json.length }} produtos com estoque baixo"</span>
+<span class="code-key">Body</span>: <span class="code-string">"Produtos que precisam reposicao:
+{{ $json.map(p => p.title + ': ' + p.variants[0].inventory_quantity).join('\n') }}"</span></code></pre>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-lg mb-4">4. Atualizar preco em massa</h3>
+                    <pre><code><span class="code-comment">// Google Sheets Trigger: On row added</span>
+<span class="code-comment">// → Shopify: Update Product</span>
+
+<span class="code-key">Product ID</span>: <span class="code-string">{{ $json.product_id }}</span>
+<span class="code-key">Variants</span>: [
+  {
+    <span class="code-key">"id"</span>: <span class="code-string">{{ $json.variant_id }}</span>,
+    <span class="code-key">"price"</span>: <span class="code-string">"{{ $json.novo_preco }}"</span>
+  }
+]</code></pre>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-lg mb-4">5. Fulfillment automatico</h3>
+                    <pre><code><span class="code-comment">// HTTP Request: Recebe tracking da transportadora</span>
+<span class="code-comment">// → Shopify: Create Fulfillment</span>
+
+<span class="code-key">Order ID</span>: <span class="code-string">{{ $json.order_id }}</span>
+<span class="code-key">Tracking Number</span>: <span class="code-string">{{ $json.tracking_code }}</span>
+<span class="code-key">Tracking Company</span>: <span class="code-string">"Correios"</span>
+<span class="code-key">Notify Customer</span>: <span class="code-string">true</span></code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-dollar-sign mr-2 text-green-500"></i>Planos Shopify
+            </h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="text-left p-3">Plano</th>
+                            <th class="text-left p-3">Preco</th>
+                            <th class="text-left p-3">API</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y">
+                        <tr>
+                            <td class="p-3 font-bold">Basic</td>
+                            <td class="p-3">R$ 150/mes</td>
+                            <td class="p-3">Full Admin API</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold">Shopify</td>
+                            <td class="p-3">R$ 380/mes</td>
+                            <td class="p-3">Full Admin API + Relatorios</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold">Advanced</td>
+                            <td class="p-3">R$ 1.500/mes</td>
+                            <td class="p-3">Full API + Calculos de frete avancados</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold">Plus</td>
+                            <td class="p-3">~$2.000/mes</td>
+                            <td class="p-3">API ilimitada + Checkout customizavel</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-4 bg-blue-50 border-l-4 border-blue-500 p-4">
+                <p class="text-sm text-blue-700">
+                    <strong>Limite de API:</strong> Todos os planos tem limite de 2 requests/segundo
+                    no bucket (40 creditos). Plano Plus tem limites maiores.
+                </p>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-exclamation-triangle mr-2 text-yellow-500"></i>Rate Limits
+            </h2>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <h3 class="font-bold text-lg mb-4">Sistema de Bucket</h3>
+                <ul class="space-y-2 text-gray-700">
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check text-green-500 mt-1"></i>
+                        <span><strong>40 creditos</strong> no bucket (limite maximo)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check text-green-500 mt-1"></i>
+                        <span><strong>2 creditos/segundo</strong> de recuperacao</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check text-green-500 mt-1"></i>
+                        <span>Cada request consome <strong>1 credito</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check text-green-500 mt-1"></i>
+                        <span>GraphQL requests podem consumir mais (baseado na query)</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="mt-4 bg-yellow-50 border-l-4 border-yellow-500 p-4">
+                <p class="text-sm text-yellow-700">
+                    <strong>Dica:</strong> Use o header <code>X-Shopify-Shop-Api-Call-Limit</code>
+                    na resposta para monitorar uso do bucket.
+                </p>
+            </div>
+        </section>
+
+        <section class="bg-gradient-to-r from-green-600 to-teal-600 rounded-xl shadow-lg p-8 text-white text-center">
+            <h2 class="text-2xl font-bold mb-4">Proximo: Mercado Pago</h2>
+            <p class="mb-6 text-white/90">Integre com o principal gateway de pagamentos do Brasil</p>
+            <a href="mercadopago.html" class="inline-block bg-white text-green-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition">
+                Continuar para Mercado Pago <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-400">N8N Academy - Dominando automacoes</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SendGrid - Email Transacional | N8N Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-sendgrid { background: linear-gradient(135deg, #1A82E2 0%, #00B2E3 100%); }
+        .step-number { width: 48px; height: 48px; background: linear-gradient(135deg, #1A82E2, #00B2E3); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.25rem; flex-shrink: 0; }
+        pre { background: #1e1e1e; border-radius: 8px; padding: 16px; overflow-x: auto; }
+        code { color: #d4d4d4; font-family: 'Fira Code', monospace; font-size: 14px; }
+        .code-comment { color: #6a9955; }
+        .code-string { color: #ce9178; }
+        .code-key { color: #9cdcfe; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex items-center space-x-4">
+                <a href="../../index.html" class="text-2xl font-bold text-gray-800">N8N Academy</a>
+                <span class="text-gray-400">/</span>
+                <a href="../../tecnico.html" class="text-blue-600 hover:text-blue-800">Trilha Tecnico</a>
+                <span class="text-gray-400">/</span>
+                <span class="text-gray-600">SendGrid</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="gradient-sendgrid text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="flex justify-center mb-6">
+                <div class="bg-white/20 p-6 rounded-2xl">
+                    <i class="fas fa-envelope text-6xl"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">SendGrid</h1>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto">
+                Envie emails transacionais e marketing em escala com alta entregabilidade
+            </p>
+            <div class="mt-6 flex justify-center gap-4 flex-wrap">
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Email Transacional</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Templates</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Marketing</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Analytics</span>
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-4xl mx-auto px-4 py-12">
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">SendGrid + N8N</h2>
+            <p class="text-gray-600 mb-6">
+                SendGrid (Twilio) e uma das melhores plataformas para email transacional.
+                Alta entregabilidade, templates dinamicos e analytics detalhados.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-blue-800 mb-2"><i class="fas fa-paper-plane mr-2"></i>Transacional</h3>
+                    <p class="text-sm text-gray-600">Confirmacoes, recibos, alertas, senhas</p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-green-800 mb-2"><i class="fas fa-check-circle mr-2"></i>Entregabilidade</h3>
+                    <p class="text-sm text-gray-600">97%+ de emails chegam na inbox</p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-purple-800 mb-2"><i class="fas fa-palette mr-2"></i>Templates</h3>
+                    <p class="text-sm text-gray-600">Editor visual e variaveis dinamicas</p>
+                </div>
+                <div class="bg-orange-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-orange-800 mb-2"><i class="fas fa-chart-bar mr-2"></i>Analytics</h3>
+                    <p class="text-sm text-gray-600">Opens, clicks, bounces, unsubscribes</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">1</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Criar Conta SendGrid</h2>
+                    <p class="text-gray-600">Cadastro e plano gratuito</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                <ol class="space-y-3 text-gray-700">
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">1.</span>
+                        <span>Acesse <strong>sendgrid.com</strong> e clique em <strong>Start for Free</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">2.</span>
+                        <span>Cadastre com email (use email corporativo para melhor aprovacao)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">3.</span>
+                        <span>Verifique seu email</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">4.</span>
+                        <span>Complete o perfil (empresa, site, uso pretendido)</span>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="bg-green-50 border-l-4 border-green-500 p-4">
+                <p class="font-bold text-green-800"><i class="fas fa-gift mr-2"></i>Plano Gratuito</p>
+                <p class="text-sm text-green-700 mt-1">
+                    100 emails/dia gratis para sempre. Suficiente para testes e projetos pequenos.
+                </p>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">2</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Configurar Sender</h2>
+                    <p class="text-gray-600">Verificar dominio ou email remetente</p>
+                </div>
+            </div>
+
+            <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-6">
+                <p class="font-bold text-yellow-800"><i class="fas fa-exclamation-triangle mr-2"></i>Importante</p>
+                <p class="text-sm text-yellow-700 mt-1">
+                    Voce precisa verificar o remetente antes de enviar emails.
+                    Recomendado: autenticar seu dominio para melhor entregabilidade.
+                </p>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <h3 class="font-bold text-lg mb-4">Opcao A: Single Sender (Rapido)</h3>
+                <ol class="space-y-3 text-gray-700">
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">1.</span>
+                        <span>Va em <strong>Settings → Sender Authentication</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">2.</span>
+                        <span>Clique em <strong>Verify a Single Sender</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">3.</span>
+                        <span>Preencha nome, email e endereco</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">4.</span>
+                        <span>Clique no link de verificacao enviado por email</span>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">3</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Obter API Key</h2>
+                    <p class="text-gray-600">Criar chave de acesso</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <ol class="space-y-3 text-gray-700">
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">1.</span>
+                        <span>Va em <strong>Settings → API Keys</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">2.</span>
+                        <span>Clique em <strong>Create API Key</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">3.</span>
+                        <span>De um nome (ex: "N8N Integration")</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">4.</span>
+                        <span>Escolha <strong>Full Access</strong> ou <strong>Restricted Access</strong> (Mail Send)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">5.</span>
+                        <span>Copie a chave (comeca com <code>SG.</code>) - aparece uma vez!</span>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">4</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Configurar no N8N</h2>
+                    <p class="text-gray-600">Adicionar credencial SendGrid</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <ol class="space-y-3 text-gray-700">
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">1.</span>
+                        <span>No N8N, va em <strong>Credentials → Add Credential</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">2.</span>
+                        <span>Busque por <strong>SendGrid API</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">3.</span>
+                        <span>Cole a <strong>API Key</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">4.</span>
+                        <span>Clique em <strong>Save</strong></span>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-code mr-2 text-blue-600"></i>Exemplos Praticos
+            </h2>
+
+            <div class="space-y-8">
+                <div>
+                    <h3 class="font-bold text-lg mb-4">1. Email de boas-vindas</h3>
+                    <pre><code><span class="code-comment">// Trigger: Novo usuario cadastrado</span>
+<span class="code-comment">// → SendGrid: Send Email</span>
+
+<span class="code-key">From Email</span>: <span class="code-string">contato@suaempresa.com</span>
+<span class="code-key">From Name</span>: <span class="code-string">Sua Empresa</span>
+<span class="code-key">To Email</span>: <span class="code-string">{{ $json.email }}</span>
+<span class="code-key">Subject</span>: <span class="code-string">Bem-vindo, {{ $json.nome }}!</span>
+<span class="code-key">Content Type</span>: text/html
+<span class="code-key">Content</span>: <span class="code-string">"&lt;h1&gt;Ola {{ $json.nome }}!&lt;/h1&gt;
+&lt;p&gt;Obrigado por se cadastrar.&lt;/p&gt;"</span></code></pre>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-lg mb-4">2. Email com template dinamico</h3>
+                    <pre><code><span class="code-comment">// Use template_id do SendGrid</span>
+<span class="code-comment">// → HTTP Request: POST SendGrid API</span>
+
+<span class="code-key">URL</span>: https://api.sendgrid.com/v3/mail/send
+<span class="code-key">Headers</span>: Authorization: Bearer SG.xxxxx
+
+<span class="code-comment">// Body:</span>
+{
+  <span class="code-key">"personalizations"</span>: [{
+    <span class="code-key">"to"</span>: [{ <span class="code-key">"email"</span>: <span class="code-string">"{{ $json.email }}"</span> }],
+    <span class="code-key">"dynamic_template_data"</span>: {
+      <span class="code-key">"nome"</span>: <span class="code-string">"{{ $json.nome }}"</span>,
+      <span class="code-key">"pedido"</span>: <span class="code-string">"{{ $json.pedido_id }}"</span>
+    }
+  }],
+  <span class="code-key">"from"</span>: { <span class="code-key">"email"</span>: <span class="code-string">"contato@empresa.com"</span> },
+  <span class="code-key">"template_id"</span>: <span class="code-string">"d-xxxxxxxxxxxx"</span>
+}</code></pre>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-lg mb-4">3. Notificacao de pagamento</h3>
+                    <pre><code><span class="code-comment">// Stripe Trigger: payment_intent.succeeded</span>
+<span class="code-comment">// → SendGrid: Send Email</span>
+
+<span class="code-key">To</span>: {{ $json.data.object.receipt_email }}
+<span class="code-key">Subject</span>: <span class="code-string">"Recibo - Pedido confirmado"</span>
+<span class="code-key">Content</span>: <span class="code-string">"Obrigado pela compra!
+Valor: R$ {{ $json.data.object.amount / 100 }}
+ID: {{ $json.data.object.id }}"</span></code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-wrench mr-2 text-orange-500"></i>Troubleshooting
+            </h2>
+
+            <div class="space-y-4">
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">Email vai para spam</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        Autentique seu dominio com SPF, DKIM e DMARC em Settings → Sender Authentication → Domain Authentication.
+                    </p>
+                </div>
+
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">403 Forbidden</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        Remetente nao verificado. Verifique o email/dominio em Sender Authentication.
+                    </p>
+                </div>
+
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                    <p class="font-bold text-red-800">Daily limit reached</p>
+                    <p class="text-sm text-red-700 mt-1">
+                        Plano gratuito: 100 emails/dia. Faca upgrade para enviar mais.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl shadow-lg p-8 text-white text-center">
+            <h2 class="text-2xl font-bold mb-4">Proximo: HubSpot</h2>
+            <p class="mb-6 text-white/90">Aprenda a integrar com o CRM mais popular</p>
+            <a href="hubspot.html" class="inline-block bg-white text-blue-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition">
+                Continuar para HubSpot <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-400">N8N Academy - Dominando automacoes</p>
+        </div>
+    </footer>
+</body>
+</html>

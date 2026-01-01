@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercado Pago - Pagamentos Brasil | N8N Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-mp { background: linear-gradient(135deg, #009EE3 0%, #00B1EA 100%); }
+        .step-number { width: 48px; height: 48px; background: linear-gradient(135deg, #009EE3, #00B1EA); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.25rem; flex-shrink: 0; }
+        pre { background: #1e1e1e; border-radius: 8px; padding: 16px; overflow-x: auto; }
+        code { color: #d4d4d4; font-family: 'Fira Code', monospace; font-size: 14px; }
+        .code-comment { color: #6a9955; }
+        .code-string { color: #ce9178; }
+        .code-key { color: #9cdcfe; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex items-center space-x-4">
+                <a href="../../index.html" class="text-2xl font-bold text-gray-800">N8N Academy</a>
+                <span class="text-gray-400">/</span>
+                <a href="../../tecnico.html" class="text-blue-600 hover:text-blue-800">Trilha Tecnico</a>
+                <span class="text-gray-400">/</span>
+                <span class="text-gray-600">Mercado Pago</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="gradient-mp text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="flex justify-center mb-6">
+                <div class="bg-white/20 p-6 rounded-2xl">
+                    <i class="fas fa-hand-holding-usd text-6xl"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Mercado Pago</h1>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto">
+                O principal gateway de pagamentos do Brasil e America Latina
+            </p>
+            <div class="mt-6 flex justify-center gap-4 flex-wrap">
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">PIX</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Cartao</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Boleto</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">Webhooks</span>
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-4xl mx-auto px-4 py-12">
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">Por Que Mercado Pago?</h2>
+            <p class="text-gray-600 mb-6">
+                Mercado Pago e o maior processador de pagamentos da America Latina.
+                Aceita PIX, cartoes, boleto e tem taxas competitivas. Essencial para
+                qualquer negocio brasileiro.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-green-800 mb-2"><i class="fas fa-qrcode mr-2"></i>PIX</h3>
+                    <p class="text-sm text-gray-600">Pagamento instantaneo com QR Code</p>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-blue-800 mb-2"><i class="fas fa-credit-card mr-2"></i>Cartao</h3>
+                    <p class="text-sm text-gray-600">Credito e debito com parcelamento</p>
+                </div>
+                <div class="bg-yellow-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-yellow-800 mb-2"><i class="fas fa-barcode mr-2"></i>Boleto</h3>
+                    <p class="text-sm text-gray-600">Boleto bancario tradicional</p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-purple-800 mb-2"><i class="fas fa-link mr-2"></i>Link de Pagamento</h3>
+                    <p class="text-sm text-gray-600">Cobre sem precisar de site</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">1</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Criar Aplicacao</h2>
+                    <p class="text-gray-600">Portal de Desenvolvedores</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                <ol class="space-y-3 text-gray-700">
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">1.</span>
+                        <span>Acesse <strong>mercadopago.com.br/developers</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">2.</span>
+                        <span>Faca login com sua conta Mercado Pago</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">3.</span>
+                        <span>Va em <strong>Suas integracoes → Criar aplicacao</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">4.</span>
+                        <span>Preencha nome (ex: "N8N Automacao")</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">5.</span>
+                        <span>Escolha tipo: <strong>Checkout Pro</strong> ou <strong>Checkout Transparente</strong></span>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4">
+                <p class="font-bold text-blue-800"><i class="fas fa-info-circle mr-2"></i>Diferenca</p>
+                <p class="text-sm text-blue-700 mt-1">
+                    <strong>Checkout Pro:</strong> Cliente vai para pagina do MP (mais simples)<br>
+                    <strong>Checkout Transparente:</strong> Pagamento no seu site (mais customizavel)
+                </p>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">2</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Obter Credenciais</h2>
+                    <p class="text-gray-600">Access Token e Public Key</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                <ol class="space-y-3 text-gray-700">
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">1.</span>
+                        <span>Na sua aplicacao, va em <strong>Credenciais de producao</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">2.</span>
+                        <span>Copie o <strong>Access Token</strong> (comeca com APP_USR)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">3.</span>
+                        <span>Copie tambem a <strong>Public Key</strong> (para frontend)</span>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-4">
+                <p class="font-bold text-yellow-800"><i class="fas fa-flask mr-2"></i>Ambiente de Teste</p>
+                <p class="text-sm text-yellow-700 mt-1">
+                    Use as <strong>Credenciais de teste</strong> para desenvolvimento.
+                    Crie usuarios de teste em <strong>Contas de teste</strong>.
+                </p>
+            </div>
+
+            <div class="bg-white p-4 rounded border">
+                <h3 class="font-bold text-sm mb-2">Formato das credenciais:</h3>
+                <pre><code><span class="code-comment">// Producao</span>
+<span class="code-key">Access Token</span>: <span class="code-string">APP_USR-1234567890123456-...</span>
+
+<span class="code-comment">// Teste</span>
+<span class="code-key">Access Token</span>: <span class="code-string">TEST-1234567890123456-...</span></code></pre>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">3</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Configurar Webhooks</h2>
+                    <p class="text-gray-600">Notificacoes IPN (Instant Payment Notification)</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                <ol class="space-y-3 text-gray-700">
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">1.</span>
+                        <span>Na aplicacao, va em <strong>Webhooks</strong></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">2.</span>
+                        <span>Cole a URL do seu N8N Webhook</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-bold text-blue-600">3.</span>
+                        <span>Selecione os eventos:</span>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="bg-white border rounded-lg overflow-hidden">
+                <table class="w-full text-sm">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="text-left p-3">Evento</th>
+                            <th class="text-left p-3">Quando Dispara</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y">
+                        <tr>
+                            <td class="p-3 font-mono text-xs">payment</td>
+                            <td class="p-3">Pagamento criado, aprovado, recusado, etc</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-mono text-xs">merchant_order</td>
+                            <td class="p-3">Pedido atualizado</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-mono text-xs">chargebacks</td>
+                            <td class="p-3">Contestacao de pagamento</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-mono text-xs">point_integration_wh</td>
+                            <td class="p-3">Pagamentos Point (maquininha)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <div class="flex items-start gap-4 mb-6">
+                <div class="step-number">4</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Usar no N8N</h2>
+                    <p class="text-gray-600">Via HTTP Request (nao tem node nativo)</p>
+                </div>
+            </div>
+
+            <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-6">
+                <p class="font-bold text-yellow-800"><i class="fas fa-info-circle mr-2"></i>Importante</p>
+                <p class="text-sm text-yellow-700 mt-1">
+                    N8N nao tem node nativo do Mercado Pago. Use o <strong>HTTP Request</strong>.
+                </p>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <h3 class="font-bold text-lg mb-4">Configuracao padrao:</h3>
+                <pre><code><span class="code-comment">// HTTP Request - Header Authentication</span>
+
+<span class="code-key">Header Name</span>: <span class="code-string">Authorization</span>
+<span class="code-key">Header Value</span>: <span class="code-string">Bearer APP_USR-seu-access-token</span>
+
+<span class="code-key">Base URL</span>: <span class="code-string">https://api.mercadopago.com</span></code></pre>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-code mr-2 text-blue-600"></i>Exemplos Praticos
+            </h2>
+
+            <div class="space-y-8">
+                <div>
+                    <h3 class="font-bold text-lg mb-4">1. Criar pagamento PIX</h3>
+                    <pre><code><span class="code-comment">// HTTP Request: POST</span>
+<span class="code-key">URL</span>: <span class="code-string">https://api.mercadopago.com/v1/payments</span>
+
+<span class="code-key">Body</span>:
+{
+  <span class="code-key">"transaction_amount"</span>: <span class="code-string">100.00</span>,
+  <span class="code-key">"payment_method_id"</span>: <span class="code-string">"pix"</span>,
+  <span class="code-key">"payer"</span>: {
+    <span class="code-key">"email"</span>: <span class="code-string">"cliente@email.com"</span>,
+    <span class="code-key">"first_name"</span>: <span class="code-string">"Joao"</span>,
+    <span class="code-key">"last_name"</span>: <span class="code-string">"Silva"</span>,
+    <span class="code-key">"identification"</span>: {
+      <span class="code-key">"type"</span>: <span class="code-string">"CPF"</span>,
+      <span class="code-key">"number"</span>: <span class="code-string">"12345678909"</span>
+    }
+  }
+}
+
+<span class="code-comment">// Resposta contem:</span>
+<span class="code-comment">// point_of_interaction.transaction_data.qr_code (texto)</span>
+<span class="code-comment">// point_of_interaction.transaction_data.qr_code_base64 (imagem)</span></code></pre>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-lg mb-4">2. Processar webhook de pagamento</h3>
+                    <pre><code><span class="code-comment">// Webhook Trigger: Recebe notificacao MP</span>
+<span class="code-comment">// → HTTP Request: GET detalhes do pagamento</span>
+
+<span class="code-key">URL</span>: <span class="code-string">https://api.mercadopago.com/v1/payments/{{ $json.data.id }}</span>
+
+<span class="code-comment">// → Switch: Verifica status</span>
+<span class="code-key">approved</span>: Pagamento confirmado → Liberar produto
+<span class="code-key">pending</span>: Aguardando pagamento
+<span class="code-key">rejected</span>: Pagamento recusado → Notificar cliente</code></pre>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-lg mb-4">3. Criar link de pagamento</h3>
+                    <pre><code><span class="code-comment">// HTTP Request: POST</span>
+<span class="code-key">URL</span>: <span class="code-string">https://api.mercadopago.com/checkout/preferences</span>
+
+<span class="code-key">Body</span>:
+{
+  <span class="code-key">"items"</span>: [
+    {
+      <span class="code-key">"title"</span>: <span class="code-string">"Curso N8N"</span>,
+      <span class="code-key">"quantity"</span>: <span class="code-string">1</span>,
+      <span class="code-key">"unit_price"</span>: <span class="code-string">297.00</span>
+    }
+  ],
+  <span class="code-key">"back_urls"</span>: {
+    <span class="code-key">"success"</span>: <span class="code-string">"https://seusite.com/sucesso"</span>,
+    <span class="code-key">"failure"</span>: <span class="code-string">"https://seusite.com/erro"</span>
+  },
+  <span class="code-key">"auto_return"</span>: <span class="code-string">"approved"</span>
+}
+
+<span class="code-comment">// Resposta: init_point (URL de pagamento)</span></code></pre>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-lg mb-4">4. Consultar saldo da conta</h3>
+                    <pre><code><span class="code-comment">// HTTP Request: GET</span>
+<span class="code-key">URL</span>: <span class="code-string">https://api.mercadopago.com/users/me</span>
+
+<span class="code-comment">// Resposta inclui:</span>
+<span class="code-comment">// available_balance: saldo disponivel para saque</span>
+<span class="code-comment">// total_balance: saldo total (inclui pendentes)</span></code></pre>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-lg mb-4">5. Reembolso total</h3>
+                    <pre><code><span class="code-comment">// HTTP Request: POST</span>
+<span class="code-key">URL</span>: <span class="code-string">https://api.mercadopago.com/v1/payments/{{ $json.payment_id }}/refunds</span>
+
+<span class="code-comment">// Body vazio = reembolso total</span>
+<span class="code-comment">// Ou especifique amount para reembolso parcial:</span>
+{
+  <span class="code-key">"amount"</span>: <span class="code-string">50.00</span>
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-list mr-2 text-blue-600"></i>Status de Pagamento
+            </h2>
+
+            <div class="bg-white border rounded-lg overflow-hidden">
+                <table class="w-full text-sm">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="text-left p-3">Status</th>
+                            <th class="text-left p-3">Significado</th>
+                            <th class="text-left p-3">Acao</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y">
+                        <tr class="bg-green-50">
+                            <td class="p-3 font-mono text-xs">approved</td>
+                            <td class="p-3">Pagamento aprovado</td>
+                            <td class="p-3">Liberar produto/servico</td>
+                        </tr>
+                        <tr class="bg-yellow-50">
+                            <td class="p-3 font-mono text-xs">pending</td>
+                            <td class="p-3">Aguardando pagamento</td>
+                            <td class="p-3">Aguardar (PIX, boleto)</td>
+                        </tr>
+                        <tr class="bg-blue-50">
+                            <td class="p-3 font-mono text-xs">in_process</td>
+                            <td class="p-3">Em analise</td>
+                            <td class="p-3">Aguardar aprovacao</td>
+                        </tr>
+                        <tr class="bg-red-50">
+                            <td class="p-3 font-mono text-xs">rejected</td>
+                            <td class="p-3">Recusado</td>
+                            <td class="p-3">Pedir outra forma de pagamento</td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="p-3 font-mono text-xs">cancelled</td>
+                            <td class="p-3">Cancelado</td>
+                            <td class="p-3">Nenhuma</td>
+                        </tr>
+                        <tr class="bg-orange-50">
+                            <td class="p-3 font-mono text-xs">refunded</td>
+                            <td class="p-3">Devolvido</td>
+                            <td class="p-3">Dinheiro retornou ao cliente</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-dollar-sign mr-2 text-green-500"></i>Taxas
+            </h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="text-left p-3">Metodo</th>
+                            <th class="text-left p-3">Taxa</th>
+                            <th class="text-left p-3">Liberacao</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y">
+                        <tr>
+                            <td class="p-3 font-bold">PIX</td>
+                            <td class="p-3">0,99%</td>
+                            <td class="p-3">Instantaneo</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold">Credito a vista</td>
+                            <td class="p-3">4,98%</td>
+                            <td class="p-3">14 dias</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold">Credito parcelado</td>
+                            <td class="p-3">4,98% + parcelas</td>
+                            <td class="p-3">Conforme parcelas</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold">Debito</td>
+                            <td class="p-3">1,99%</td>
+                            <td class="p-3">14 dias</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold">Boleto</td>
+                            <td class="p-3">R$ 3,49</td>
+                            <td class="p-3">3 dias uteis</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-4 bg-blue-50 border-l-4 border-blue-500 p-4">
+                <p class="text-sm text-blue-700">
+                    <strong>Nota:</strong> Taxas podem variar. Contas com alto volume
+                    podem negociar taxas menores.
+                </p>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-lightbulb mr-2 text-yellow-500"></i>Dicas Importantes
+            </h2>
+
+            <div class="space-y-4">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-gray-800 mb-2">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>Sempre valide webhook
+                    </h3>
+                    <p class="text-sm text-gray-600">
+                        Ao receber IPN, sempre faca GET no pagamento para confirmar dados.
+                        Nunca confie apenas no webhook (pode ser forjado).
+                    </p>
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-gray-800 mb-2">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>Idempotencia
+                    </h3>
+                    <p class="text-sm text-gray-600">
+                        Use o header <code>X-Idempotency-Key</code> para evitar criar
+                        pagamentos duplicados em caso de retry.
+                    </p>
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-gray-800 mb-2">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>Teste com usuarios de teste
+                    </h3>
+                    <p class="text-sm text-gray-600">
+                        Crie usuarios de teste no painel. Use cartoes de teste fornecidos
+                        pelo MP para simular aprovacao/recusa.
+                    </p>
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-gray-800 mb-2">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>PIX expira
+                    </h3>
+                    <p class="text-sm text-gray-600">
+                        Por padrao, PIX expira em 24h. Use <code>date_of_expiration</code>
+                        para definir prazo customizado.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl shadow-lg p-8 text-white text-center">
+            <h2 class="text-2xl font-bold mb-4">Parabens!</h2>
+            <p class="mb-6 text-white/90">Voce completou a trilha tecnica de APIs!</p>
+            <a href="../../tecnico.html" class="inline-block bg-white text-blue-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition">
+                Voltar para Trilha Tecnico <i class="fas fa-arrow-left ml-2"></i>
+            </a>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-400">N8N Academy - Dominando automacoes</p>
+        </div>
+    </footer>
+</body>
+</html>
