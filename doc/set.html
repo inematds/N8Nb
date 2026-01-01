@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Fields (Set) - n8n Cheatsheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 35px;
+        }
+        .section h2 {
+            color: #2196F3;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #2196F3;
+        }
+        .section h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+        .section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        ul li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 5px solid #2196F3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .steps {
+            background: #e8f4f8;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .steps ol {
+            padding-left: 25px;
+        }
+        .steps li {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        .example {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        strong {
+            color: #2196F3;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Edit Fields (Set)</h1>
+            <div class="subtitle">Sua Fonte Única de Verdade para Dados</div>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>O que o Edit Fields Faz</h2>
+                <p>O nó Set, agora chamado de nó Edit Fields no n8n, é a pedra fundamental para moldar e reestruturar dados como sua "fonte única de verdade". Ele permite criar, renomear, formatar, combinar e preparar qualquer variável que seu workflow precise para nós downstream.</p>
+
+                <ul>
+                    <li><strong>Define, sobrescreve ou cria novos campos</strong> nos dados de item do seu workflow</li>
+                    <li><strong>Edita nomes de campos, valores e tipos de dados</strong> (string, number, boolean, array, object)</li>
+                    <li><strong>Permite mapeamento manual</strong> (usando expressões ou valores fixos) ou autoria direta de JSON para estruturas complexas</li>
+                    <li><strong>Permite limpar, formatar e padronizar entrada</strong> para que cada nó downstream saiba exatamente onde encontrar seus dados necessários</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Principais Casos de Uso</h2>
+                <ul>
+                    <li><strong>Normalização de dados:</strong> Alterar tipos de dados ou corrigir valores de fontes inconsistentes (ex: converter timestamps, dividir/combinar campos)</li>
+                    <li><strong>Criar novas variáveis</strong> para lógica, chamadas de API ou relatórios</li>
+                    <li><strong>Reestruturar payloads JSON</strong> para requisições de saída ou inserções de banco de dados</li>
+                    <li><strong>Manter, remover ou mesclar campos seletivamente</strong> para produzir apenas as variáveis relevantes necessárias downstream</li>
+                    <li><strong>Armazenar valores estáticos ou calculados</strong> (ex: "status=approved", "price=total * 0.8") para uso posterior no workflow</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Como Configurar e Usar</h2>
+                <div class="steps">
+                    <ol>
+                        <li><strong>Inserir o Nó:</strong> Adicione após qualquer nó que gere dados brutos, não estruturados ou bagunçados</li>
+
+                        <li><strong>Escolher Modo:</strong>
+                            <ul>
+                                <li><strong>Manual Mapping:</strong> Arraste e solte campos da entrada, defina valores fixos ou expressões</li>
+                                <li><strong>JSON Output:</strong> Edite ou cole diretamente um objeto JSON para transformar o item inteiro</li>
+                            </ul>
+                        </li>
+
+                        <li><strong>Definir Campos:</strong>
+                            <ul>
+                                <li>Especifique novos nomes de campos e valores</li>
+                                <li>Altere tipos de dados, crie arrays/objetos e aplique fórmulas com expressões</li>
+                                <li>"Include Other Input Fields" pode manter todos os dados originais, ou escolha "Keep Only Set Fields" para descartar tudo exceto campos adicionados explicitamente</li>
+                                <li>Notação de ponto permite aninhar campos (ex: "user.name" ou "address.street"), ou pode desabilitar para objetos planos</li>
+                            </ul>
+                        </li>
+
+                        <li><strong>Saída:</strong> Nós downstream sempre referenciam os valores limpos e estruturados do seu nó Edit Fields, tornando as automações confiáveis e modulares</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Melhores Práticas e Dicas</h2>
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>Use cedo no seu workflow</strong> (frequentemente logo após o trigger ou primeiro nó de dados) para padronizar todos os dados e prevenir problemas mais tarde</li>
+                        <li><strong>Agrupe variáveis relacionadas à lógica</strong> em um único objeto para referência e manutenção mais fáceis</li>
+                        <li><strong>Combine com Aggregate/Split Out</strong> para processar dados em massa ou individualmente, depois moldá-los para resumo, mensagens ou armazenamento</li>
+                        <li><strong>Verifique "Keep Only Set Fields"</strong> se precisar de payloads ultra-limpos para APIs ou bancos de dados</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Exemplo Prático</h2>
+                <div class="example">
+                    <h3>Cenário: Padronizando Dados de Webhook</h3>
+                    <p>Um webhook recebido retorna <code>{username: "john", timestamp: "2024-01-01T08:00:00Z"}</code></p>
+
+                    <p><strong>Você usa o nó Edit Fields para:</strong></p>
+                    <ul>
+                        <li>Renomear "username" para "user_id"</li>
+                        <li>Converter "timestamp" para uma data formatada</li>
+                        <li>Adicionar um novo campo "status: active"</li>
+                    </ul>
+
+                    <p><strong>Resultado:</strong> Seus nós downstream veem apenas campos bem nomeados e com tipos corretos, perfeitos para integração ou relatórios.</p>
+
+                    <p>O nó Edit Fields é essencial para construir automações robustas, legíveis e manuteníveis. Ele dá controle total sobre os dados do seu workflow, definindo um único ponto onde "verdade" e estrutura são garantidas.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>n8n Cheatsheet - Edit Fields (Set) Node | Baseado em "Master n8n with 17 Nodes" by Nate Herk</p>
+        </div>
+    </div>
+</body>
+</html>

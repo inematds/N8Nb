@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loop Over Items - n8n Cheatsheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #00BCD4 0%, #0097A7 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 35px;
+        }
+        .section h2 {
+            color: #00BCD4;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #00BCD4;
+        }
+        .section h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+        .section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        ul li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 5px solid #00BCD4;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .steps {
+            background: #e8f4f8;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .steps ol {
+            padding-left: 25px;
+        }
+        .steps li {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        .example {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        strong {
+            color: #00BCD4;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Loop Over Items</h1>
+            <div class="subtitle">Processamento Sequencial Controlado</div>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>O que o Loop Faz</h2>
+                <p>O nó Loop Over Items (às vezes mostrado como Split in Batches) no n8n é essencial para processamento sequencial, especialmente ao trabalhar com grandes listas e você quer evitar sobrecarregar APIs, atingir limites de taxa ou esgotar a memória processando muitos itens em paralelo.</p>
+
+                <ul>
+                    <li><strong>Divide uma lista de itens de entrada</strong> em lotes menores e gerenciáveis, frequentemente um de cada vez, processando cada um sequencialmente, em vez de em massa ou paralelo</li>
+                    <li><strong>Mantém suas automações confiáveis e eficientes em recursos</strong>, lidando com limites de API, requisitos de delay e automação de dados em larga escala</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Principais Casos de Uso</h2>
+                <ul>
+                    <li><strong>Limitação de Taxa de API:</strong> Enviar requisições com segurança para APIs com limite de taxa, processando apenas uma (ou um punhado) de cada vez</li>
+                    <li><strong>Grandes Datasets:</strong> Automatizar tarefas como enviar emails, atualizar registros de CRM ou fazer scraping de sites para centenas/milhares de itens sem timeouts ou crashes de sistema</li>
+                    <li><strong>Workflows Paginados:</strong> Fazer loop sobre páginas de dados, buscar e processar cada uma por vez, e opcionalmente lidar com tamanho dinâmico de item ou lote</li>
+                    <li><strong>Throttling de Workflow:</strong> Adicionar pausas (com o nó Wait) entre lotes, garantindo conformidade com limites de processamento de terceiros ou backend</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Como Funciona</h2>
+                <div class="steps">
+                    <ol>
+                        <li><strong>Adicionar Nó Após Fonte de Dados:</strong> Posicione o nó após um nó produtor de lista (como API, Code, Google Sheets ou nó Aggregate)</li>
+
+                        <li><strong>Definir Tamanho do Lote:</strong> Defina o tamanho do lote, 1 para limites de taxa estritos, ou maior para processamento agrupado</li>
+
+                        <li><strong>Conectar Sua Lógica de Processamento:</strong> Downstream, adicione nós para sua ação (ex: HTTP Request, Email, Transformação de Dados)</li>
+
+                        <li><strong>Loop de Volta:</strong> Conecte o nó de ação de volta à entrada "loop" do nó Loop para execuções repetidas até que todos os lotes sejam processados</li>
+
+                        <li><strong>Finalizar e Sair:</strong> Quando todos os itens estiverem completos, a execução do workflow avança da saída "done" do nó Loop</li>
+
+                        <li><strong>Delays Opcionais:</strong> Insira nós Wait para controlar a velocidade de requisição entre iterações se necessário</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Melhores Práticas e Dicas</h2>
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>Prefira Loop Over Items/Split in Batches</strong> para chamadas de API para evitar banimentos ou falhas com serviços externos</li>
+                        <li><strong>Muitos nós n8n nativamente iteram</strong> através de arrays de entrada, mas loops explícitos fornecem controle preciso e tratamento de erros</li>
+                        <li><strong>Sempre defina uma condição de saída clara</strong> ou lista finita de itens para evitar loops infinitos, especialmente ao fazer scraping ou paginar</li>
+                        <li><strong>Se precisar processar lotes em paralelo</strong>, ajuste o tamanho do lote ou combine nós paralelos e de loop intencionalmente</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Exemplo Prático</h2>
+                <div class="example">
+                    <h3>Cenário: Enviar Emails com Limite de Taxa</h3>
+                    <p>Você tem 500 contatos para enviar email (com um limite de API de 10 por minuto):</p>
+
+                    <ul>
+                        <li><strong>Use Loop Over Items</strong> (tamanho do lote: 1) e um nó Wait (6 segundos)</li>
+                        <li>O workflow envia um email, pausa, faz loop para o próximo, e repete até que todos os 500 estejam prontos, evitando banimentos e garantindo operação estável</li>
+                    </ul>
+
+                    <p><strong>Resultado:</strong> O nó Loop Over Items torna automações complexas e de larga escala estáveis, controladas e em conformidade com restrições de taxa e memória, uma ferramenta essencial para qualquer construtor sério de n8n.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>n8n Cheatsheet - Loop Over Items Node | Baseado em "Master n8n with 17 Nodes" by Nate Herk</p>
+        </div>
+    </div>
+</body>
+</html>

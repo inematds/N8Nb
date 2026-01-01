@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code - n8n Cheatsheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #212121 0%, #424242 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 35px;
+        }
+        .section h2 {
+            color: #212121;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #212121;
+        }
+        .section h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+        .section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        ul li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 5px solid #212121;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .steps {
+            background: #e8f4f8;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .steps ol {
+            padding-left: 25px;
+        }
+        .steps li {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        strong {
+            color: #212121;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Code</h1>
+            <div class="subtitle">JavaScript Customizado para Transformações Complexas</div>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>O que o Code Faz</h2>
+                <p>O nó Code no n8n é sua ferramenta principal para manipular, transformar e estruturar dados usando JavaScript customizado, oferecendo uma solução mais rápida, previsível e rigidamente controlada do que nós baseados em IA ou pré-construídos para operações complexas.</p>
+
+                <ul>
+                    <li><strong>Executa JavaScript customizado</strong> em dados JSON recebidos, seja em cada item individualmente ou em todo o lote de uma vez</li>
+                    <li><strong>Permite remodelar saídas</strong>, adicionar novos campos, realizar cálculos, filtrar resultados ou reestruturar completamente seus dados para atender requisitos de nós downstream</li>
+                    <li><strong>Essencial para tarefas</strong> onde nós integrados ou expressões não são suficientes, como matemática avançada, remodelagem única de JSON ou lidar com peculiaridades de resposta de API</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Principais Casos de Uso</h2>
+                <ul>
+                    <li><strong>Transformação de formato:</strong> Converter respostas de API (achatar objetos, dividir strings, agrupar campos)</li>
+                    <li><strong>Cálculos customizados:</strong> Agregar somas, porcentagens ou criar novos campos computados</li>
+                    <li><strong>Manipulação de conteúdo:</strong> Extrair partes de uma string, limpar texto, analisar datas, reformatar emails</li>
+                    <li><strong>Filtragem de dados:</strong> Manter apenas itens que correspondem a regras complexas de múltiplas condições</li>
+                    <li><strong>Preparar payloads</strong> para APIs, bancos de dados ou ferramentas de mensagens que precisam de estrutura precisa</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Como Usar Efetivamente</h2>
+                <div class="steps">
+                    <ol>
+                        <li><strong>Entender Dados Recebidos:</strong> Sempre inspecione o JSON recebido para ver o que seu código receberá. Use o painel "Execution Data" ou console.log (para configurações self-hosted) para debug</li>
+
+                        <li><strong>Escrever Código Focado:</strong> A maioria do código funciona na variável <code>item.json</code>, representando um item de workflow de cada vez. Você pode fazer loop por todos os itens ou processar cada um individualmente dependendo de suas necessidades</li>
+
+                        <li><strong>Saída Esperada:</strong> O nó Code deve retornar um array de objetos como <code>[{ json: { ... } }, ...]</code>. Retornar apenas um objeto ou array causará erros, certifique-se de embrulhar suas saídas adequadamente</li>
+
+                        <li><strong>Debugging:</strong> Quando erros ocorrem, verifique que:
+                            <ul>
+                                <li>Você não sobrescreveu ou removeu acidentalmente a propriedade json</li>
+                                <li>Sua saída final corresponde ao que n8n espera (um array de objetos)</li>
+                                <li>Em caso de dúvida, retorne um item simples inalterado para isolar problemas</li>
+                            </ul>
+                        </li>
+
+                        <li><strong>Deixe IA Ajudar:</strong> Para velocidade, clareza e precisão, use IA como assistente de escrita de código, forneça o erro/contexto e seu objetivo, e deixe ela sugerir e consertar seu código</li>
+
+                        <li><strong>Editar e Testar Iterativamente:</strong> Após escrever código, execute testes de execução. Se algo quebrar, compartilhe a entrada, o código e a mensagem de erro ao buscar ajuda, essa clareza acelera debugging e suporte de IA</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Melhores Práticas e Solução de Problemas</h2>
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>Se seu nó code não está funcionando</strong>, verifique que a estrutura dos seus dados retornados corresponde exatamente ao que n8n espera (chave "json" deve apontar para um objeto)</li>
+                        <li><strong>Não use imports globais</strong> (como import ou export), o nó code roda em sandbox. Use require se self-hosting e módulos externos estiverem habilitados</li>
+                        <li><strong>Use variáveis integradas do n8n</strong>, como $input, para referenciar dados de outros nós para código limpo e confiável</li>
+                        <li><strong>Comece simples e construa complexidade</strong>, teste com dados hardcoded se necessário antes de conectar entrada dinâmica</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Estrutura de Retorno Obrigatória</h2>
+                <div class="warning">
+                    <h3>IMPORTANTE: Formato de Retorno Correto</h3>
+                    <p>O nó Code DEVE retornar dados no seguinte formato:</p>
+                    <code style="display: block; margin: 10px 0; padding: 10px; background: white;">
+                        return [{ json: { campo1: valor1, campo2: valor2 } }];
+                    </code>
+                    <p>Erros comuns:</p>
+                    <ul>
+                        <li>Retornar apenas um objeto: <code>return { campo: valor }</code> ❌</li>
+                        <li>Retornar apenas um array: <code>return [valor1, valor2]</code> ❌</li>
+                        <li>Esquecer a propriedade "json": <code>return [{ campo: valor }]</code> ❌</li>
+                    </ul>
+                    <p>Para debugging, compartilhe saída de erro, o código real e uma amostra do JSON recebido com IA ou a comunidade n8n para diagnóstico rápido.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <p style="text-align: center; font-size: 1.1em; margin-top: 30px;">
+                    <strong>O nó Code é a ferramenta definitiva para manipulação de dados sob medida no n8n</strong> - poderoso, rápido e previsível quando você conhece seus dados e domina a estrutura de retorno.
+                </p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>n8n Cheatsheet - Code Node | Baseado em "Master n8n with 17 Nodes" by Nate Herk</p>
+        </div>
+    </div>
+</body>
+</html>

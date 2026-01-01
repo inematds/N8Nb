@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IF - n8n Cheatsheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 35px;
+        }
+        .section h2 {
+            color: #9C27B0;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #9C27B0;
+        }
+        .section h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+        .section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        ul li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 5px solid #9C27B0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .steps {
+            background: #e8f4f8;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .steps ol {
+            padding-left: 25px;
+        }
+        .steps li {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        .example {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .code-examples {
+            background: #f4f4f4;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .code-examples h4 {
+            color: #9C27B0;
+            margin-bottom: 10px;
+        }
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        strong {
+            color: #9C27B0;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>IF</h1>
+            <div class="subtitle">Decisões Inteligentes nos Seus Workflows</div>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>O que o IF Faz</h2>
+                <p>O nó IF no n8n traz poder de tomada de decisão aos seus workflows, permitindo que automações executem verificações e se ramifiquem com base nas suas condições, seja igualdade, comparação ou lógica customizada.</p>
+
+                <ul>
+                    <li><strong>Avalia uma condição lógica</strong> contra seus dados (ex: "status = active", "amount > 1000", "email includes @company.com")</li>
+                    <li><strong>Envia a execução do workflow por dois ramos:</strong> "true" (se a condição for atendida), ou "false" (se não for)</li>
+                    <li><strong>Usado para filtragem avançada</strong>, tratamento de erros, lógica de negócio e roteamento de diferentes ações baseadas em entradas</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Principais Casos de Uso</h2>
+                <ul>
+                    <li><strong>Filtragem:</strong> Continuar apenas com itens que atendem um critério específico, como "score > 80" ou "order_status = shipped"</li>
+                    <li><strong>Portões de Qualidade:</strong> Validar registros recebidos, processar apenas aqueles que passam nas verificações</li>
+                    <li><strong>Processamento Condicional:</strong> Rotear dados para diferentes integrações ou notificações dependendo de status/valores</li>
+                    <li><strong>Gerenciamento de Erros:</strong> Ramificar transações falhadas para lógica de retry ou sistemas de alerta</li>
+                    <li><strong>Lógica de Negócio:</strong> Lidar com clientes premium vs. básicos, alertas de alta prioridade ou casos especiais com caminhos separados</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Como Configurar e Usar</h2>
+                <div class="steps">
+                    <ol>
+                        <li><strong>Inserir o Nó:</strong> Adicione após qualquer nó onde ramificação baseada em lógica é necessária (ex: Set, HTTP Request)</li>
+
+                        <li><strong>Configurar Condições:</strong>
+                            <ul>
+                                <li>Escolha "Field to Evaluate", então defina "Comparison Operation" (igual a, diferente, maior que, contém, começa com, termina com, etc.)</li>
+                                <li>Para casos avançados, use expressões, lógica baseada em JavaScript para avaliar condições complexas (ex: "score > 90 && status == 'active'")</li>
+                            </ul>
+                        </li>
+
+                        <li><strong>Ramos True/False:</strong>
+                            <ul>
+                                <li>Saídas no conector "true" se a condição corresponder, conector "false" caso contrário</li>
+                                <li>Adicione diferentes nós/ações a cada ramo, automações se adaptam a qualquer entrada de dados</li>
+                            </ul>
+                        </li>
+
+                        <li><strong>Testar Execução:</strong> Use dados de teste no desenvolvimento para confirmar comportamento de ramificação antes de ativar seu workflow</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Melhores Práticas e Dicas</h2>
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>Divida lógica complexa</strong> usando múltiplos nós IF ou combine com nós Switch para ramificação multi-direcional</li>
+                        <li><strong>Agrupe verificações relacionadas</strong> em blocos lógicos para debugging e manutenção mais fáceis</li>
+                        <li><strong>Para verificar existência de campos</strong>, use verificações de objeto como <code>{{ $json.items.length > 0 }}</code></li>
+                        <li><strong>Use em loops</strong> para terminar iterações sob certas condições (ex: quando "nextPage" é false)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Padrões de Exemplo</h2>
+                <div class="code-examples">
+                    <h4>Igualdade básica:</h4>
+                    <code>{{ $json.status === "active" }}</code>
+
+                    <h4>Comparação numérica:</h4>
+                    <code>{{ $json.amount > 1000 }}</code>
+
+                    <h4>String contém:</h4>
+                    <code>{{ $json.email.includes("@company.com") }}</code>
+
+                    <h4>Testes de array/objeto:</h4>
+                    <code>{{ $json.items.length > 0 }}</code>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Exemplo Prático</h2>
+                <div class="example">
+                    <h3>Cenário: Filtrar Pedidos por Valor</h3>
+                    <p>Você quer processar pedidos de forma diferente baseado no valor:</p>
+
+                    <ul>
+                        <li><strong>Condição:</strong> <code>{{ $json.amount > 1000 }}</code></li>
+                        <li><strong>Ramo TRUE:</strong> Enviar para aprovação manual e notificar gerente</li>
+                        <li><strong>Ramo FALSE:</strong> Aprovar automaticamente e processar imediatamente</li>
+                    </ul>
+
+                    <p><strong>Resultado:</strong> O nó IF é essencial para automação inteligente de workflows, transformando o n8n de um sistema estático em uma plataforma responsiva que pode adaptar, filtrar e lidar com regras de negócio dinamicamente.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>n8n Cheatsheet - IF Node | Baseado em "Master n8n with 17 Nodes" by Nate Herk</p>
+        </div>
+    </div>
+</body>
+</html>

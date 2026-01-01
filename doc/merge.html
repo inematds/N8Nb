@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge - n8n Cheatsheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #673AB7 0%, #512DA8 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 35px;
+        }
+        .section h2 {
+            color: #673AB7;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #673AB7;
+        }
+        .section h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+        .section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        ul li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 5px solid #673AB7;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .mode-box {
+            background: #e8f4f8;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .example {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        strong {
+            color: #673AB7;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+        .table-box {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #673AB7;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Merge</h1>
+            <div class="subtitle">Combine Dados de Múltiplas Fontes</div>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>O que o Merge Faz</h2>
+                <p>O nó Merge no n8n permite que você combine dados de dois ou mais ramos diferentes do seu workflow, seja mesclando registros relacionados, anexando listas, ou aguardando que múltiplas operações paralelas sejam concluídas antes de continuar.</p>
+
+                <ul>
+                    <li><strong>Combina dados de múltiplas entradas</strong> em uma única saída estruturada</li>
+                    <li><strong>Suporta vários modos de mesclagem</strong> para diferentes casos de uso</li>
+                    <li><strong>Essencial para workflows paralelos</strong> que precisam sincronizar resultados</li>
+                    <li><strong>Permite enriquecer dados</strong> combinando informações de diferentes fontes</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Modos de Mesclagem</h2>
+                <div class="mode-box">
+                    <h3>1. Append</h3>
+                    <p>Anexa todos os itens de todas as entradas em uma única lista</p>
+                    <ul>
+                        <li>Simplesmente junta todos os itens</li>
+                        <li>Não faz correspondência ou combinação</li>
+                        <li>Útil para consolidar resultados de múltiplas fontes</li>
+                    </ul>
+
+                    <h3 style="margin-top: 25px;">2. Merge By Fields</h3>
+                    <p>Combina itens baseado em campos chave correspondentes</p>
+                    <ul>
+                        <li>Como um JOIN de banco de dados</li>
+                        <li>Especifica campos chave para correspondência</li>
+                        <li>Mescla campos de itens correspondentes</li>
+                    </ul>
+
+                    <h3 style="margin-top: 25px;">3. Merge By Position</h3>
+                    <p>Combina itens baseado em sua posição no array</p>
+                    <ul>
+                        <li>Primeiro item com primeiro item, segundo com segundo, etc.</li>
+                        <li>Útil quando ordem é significativa</li>
+                        <li>Itens devem estar em ordem correspondente</li>
+                    </ul>
+
+                    <h3 style="margin-top: 25px;">4. Wait to Finish</h3>
+                    <p>Aguarda todas as entradas completarem antes de continuar</p>
+                    <ul>
+                        <li>Sincroniza operações paralelas</li>
+                        <li>Passa dados da primeira entrada apenas</li>
+                        <li>Útil para garantir que tudo termine antes do próximo passo</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Principais Casos de Uso</h2>
+                <ul>
+                    <li><strong>Enriquecimento de Dados:</strong> Combinar dados de cliente de CRM com dados de vendas do banco de dados</li>
+                    <li><strong>Consolidação de Resultados:</strong> Juntar resultados de múltiplas APIs ou fontes de dados</li>
+                    <li><strong>Sincronização Paralela:</strong> Aguardar múltiplas operações paralelas completarem antes de continuar</li>
+                    <li><strong>Combinação de Dados Relacionados:</strong> Juntar tabelas relacionadas como em JOIN de SQL</li>
+                    <li><strong>Agregação Multi-fonte:</strong> Combinar dados de diferentes sistemas para relatórios unificados</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Como Configurar</h2>
+                <div class="highlight-box">
+                    <h3>Configuração Básica</h3>
+                    <ol style="padding-left: 25px; margin-top: 15px;">
+                        <li><strong>Inserir o Nó:</strong> Adicione onde dois ou mais ramos de workflow se encontram</li>
+                        <li><strong>Conectar Entradas:</strong> Conecte múltiplos nós ao Merge (Input 1, Input 2, etc.)</li>
+                        <li><strong>Escolher Modo:</strong> Selecione o modo de mesclagem apropriado para seu caso de uso</li>
+                        <li><strong>Configurar Campos:</strong> Para Merge By Fields, especifique os campos chave</li>
+                        <li><strong>Testar:</strong> Execute com dados de teste para verificar resultado da mesclagem</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Comparação de Modos</h2>
+                <div class="table-box">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Modo</th>
+                                <th>Quando Usar</th>
+                                <th>Exemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Append</strong></td>
+                                <td>Combinar listas sem relação</td>
+                                <td>Juntar leads de 3 fontes diferentes</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Merge By Fields</strong></td>
+                                <td>Combinar dados relacionados</td>
+                                <td>Juntar dados de cliente com pedidos por customer_id</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Merge By Position</strong></td>
+                                <td>Dados em ordem correspondente</td>
+                                <td>Combinar nomes com emails na mesma ordem</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Wait to Finish</strong></td>
+                                <td>Sincronizar operações paralelas</td>
+                                <td>Aguardar 3 uploads de arquivo completarem</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Exemplos Práticos</h2>
+                <div class="example">
+                    <h3>Exemplo 1: Enriquecimento de Dados de Cliente</h3>
+                    <p><strong>Cenário:</strong> Combinar dados básicos de clientes com histórico de compras</p>
+                    <ul>
+                        <li><strong>Input 1:</strong> Buscar clientes do CRM → [{id: 1, name: "João", email: "..."}]</li>
+                        <li><strong>Input 2:</strong> Buscar pedidos do DB → [{customer_id: 1, total: 500}]</li>
+                        <li><strong>Merge By Fields:</strong> id = customer_id</li>
+                        <li><strong>Resultado:</strong> [{id: 1, name: "João", email: "...", total: 500}]</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h3>Exemplo 2: Consolidação de Múltiplas APIs</h3>
+                    <p><strong>Cenário:</strong> Buscar produtos de 3 fornecedores diferentes</p>
+                    <ul>
+                        <li><strong>Input 1:</strong> API Fornecedor A → [prod1, prod2]</li>
+                        <li><strong>Input 2:</strong> API Fornecedor B → [prod3, prod4]</li>
+                        <li><strong>Input 3:</strong> API Fornecedor C → [prod5]</li>
+                        <li><strong>Merge Append:</strong> Junta tudo em [prod1, prod2, prod3, prod4, prod5]</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h3>Exemplo 3: Sincronização de Uploads Paralelos</h3>
+                    <p><strong>Cenário:</strong> Fazer upload de múltiplos arquivos em paralelo e aguardar todos</p>
+                    <ul>
+                        <li><strong>Input 1:</strong> Upload arquivo 1 para S3</li>
+                        <li><strong>Input 2:</strong> Upload arquivo 2 para S3</li>
+                        <li><strong>Input 3:</strong> Upload arquivo 3 para S3</li>
+                        <li><strong>Merge Wait to Finish:</strong> Aguarda todos completarem</li>
+                        <li><strong>Próximo passo:</strong> Enviar notificação de conclusão</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Melhores Práticas</h2>
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>Valide Campos Chave:</strong> Ao usar Merge By Fields, garanta que campos chave existem em ambas as entradas</li>
+                        <li><strong>Considere Performance:</strong> Merge By Fields pode ser lento com muitos itens - otimize quando possível</li>
+                        <li><strong>Documente Lógica:</strong> Deixe claro no workflow qual modo de merge está sendo usado e por quê</li>
+                        <li><strong>Trate Dados Ausentes:</strong> Planeje para casos onde não há correspondência (em Merge By Fields)</li>
+                        <li><strong>Use Wait to Finish Apropriadamente:</strong> Quando precisar apenas sincronizar, não combinar dados</li>
+                        <li><strong>Teste com Dados Reais:</strong> Sempre teste merges com volumes e variedades de dados representativos</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Troubleshooting</h2>
+                <div class="highlight-box">
+                    <h3>Problemas Comuns</h3>
+                    <ul>
+                        <li><strong>Merge não encontra correspondências:</strong> Verifique se campos chave têm mesmo tipo de dados e formato</li>
+                        <li><strong>Dados duplicados:</strong> Pode acontecer se campos chave não são únicos - considere limpeza prévia</li>
+                        <li><strong>Ordem incorreta:</strong> Merge By Position requer ordem consistente - use Sort antes se necessário</li>
+                        <li><strong>Timeout:</strong> Para grandes volumes, considere processar em lotes menores</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>n8n Cheatsheet - Merge Node | Baseado em "Master n8n with 17 Nodes" by Nate Herk</p>
+        </div>
+    </div>
+</body>
+</html>

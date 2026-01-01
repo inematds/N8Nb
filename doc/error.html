@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Trigger - n8n Cheatsheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #F44336 0%, #D32F2F 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 35px;
+        }
+        .section h2 {
+            color: #F44336;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #F44336;
+        }
+        .section h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+        .section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        ul li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 5px solid #F44336;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .use-cases {
+            background: #e8f4f8;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .example {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .warning {
+            background: #ffebee;
+            border-left: 5px solid #F44336;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        strong {
+            color: #F44336;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Error Trigger</h1>
+            <div class="subtitle">Tratamento Inteligente de Erros</div>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>O que o Error Trigger Faz</h2>
+                <p>O nó Error Trigger no n8n permite que você force intencionalmente a falha de um workflow em pontos específicos, útil para validação de dados, tratamento de casos extremos e implementação de lógica de controle de qualidade robusta.</p>
+
+                <ul>
+                    <li><strong>Interrompe a execução do workflow</strong> imediatamente quando acionado</li>
+                    <li><strong>Registra mensagem de erro customizada</strong> para debugging e monitoramento</li>
+                    <li><strong>Pode ser capturado por workflows de tratamento de erro</strong> para ações de recuperação</li>
+                    <li><strong>Essencial para validação de dados</strong> e garantia de qualidade em automações críticas</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Principais Casos de Uso</h2>
+                <div class="use-cases">
+                    <ul>
+                        <li><strong>Validação de Dados:</strong> Falhar o workflow se dados críticos estiverem faltando ou inválidos</li>
+                        <li><strong>Controle de Qualidade:</strong> Verificar se condições específicas são atendidas antes de continuar</li>
+                        <li><strong>Limites de Negócio:</strong> Impor regras de negócio estritas (ex: não processar pedidos acima de certo valor sem aprovação)</li>
+                        <li><strong>Debugging:</strong> Forçar falha em pontos específicos durante desenvolvimento para testar tratamento de erros</li>
+                        <li><strong>Notificações de Alerta:</strong> Acionar alertas quando condições anormais são detectadas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Como Configurar</h2>
+                <div class="highlight-box">
+                    <h3>Configuração Básica</h3>
+                    <ol style="padding-left: 25px; margin-top: 15px;">
+                        <li><strong>Inserir o Nó:</strong> Adicione após uma condição IF ou Switch que detecta um estado de erro</li>
+                        <li><strong>Mensagem de Erro:</strong> Configure uma mensagem descritiva que explique por que o erro foi acionado</li>
+                        <li><strong>Dados Contextuais:</strong> Opcionalmente inclua dados relevantes para ajudar no debugging</li>
+                        <li><strong>Conectar Tratamento:</strong> Configure workflow de tratamento de erro se quiser recuperação automática</li>
+                    </ol>
+
+                    <h3 style="margin-top: 25px;">Padrão Comum de Uso</h3>
+                    <p style="margin-top: 10px;">O Error Trigger é frequentemente usado em combinação com nós IF:</p>
+                    <ul style="margin-top: 10px;">
+                        <li>IF → condição detecta problema</li>
+                        <li>Ramo FALSE → Error Trigger com mensagem descritiva</li>
+                        <li>Ramo TRUE → continua processamento normal</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Exemplos Práticos</h2>
+                <div class="example">
+                    <h3>Exemplo 1: Validação de Dados Obrigatórios</h3>
+                    <p><strong>Cenário:</strong> Garantir que email e nome estejam presentes</p>
+                    <ul>
+                        <li>IF: verifica se <code>{{ $json.email }}</code> e <code>{{ $json.name }}</code> existem</li>
+                        <li>FALSE → Error Trigger: "Dados obrigatórios ausentes: email ou nome"</li>
+                        <li>TRUE → continua processamento</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h3>Exemplo 2: Limite de Valor</h3>
+                    <p><strong>Cenário:</strong> Bloquear pedidos acima de R$ 10.000 sem aprovação</p>
+                    <ul>
+                        <li>IF: <code>{{ $json.amount > 10000 && !$json.approved }}</code></li>
+                        <li>TRUE → Error Trigger: "Pedido de R$ {{ $json.amount }} requer aprovação manual"</li>
+                        <li>FALSE → processa pedido normalmente</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h3>Exemplo 3: Validação de API Response</h3>
+                    <p><strong>Cenário:</strong> Verificar se API retornou dados válidos</p>
+                    <ul>
+                        <li>HTTP Request → busca dados da API</li>
+                        <li>IF: verifica se <code>{{ $json.data.length > 0 }}</code></li>
+                        <li>FALSE → Error Trigger: "API não retornou dados - possível problema no serviço"</li>
+                        <li>TRUE → processa dados recebidos</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Tratamento de Erros</h2>
+                <div class="highlight-box">
+                    <h3>Workflow de Tratamento de Erro</h3>
+                    <p>Você pode criar workflows dedicados para capturar e tratar erros:</p>
+                    <ul style="margin-top: 10px;">
+                        <li><strong>Error Trigger Workflow:</strong> Crie workflow separado que começa com "When workflow error occurs"</li>
+                        <li><strong>Captura Contexto:</strong> Recebe informações sobre qual workflow falhou e por quê</li>
+                        <li><strong>Ações de Recuperação:</strong> Enviar notificações, logar erros, tentar retry, etc.</li>
+                        <li><strong>Alertas:</strong> Notificar equipe via Slack, email ou sistema de monitoring</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Melhores Práticas</h2>
+                <div class="warning">
+                    <h3>Dicas Importantes</h3>
+                    <ul>
+                        <li><strong>Mensagens Descritivas:</strong> Sempre use mensagens de erro claras e acionáveis</li>
+                        <li><strong>Inclua Contexto:</strong> Adicione dados relevantes que ajudem a identificar a causa</li>
+                        <li><strong>Não Abuse:</strong> Use para casos realmente excepcionais, não para controle de fluxo normal</li>
+                        <li><strong>Configure Alertas:</strong> Implemente notificações para erros críticos</li>
+                        <li><strong>Log Estruturado:</strong> Considere logar erros em banco de dados ou serviço de monitoring</li>
+                        <li><strong>Documente Condições:</strong> Deixe claro no workflow quais condições acionam cada erro</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Padrões Avançados</h2>
+                <div class="highlight-box">
+                    <h3>1. Retry com Limite</h3>
+                    <p>Combinar Error Trigger com lógica de retry:</p>
+                    <ul>
+                        <li>Tentar ação até N vezes</li>
+                        <li>Se todas falharem → Error Trigger</li>
+                        <li>Notificar sobre falha persistente</li>
+                    </ul>
+
+                    <h3 style="margin-top: 20px;">2. Validação em Cascata</h3>
+                    <p>Múltiplas validações em sequência:</p>
+                    <ul>
+                        <li>Validação 1 → IF → Error se falhar</li>
+                        <li>Validação 2 → IF → Error se falhar</li>
+                        <li>Todas passaram → Continua</li>
+                    </ul>
+
+                    <h3 style="margin-top: 20px;">3. Error com Classificação</h3>
+                    <p>Diferentes níveis de severidade:</p>
+                    <ul>
+                        <li>CRITICAL: para workflow imediatamente</li>
+                        <li>WARNING: loga mas continua</li>
+                        <li>INFO: apenas registra para análise</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>n8n Cheatsheet - Error Trigger Node | Baseado em "Master n8n with 17 Nodes" by Nate Herk</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split Out - n8n Cheatsheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 35px;
+        }
+        .section h2 {
+            color: #FF6B6B;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #FF6B6B;
+        }
+        .section h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+        .section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        ul li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 5px solid #FF6B6B;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .steps {
+            background: #e8f4f8;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .steps ol {
+            padding-left: 25px;
+        }
+        .steps li {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        .example {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        strong {
+            color: #FF6B6B;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Split Out</h1>
+            <div class="subtitle">Transforme Arrays em Itens Individuais</div>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>O que o Split Out Faz</h2>
+                <p>O nó Split Out no n8n permite que você pegue qualquer campo de array nos seus dados e o divida, fazendo com que cada elemento do array se torne seu próprio item para processamento individual, funcionando como o nó "iterator" em outras ferramentas de automação.</p>
+
+                <ul>
+                    <li>Recebe um item (por exemplo, com um campo chamado "customers", que é um array: [{"name":"Alice"},{"name":"Bob"},{"name":"Carlos"}])</li>
+                    <li>O nó produz um item separado para cada entrada nesse array, expandindo o array agrupado em múltiplos itens de workflow para processar individualmente</li>
+                    <li>Isso significa que você pode enviar emails personalizados para cada cliente, processar registros separados de respostas de API ou lidar com cada linha de uma planilha isoladamente</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Principais Casos de Uso</h2>
+                <ul>
+                    <li><strong>Dividir registros de respostas de API</strong> para que cada um seja processado separadamente</li>
+                    <li><strong>Separar linhas de uma tabela</strong>, como Google Sheets ou consulta de banco de dados, para aplicar ações individuais</li>
+                    <li><strong>Iterar sobre saídas de modelos de IA</strong>, para que você possa tratar cada resultado gerado individualmente</li>
+                    <li><strong>Ações de automação granulares</strong>, como enviar mensagens para cada contato de uma lista de contatos</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Como Configurar e Usar</h2>
+                <div class="steps">
+                    <ol>
+                        <li><strong>Inserir o Nó:</strong> Adicione o nó Split Out diretamente após um nó que gera um array (ex: HTTP Request, Sheets, AI, etc.)</li>
+
+                        <li><strong>Campo para Dividir:</strong> Especifique o campo que contém o array que você deseja dividir (ex: "data.customers")</li>
+
+                        <li><strong>Configurações de Inclusão:</strong> Decida se deseja manter outros campos do item original com cada resultado dividido:
+                            <ul>
+                                <li>"No Other Fields" (apenas o campo principal)</li>
+                                <li>"All Other Fields" (preservar contexto)</li>
+                                <li>"Selected Other Fields" (lista customizada)</li>
+                            </ul>
+                        </li>
+
+                        <li><strong>Notação de Ponto:</strong> Por padrão, você pode referenciar subcampos usando notação de ponto ("parent.child"). Isso é útil para dados estruturados, desabilite se usar objetos planos</li>
+
+                        <li><strong>Conectar Downstream:</strong> Continue construindo seu workflow, cada novo item agora representa um caminho de execução individual para apenas aquele elemento do array</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Melhores Práticas e Dicas</h2>
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>Use Split Out antes de loops, requisições HTTP ou ações de mensagens</strong> - você garantirá que cada dado seja processado sem manipulação manual de arrays</li>
+                        <li><strong>Se seu array de origem vem de mais profundo no workflow</strong> (não apenas do nó anterior), verifique as conexões dos nós, pois Split Out espera entrada diretamente de seu predecessor, a menos que use nós Merge ou Set</li>
+                        <li><strong>Combine com o nó Aggregate</strong> se precisar reconstruir arrays após o processamento para relatórios, resumos ou envios de API</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Exemplo Prático</h2>
+                <div class="example">
+                    <h3>Cenário: Processar Lista de Contatos</h3>
+                    <p>Suponha que uma API retorne <code>[{"name":"Julie"},{"name":"Sam"},{"name":"Lee"}]</code> em um campo "contacts".</p>
+
+                    <p><strong>Com Split Out:</strong></p>
+                    <ul>
+                        <li>O nó produz três itens separados para Julie, Sam e Lee</li>
+                        <li>Você pode então enviar um email por contato ou registrar cada um em um banco de dados individualmente</li>
+                    </ul>
+
+                    <p><strong>Resultado:</strong> O nó Split Out é crítico para mudar automações de "volume" para "individual", permitindo workflows detalhados, direcionados e poderosos no n8n.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>n8n Cheatsheet - Split Out Node | Baseado em "Master n8n with 17 Nodes" by Nate Herk</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aggregate - n8n Cheatsheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 35px;
+        }
+        .section h2 {
+            color: #4CAF50;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #4CAF50;
+        }
+        .section h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+        .section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        ul li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 5px solid #4CAF50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .steps {
+            background: #e8f4f8;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .steps ol {
+            padding-left: 25px;
+        }
+        .steps li {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        .example {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        strong {
+            color: #4CAF50;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Aggregate</h1>
+            <div class="subtitle">Combine Múltiplos Itens em Um Só</div>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>O que o Aggregate Faz</h2>
+                <p>O nó Aggregate no n8n é a contraparte do nó Split Out, permitindo que você combine (ou "agrupe") múltiplos itens de workflow em um único item, frequentemente para preparar dados para relatórios resumidos, processamento em grupo ou atualizações de API em lote.</p>
+
+                <ul>
+                    <li><strong>Transforma muitos itens individuais de workflow</strong> em um número menor de itens agrupados, geralmente apenas um, coletando dados de um campo (ex: todos os valores de "email") ou combinando itens inteiros em um único array</li>
+                    <li><strong>Permite preparar payloads em lote</strong>, fazer cálculos de resumo ou criar relatórios agrupados antes de enviar os dados adiante no workflow</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Principais Casos de Uso</h2>
+                <ul>
+                    <li><strong>Lotes para APIs:</strong> Preparar arrays de registros para enviar a um sistema externo em massa, em vez de um de cada vez</li>
+                    <li><strong>Resumir:</strong> Computar métricas agregadas (como totais, médias ou min/max) para relatórios</li>
+                    <li><strong>Agrupar:</strong> Agrupar itens por um campo específico (como ID do cliente ou categoria) para reestruturar sua saída para análise ou dashboards</li>
+                    <li><strong>Reconstruir Arrays:</strong> Após processar itens individuais (por exemplo, após um Split Out), reagrupá-los para processamento adicional ou exportação</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Como Configurar e Usar</h2>
+                <div class="steps">
+                    <ol>
+                        <li><strong>Inserir o Nó:</strong> Adicione o nó Aggregate após uma série de itens, como saídas de Split Out, requisições HTTP ou registros transformados</li>
+
+                        <li><strong>Escolher Modo de Agregação:</strong>
+                            <ul>
+                                <li><strong>Individual Fields:</strong> Combine campos específicos de todos os itens de entrada em um array (ex: coletar todos os endereços de email em um campo de array)</li>
+                                <li><strong>All Item Data:</strong> Agrupe itens inteiros em uma lista dentro de um único campo de saída, frequentemente nomeado como "orders" ou "results"</li>
+                            </ul>
+                        </li>
+
+                        <li><strong>Opções Avançadas:</strong>
+                            <ul>
+                                <li><strong>Group By:</strong> Agrupe itens por um valor único ou categoria (ex: todas as vendas por cliente)</li>
+                                <li><strong>Merge Lists:</strong> Achate arrays do campo agregado se cada entrada já for um array (problema de "lista de listas")</li>
+                                <li><strong>Include/Exclude Fields:</strong> Ajuste quais campos são mantidos em arrays ou itens de resumo</li>
+                                <li><strong>Disable Dot Notation:</strong> Referencie campos com nomes contendo pontos como chaves literais</li>
+                            </ul>
+                        </li>
+
+                        <li><strong>Conectar Downstream:</strong> Após a agregação, a saída é um único item (ou itens agrupados se usar Group By) contendo arrays ou dados resumidos, pronto para relatórios, exportação ou ação em massa</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Melhores Práticas e Dicas</h2>
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>Use após Split Out ou lógica de loop</strong> para recombinar resultados individuais de volta em estrutura para o próximo passo de automação</li>
+                        <li><strong>Ao resumir, aproveite nós JavaScript downstream</strong> para cálculos complexos (ex: totais/médias) se não forem tratados diretamente no Aggregate</li>
+                        <li><strong>Sempre verifique</strong> que seu array resultante ou dados agrupados correspondem ao que o próximo sistema downstream ou API está esperando</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Exemplo Prático</h2>
+                <div class="example">
+                    <h3>Cenário: Agregando Pedidos</h3>
+                    <p>Suponha que você tenha 10 itens de pedido chegando individualmente. Usando Aggregate:</p>
+
+                    <ul>
+                        <li><strong>All Item Data:</strong> Produz um único item com um campo "orders", cujo valor é um array de todos os seus registros de pedidos, ideal para POSTs de API únicos ou planilhas de resumo</li>
+                        <li><strong>Individual Fields + Sum:</strong> Reúne todos os campos "amount" em um único array, ou os soma para um valor total de vendas</li>
+                    </ul>
+
+                    <p><strong>Resultado:</strong> O nó Aggregate é o passo crítico de "recombinação" ou "agrupamento", ajudando você a passar do tratamento de dados granular de volta para dados agrupados e prontos para lote para automações eficientes.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>n8n Cheatsheet - Aggregate Node | Baseado em "Master n8n with 17 Nodes" by Nate Herk</p>
+        </div>
+    </div>
+</body>
+</html>

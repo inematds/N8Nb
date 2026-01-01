@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Switch - n8n Cheatsheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 35px;
+        }
+        .section h2 {
+            color: #FF9800;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #FF9800;
+        }
+        .section h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+        .section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        ul li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 5px solid #FF9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .steps {
+            background: #e8f4f8;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .steps ol {
+            padding-left: 25px;
+        }
+        .steps li {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        .example {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        strong {
+            color: #FF9800;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Switch</h1>
+            <div class="subtitle">IF Turbinado para Múltiplos Caminhos</div>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>O que o Switch Faz</h2>
+                <p>O nó Switch no n8n é como um nó IF turbinado, permitindo que seus workflows se ramifiquem em muitos caminhos diferentes, não apenas dois, baseado em regras de roteamento customizadas que você define.</p>
+
+                <ul>
+                    <li><strong>Roteia itens recebidos</strong> para um de vários ramos de saída, dependendo do valor de um campo ou do resultado de uma expressão</li>
+                    <li><strong>Substitui longas cadeias de nós IF</strong> ou lógica complexa com um único nó para clareza e manutenibilidade</li>
+                    <li><strong>Suporta quantas saídas você precisar</strong>, cada uma com sua própria regra de correspondência (ex: 10 códigos de status possíveis, 5 cidades ou quaisquer categorias que desejar)</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Principais Casos de Uso</h2>
+                <ul>
+                    <li><strong>Roteamento Multi-direcional:</strong> Enviar faturas para diferentes endereços de email/nós de email baseado no ID do departamento</li>
+                    <li><strong>Alternância de Ações:</strong> Acionar diferentes ações para cada evento possível ou papel de usuário</li>
+                    <li><strong>Categorização de Dados:</strong> Categorizar automaticamente requisições, mensagens ou tarefas recebidas por tipo ou urgência</li>
+                    <li><strong>Simplificar Lógica:</strong> Substituir múltiplos nós IF conectados em sequência com um único Switch para workflows muito mais limpos</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Como Configurar e Usar</h2>
+                <div class="steps">
+                    <ol>
+                        <li><strong>Inserir o Nó:</strong> Posicione-o em qualquer ponto onde seu workflow precisa se ramificar por mais de duas possibilidades</li>
+
+                        <li><strong>Configurar Regras:</strong> Para cada saída, defina uma comparação, pode ser uma verificação de valor, correspondência a uma string, número ou uma expressão
+                            <ul>
+                                <li><strong>Exemplo:</strong> Saída 1 pode corresponder a "status = 'pending'", Saída 2 "status = 'approved'", etc.</li>
+                                <li>Você pode adicionar quantas saídas ("rotas") forem necessárias e dar a cada uma um rótulo customizado para clareza</li>
+                            </ul>
+                        </li>
+
+                        <li><strong>Tratamento de Fallback:</strong> Opcionalmente defina uma rota padrão para "sem correspondência", útil para logging ou tratamento de erros</li>
+
+                        <li><strong>Ações Downstream:</strong> Conecte um pipeline de processamento diferente, notificação ou chamada externa sob cada ramo para lidar com dados roteados apropriadamente</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Melhores Práticas e Dicas</h2>
+                <div class="highlight-box">
+                    <ul>
+                        <li><strong>Use nós Switch</strong> para manter a lógica de ramificação legível e visual, especialmente quando há várias condições para corresponder</li>
+                        <li><strong>Rotule claramente cada saída</strong> para manutenção e debugging de workflow mais fáceis</li>
+                        <li><strong>Para condições complexas</strong> (como "amount > 1000 and status = 'pending'"), use expressões nas regras de correspondência</li>
+                        <li><strong>Combine com nós IF</strong> para lógica hierárquica ou aninhada, mas deixe o Switch lidar com todos os casos multi-direcionais para prevenir expansão de lógica</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Exemplo Prático</h2>
+                <div class="example">
+                    <h3>Cenário: Roteamento de Pedidos por Tipo</h3>
+                    <p>Um webhook envia pedidos com um campo "order_type".</p>
+
+                    <p><strong>O nó Switch produz saídas para diferentes ramos:</strong></p>
+                    <ul>
+                        <li><strong>"retail"</strong> - Rota para sistema de varejo</li>
+                        <li><strong>"wholesale"</strong> - Rota para sistema de atacado</li>
+                        <li><strong>"international"</strong> - Rota para processamento internacional</li>
+                        <li><strong>"fallback"</strong> - Se order_type for qualquer outra coisa</li>
+                    </ul>
+
+                    <p>Cada ramo então envia dados para sua própria cadeia de automação de atendimento ou relatórios.</p>
+
+                    <p><strong>Resultado:</strong> O nó Switch é essencial para automação expressiva e modular no n8n, permitindo que você roteie, classifique e processe dados através de uma ampla gama de cenários de workflow, tudo a partir de um nó.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>n8n Cheatsheet - Switch Node | Baseado em "Master n8n with 17 Nodes" by Nate Herk</p>
+        </div>
+    </div>
+</body>
+</html>
