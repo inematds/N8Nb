@@ -182,6 +182,36 @@ Supabase Insert:<br>
       </div>
     </div>
 
+    <!-- Workflow -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-download text-green-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Workflow para Download</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="flex items-center justify-center">
+          <img src="self-updating-rag.jpg" alt="Self-Updating RAG Workflow" class="rounded-xl shadow-lg max-h-96 object-contain hover:scale-105 transition-transform cursor-pointer" onclick="window.open('self-updating-rag.jpg', '_blank')">
+        </div>
+        <div class="flex flex-col justify-center">
+          <h3 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">Self-Updating RAG System</h3>
+          <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+            Sistema RAG auto-atualizavel com Google Drive, Qdrant e Gemini.
+            Detecta mudancas e re-ingesta documentos automaticamente.
+          </p>
+          <ul class="space-y-2 mb-6 text-neutral-600 dark:text-neutral-400">
+            <li><i class="fas fa-check text-green-500 mr-2"></i>Watch Google Drive changes</li>
+            <li><i class="fas fa-check text-green-500 mr-2"></i>Hash comparison MD5</li>
+            <li><i class="fas fa-check text-green-500 mr-2"></i>Qdrant vector store</li>
+            <li><i class="fas fa-check text-green-500 mr-2"></i>Auto delete + re-ingest</li>
+          </ul>
+          <a href="Self_Updating_RAG.json" download class="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white px-8 py-4 rounded-xl font-bold transition-all text-center">
+            <i class="fas fa-download mr-2"></i>Baixar Workflow JSON
+          </a>
+        </div>
+      </div>
+    </div>
+
     <!-- Navegacao -->
     <div class="flex justify-between">
       <a href="voice-rag.html" class="bg-neutral-600 hover:bg-neutral-700 text-white px-8 py-4 rounded-xl font-bold transition-colors">

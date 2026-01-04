@@ -195,6 +195,36 @@ parameters:<br>
       </div>
     </div>
 
+    <!-- Workflow -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-download text-red-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Workflow para Download</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="flex items-center justify-center">
+          <img src="agentic-rag.jpg" alt="Agentic RAG Workflow" class="rounded-xl shadow-lg max-h-96 object-contain hover:scale-105 transition-transform cursor-pointer" onclick="window.open('agentic-rag.jpg', '_blank')">
+        </div>
+        <div class="flex flex-col justify-center">
+          <h3 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">Agentic RAG Agent</h3>
+          <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+            Workflow completo com agente que decide entre vector store, SQL, arquivos e APIs.
+            Inclui classificador de intencao e tool calling integrado.
+          </p>
+          <ul class="space-y-2 mb-6 text-neutral-600 dark:text-neutral-400">
+            <li><i class="fas fa-check text-green-500 mr-2"></i>Tool calling com 4 ferramentas</li>
+            <li><i class="fas fa-check text-green-500 mr-2"></i>Classificacao automatica de query</li>
+            <li><i class="fas fa-check text-green-500 mr-2"></i>Supabase como vector store</li>
+            <li><i class="fas fa-check text-green-500 mr-2"></i>Memoria de conversacao</li>
+          </ul>
+          <a href="Agentic_RAG.json" download class="bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white px-8 py-4 rounded-xl font-bold transition-all text-center">
+            <i class="fas fa-download mr-2"></i>Baixar Workflow JSON
+          </a>
+        </div>
+      </div>
+    </div>
+
     <!-- Navegacao -->
     <div class="flex justify-between">
       <a href="../../rag-avancado.html" class="bg-neutral-600 hover:bg-neutral-700 text-white px-8 py-4 rounded-xl font-bold transition-colors">

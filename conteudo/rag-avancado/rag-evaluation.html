@@ -243,6 +243,36 @@ Fine-tune prompt examples
       </div>
     </div>
 
+    <!-- Workflow -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-download text-orange-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Workflow para Download</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="flex items-center justify-center">
+          <img src="rag-evaluation.jpg" alt="RAG Evaluation Workflow" class="rounded-xl shadow-lg max-h-96 object-contain hover:scale-105 transition-transform cursor-pointer" onclick="window.open('rag-evaluation.jpg', '_blank')">
+        </div>
+        <div class="flex flex-col justify-center">
+          <h3 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">RAG Evaluation System</h3>
+          <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+            Sistema de avaliacao automatizada de qualidade RAG.
+            Mede relevancia, groundedness e satisfacao do usuario.
+          </p>
+          <ul class="space-y-2 mb-6 text-neutral-600 dark:text-neutral-400">
+            <li><i class="fas fa-check text-green-500 mr-2"></i>Relevance Score automatico</li>
+            <li><i class="fas fa-check text-green-500 mr-2"></i>Groundedness check</li>
+            <li><i class="fas fa-check text-green-500 mr-2"></i>HITL feedback loop</li>
+            <li><i class="fas fa-check text-green-500 mr-2"></i>Metricas para dashboard</li>
+          </ul>
+          <a href="RAG_Evaluation.json" download class="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white px-8 py-4 rounded-xl font-bold transition-all text-center">
+            <i class="fas fa-download mr-2"></i>Baixar Workflow JSON
+          </a>
+        </div>
+      </div>
+    </div>
+
     <!-- Navegacao -->
     <div class="flex justify-between">
       <a href="multi-agent-rag.html" class="bg-neutral-600 hover:bg-neutral-700 text-white px-8 py-4 rounded-xl font-bold transition-colors">
