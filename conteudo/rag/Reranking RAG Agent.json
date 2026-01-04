@@ -1,0 +1,463 @@
+{
+  "name": "Reranking RAG Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "topN": 5
+      },
+      "type": "@n8n/n8n-nodes-langchain.rerankerCohere",
+      "typeVersion": 1,
+      "position": [
+        1504,
+        448
+      ],
+      "id": "daf79f03-66e9-414e-8190-116674d9c078",
+      "name": "Cohere Reranker",
+      "credentials": {
+        "cohereApi": {
+          "id": "9nGOd5vv54FW05kn",
+          "name": "CohereApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 🎯 RAG with Reranking\n\nThis workflow demonstrates **semantic search with reranking** to improve retrieval accuracy.\n\n**How it works:**\n1. User asks a question\n2. Vector search retrieves top 20 similar documents\n3. Cohere reranker re-scores results for relevance\n4. Top 5 most relevant documents are used for response\n\n**Why reranking?**\nVector similarity ≠ relevance. Reranking uses a more sophisticated model to identify which results actually answer the query.\n\n**Performance tip:** Retrieve more (topK=20), rerank to fewer (topK=5)",
+        "height": 440,
+        "width": 520,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1072,
+        496
+      ],
+      "id": "397b7035-c1a4-4d24-8a9c-0bbaa3f4e96d",
+      "name": "Overview"
+    },
+    {
+      "parameters": {
+        "content": "## ⚙️ Setup Required\n\n### 1. Supabase Vector Store\n- Connect your Supabase instance\n- Table: `meetings` (or customize)\n- Must have vector column with embeddings\n\n### 2. OpenAI API\n- Embeddings: `text-embedding-3-small`\n- Chat Model: `gpt-4o-mini` or `gpt-4o`\n\n### 3. Cohere API\n- Reranker model (default works)\n- Free tier: 1000 requests/month\n- Improves relevance significantly\n\n### 4. Customize\n- Update table name in Vector Store node\n- Adjust system prompt in RAG Agent\n- Tune topK values (retrieve=20, rerank=5)\n- Add metadata filtering if needed",
+        "height": 560,
+        "width": 420,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1072,
+        -112
+      ],
+      "id": "26d48a07-f26e-476a-903a-72b8f40027a9",
+      "name": "Setup Guide"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list"
+        },
+        "options": {
+          "temperature": 0.3
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1056,
+        240
+      ],
+      "id": "67e9ae2a-d72c-4350-82eb-93cee01ccf0a",
+      "name": "OpenAI Chat Model3",
+      "credentials": {
+        "openAiApi": {
+          "id": "KSKdcXliKsG4jYZC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1232,
+        240
+      ],
+      "id": "911d383b-bccc-48b0-b53e-43298c78451f",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1g1jdk4nBlsS4yedySgVTGYZcqgLGOX0Y",
+          "mode": "list",
+          "cachedResultName": "Contextual RAG test",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1g1jdk4nBlsS4yedySgVTGYZcqgLGOX0Y"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -448,
+        16
+      ],
+      "id": "a8bdc26d-b443-4700-95ee-f37ec3447a7a",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "OeQme96wgmHJ0Mza",
+          "name": "Google Drive account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chunkSize": 300,
+        "chunkOverlap": 50,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        704,
+        352
+      ],
+      "id": "33dc2aae-30b1-45c4-8c61-e202feca8262",
+      "name": "Recursive Character Text Splitter1"
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-large",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        848,
+        720
+      ],
+      "id": "a225c48f-29fc-44b5-9b84-49a22047259d",
+      "name": "Embeddings OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "KSKdcXliKsG4jYZC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "textSplittingMode": "custom",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "doc_id",
+                "value": "={{ $('Google Drive Trigger').item.json.id }}"
+              },
+              {
+                "name": "doc_date",
+                "value": "={{ $('Google Drive Trigger').item.json.createdTime }}"
+              },
+              {
+                "name": "publisher",
+                "value": "={{ $('Google Drive Trigger').item.json.owners[0].displayName }}"
+              },
+              {
+                "name": "title",
+                "value": "={{ $('Google Drive Trigger').item.json.originalFilename }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        480,
+        176
+      ],
+      "id": "dc5c939e-812b-418f-bf9c-96f38b8f67ec",
+      "name": "Default Data Loader1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        928,
+        16
+      ],
+      "id": "49684240-8026-4105-9c8e-9fdd49f09469",
+      "name": "When chat message received",
+      "webhookId": "cec80a22-0e26-4265-8a16-2d888c17b95b"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are an AI assistant with access to company meeting logs and documents. Use the Supabase Vector Store tool to search the database and provide accurate, contextual answers to user questions. Always cite which documents or meetings your information comes from."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1152,
+        16
+      ],
+      "id": "495c43eb-ed0f-48e0-a7e8-fa03ddd5772a",
+      "name": "Reranking RAG Agent"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": {
+          "__rl": true,
+          "value": "n8n_test",
+          "mode": "list",
+          "cachedResultName": "n8n_test"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        16
+      ],
+      "id": "10b6c98e-e330-4274-aad6-dce9a7af688d",
+      "name": "Supabase Vector Store - Ingestion",
+      "credentials": {
+        "supabaseApi": {
+          "id": "y51RwLNUw8jtL0qI",
+          "name": "Patuxent Assistant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Search company meeting logs and documents. Use this tool to find relevant information from the knowledge base.",
+        "tableName": {
+          "__rl": true,
+          "value": "meetings",
+          "mode": "list",
+          "cachedResultName": "meetings"
+        },
+        "topK": 20,
+        "useReranker": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.3,
+      "position": [
+        1360,
+        240
+      ],
+      "id": "088787ac-6e38-40a9-bf8d-2721db731956",
+      "name": "Supabase Vector Store - Retrieval",
+      "credentials": {
+        "supabaseApi": {
+          "id": "y51RwLNUw8jtL0qI",
+          "name": "Patuxent Assistant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -224,
+        16
+      ],
+      "id": "e67f2d60-9007-493e-85fa-65b8bc571000",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "OeQme96wgmHJ0Mza",
+          "name": "Google Drive account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        0,
+        16
+      ],
+      "id": "cb2ceaeb-3d5c-4bc3-b678-3598ed6c3f9f",
+      "name": "Extract from File"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Cohere Reranker": {
+      "ai_reranker": [
+        [
+          {
+            "node": "Supabase Vector Store - Retrieval",
+            "type": "ai_reranker",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Reranking RAG Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Reranking RAG Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter1": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader1",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store - Ingestion",
+            "type": "ai_embedding",
+            "index": 0
+          },
+          {
+            "node": "Supabase Vector Store - Retrieval",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader1": {
+      "ai_document": [
+        [
+          {
+            "node": "Supabase Vector Store - Ingestion",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Reranking RAG Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store - Retrieval": {
+      "ai_tool": [
+        [
+          {
+            "node": "Reranking RAG Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Supabase Vector Store - Ingestion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a1546db0-1e77-4b84-a45f-8e07e091ea9a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "aaadb797535f05587ee95b776c942a7c3f7a46fd7aa0c9b6a9d64e1e595f8af1"
+  },
+  "id": "Gi7RhRQtvhqEDGx9",
+  "tags": []
+}

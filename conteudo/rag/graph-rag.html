@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graph RAG - Relacionamentos Inteligentes | N8N Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    .code-block { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 0.75rem; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.7; }
+  </style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../../rag.html" class="text-2xl font-bold text-purple-600 dark:text-purple-400 flex items-center gap-2">
+          <span>←</span><span class="text-3xl"><i class="fas fa-project-diagram"></i></span><span>Graph RAG</span>
+        </a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-gradient-to-br from-purple-500 via-violet-500 to-indigo-500 py-24">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="text-8xl mb-8"><i class="fas fa-project-diagram"></i></div>
+      <h1 class="text-6xl font-bold mb-6">Graph RAG</h1>
+      <p class="text-3xl mb-4 text-white/90">Assistente RAG de Grafos</p>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto">Sistema avancado com relacionamentos entre tabelas e navegacao por grafos de conhecimento</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 py-12">
+    <!-- Download e Imagem -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-8 mb-12">
+      <div class="flex flex-col lg:flex-row gap-8">
+        <div class="lg:w-1/2">
+          <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+            <i class="fas fa-download text-purple-500 mr-2"></i>Workflow Pronto
+          </h2>
+          <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-6">
+            Workflow avancado com 3 tabelas relacionadas no Supabase. Combina busca semantica com traversal de relacionamentos.
+          </p>
+          <a href="Graph RAG Agent with Supabase Vector Storage.json" download class="inline-flex items-center bg-purple-500 hover:bg-purple-600 text-white px-8 py-4 rounded-xl font-bold transition-colors text-lg">
+            <i class="fas fa-download mr-3"></i>Download Workflow JSON
+          </a>
+        </div>
+        <div class="lg:w-1/2">
+          <img src="GraphRAG.jpg" alt="Graph RAG Workflow" class="rounded-xl shadow-lg w-full">
+        </div>
+      </div>
+    </div>
+
+    <!-- O que e Graph RAG -->
+    <div class="bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-900/20 dark:to-purple-900/20 rounded-3xl p-12 mb-12 border-2 border-violet-200 dark:border-violet-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-question-circle text-violet-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">O Que e Graph RAG?</h2>
+      </div>
+      <p class="text-xl text-neutral-700 dark:text-neutral-300 mb-6">
+        Graph RAG usa um grafo de informacoes onde diferentes tabelas/tipos de dados estao conectados entre si. Isso tambem pode ser chamado de ontologia - entender como diferentes conjuntos de dados se relacionam.
+      </p>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl text-center">
+          <div class="text-4xl text-blue-500 mb-3"><i class="fas fa-file-alt"></i></div>
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">Documents</h3>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Titulo, conteudo, categoria, autor, status + IDs relacionados</p>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl text-center">
+          <div class="text-4xl text-green-500 mb-3"><i class="fas fa-question-circle"></i></div>
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">FAQs</h3>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Perguntas e respostas frequentes + documento fonte</p>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl text-center">
+          <div class="text-4xl text-orange-500 mb-3"><i class="fas fa-list-check"></i></div>
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">Procedures</h3>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Procedimentos passo-a-passo + documentos relacionados</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fluxo de Ingestao -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-upload text-purple-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Fluxo de Ingestao e Vetorizacao</h2>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-gradient-to-r from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 p-6 rounded-xl border-l-4 border-purple-500">
+          <h3 class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-2"><i class="fas fa-sitemap mr-2"></i>Input de Dados com Schema</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Agente recebe dados de teste + definicoes de tabelas (documents, FAQs, procedures) com mapeamentos de relacionamento.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 p-6 rounded-xl border-l-4 border-purple-500">
+          <h3 class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-2"><i class="fas fa-brain mr-2"></i>Classificacao LLM dos Dados</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Revisa dados de entrada contra schemas para determinar atribuicao correta de tabela.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 p-6 rounded-xl border-l-4 border-purple-500">
+          <h3 class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-2"><i class="fas fa-code mr-2"></i>Parsing e Validacao JSON</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Extrai dados estruturados e valida contra regras de schema predefinidas.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 p-6 rounded-xl border-l-4 border-purple-500">
+          <h3 class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-2"><i class="fas fa-vector-square mr-2"></i>Geracao de Embeddings OpenAI</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Converte titulo + conteudo em vetores via requisicao HTTP.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 p-6 rounded-xl border-l-4 border-purple-500">
+          <h3 class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-2"><i class="fas fa-random mr-2"></i>Roteamento Inteligente</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Direciona dados para tabela Supabase apropriada baseado na classificacao (documents/FAQs/procedures).</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 p-6 rounded-xl border-l-4 border-purple-500">
+          <h3 class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-2"><i class="fas fa-link mr-2"></i>Preservacao de Relacionamentos</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Armazena IDs de chave estrangeira (related_faq_id, related_procedure_id) nos metadados para traversal de grafo.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fluxo de Retrieval -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-search text-indigo-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Fluxo de Retrieval e Traversal</h2>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 p-6 rounded-xl border-l-4 border-indigo-500">
+          <h3 class="text-xl font-bold text-indigo-800 dark:text-indigo-300 mb-2"><i class="fas fa-database mr-2"></i>Busca Semantica Multi-Tabela</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Agente consulta tres vector stores separados (um por tipo de dado) simultaneamente.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 p-6 rounded-xl border-l-4 border-indigo-500">
+          <h3 class="text-xl font-bold text-indigo-800 dark:text-indigo-300 mb-2"><i class="fas fa-arrow-right mr-2"></i>Retrieval Vetorial Inicial</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Retorna chunks relevantes com IDs de relacionamento embeddados nos metadados.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 p-6 rounded-xl border-l-4 border-indigo-500">
+          <h3 class="text-xl font-bold text-indigo-800 dark:text-indigo-300 mb-2"><i class="fas fa-project-diagram mr-2"></i>Traversal de Relacionamentos</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Usa IDs retornados para buscar registros diretamente conectados de tabelas relacionadas.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 p-6 rounded-xl border-l-4 border-indigo-500">
+          <h3 class="text-xl font-bold text-indigo-800 dark:text-indigo-300 mb-2"><i class="fas fa-route mr-2"></i>Estrategia de Busca Dupla</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Combina busca semantica para resultados primarios + queries diretas por ID para contexto vinculado.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 p-6 rounded-xl border-l-4 border-indigo-500">
+          <h3 class="text-xl font-bold text-indigo-800 dark:text-indigo-300 mb-2"><i class="fas fa-layer-group mr-2"></i>Agregacao de Contexto</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Mescla dados semanticamente relevantes com informacoes relacionalmente conectadas para respostas abrangentes.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Diagrama de Relacionamentos -->
+    <div class="bg-gradient-to-br from-slate-50 to-gray-50 dark:from-slate-900/20 dark:to-gray-900/20 rounded-3xl p-12 mb-12 border-2 border-slate-200 dark:border-slate-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-network-wired text-slate-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Estrutura de Relacionamentos</h2>
+      </div>
+
+      <div class="bg-white dark:bg-neutral-800 p-8 rounded-xl">
+        <div class="code-block text-sm">
+<span class="text-blue-400">Documents</span>
+├── id (PK)
+├── title
+├── content
+├── category
+├── author
+├── status
+├── <span class="text-green-400">related_faq_id</span> → FAQs.id
+└── <span class="text-orange-400">related_procedure_id</span> → Procedures.id
+
+<span class="text-green-400">FAQs</span>
+├── id (PK)
+├── question
+├── answer
+└── <span class="text-blue-400">source_document_id</span> → Documents.id
+
+<span class="text-orange-400">Procedures</span>
+├── id (PK)
+├── title
+├── steps[]
+└── <span class="text-blue-400">related_document_id</span> → Documents.id
+        </div>
+      </div>
+    </div>
+
+    <!-- Proposta de Valor -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-gem text-purple-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Proposta de Valor</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border-2 border-green-200 dark:border-green-800">
+          <p class="text-lg font-semibold text-green-900 dark:text-green-300 mb-2"><i class="fas fa-puzzle-piece mr-2"></i>Completude Contextual</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Inclui automaticamente documentos, FAQs e procedimentos relacionados versus chunks isolados.</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border-2 border-blue-200 dark:border-blue-800">
+          <p class="text-lg font-semibold text-blue-900 dark:text-blue-300 mb-2"><i class="fas fa-sitemap mr-2"></i>Navegacao de Conhecimento Estruturada</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Segue relacionamentos explicitos entre tipos de dados como um humano conectaria informacoes.</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 p-6 rounded-xl border-2 border-amber-200 dark:border-amber-800">
+          <p class="text-lg font-semibold text-amber-900 dark:text-amber-300 mb-2"><i class="fas fa-shield-alt mr-2"></i>Reducao de Alucinacao</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Aproveita relacionamentos definidos em vez de inferir conexoes, melhorando precisao.</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 p-6 rounded-xl border-2 border-purple-200 dark:border-purple-800">
+          <p class="text-lg font-semibold text-purple-900 dark:text-purple-300 mb-2"><i class="fas fa-expand-arrows-alt mr-2"></i>Arquitetura de Dados Escalavel</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Lida com bases de conhecimento complexas multi-entidade que busca vetorial simples nao consegue navegar.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Compradores Ideais -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-users text-indigo-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Compradores Ideais</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-neutral-100 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2"><i class="fas fa-server text-blue-500 mr-2"></i>TI e Suporte Enterprise</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Sistemas de documentacao onde guias, troubleshooting e FAQs referenciam uns aos outros.</p>
+        </div>
+
+        <div class="bg-neutral-100 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2"><i class="fas fa-hospital text-green-500 mr-2"></i>Sistemas de Saude</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Registros medicos vinculando diagnosticos, protocolos de tratamento, medicacoes e historicos.</p>
+        </div>
+
+        <div class="bg-neutral-100 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2"><i class="fas fa-clipboard-check text-red-500 mr-2"></i>Compliance e Regulatorio</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Sistemas de auditoria conectando politicas, procedimentos, incidentes e acoes corretivas.</p>
+        </div>
+
+        <div class="bg-neutral-100 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2"><i class="fas fa-cogs text-purple-500 mr-2"></i>Desenvolvimento de Produto</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Docs de engenharia relacionando especificacoes, procedimentos de teste, issues e decisoes de design.</p>
+        </div>
+
+        <div class="bg-neutral-100 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2"><i class="fas fa-gavel text-amber-500 mr-2"></i>Servicos Legais</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Gestao de casos vinculando contratos, precedentes, peticoes e correspondencia relacionada.</p>
+        </div>
+
+        <div class="bg-neutral-100 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2"><i class="fas fa-graduation-cap text-cyan-500 mr-2"></i>Plataformas Educacionais</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Materiais de curso conectando aulas, exercicios, pre-requisitos e recursos.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Configuracao -->
+    <div class="bg-gradient-to-br from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-700 rounded-3xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-cogs text-neutral-600 dark:text-neutral-400"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Configuracao Avancada</h2>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-900 p-6 rounded-xl">
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">1. Defina os Schemas</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Configure as definicoes de tabelas (documents, FAQs, procedures) com todos os campos e relacionamentos. O agente precisa conhecer a estrutura para classificar corretamente.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-900 p-6 rounded-xl">
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">2. Crie as Tabelas no Supabase</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Use os comandos SQL incluidos no workflow para criar as tabelas com as dimensoes corretas para embeddings e foreign keys.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-900 p-6 rounded-xl">
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">3. Configure o Roteador</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">O router direciona dados para documents, FAQs ou procedures baseado na classificacao do LLM. Ajuste as condicoes conforme seu schema.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-900 p-6 rounded-xl">
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">4. Configure Estrategias de Busca</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">O system message do agente inclui duas estrategias: busca semantica + traversal de relacionamentos via IDs nos metadados.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-900 p-6 rounded-xl">
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">5. Embedding via HTTP Request</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Este workflow usa HTTP request para embeddings (nao um agente). Configure sua OpenAI key e certifique-se que as dimensoes correspondem as tabelas.</p>
+        </div>
+      </div>
+
+      <div class="mt-8 p-6 bg-amber-100 dark:bg-amber-900/30 rounded-xl">
+        <p class="text-lg font-semibold text-amber-900 dark:text-amber-200">
+          <i class="fas fa-exclamation-triangle mr-2"></i>Este e o workflow mais complexo da trilha. Requer configuracao cuidadosa das tabelas, schemas e relacionamentos antes de funcionar corretamente.
+        </p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Navigation -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="flex flex-col md:flex-row gap-4 justify-center">
+      <a href="hybrid-rag.html" class="bg-neutral-200 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200 px-8 py-4 rounded-xl font-bold hover:bg-neutral-300 dark:hover:bg-neutral-600 transition text-center">
+        <i class="fas fa-arrow-left mr-2"></i>Anterior: Hybrid Context RAG
+      </a>
+      <a href="../../rag.html" class="bg-purple-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-purple-700 transition text-center">
+        <i class="fas fa-home mr-2"></i>Voltar para Trilha RAG
+      </a>
+    </div>
+  </section>
+
+  <footer class="bg-neutral-900 dark:bg-black text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-neutral-400">N8N Academy - Dominando automacoes com IA</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    } else {
+      themeToggleDarkIcon.classList.remove('hidden');
+    }
+    themeToggleBtn.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html>

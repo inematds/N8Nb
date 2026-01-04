@@ -1,0 +1,1350 @@
+{
+  "name": "Graph RAG Agent with Supabase Vector Storage",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "81701b7c-cb7a-4228-831a-6c473c4be712",
+      "name": "Manual Trigger - Data Ingestion",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -608,
+        -912
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "11fff6bb-4ff0-4a85-9765-d2c50a23f18e",
+                    "leftValue": "={{ $json.output.targetTable }}",
+                    "rightValue": "documents",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "70f9cae4-367e-48ef-985c-f5b4d7177420",
+                    "leftValue": "={{ $json.output.targetTable }}",
+                    "rightValue": "faqs",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "4f8efc41-cad5-4247-a446-c0843163c89c",
+                    "leftValue": "={{ $json.output.targetTable }}",
+                    "rightValue": "procedures",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {
+          "allMatchingOutputs": true
+        }
+      },
+      "id": "3e06d8b0-5f13-40e3-adc2-5cad1aeec1eb",
+      "name": "Route to Table",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        416,
+        -928
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a data classification expert. Analyze the data structure and content to determine the correct table.\n\n**Table Schemas:**\n- table1: {{ $json.table1.table1.toJsonString() }} : {{ $json[\"table1 Schema\"].toJsonString() }}\n- table2: {{ $json.table2.toJsonString() }}: {{ $json[\"table2 Schema\"].toJsonString() }}\n- table3: {{ $json.table3.toJsonString() }} : {{ $json[\"table3 Schema\"].toJsonString() }}\n\n**Data to classify:** \n{{ $('Test File').item.json.toJsonString() }}\n\nDetermine which table this data belongs to based on its structure and content type.",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "id": "7866b37e-0b86-41f0-8789-85466d2ea7bc",
+      "name": "Data Classification Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        64,
+        -912
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "id": "484d16e6-bbad-4626-80c8-26c2821ac35c",
+      "name": "OpenAI Chat Model - Classification1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        64,
+        -688
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "KSKdcXliKsG4jYZC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n\t\"type\": \"object\",\n\t\"properties\": {\n\t\t\"targetTable\": {\n\t\t\t\"type\": \"string\",\n\t\t\t\"enum\": [\"documents\", \"faqs\", \"procedures\"],\n\t\t\t\"description\": \"The table name where data should be inserted\"\n\t\t},\n\t\t\"reasoning\": {\n\t\t\t\"type\": \"string\",\n\t\t\t\"description\": \"Explanation for the classification\"\n\t\t}\n\t},\n\t\"required\": [\"targetTable\", \"reasoning\"]\n}"
+      },
+      "id": "9f9b39ee-8cd7-4306-a395-ae98cbd35a5c",
+      "name": "Classification Schema Parser1",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        208,
+        -688
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "82496d08-ca67-4744-b594-e1fbd694e338",
+              "name": "",
+              "value": "{   \"title\": \"New Hire Laptop Setup\",   \"steps\": \"1. Remove laptop from shipping box and verify serial number matches asset tag\\n2. Power on and connect to WiFi network 'CompanySetup'\\n3. Run initial OS updates (approximately 30 minutes)\\n4. Install company security suite from USB drive provided by IT\\n5. Configure Outlook with employee credentials\\n6. Install required software: Slack, Zoom, Microsoft Office 365\\n7. Set up VPN client with credentials from welcome packet\\n8. Complete security training module\\n9. Return completed setup checklist to IT department\",   \"department\": \"IT\",   \"difficulty\": \"Easy\" }",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -384,
+        -912
+      ],
+      "id": "b1c67090-df28-46d2-accb-60fbd7ce6370",
+      "name": "Test File"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "table1",
+              "value": "{\"table1\":{\"name\":\"documents\",\"schema\":\"Company documentation, guides, and policies. Contains title (string) and content (long text). Used for policy documents, manuals, and reference materials.\"}}",
+              "type": "object"
+            },
+            {
+              "id": "adc7a066-d60d-46b2-b670-575e3eef3a63",
+              "name": "table1 Schema",
+              "value": "{\"table_id\":\"documents\",\"schema\":[{\"name\":\"title\",\"type\":\"text\"},{\"name\":\"content\",\"type\":\"text\"},{\"name\":\"category\",\"type\":\"text\"},{\"name\":\"author\",\"type\":\"text\"},{\"name\":\"related_faq_ids\",\"type\":\"_uuid\"},{\"name\":\"related_procedure_ids\",\"type\":\"_uuid\"},{\"name\":\"metadata\",\"type\":\"jsonb\"}]}",
+              "type": "object"
+            },
+            {
+              "id": "id-2",
+              "name": "table2",
+              "value": "{\"table2\":{\"name\":\"faqs\",\"schema\":\"Frequently asked questions and answers. Contains question (string) and answer (long text). Used for common inquiries and their solutions.\"}}",
+              "type": "object"
+            },
+            {
+              "id": "id-6",
+              "name": "table2 Schema",
+              "value": "{\"table_id\":\"faqs\",\"schema\":[{\"name\":\"question\",\"type\":\"text\"},{\"name\":\"answer\",\"type\":\"text\"},{\"name\":\"category\",\"type\":\"text\"},{\"name\":\"source_document_id\",\"type\":\"uuid\"},{\"name\":\"related_procedure_ids\",\"type\":\"_uuid\"},{\"name\":\"metadata\",\"type\":\"jsonb\"}]}",
+              "type": "object"
+            },
+            {
+              "id": "id-3",
+              "name": "table3",
+              "value": "{\"table3\":{\"name\":\"procedures\",\"schema\":\"Step-by-step instructions and procedures. Contains title (string) and steps (long text with numbered instructions). Used for process documentation and how-to guides.\"}}",
+              "type": "object"
+            },
+            {
+              "id": "7991160f-8739-4927-b943-b8c1b8b96733",
+              "name": "table3 Schema",
+              "value": "{\"table_id\":\"procedures\",\"schema\":[{\"name\":\"title\",\"type\":\"text\"},{\"name\":\"steps\",\"type\":\"text\"},{\"name\":\"department\",\"type\":\"text\"},{\"name\":\"difficulty\",\"type\":\"text\"},{\"name\":\"source_document_id\",\"type\":\"uuid\"},{\"name\":\"prerequisite_procedure_ids\",\"type\":\"_uuid\"},{\"name\":\"related_faq_ids\",\"type\":\"_uuid\"}]}",
+              "type": "object"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "2691d456-728d-4717-9335-394341e014ba",
+      "name": "Table Names2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -160,
+        -912
+      ]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Review the information provided and parse the content to fit the following schema:\n\n\"schema\":[{\"name\":\"title\",\"type\":\"text\"},{\"name\":\"content\",\"type\":\"text\"},{\"name\":\"category\",\"type\":\"text\"},{\"name\":\"author\",\"type\":\"text\"},{\"name\":\"related_faq_ids\",\"type\":\"_uuid\"},{\"name\":\"related_procedure_ids\",\"type\":\"_uuid\"},{\"name\":\"metadata\",\"type\":\"jsonb\"}]\n",
+              "role": "system"
+            },
+            {
+              "content": "={{ $('Test File').item.json.toJsonString() }}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        640,
+        -1104
+      ],
+      "id": "8378dfce-8cbb-486f-8b1a-7913089eeb89",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "KSKdcXliKsG4jYZC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Review the information provided and parse the content to fit the following schema:\n\n\"schema\":[{\"name\":\"question\",\"type\":\"text\"},{\"name\":\"answer\",\"type\":\"text\"},{\"name\":\"category\",\"type\":\"text\"},{\"name\":\"source_document_id\",\"type\":\"uuid\"},{\"name\":\"related_procedure_ids\",\"type\":\"_uuid\"},{\"name\":\"metadata\",\"type\":\"jsonb\"}]\n\nEach schema should be it's own object.",
+              "role": "system"
+            },
+            {
+              "content": "={{ $('Test File').item.json.toJsonString() }}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        640,
+        -912
+      ],
+      "id": "cf4c2141-9e7f-46ec-867d-7ac206d3f0ac",
+      "name": "Message a model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "KSKdcXliKsG4jYZC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f66bceaf-0ec1-45a6-acfb-70946ce8fbe3",
+              "name": "content to upload",
+              "value": "={{ $json.message.content }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        992,
+        -1104
+      ],
+      "id": "b36522f1-ce29-42cf-9f4e-43f14fb6a105",
+      "name": "content parser"
+    },
+    {
+      "parameters": {
+        "tableId": "documents",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "title",
+              "fieldValue": "={{ $('content parser').item.json['content to upload'].title }}"
+            },
+            {
+              "fieldId": "embedding",
+              "fieldValue": "={{ $json.data[0].embedding }}"
+            },
+            {
+              "fieldId": "category",
+              "fieldValue": "={{ $('content parser').item.json['content to upload'].category }}"
+            },
+            {
+              "fieldId": "author",
+              "fieldValue": "={{ $('content parser').item.json['content to upload'].author }}"
+            },
+            {
+              "fieldId": "related_faq_ids",
+              "fieldValue": "={{ $('content parser').item.json['content to upload'].related_faq_ids }}"
+            },
+            {
+              "fieldId": "related_procedure_ids",
+              "fieldValue": "={{ $('content parser').item.json['content to upload'].related_procedure_ids }}"
+            },
+            {
+              "fieldId": "metadata",
+              "fieldValue": "={{ $('content parser').item.json['content to upload'].title }}: {{ $('content parser').item.json['content to upload'].content }}"
+            },
+            {
+              "fieldId": "content",
+              "fieldValue": "={{ $('content parser').item.json['content to upload'].content }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        -1104
+      ],
+      "id": "a50c9624-f7cd-46a1-a65e-e8c1fce94197",
+      "name": "Create a row",
+      "credentials": {
+        "supabaseApi": {
+          "id": "y51RwLNUw8jtL0qI",
+          "name": "Patuxent Assistant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/embeddings",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "input",
+              "value": "={{ $json['content to upload'].title }}: {{ $json['content to upload'].content }}"
+            },
+            {
+              "name": "model",
+              "value": "text-embedding-3-small"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1216,
+        -1104
+      ],
+      "id": "5561c0ed-5a99-4abb-884b-d1b53b151731",
+      "name": "HTTP Request",
+      "credentials": {
+        "openAiApi": {
+          "id": "KSKdcXliKsG4jYZC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "faqs",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "question",
+              "fieldValue": "={{ $('Split Out').item.json.question }}"
+            },
+            {
+              "fieldId": "answer",
+              "fieldValue": "={{ $('Split Out').item.json.answer }}"
+            },
+            {
+              "fieldId": "category",
+              "fieldValue": "={{ $('Split Out').item.json.category }}"
+            },
+            {
+              "fieldId": "metadata",
+              "fieldValue": "={{ $('Split Out').item.json.question }}: {{ $('Split Out').item.json.answer }}"
+            },
+            {
+              "fieldId": "embedding",
+              "fieldValue": "={{ $json.data[0].embedding }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        -912
+      ],
+      "id": "c7f94e66-cc6d-43a3-9444-536096e39665",
+      "name": "Create a row1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "y51RwLNUw8jtL0qI",
+          "name": "Patuxent Assistant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/embeddings",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "input",
+              "value": "={{ $json.question }}: {{ $json.answer }}"
+            },
+            {
+              "name": "model",
+              "value": "text-embedding-3-small"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1216,
+        -912
+      ],
+      "id": "f072c60c-6d2d-4dfd-94b7-94998c8c0501",
+      "name": "HTTP Request1",
+      "credentials": {
+        "openAiApi": {
+          "id": "KSKdcXliKsG4jYZC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "message.content.schema",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        992,
+        -912
+      ],
+      "id": "336f4ef7-d9c3-4ce1-9036-ff9ab6105dd6",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Review the information provided and parse the content to fit the following schema:\n\n\"schema\":[{\"name\":\"title\",\"type\":\"text\"},{\"name\":\"steps\",\"type\":\"text\"},{\"name\":\"department\",\"type\":\"text\"},{\"name\":\"difficulty\",\"type\":\"text\"},{\"name\":\"source_document_id\",\"type\":\"uuid\"},{\"name\":\"prerequisite_procedure_ids\",\"type\":\"_uuid\"},{\"name\":\"related_faq_ids\",\"type\":\"_uuid\"}]\n",
+              "role": "system"
+            },
+            {
+              "content": "={{ $('Test File').item.json.toJsonString() }}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        640,
+        -720
+      ],
+      "id": "524fc495-edf6-4d52-aa65-0af3c6dfffa1",
+      "name": "Message a model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "KSKdcXliKsG4jYZC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "procedures",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "title",
+              "fieldValue": "={{ $('Edit Fields').item.json[''].title }}"
+            },
+            {
+              "fieldId": "steps",
+              "fieldValue": "={{ $('Edit Fields').item.json[''].steps }}"
+            },
+            {
+              "fieldId": "department",
+              "fieldValue": "={{ $('Edit Fields').item.json[''].department }}"
+            },
+            {
+              "fieldId": "difficulty",
+              "fieldValue": "={{ $('Edit Fields').item.json[''].difficulty }}"
+            },
+            {
+              "fieldId": "embedding",
+              "fieldValue": "={{ $json.data[0].embedding }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        -720
+      ],
+      "id": "31336bda-50b0-4f92-85d1-f70a68537317",
+      "name": "Create a row2",
+      "credentials": {
+        "supabaseApi": {
+          "id": "y51RwLNUw8jtL0qI",
+          "name": "Patuxent Assistant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/embeddings",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "input",
+              "value": "={{ $json[''].title }}: {{ $json[''].steps }}"
+            },
+            {
+              "name": "model",
+              "value": "text-embedding-3-small"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1216,
+        -720
+      ],
+      "id": "282eb4ec-8fd4-482b-a2b3-3f3f9878c74e",
+      "name": "HTTP Request2",
+      "credentials": {
+        "openAiApi": {
+          "id": "KSKdcXliKsG4jYZC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7aca917a-198a-4c20-be8c-6d83eae8fce4",
+              "name": "",
+              "value": "={{ $json.message.content }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        992,
+        -720
+      ],
+      "id": "c56ca864-8519-46fa-bb58-9b368239d2d0",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Search documents table for policies, guides, and documentation using semantic similarity. Returns title, content, category, author.",
+        "tableName": {
+          "__rl": true,
+          "mode": "list",
+          "value": "documents"
+        },
+        "topK": 10,
+        "options": {}
+      },
+      "id": "3c3d68ab-779a-4154-9a18-e8c95071054b",
+      "name": "Vector Store - Documents",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.3,
+      "position": [
+        -128,
+        -64
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "y51RwLNUw8jtL0qI",
+          "name": "Patuxent Assistant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Search FAQs table for questions and answers using semantic similarity. Returns question, answer, category, source_document_id.",
+        "tableName": {
+          "__rl": true,
+          "mode": "list",
+          "value": "faqs"
+        },
+        "topK": 10,
+        "options": {}
+      },
+      "id": "85f72a4c-cf03-404b-b938-4ab8fcff5e0c",
+      "name": "Vector Store - FAQs",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.3,
+      "position": [
+        160,
+        -64
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "y51RwLNUw8jtL0qI",
+          "name": "Patuxent Assistant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Search procedures table for step-by-step instructions using semantic similarity. Returns title, steps, department, difficulty.",
+        "tableName": {
+          "__rl": true,
+          "mode": "list",
+          "value": "procedures"
+        },
+        "topK": 10,
+        "options": {}
+      },
+      "id": "e32dc02b-5a3e-40c0-9a15-31538a3a3f38",
+      "name": "Vector Store - Procedures",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.3,
+      "position": [
+        448,
+        -64
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "y51RwLNUw8jtL0qI",
+          "name": "Patuxent Assistant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "documents"
+      },
+      "id": "1fc519a0-3a87-4681-8c92-b2fda3c5acb5",
+      "name": "Query Documents Table",
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        736,
+        -64
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "y51RwLNUw8jtL0qI",
+          "name": "Patuxent Assistant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "faqs"
+      },
+      "id": "b9114413-8428-44ea-b238-aa31785b5e5b",
+      "name": "Query FAQs Table",
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        864,
+        -64
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "y51RwLNUw8jtL0qI",
+          "name": "Patuxent Assistant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "procedures"
+      },
+      "id": "12f88926-c5c9-425e-8f6e-cf6fd0efa9dc",
+      "name": "Query Procedures Table",
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        992,
+        -64
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "y51RwLNUw8jtL0qI",
+          "name": "Patuxent Assistant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are an intelligent query agent with two search strategies:\n\n**1. Vector Search (semantic):** Use for conceptual queries and natural language questions\n- Search Documents: policy information, guides, documentation\n- Search FAQs: common questions and answers\n- Search Procedures: step-by-step instructions\n\n**2. Direct Queries (structured):** Use after vector search to get complete records or traverse relationships\n- Query Documents by ID\n- Query FAQs by ID or source_document_id\n- Query Procedures by ID or source_document_id\n\n**Workflow:**\n1. Use vector search to find relevant records\n2. Extract IDs from results\n3. Use Supabase Query tools to get complete data or follow relationships\n4. Synthesize comprehensive answer\n5. Always cite sources and ony use the database for answers"
+        }
+      },
+      "id": "2dee268e-d3ef-4270-81e3-bf87970939ff",
+      "name": "Query Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        320,
+        -288
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "id": "5f454e08-0145-4628-809e-993be526dd13",
+      "name": "OpenAI Chat Model - Query1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -384,
+        -64
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "KSKdcXliKsG4jYZC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "133dfc21-9338-4b69-b6ea-503ff66ae2a9",
+      "name": "Query Memory1",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -256,
+        -64
+      ]
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-large",
+        "options": {}
+      },
+      "id": "4c04f223-f7f7-44b2-925b-6add3377932d",
+      "name": "OpenAI Embeddings - Query ",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -48,
+        144
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "KSKdcXliKsG4jYZC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-large",
+        "options": {}
+      },
+      "id": "1f758532-b865-467c-8635-73f9c1d4334c",
+      "name": "OpenAI Embeddings - Query 4",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        144
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "KSKdcXliKsG4jYZC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-large",
+        "options": {}
+      },
+      "id": "1ed273fe-6b1d-4798-a6d4-4864fb5f1a7a",
+      "name": "OpenAI Embeddings - Query 5",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        528,
+        144
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "KSKdcXliKsG4jYZC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -608,
+        -288
+      ],
+      "id": "66d9ad88-e660-455b-a12f-a53af2bf6f69",
+      "name": "When chat message received",
+      "webhookId": "05bf2773-230a-4857-b9a2-39c1ec2819d6"
+    },
+    {
+      "parameters": {
+        "content": "# Query Agent\n## With Table Traversal\n",
+        "height": 816,
+        "width": 1888,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -736,
+        -480
+      ],
+      "typeVersion": 1,
+      "id": "24c21b36-f87c-4809-b895-b19cb8f7941c",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "# Multi-Table Document Ingestion\n",
+        "height": 672,
+        "width": 2464
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -736,
+        -1184
+      ],
+      "typeVersion": 1,
+      "id": "29527dc4-1f20-4e05-bf2b-537284ddd06a",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Sample SQL Commands for Table Creation in Supabase\n```\n-- Enable pgvector\nCREATE EXTENSION IF NOT EXISTS vector;\n```\n\n```\n-- Documents table\nCREATE TABLE documents (\n  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,\n  title TEXT NOT NULL,\n  content TEXT NOT NULL,\n  embedding VECTOR(1536),\n  category TEXT,\n  author TEXT,\n  related_faq_ids UUID[],\n  related_procedure_ids UUID[],\n  metadata JSONB,\n  created_at TIMESTAMPTZ DEFAULT NOW()\n);\n```",
+        "height": 448,
+        "width": 640,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1408,
+        -1184
+      ],
+      "typeVersion": 1,
+      "id": "2c5946b1-31c4-4246-b4b6-3b3e5f4df1a2",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "# RAG System Overview\n\n## How It Works\n\n### Data Ingestion Workflow\n1. **Input** → Paste your document/FAQ/procedure as JSON\n2. **Classification Agent** → AI determines which table (documents/faqs/procedures)\n3. **Schema Parsing** → Formats data to match table structure\n4. **Embedding Generation** → Creates vector embeddings via OpenAI\n5. **Storage** → Inserts into Supabase with embeddings\n\n## System Architecture\n\n```\nInput Data → Classification → Parsing → Embeddings → Supabase\n                                                         ↓\nUser Query → Agent → Vector Search + SQL Tools → Supabase\n                ↓\n            Response\n```\n\n## Setup Checklist\n\n### 1. Supabase Setup\n- [ ] Run SQL commands to create tables\n- [ ] Enable pgvector extension\n\n### 2. n8n Configuration\n- [ ] Add OpenAI credentials\n- [ ] Add Supabase credentials\n- [ ] Verify all embedding nodes use the same embedding model\n\n### 3. Testing\n- [ ] Run ingestion workflow with test data for each type\n- [ ] Verify data appears in Supabase tables\n- [ ] Test query workflow with sample questions\n\n## Common Issues\n\n**\"Different vector dimensions\" error:**\n- [ ] Check embedding models\n\n**Classification fails:**  \n→ [ ] Check input JSON format matches examples\n\n**No query results:**  \n→ [ ] Ensure data was ingested successfully  \n→ [ ] Check embeddings were generated",
+        "height": 1200,
+        "width": 640
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1408,
+        -704
+      ],
+      "typeVersion": 1,
+      "id": "246e077c-2fb7-4f9a-a398-192ba649794a",
+      "name": "Sticky Note3"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger - Data Ingestion": {
+      "main": [
+        [
+          {
+            "node": "Test File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route to Table": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Message a model1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Message a model2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data Classification Agent1": {
+      "main": [
+        [
+          {
+            "node": "Route to Table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model - Classification1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Data Classification Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classification Schema Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Data Classification Agent1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test File": {
+      "main": [
+        [
+          {
+            "node": "Table Names2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Table Names2": {
+      "main": [
+        [
+          {
+            "node": "Data Classification Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "content parser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model1": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "content parser": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Create a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Create a row1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Create a row2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Store - Documents": {
+      "ai_tool": [
+        [
+          {
+            "node": "Query Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Store - FAQs": {
+      "ai_tool": [
+        [
+          {
+            "node": "Query Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Store - Procedures": {
+      "ai_tool": [
+        [
+          {
+            "node": "Query Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query Documents Table": {
+      "ai_tool": [
+        [
+          {
+            "node": "Query Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query FAQs Table": {
+      "ai_tool": [
+        [
+          {
+            "node": "Query Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query Procedures Table": {
+      "ai_tool": [
+        [
+          {
+            "node": "Query Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query Agent1": {
+      "main": [
+        []
+      ]
+    },
+    "OpenAI Chat Model - Query1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Query Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "Query Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Embeddings - Query ": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Vector Store - Documents",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Embeddings - Query 4": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Vector Store - FAQs",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Embeddings - Query 5": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Vector Store - Procedures",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Query Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "9923abcb-2b8c-42dd-a363-477f54227336",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "aaadb797535f05587ee95b776c942a7c3f7a46fd7aa0c9b6a9d64e1e595f8af1"
+  },
+  "id": "14QhBwrIGimgG8no",
+  "tags": []
+}

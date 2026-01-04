@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trilha RAG - Retrieval Augmented Generation | N8N Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { darkMode: 'class' }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .module-card { transition: all 0.3s ease; }
+        .module-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .gradient-rag { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%); }
+        .workflow-img { transition: transform 0.3s ease; }
+        .workflow-img:hover { transform: scale(1.02); }
+    </style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+
+    <!-- Header -->
+    <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="text-2xl font-bold text-purple-600 dark:text-purple-400 flex items-center gap-2">
+                    <span class="text-xl">←</span>
+                    <span class="text-3xl">🧠</span>
+                    <span>N8N Academy</span>
+                </a>
+                <div class="flex items-center gap-4">
+                    <span class="px-4 py-2 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-full text-sm font-bold">
+                        <i class="fas fa-robot mr-1"></i> RAG Agents
+                    </span>
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-600">
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="gradient-rag py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+            <div class="text-7xl mb-6">🧠</div>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
+                Trilha RAG
+            </h1>
+            <p class="text-xl sm:text-2xl mb-6 text-white/90 max-w-3xl mx-auto">
+                Retrieval Augmented Generation - Transforme documentos em bases de conhecimento inteligentes
+            </p>
+            <div class="flex gap-4 justify-center flex-wrap">
+                <span class="px-5 py-2.5 bg-white/20 rounded-lg backdrop-blur-sm font-medium">
+                    <i class="fas fa-file-alt mr-2"></i>4 Workflows Completos
+                </span>
+                <span class="px-5 py-2.5 bg-white/20 rounded-lg backdrop-blur-sm font-medium">
+                    <i class="fas fa-database mr-2"></i>Vector Stores
+                </span>
+                <span class="px-5 py-2.5 bg-white/20 rounded-lg backdrop-blur-sm font-medium">
+                    <i class="fas fa-brain mr-2"></i>AI Agents
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Intro Section -->
+    <section class="bg-white dark:bg-neutral-800 py-12 shadow-md">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div>
+                    <div class="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">RAG</div>
+                    <div class="text-neutral-600 dark:text-neutral-400 font-medium">Retrieval Augmented Generation</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-indigo-600 dark:text-indigo-400 mb-2">4</div>
+                    <div class="text-neutral-600 dark:text-neutral-400 font-medium">Arquiteturas Diferentes</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-violet-600 dark:text-violet-400 mb-2">100%</div>
+                    <div class="text-neutral-600 dark:text-neutral-400 font-medium">Prontos para Usar</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- O que e RAG -->
+    <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 rounded-2xl p-8 border border-purple-200 dark:border-purple-800">
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+                <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>O Que e RAG?
+            </h2>
+            <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+                <strong>RAG (Retrieval Augmented Generation)</strong> e uma tecnica que combina busca semantica em documentos
+                com geracao de texto por IA. Em vez do modelo "inventar" respostas, ele busca informacoes reais
+                nos seus documentos e usa como contexto para responder.
+            </p>
+            <div class="grid md:grid-cols-2 gap-4 mt-6">
+                <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg">
+                    <h3 class="font-bold text-red-600 mb-2"><i class="fas fa-times-circle mr-1"></i> Sem RAG</h3>
+                    <p class="text-sm text-neutral-600 dark:text-neutral-400">IA responde baseado apenas no treinamento geral, podendo "alucinar" informacoes incorretas sobre seus dados.</p>
+                </div>
+                <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg">
+                    <h3 class="font-bold text-green-600 mb-2"><i class="fas fa-check-circle mr-1"></i> Com RAG</h3>
+                    <p class="text-sm text-neutral-600 dark:text-neutral-400">IA busca nos SEUS documentos primeiro, depois responde com base em dados reais e verificaveis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modulos -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+
+        <!-- Modulo 1: Simple RAG -->
+        <div class="module-card bg-white dark:bg-neutral-800 rounded-2xl shadow-xl overflow-hidden">
+            <div class="md:flex">
+                <div class="md:w-1/2 p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 px-3 py-1 rounded-full text-sm font-bold">Modulo 1</span>
+                        <span class="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-3 py-1 rounded-full text-sm font-semibold">Fundacional</span>
+                    </div>
+                    <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+                        <i class="fas fa-seedling text-emerald-500 mr-2"></i>Simple RAG
+                    </h2>
+                    <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+                        A base de tudo: ingeste documentos, vetorize com OpenAI, armazene no Pinecone
+                        e crie um agente conversacional com memoria.
+                    </p>
+
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-emerald-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Upload de documentos via interface ou webhook</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-emerald-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Embeddings com OpenAI text-embedding-small</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-emerald-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Vector store Pinecone com metadata</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-emerald-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Agente GPT-4 com janela de memoria de 10 mensagens</span>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <a href="conteudo/rag/simple-rag.html" class="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-book-open mr-2"></i>Ver Detalhes
+                        </a>
+                        <a href="conteudo/rag/Simple RAG.json" download class="bg-neutral-200 dark:bg-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-600 text-neutral-800 dark:text-neutral-200 px-6 py-3 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-download mr-2"></i>Workflow
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 bg-neutral-100 dark:bg-neutral-900 p-4 flex items-center justify-center">
+                    <img src="conteudo/rag/simpleRAG.jpg" alt="Simple RAG Workflow" class="workflow-img rounded-lg shadow-lg max-h-80 object-contain">
+                </div>
+            </div>
+        </div>
+
+        <!-- Modulo 2: Reranking RAG -->
+        <div class="module-card bg-white dark:bg-neutral-800 rounded-2xl shadow-xl overflow-hidden">
+            <div class="md:flex md:flex-row-reverse">
+                <div class="md:w-1/2 p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-3 py-1 rounded-full text-sm font-bold">Modulo 2</span>
+                        <span class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full text-sm font-semibold">Precisao</span>
+                    </div>
+                    <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+                        <i class="fas fa-sort-amount-up text-blue-500 mr-2"></i>Reranking RAG
+                    </h2>
+                    <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+                        Adiciona Cohere Reranker para filtrar resultados. Busca 20 chunks,
+                        re-rankeia por relevancia e retorna apenas os 10 melhores.
+                    </p>
+
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-blue-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Ingestao via Google Drive folder</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-blue-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Supabase como vector store</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-blue-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Cohere Reranker para precisao 30-50% maior</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-blue-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Reducao de custos de API com menos tokens</span>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <a href="conteudo/rag/reranking-rag.html" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-book-open mr-2"></i>Ver Detalhes
+                        </a>
+                        <a href="conteudo/rag/Reranking RAG Agent.json" download class="bg-neutral-200 dark:bg-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-600 text-neutral-800 dark:text-neutral-200 px-6 py-3 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-download mr-2"></i>Workflow
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 bg-neutral-100 dark:bg-neutral-900 p-4 flex items-center justify-center">
+                    <img src="conteudo/rag/reranking.jpg" alt="Reranking RAG Workflow" class="workflow-img rounded-lg shadow-lg max-h-80 object-contain">
+                </div>
+            </div>
+        </div>
+
+        <!-- Modulo 3: Hybrid Context RAG -->
+        <div class="module-card bg-white dark:bg-neutral-800 rounded-2xl shadow-xl overflow-hidden">
+            <div class="md:flex">
+                <div class="md:w-1/2 p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 px-3 py-1 rounded-full text-sm font-bold">Modulo 3</span>
+                        <span class="bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 px-3 py-1 rounded-full text-sm font-semibold">Contexto</span>
+                    </div>
+                    <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+                        <i class="fas fa-expand-arrows-alt text-orange-500 mr-2"></i>Hybrid Context RAG
+                    </h2>
+                    <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+                        Busca nao so o chunk relevante, mas tambem 2 linhas antes e 2 depois.
+                        Contexto expandido para respostas mais precisas em documentos narrativos.
+                    </p>
+
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-orange-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Embeddings com text-embedding-large</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-orange-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Expansao de contexto com JavaScript</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-orange-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Gemini para janela de contexto maior</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-orange-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Fallback model para evitar timeout</span>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <a href="conteudo/rag/hybrid-rag.html" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-book-open mr-2"></i>Ver Detalhes
+                        </a>
+                        <a href="conteudo/rag/Hybrid Context RAG.json" download class="bg-neutral-200 dark:bg-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-600 text-neutral-800 dark:text-neutral-200 px-6 py-3 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-download mr-2"></i>Workflow
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 bg-neutral-100 dark:bg-neutral-900 p-4 flex items-center justify-center">
+                    <img src="conteudo/rag/Hybrid.jpg" alt="Hybrid Context RAG Workflow" class="workflow-img rounded-lg shadow-lg max-h-80 object-contain">
+                </div>
+            </div>
+        </div>
+
+        <!-- Modulo 4: Graph RAG -->
+        <div class="module-card bg-white dark:bg-neutral-800 rounded-2xl shadow-xl overflow-hidden">
+            <div class="md:flex md:flex-row-reverse">
+                <div class="md:w-1/2 p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-3 py-1 rounded-full text-sm font-bold">Modulo 4</span>
+                        <span class="bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 px-3 py-1 rounded-full text-sm font-semibold">Avancado</span>
+                    </div>
+                    <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+                        <i class="fas fa-project-diagram text-purple-500 mr-2"></i>Graph RAG
+                    </h2>
+                    <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+                        Sistema com relacionamentos entre tabelas (Documents, FAQs, Procedures).
+                        Busca semantica + navegacao por grafos para contexto completo.
+                    </p>
+
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-purple-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">3 tabelas relacionadas no Supabase</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-purple-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">LLM classifica e roteia dados automaticamente</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-purple-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Busca semantica + traversal de relacionamentos</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-purple-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Reducao de alucinacao com dados estruturados</span>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <a href="conteudo/rag/graph-rag.html" class="bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-book-open mr-2"></i>Ver Detalhes
+                        </a>
+                        <a href="conteudo/rag/Graph RAG Agent with Supabase Vector Storage.json" download class="bg-neutral-200 dark:bg-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-600 text-neutral-800 dark:text-neutral-200 px-6 py-3 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-download mr-2"></i>Workflow
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 bg-neutral-100 dark:bg-neutral-900 p-4 flex items-center justify-center">
+                    <img src="conteudo/rag/GraphRAG.jpg" alt="Graph RAG Workflow" class="workflow-img rounded-lg shadow-lg max-h-80 object-contain">
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Comparativo -->
+    <section class="bg-white dark:bg-neutral-800 py-16">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-neutral-900 dark:text-neutral-100 mb-12">
+                <i class="fas fa-balance-scale text-purple-500 mr-2"></i>Qual RAG Escolher?
+            </h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead class="bg-purple-100 dark:bg-purple-900/30">
+                        <tr>
+                            <th class="text-left p-4 font-bold text-neutral-900 dark:text-neutral-100">Tipo</th>
+                            <th class="text-left p-4 font-bold text-neutral-900 dark:text-neutral-100">Melhor Para</th>
+                            <th class="text-left p-4 font-bold text-neutral-900 dark:text-neutral-100">Complexidade</th>
+                            <th class="text-left p-4 font-bold text-neutral-900 dark:text-neutral-100">Custo</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-neutral-200 dark:divide-neutral-700">
+                        <tr>
+                            <td class="p-4 font-semibold text-emerald-600">Simple RAG</td>
+                            <td class="p-4 text-neutral-600 dark:text-neutral-400">MVPs, POCs, bases pequenas</td>
+                            <td class="p-4"><span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs">Baixa</span></td>
+                            <td class="p-4"><span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs">$</span></td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-blue-600">Reranking RAG</td>
+                            <td class="p-4 text-neutral-600 dark:text-neutral-400">Bases grandes, precisao critica</td>
+                            <td class="p-4"><span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs">Media</span></td>
+                            <td class="p-4"><span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs">$$</span></td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-orange-600">Hybrid Context</td>
+                            <td class="p-4 text-neutral-600 dark:text-neutral-400">Documentos narrativos, contratos</td>
+                            <td class="p-4"><span class="bg-orange-100 text-orange-700 px-2 py-1 rounded text-xs">Media-Alta</span></td>
+                            <td class="p-4"><span class="bg-orange-100 text-orange-700 px-2 py-1 rounded text-xs">$$$</span></td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-purple-600">Graph RAG</td>
+                            <td class="p-4 text-neutral-600 dark:text-neutral-400">Dados relacionados, enterprise</td>
+                            <td class="p-4"><span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs">Alta</span></td>
+                            <td class="p-4"><span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs">$$$$</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation -->
+    <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex flex-col md:flex-row gap-4 justify-center">
+            <a href="masterclass.html" class="bg-neutral-200 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200 px-8 py-4 rounded-xl font-bold hover:bg-neutral-300 dark:hover:bg-neutral-600 transition text-center">
+                <i class="fas fa-arrow-left mr-2"></i>Trilha Masterclass
+            </a>
+            <a href="index.html" class="bg-purple-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-purple-700 transition text-center">
+                <i class="fas fa-home mr-2"></i>Voltar ao Inicio
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-neutral-900 dark:bg-black text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-neutral-400">N8N Academy - Dominando automacoes com IA</p>
+            <p class="text-sm text-neutral-500 mt-2">4 workflows RAG completos para produtizacao</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Dark Mode Toggle
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+        if (localStorage.getItem('color-theme') === 'dark' ||
+            (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            themeToggleLightIcon.classList.remove('hidden');
+        } else {
+            themeToggleDarkIcon.classList.remove('hidden');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+        });
+    </script>
+
+</body>
+</html>

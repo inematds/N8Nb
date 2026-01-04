@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reranking RAG - Precisao Maximizada | N8N Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    .code-block { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 0.75rem; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.7; }
+  </style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../../rag.html" class="text-2xl font-bold text-blue-600 dark:text-blue-400 flex items-center gap-2">
+          <span>←</span><span class="text-3xl"><i class="fas fa-sort-amount-up"></i></span><span>Reranking RAG</span>
+        </a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-gradient-to-br from-blue-500 via-indigo-500 to-violet-500 py-24">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="text-8xl mb-8"><i class="fas fa-sort-amount-up"></i></div>
+      <h1 class="text-6xl font-bold mb-6">Reranking RAG</h1>
+      <p class="text-3xl mb-4 text-white/90">Reclassificacao do Agente RAG</p>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto">Sistema de precisao com duas etapas: busca semantica + re-ranking inteligente com Cohere</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 py-12">
+    <!-- Download e Imagem -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-8 mb-12">
+      <div class="flex flex-col lg:flex-row gap-8">
+        <div class="lg:w-1/2">
+          <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+            <i class="fas fa-download text-blue-500 mr-2"></i>Workflow Pronto
+          </h2>
+          <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-6">
+            Workflow com Google Drive, Supabase e Cohere Reranker. Precisao 30-50% maior que RAG simples.
+          </p>
+          <a href="Reranking RAG Agent.json" download class="inline-flex items-center bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-xl font-bold transition-colors text-lg">
+            <i class="fas fa-download mr-3"></i>Download Workflow JSON
+          </a>
+        </div>
+        <div class="lg:w-1/2">
+          <img src="reranking.jpg" alt="Reranking RAG Workflow" class="rounded-xl shadow-lg w-full">
+        </div>
+      </div>
+    </div>
+
+    <!-- O que e Reranking -->
+    <div class="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-3xl p-12 mb-12 border-2 border-indigo-200 dark:border-indigo-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-question-circle text-indigo-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">O Que e Re-Ranking?</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <h3 class="text-xl font-bold text-red-600 mb-3"><i class="fas fa-times-circle mr-2"></i>RAG Simples</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Busca os 20 chunks mais proximos semanticamente e usa todos. Pode incluir resultados marginalmente relevantes que poluem o contexto.</p>
+        </div>
+        <div class="bg-white dark:bg-neutral-800 p-6 rounded-xl">
+          <h3 class="text-xl font-bold text-green-600 mb-3"><i class="fas fa-check-circle mr-2"></i>RAG com Re-Ranking</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Busca 20 chunks, re-rankeia por relevancia REAL usando Cohere, retorna apenas os 10 melhores. Menos ruido, mais precisao.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fluxo de Ingestao -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-upload text-blue-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Fluxo de Ingestao e Vetorizacao</h2>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border-l-4 border-blue-500">
+          <h3 class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-2"><i class="fab fa-google-drive mr-2"></i>Monitoramento Google Drive</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Observa pasta para novos documentos e extrai conteudo de texto automaticamente.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border-l-4 border-blue-500">
+          <h3 class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-2"><i class="fas fa-brain mr-2"></i>Geracao de Embeddings OpenAI</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Converte chunks de documento em vetores usando o modelo de embedding especificado.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border-l-4 border-blue-500">
+          <h3 class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-2"><i class="fas fa-database mr-2"></i>Armazenamento Supabase</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Faz upload dos chunks embeddados com configuracao de dimensao correspondente.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fluxo de Retrieval -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-filter text-violet-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Fluxo de Re-Ranking e Resposta</h2>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-gradient-to-r from-violet-50 to-purple-50 dark:from-violet-900/20 dark:to-purple-900/20 p-6 rounded-xl border-l-4 border-violet-500">
+          <h3 class="text-xl font-bold text-violet-800 dark:text-violet-300 mb-2"><i class="fas fa-comments mr-2"></i>Trigger de Chat</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Recebe queries via chat nativo do N8N (configuravel para webhook/apps de mensagem).</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-violet-50 to-purple-50 dark:from-violet-900/20 dark:to-purple-900/20 p-6 rounded-xl border-l-4 border-violet-500">
+          <h3 class="text-xl font-bold text-violet-800 dark:text-violet-300 mb-2"><i class="fas fa-search mr-2"></i>Busca Semantica Inicial</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Puxa os top N chunks (ex: 20) do Supabase baseado em similaridade de embedding.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-violet-50 to-purple-50 dark:from-violet-900/20 dark:to-purple-900/20 p-6 rounded-xl border-l-4 border-violet-500">
+          <h3 class="text-xl font-bold text-violet-800 dark:text-violet-300 mb-2"><i class="fas fa-sort-amount-down mr-2"></i>Re-Ranking Cohere</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Processa chunks recuperados atraves do re-ranker Cohere para pontuar relevancia REAL para a query.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-violet-50 to-purple-50 dark:from-violet-900/20 dark:to-purple-900/20 p-6 rounded-xl border-l-4 border-violet-500">
+          <h3 class="text-xl font-bold text-violet-800 dark:text-violet-300 mb-2"><i class="fas fa-medal mr-2"></i>Filtragem dos Melhores Resultados</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Retorna apenas o subconjunto mais bem rankeado (ex: top 10) para reduzir ruido e melhorar precisao.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-violet-50 to-purple-50 dark:from-violet-900/20 dark:to-purple-900/20 p-6 rounded-xl border-l-4 border-violet-500">
+          <h3 class="text-xl font-bold text-violet-800 dark:text-violet-300 mb-2"><i class="fas fa-robot mr-2"></i>Resposta do Agente IA</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Alimenta contexto re-rankeado para modelo de chat com janela de memoria de 20 mensagens.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Proposta de Valor -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-gem text-purple-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Proposta de Valor</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border-2 border-green-200 dark:border-green-800">
+          <p class="text-lg font-semibold text-green-900 dark:text-green-300 mb-2"><i class="fas fa-bullseye mr-2"></i>Respostas de Maior Precisao</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Re-ranking filtra ruido da busca semantica, retornando chunks verdadeiramente relevantes versus vagamente relacionados.</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border-2 border-blue-200 dark:border-blue-800">
+          <p class="text-lg font-semibold text-blue-900 dark:text-blue-300 mb-2"><i class="fas fa-dollar-sign mr-2"></i>Eficiencia de Custo</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Processa menos tokens eliminando contexto de baixa qualidade, reduzindo custos de API em 30-50%.</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 p-6 rounded-xl border-2 border-amber-200 dark:border-amber-800">
+          <p class="text-lg font-semibold text-amber-900 dark:text-amber-300 mb-2"><i class="fas fa-tachometer-alt mr-2"></i>Tempos de Resposta Mais Rapidos</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Janelas de contexto menores e de maior qualidade significam processamento mais rapido e menor latencia.</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 p-6 rounded-xl border-2 border-purple-200 dark:border-purple-800">
+          <p class="text-lg font-semibold text-purple-900 dark:text-purple-300 mb-2"><i class="fas fa-signal mr-2"></i>Melhor Relacao Sinal-Ruido</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Elimina falsos positivos de sobreposicao de palavras-chave em grandes bases de conhecimento.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Compradores Ideais -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-users text-indigo-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Compradores Ideais</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-neutral-100 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2"><i class="fas fa-building text-blue-500 mr-2"></i>Gestao de Conhecimento Enterprise</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Grandes organizacoes com 10.000+ documentos onde busca semantica retorna muitos matches marginais.</p>
+        </div>
+
+        <div class="bg-neutral-100 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2"><i class="fas fa-headset text-green-500 mr-2"></i>Equipes de Suporte Tecnico</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Documentacao de produto com terminologia similar entre features requerendo diferenciacao precisa.</p>
+        </div>
+
+        <div class="bg-neutral-100 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2"><i class="fas fa-gavel text-red-500 mr-2"></i>Legal e Compliance</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Bases de contratos onde sobreposicao de palavras-chave cria falsos positivos mas precisao de contexto e critica.</p>
+        </div>
+
+        <div class="bg-neutral-100 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2"><i class="fas fa-hospital text-purple-500 mr-2"></i>Sistemas de Informacao de Saude</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Bases medicas onde sintomas/tratamentos similares precisam de desambiguacao precisa.</p>
+        </div>
+
+        <div class="bg-neutral-100 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2"><i class="fas fa-shopping-cart text-amber-500 mr-2"></i>Plataformas E-Commerce</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Catalogos de produtos com descricoes sobrepostas requerendo matching preciso com queries de usuarios.</p>
+        </div>
+
+        <div class="bg-neutral-100 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2"><i class="fas fa-university text-cyan-500 mr-2"></i>Bases de Pesquisa Academica</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Bibliotecas universitarias precisando de recomendacoes precisas de artigos de arquivos massivos.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Configuracao Cohere -->
+    <div class="bg-gradient-to-br from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-700 rounded-3xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-key text-neutral-600 dark:text-neutral-400"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Configurando Cohere</h2>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-900 p-6 rounded-xl">
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">1. Crie Conta no Cohere</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Acesse o dashboard do Cohere e va para API Keys. Crie uma trial key ou production key.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-900 p-6 rounded-xl">
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">2. Configure Supabase</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Va em Settings > Project Settings > API Keys no Supabase. Crie uma nova API key para conectar com N8N.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-900 p-6 rounded-xl">
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">3. Mantenha Embeddings Consistentes</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Use o MESMO modelo de embedding tanto na ingestao quanto no retrieval. Certifique-se que as dimensoes do Supabase correspondem ao modelo.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-900 p-6 rounded-xl">
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">4. Ajuste os Parametros</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Configure: busca inicial (ex: 20 chunks), retorno apos re-rank (ex: 10 chunks), janela de memoria (20 mensagens padrao).</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Navigation -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="flex flex-col md:flex-row gap-4 justify-center">
+      <a href="simple-rag.html" class="bg-neutral-200 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200 px-8 py-4 rounded-xl font-bold hover:bg-neutral-300 dark:hover:bg-neutral-600 transition text-center">
+        <i class="fas fa-arrow-left mr-2"></i>Anterior: Simple RAG
+      </a>
+      <a href="hybrid-rag.html" class="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-700 transition text-center">
+        Proximo: Hybrid Context RAG<i class="fas fa-arrow-right ml-2"></i>
+      </a>
+    </div>
+  </section>
+
+  <footer class="bg-neutral-900 dark:bg-black text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-neutral-400">N8N Academy - Dominando automacoes com IA</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    } else {
+      themeToggleDarkIcon.classList.remove('hidden');
+    }
+    themeToggleBtn.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html>

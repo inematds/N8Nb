@@ -1,0 +1,877 @@
+{
+  "name": "Hybrid Context RAG",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "query"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -2880,
+        -48
+      ],
+      "id": "eb9bd1d2-d812-4824-b53c-2aa703c6e30b",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -1440,
+        -768
+      ],
+      "id": "931e2979-4a3e-446f-a295-a622cd6bc904",
+      "name": "When chat message received",
+      "webhookId": "5bd26095-75e7-40eb-8148-18609936d74a"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1296,
+        -576
+      ],
+      "id": "3b298b6e-7e95-48b9-b707-5d26c5704c16",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "3bEi7KYtZRpIPhfr",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -992,
+        -480
+      ],
+      "id": "9fe8bea4-bb3f-4e5d-a786-2ce4683bcf04",
+      "name": "Simple Memory1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "claude-sonnet-4-20250514",
+          "cachedResultName": "Claude 4 Sonnet"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.3,
+      "position": [
+        -1152,
+        -480
+      ],
+      "id": "04bd5257-f09f-453c-b8f3-de4dce9068b0",
+      "name": "Anthropic Chat Model1",
+      "credentials": {
+        "anthropicApi": {
+          "id": "9KuZnve0MpLVXWfL",
+          "name": "Anthropic account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chunkSize": 300,
+        "chunkOverlap": 50,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        -1744,
+        -400
+      ],
+      "id": "599eb13f-fcef-4fb7-b83b-6a5f021e6cc5",
+      "name": "Recursive Character Text Splitter1"
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-large",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -2272,
+        -592
+      ],
+      "id": "14168de8-17e7-453f-a45e-f7ce58b3a29e",
+      "name": "Embeddings OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "KSKdcXliKsG4jYZC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "textSplittingMode": "custom",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "doc_id",
+                "value": "={{ $('Google Drive Trigger1').item.json.id }}"
+              },
+              {
+                "name": "doc_date",
+                "value": "={{ $('Google Drive Trigger1').item.json.createdTime }}"
+              },
+              {
+                "name": "publisher",
+                "value": "={{ $('Google Drive Trigger1').item.json.owners[0].displayName }}"
+              },
+              {
+                "name": "title",
+                "value": "={{ $('Google Drive Trigger1').item.json.originalFilename }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        -2000,
+        -608
+      ],
+      "id": "420f19dd-d7b0-4cca-886c-72acd88e2130",
+      "name": "Default Data Loader1"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": {
+          "__rl": true,
+          "value": "n8n_test",
+          "mode": "list",
+          "cachedResultName": "n8n_test"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.3,
+      "position": [
+        -2272,
+        -816
+      ],
+      "id": "028289cb-97a7-4466-808e-9703c9530cb9",
+      "name": "Supabase Vector Store1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "y51RwLNUw8jtL0qI",
+          "name": "Patuxent Assistant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -2496,
+        -816
+      ],
+      "id": "7acdbe5c-0dd5-4e7a-aca8-b11f5034038c",
+      "name": "Extract from File1"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -2704,
+        -816
+      ],
+      "id": "77269ca2-23a7-4748-847b-8a96adf4b1a6",
+      "name": "Download file1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "OeQme96wgmHJ0Mza",
+          "name": "Google Drive account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1g1jdk4nBlsS4yedySgVTGYZcqgLGOX0Y",
+          "mode": "list",
+          "cachedResultName": "Contextual RAG test",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1g1jdk4nBlsS4yedySgVTGYZcqgLGOX0Y"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -2912,
+        -816
+      ],
+      "id": "b4d0905f-6f67-457e-b5d3-a846e454a237",
+      "name": "Google Drive Trigger1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "OeQme96wgmHJ0Mza",
+          "name": "Google Drive account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Why Agent-Based Ingestion?\n\n**Advantages:**\n- More flexible document processing\n- Agent can make decisions about chunking strategy\n- Easier to extend with new processing steps\n- Better for teaching agentic workflows\n\n**The agent:**\n1. Receives documents\n2. Decides how to process each one\n3. Uses tools in sequence\n4. Reports results\n\nThis is more sophisticated than a linear pipeline!",
+        "height": 336,
+        "width": 320,
+        "color": 6
+      },
+      "id": "0c93a535-faa6-4b99-b768-cbbdc7d8ce2b",
+      "name": "Why Agent-Based?1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2944,
+        -592
+      ]
+    },
+    {
+      "parameters": {
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "=You are a helpful assistant with access to internal documentation. Follow these steps:\n\n**STEP 1: Search**\nUse the Vector Content Tool to retrieve relevant content for the user's query.\n\n**STEP 2: Answer with Citation**\nProvide answer citing:\n- Title from metadata\n\n"
+        }
+      },
+      "id": "ba5881d8-6710-4c33-8a18-9b7c5750685c",
+      "name": "Contextual RAG Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -1152,
+        -768
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## QUERY PIPELINE\nUse this to query the knowledge base",
+        "height": 692,
+        "width": 1100,
+        "color": 5
+      },
+      "id": "95da7d8f-2559-4719-b076-43196a64598f",
+      "name": "Query Section1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1568,
+        -912
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## INGESTION WORKFLOW\nAgent processes and embeds documents intelligently",
+        "height": 692,
+        "width": 1448,
+        "color": 2
+      },
+      "id": "0fdc07f1-f901-4ff9-8469-6ab7f389664f",
+      "name": "Ingestion Section1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -3024,
+        -912
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Hybrid Contextual RAG\n**Agent-Based Document Ingestion**\n\n**What it teaches:**\n- Using agents for document processing\n- Metadata-enhanced search (better accuracy)\n- Window expansion (sequential context)\n- Combined approach (best of both worlds)\n\n**Run Order:**\n1. Run INGESTION flow first (left side)\n2. Then use QUERY flow (right side)\n\n**Innovation:**\nAgent intelligently processes documents, enriches them with dual context, and stores them.",
+        "height": 480,
+        "width": 389,
+        "color": 4
+      },
+      "id": "6891273f-51f9-40a1-8c28-a6507a6992f9",
+      "name": "Tutorial Info1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -3440,
+        -928
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "load",
+        "tableName": {
+          "__rl": true,
+          "value": "n8n_test",
+          "mode": "list",
+          "cachedResultName": "n8n_test"
+        },
+        "prompt": "={{ $json.query }}",
+        "topK": 1,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.3,
+      "position": [
+        -2432,
+        -48
+      ],
+      "id": "fad41c75-4c2c-462f-b0b4-d619cde6dcb3",
+      "name": "Supabase Vector Store",
+      "credentials": {
+        "supabaseApi": {
+          "id": "y51RwLNUw8jtL0qI",
+          "name": "Patuxent Assistant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const row_id = $input.first().json.document.metadata.row_id\n\nconst before = row_id - 2\nconst after = row_id + 2\n\nreturn { before, after }\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1760,
+        -48
+      ],
+      "id": "880cd0df-522d-487f-aee9-33672515765d",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "n8n_test",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "gte",
+              "keyValue": "={{ $json.before }}"
+            },
+            {
+              "keyName": "id",
+              "condition": "lte",
+              "keyValue": "={{ $json.after }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -1456,
+        -48
+      ],
+      "id": "92ac2e6e-e238-4b81-9946-e3d5add3e419",
+      "name": "Get many rows",
+      "credentials": {
+        "supabaseApi": {
+          "id": "y51RwLNUw8jtL0qI",
+          "name": "Patuxent Assistant"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "text_content",
+              "renameField": "=combined semantic text"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -1328,
+        208
+      ],
+      "id": "8b6aa468-df84-44f0-bce8-f29bff29f8ff",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f8054df1-9f39-4af7-b098-db8d9f182689",
+              "name": "text_content",
+              "value": "={{ $json.document.pageContent }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2080,
+        -48
+      ],
+      "id": "0e30db1e-9c76-4c5f-9023-33e61c938252",
+      "name": "Text Content"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "content",
+              "renameField": true,
+              "outputFieldName": "context"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -1040,
+        -48
+      ],
+      "id": "0ffe281c-ce74-4aed-8228-7f9f960f3fbf",
+      "name": "Aggregate1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "455191b1-bb4e-492c-ad2e-594d0aa7103d",
+              "name": "content",
+              "value": "={{ $json.content }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1248,
+        -48
+      ],
+      "id": "26a926c5-dc1f-4fbb-a751-c96db688e2cc",
+      "name": "Set Context"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -784,
+        -32
+      ],
+      "id": "8ad48200-bf46-417d-9d90-dda441ee5df4",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-large",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -2432,
+        176
+      ],
+      "id": "0766e801-e70e-40ca-83a7-b8fdea6e9102",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "KSKdcXliKsG4jYZC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "Call this tool to retrieve content relevant to the customer's query.",
+        "workflowId": {
+          "__rl": true,
+          "value": "yOVckvjwejsdRasU",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/yOVckvjwejsdRasU",
+          "cachedResultName": "Vector Content Tool"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('query', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "query"
+          ],
+          "schema": [
+            {
+              "id": "query",
+              "displayName": "query",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -816,
+        -496
+      ],
+      "id": "bab6dd84-2324-4a38-9d34-54bedc14cc6a",
+      "name": "Vector Content Tool"
+    },
+    {
+      "parameters": {
+        "content": "## Subworkflow\n**IMPORTANT** \nYou will need to copy this workflow and paste it into a separate workflow called \"Vector Content Tool\", then connect it to your Agent.",
+        "height": 608,
+        "width": 2528,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2992,
+        -208
+      ],
+      "typeVersion": 1,
+      "id": "a164cb5a-b17d-4dbb-abcd-b135cb3a21cf",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "87153f2c-31b5-4e07-a908-bff867df6964",
+              "name": "query",
+              "value": "buildcamp next steps",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2656,
+        -48
+      ],
+      "id": "cc7a9ba3-0753-427f-aa0c-c2addfbdc423",
+      "name": "User Query"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "User Query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Contextual RAG Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Contextual RAG Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "Contextual RAG Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Contextual RAG Agent1",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter1": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader1",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader1": {
+      "ai_document": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File1": {
+      "main": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file1": {
+      "main": [
+        [
+          {
+            "node": "Extract from File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Download file1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store": {
+      "main": [
+        [
+          {
+            "node": "Text Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Get many rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many rows": {
+      "main": [
+        [
+          {
+            "node": "Set Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Text Content": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Context": {
+      "main": [
+        [
+          {
+            "node": "Aggregate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Content Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Contextual RAG Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "User Query": {
+      "main": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "b0cdaf95-713d-4cac-bc89-dc42b0faf70f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "aaadb797535f05587ee95b776c942a7c3f7a46fd7aa0c9b6a9d64e1e595f8af1"
+  },
+  "id": "TRm6GpkWbarsu387",
+  "tags": []
+}

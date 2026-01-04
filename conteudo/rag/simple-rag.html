@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple RAG - Configuracao Basica | N8N Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    .code-block { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 0.75rem; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.7; }
+  </style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../../rag.html" class="text-2xl font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
+          <span>←</span><span class="text-3xl"><i class="fas fa-seedling"></i></span><span>Simple RAG</span>
+        </a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-gradient-to-br from-emerald-500 via-green-500 to-teal-500 py-24">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="text-8xl mb-8"><i class="fas fa-seedling"></i></div>
+      <h1 class="text-6xl font-bold mb-6">Simple RAG</h1>
+      <p class="text-3xl mb-4 text-white/90">Configuracao Basica do RAG</p>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto">A base fundacional para criar agentes conversacionais com acesso a seus documentos</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 py-12">
+    <!-- Download e Imagem -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-8 mb-12">
+      <div class="flex flex-col lg:flex-row gap-8">
+        <div class="lg:w-1/2">
+          <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+            <i class="fas fa-download text-emerald-500 mr-2"></i>Workflow Pronto
+          </h2>
+          <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-6">
+            Baixe o workflow completo e importe diretamente no seu N8N. Inclui fluxo de ingestao e fluxo de consulta.
+          </p>
+          <a href="Simple RAG.json" download class="inline-flex items-center bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 rounded-xl font-bold transition-colors text-lg">
+            <i class="fas fa-download mr-3"></i>Download Workflow JSON
+          </a>
+        </div>
+        <div class="lg:w-1/2">
+          <img src="simpleRAG.jpg" alt="Simple RAG Workflow" class="rounded-xl shadow-lg w-full">
+        </div>
+      </div>
+    </div>
+
+    <!-- Fluxo de Ingestao -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-upload text-emerald-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Fluxo de Ingestao e Vetorizacao</h2>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 p-6 rounded-xl border-l-4 border-emerald-500">
+          <h3 class="text-xl font-bold text-emerald-800 dark:text-emerald-300 mb-2"><i class="fas fa-play-circle mr-2"></i>Trigger de Upload</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Aceita documentos via interface de upload do N8N ou webhook de front-ends customizados.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 p-6 rounded-xl border-l-4 border-emerald-500">
+          <h3 class="text-xl font-bold text-emerald-800 dark:text-emerald-300 mb-2"><i class="fas fa-file-code mr-2"></i>Processamento de Dados Binarios</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Detecta o tipo MIME e extrai o texto bruto automaticamente de PDFs, DOCs, TXTs e outros formatos.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 p-6 rounded-xl border-l-4 border-emerald-500">
+          <h3 class="text-xl font-bold text-emerald-800 dark:text-emerald-300 mb-2"><i class="fas fa-cut mr-2"></i>Divisao Recursiva de Texto</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Quebra documentos em tamanhos de chunk otimizados para embedding (recursive text splitter).</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 p-6 rounded-xl border-l-4 border-emerald-500">
+          <h3 class="text-xl font-bold text-emerald-800 dark:text-emerald-300 mb-2"><i class="fas fa-brain mr-2"></i>Geracao de Embeddings OpenAI</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Converte chunks em vetores usando o modelo <code class="bg-neutral-200 dark:bg-neutral-700 px-2 py-1 rounded">text-embedding-small</code>.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 p-6 rounded-xl border-l-4 border-emerald-500">
+          <h3 class="text-xl font-bold text-emerald-800 dark:text-emerald-300 mb-2"><i class="fas fa-database mr-2"></i>Armazenamento Pinecone</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Faz upload dos chunks vetorizados para o indice designado com metadados.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fluxo de Retrieval -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-search text-teal-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Fluxo de Retrieval e Resposta</h2>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 p-6 rounded-xl border-l-4 border-teal-500">
+          <h3 class="text-xl font-bold text-teal-800 dark:text-teal-300 mb-2"><i class="fas fa-comments mr-2"></i>Trigger de Chat</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Escuta consultas via chat nativo do N8N, webhook, WhatsApp ou Telegram.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 p-6 rounded-xl border-l-4 border-teal-500">
+          <h3 class="text-xl font-bold text-teal-800 dark:text-teal-300 mb-2"><i class="fas fa-vector-square mr-2"></i>Vetorizacao da Query</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Converte a pergunta do usuario no mesmo formato de embedding usado na ingestao.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 p-6 rounded-xl border-l-4 border-teal-500">
+          <h3 class="text-xl font-bold text-teal-800 dark:text-teal-300 mb-2"><i class="fas fa-search-plus mr-2"></i>Busca Semantica</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Consulta o Pinecone pelos chunks mais relevantes baseado em pontuacao de similaridade.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 p-6 rounded-xl border-l-4 border-teal-500">
+          <h3 class="text-xl font-bold text-teal-800 dark:text-teal-300 mb-2"><i class="fas fa-robot mr-2"></i>Resposta de IA com Contexto</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Alimenta os chunks recuperados + query para GPT-4 com janela de memoria de 10 mensagens.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 p-6 rounded-xl border-l-4 border-teal-500">
+          <h3 class="text-xl font-bold text-teal-800 dark:text-teal-300 mb-2"><i class="fas fa-paper-plane mr-2"></i>Entrega da Resposta</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Retorna a resposta pelo mesmo canal de comunicacao original.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Caso de Uso -->
+    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-3xl p-12 mb-12 border-2 border-blue-200 dark:border-blue-800">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-lightbulb text-yellow-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Caso de Uso</h2>
+      </div>
+      <p class="text-2xl text-neutral-700 dark:text-neutral-300 mb-8 leading-relaxed">
+        Transforme documentos estaticos em uma base de conhecimento inteligente e conversacional - consulte documentacao interna atraves de linguagem natural sem busca manual.
+      </p>
+    </div>
+
+    <!-- Proposta de Valor -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-gem text-purple-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Proposta de Valor</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border-2 border-green-200 dark:border-green-800">
+          <p class="text-lg font-semibold text-green-900 dark:text-green-300 mb-2"><i class="fas fa-bolt mr-2"></i>Acesso Instantaneo ao Conhecimento</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Obtenha respostas precisas em segundos versus horas de busca manual em arquivos.</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border-2 border-blue-200 dark:border-blue-800">
+          <p class="text-lg font-semibold text-blue-900 dark:text-blue-300 mb-2"><i class="fas fa-headset mr-2"></i>Reducao da Carga de Suporte</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Desvie perguntas repetitivas para IA, cortando custos de suporte em 40-60%.</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 p-6 rounded-xl border-2 border-amber-200 dark:border-amber-800">
+          <p class="text-lg font-semibold text-amber-900 dark:text-amber-300 mb-2"><i class="fas fa-sync-alt mr-2"></i>Respostas Sempre Atualizadas</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Auto-indexa documentos atualizados sem retreinar modelos.</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 p-6 rounded-xl border-2 border-purple-200 dark:border-purple-800">
+          <p class="text-lg font-semibold text-purple-900 dark:text-purple-300 mb-2"><i class="fas fa-layer-group mr-2"></i>Base Escalavel</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Estende facilmente com ferramentas, inputs multi-modais ou raciocinio avancado.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Compradores Ideais -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-users text-indigo-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Compradores Ideais</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-neutral-100 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2"><i class="fas fa-headset text-blue-500 mr-2"></i>Equipes de Suporte ao Cliente</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Autoatendimento 24/7 para docs de ajuda e FAQs extensos.</p>
+        </div>
+
+        <div class="bg-neutral-100 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2"><i class="fas fa-briefcase text-green-500 mr-2"></i>Servicos Profissionais</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Referencia rapida para arquivos de casos, precedentes legais, documentos de clientes.</p>
+        </div>
+
+        <div class="bg-neutral-100 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2"><i class="fas fa-hospital text-red-500 mr-2"></i>Organizacoes de Saude</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Acesso compativel com HIPAA a protocolos, pesquisas, educacao de pacientes.</p>
+        </div>
+
+        <div class="bg-neutral-100 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2"><i class="fas fa-building text-purple-500 mr-2"></i>TI e RH Internos</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Automatize perguntas de funcionarios sobre politicas, beneficios, onboarding.</p>
+        </div>
+
+        <div class="bg-neutral-100 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2"><i class="fas fa-graduation-cap text-amber-500 mr-2"></i>Instituicoes Educacionais</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Acesso instantaneo de alunos a materiais de curso, ementas, artigos de pesquisa.</p>
+        </div>
+
+        <div class="bg-neutral-100 dark:bg-neutral-700 p-6 rounded-xl">
+          <p class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2"><i class="fas fa-code text-cyan-500 mr-2"></i>Equipes de Produto SaaS</p>
+          <p class="text-neutral-600 dark:text-neutral-400">Assistentes IA in-app para documentacao de produto e referencias de API.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Configuracao -->
+    <div class="bg-gradient-to-br from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-700 rounded-3xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-cogs text-neutral-600 dark:text-neutral-400"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Configuracao Passo a Passo</h2>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-neutral-900 p-6 rounded-xl">
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">1. Escolha o Metodo de Upload</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Use o upload nativo do N8N para testes, ou configure webhooks para integracao com front-ends como Lovable ou Bolt.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-900 p-6 rounded-xl">
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">2. Configure o Pinecone</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Crie uma conta no Pinecone, obtenha sua API key, crie um indice com as dimensoes corretas para o modelo de embedding.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-900 p-6 rounded-xl">
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">3. Configure o Embedding</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Use o mesmo modelo de embedding tanto na ingestao quanto no retrieval. O <code class="bg-neutral-200 dark:bg-neutral-700 px-2 py-1 rounded">text-embedding-small</code> e uma boa opcao para comecar.</p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-900 p-6 rounded-xl">
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">4. Ajuste a Memoria</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Configure a janela de memoria do agente (padrao: 10 mensagens). Ajuste conforme necessidade do caso de uso.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Navigation -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="flex flex-col md:flex-row gap-4 justify-center">
+      <a href="../../rag.html" class="bg-neutral-200 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200 px-8 py-4 rounded-xl font-bold hover:bg-neutral-300 dark:hover:bg-neutral-600 transition text-center">
+        <i class="fas fa-arrow-left mr-2"></i>Voltar para Trilha RAG
+      </a>
+      <a href="reranking-rag.html" class="bg-emerald-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-emerald-700 transition text-center">
+        Proximo: Reranking RAG<i class="fas fa-arrow-right ml-2"></i>
+      </a>
+    </div>
+  </section>
+
+  <footer class="bg-neutral-900 dark:bg-black text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-neutral-400">N8N Academy - Dominando automacoes com IA</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    } else {
+      themeToggleDarkIcon.classList.remove('hidden');
+    }
+    themeToggleBtn.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html>
