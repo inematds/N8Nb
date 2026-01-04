@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Self-Updating RAG - Sincronizacao Automatica | N8N Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    .code-block { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 0.75rem; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.7; }
+  </style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../../rag-avancado.html" class="text-2xl font-bold text-green-600 dark:text-green-400 flex items-center gap-2">
+          <span>←</span><span class="text-3xl"><i class="fas fa-sync"></i></span><span>Self-Updating RAG</span>
+        </a>
+        <a href="https://inema.club" target="_blank" class="text-sm font-bold text-cyan-400 hover:text-cyan-300 transition-colors mr-3">INEMA.CLUB</a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-gradient-to-br from-green-500 via-emerald-500 to-teal-500 py-24">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="text-8xl mb-8"><i class="fas fa-sync"></i></div>
+      <h1 class="text-6xl font-bold mb-6">Self-Updating RAG</h1>
+      <p class="text-3xl mb-4 text-white/90">Sincronizacao Automatica</p>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto">Sistema RAG que detecta mudancas nos documentos e atualiza o vector store automaticamente</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 py-12">
+    <!-- Problema -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-exclamation-triangle text-amber-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">O Problema</h2>
+      </div>
+
+      <div class="prose dark:prose-invert max-w-none">
+        <p class="text-xl text-neutral-600 dark:text-neutral-400 mb-6">
+          Em um RAG tradicional, quando um documento e atualizado, os embeddings antigos continuam no vector store.
+          Isso causa respostas desatualizadas, conflitos de informacao e perda de confianca no sistema.
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-6 mt-8">
+          <div class="bg-red-50 dark:bg-red-900/20 p-6 rounded-xl border border-red-200 dark:border-red-800">
+            <h3 class="text-xl font-bold text-red-700 dark:text-red-300 mb-3"><i class="fas fa-times-circle mr-2"></i>Sem Self-Update</h3>
+            <ul class="text-neutral-600 dark:text-neutral-400 space-y-2">
+              <li>• Documento atualizado no Drive</li>
+              <li>• Vector store mantem versao antiga</li>
+              <li>• RAG retorna info desatualizada</li>
+              <li>• Requer re-ingestao manual</li>
+            </ul>
+          </div>
+          <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl border border-green-200 dark:border-green-800">
+            <h3 class="text-xl font-bold text-green-700 dark:text-green-300 mb-3"><i class="fas fa-check-circle mr-2"></i>Com Self-Update</h3>
+            <ul class="text-neutral-600 dark:text-neutral-400 space-y-2">
+              <li>• Documento atualizado no Drive</li>
+              <li>• Trigger detecta mudanca automatico</li>
+              <li>• Deleta embeddings antigos</li>
+              <li>• Re-ingesta nova versao</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Arquitetura -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-cogs text-green-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Arquitetura Self-Updating</h2>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border-l-4 border-green-500">
+          <h3 class="text-xl font-bold text-green-800 dark:text-green-300 mb-2"><i class="fas fa-folder-open mr-2"></i>1. Watch Google Drive</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Trigger monitora pasta no Google Drive. Dispara quando arquivos sao criados, modificados ou deletados.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border-l-4 border-green-500">
+          <h3 class="text-xl font-bold text-green-800 dark:text-green-300 mb-2"><i class="fas fa-fingerprint mr-2"></i>2. Hash Comparison</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Compara hash MD5 do arquivo com hash armazenado. Se diferente, arquivo foi modificado.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border-l-4 border-green-500">
+          <h3 class="text-xl font-bold text-green-800 dark:text-green-300 mb-2"><i class="fas fa-trash-alt mr-2"></i>3. Delete Old Embeddings</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Remove todos os chunks do documento antigo do vector store usando file_id como filtro.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border-l-4 border-green-500">
+          <h3 class="text-xl font-bold text-green-800 dark:text-green-300 mb-2"><i class="fas fa-upload mr-2"></i>4. Re-Ingest Document</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Extrai texto, chunka, gera embeddings e armazena nova versao com timestamp atualizado.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border-l-4 border-green-500">
+          <h3 class="text-xl font-bold text-green-800 dark:text-green-300 mb-2"><i class="fas fa-clipboard-list mr-2"></i>5. Log Sync Event</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Registra operacao em tabela de audit: file_id, old_hash, new_hash, timestamp, status.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Implementacao -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-code text-emerald-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Implementacao no N8N</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl">
+          <h3 class="font-bold text-xl mb-4 text-blue-700 dark:text-blue-300"><i class="fas fa-clock mr-2"></i>Trigger Schedule</h3>
+          <div class="code-block text-sm">
+Schedule Trigger:<br>
+  - Every 15 minutes<br>
+  - Or: On file change event<br>
+<br>
+Google Drive:<br>
+  - List files in folder<br>
+  - Get file metadata (hash)<br>
+  - Compare with stored hash
+          </div>
+        </div>
+
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl">
+          <h3 class="font-bold text-xl mb-4 text-purple-700 dark:text-purple-300"><i class="fas fa-database mr-2"></i>Delete + Insert</h3>
+          <div class="code-block text-sm">
+Supabase Delete:<br>
+  - DELETE FROM documents<br>
+  - WHERE file_id = '{{ file_id }}'<br>
+<br>
+Supabase Insert:<br>
+  - INSERT chunks with new hash<br>
+  - Update sync_log table
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl border border-amber-200 dark:border-amber-800">
+        <h3 class="font-bold text-lg text-amber-700 dark:text-amber-300 mb-3"><i class="fas fa-lightbulb mr-2"></i>Dica de Performance</h3>
+        <p class="text-neutral-600 dark:text-neutral-400">Use Google Drive Push Notifications (webhooks) em vez de polling para detectar mudancas em tempo real sem consumir creditos de API desnecessariamente.</p>
+      </div>
+    </div>
+
+    <!-- Casos de Uso -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-briefcase text-green-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Casos de Uso Ideais</h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl text-center">
+          <div class="text-5xl mb-4">📚</div>
+          <h3 class="font-bold text-lg mb-2">Documentacao Tecnica</h3>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">APIs, SDKs, manuais que mudam frequentemente</p>
+        </div>
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl text-center">
+          <div class="text-5xl mb-4">📋</div>
+          <h3 class="font-bold text-lg mb-2">Politicas Corporativas</h3>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">HR, compliance, procedimentos internos</p>
+        </div>
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl text-center">
+          <div class="text-5xl mb-4">🛒</div>
+          <h3 class="font-bold text-lg mb-2">Catalogo de Produtos</h3>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Precos, especificacoes, estoque atualizado</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navegacao -->
+    <div class="flex justify-between">
+      <a href="voice-rag.html" class="bg-neutral-600 hover:bg-neutral-700 text-white px-8 py-4 rounded-xl font-bold transition-colors">
+        <i class="fas fa-arrow-left mr-2"></i>Anterior: Voice RAG
+      </a>
+      <a href="multi-agent-rag.html" class="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-bold transition-colors">
+        Proximo: Multi-Agent RAG<i class="fas fa-arrow-right ml-2"></i>
+      </a>
+    </div>
+  </section>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    } else {
+      themeToggleDarkIcon.classList.remove('hidden');
+    }
+    themeToggleBtn.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html>

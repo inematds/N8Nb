@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice RAG - Interfaces de Voz | N8N Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    .code-block { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 0.75rem; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.7; }
+  </style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../../rag-avancado.html" class="text-2xl font-bold text-cyan-600 dark:text-cyan-400 flex items-center gap-2">
+          <span>←</span><span class="text-3xl"><i class="fas fa-microphone"></i></span><span>Voice RAG</span>
+        </a>
+        <a href="https://inema.club" target="_blank" class="text-sm font-bold text-cyan-400 hover:text-cyan-300 transition-colors mr-3">INEMA.CLUB</a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-gradient-to-br from-cyan-500 via-teal-500 to-emerald-500 py-24">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="text-8xl mb-8"><i class="fas fa-microphone"></i></div>
+      <h1 class="text-6xl font-bold mb-6">Voice RAG</h1>
+      <p class="text-3xl mb-4 text-white/90">Interfaces de Voz e Telefone</p>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto">Crie agentes de suporte telefonico 24/7 com conhecimento contextual via RAG</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 py-12">
+    <!-- Conceito -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-lightbulb text-amber-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">O Que e Voice RAG?</h2>
+      </div>
+
+      <div class="prose dark:prose-invert max-w-none">
+        <p class="text-xl text-neutral-600 dark:text-neutral-400 mb-6">
+          <strong class="text-cyan-600">Voice RAG</strong> combina interfaces de voz (telefone, assistentes de voz)
+          com sistemas RAG para criar agentes que entendem fala, buscam informacoes relevantes e respondem naturalmente.
+        </p>
+
+        <div class="bg-cyan-50 dark:bg-cyan-900/20 p-8 rounded-xl border border-cyan-200 dark:border-cyan-800 mt-8">
+          <h3 class="text-2xl font-bold text-cyan-700 dark:text-cyan-300 mb-4">Fluxo de Voice RAG</h3>
+          <div class="flex flex-wrap items-center justify-center gap-4 text-center">
+            <div class="bg-white dark:bg-neutral-700 p-4 rounded-lg">
+              <div class="text-3xl mb-2">🎤</div>
+              <p class="text-sm font-medium">Fala do Usuario</p>
+            </div>
+            <i class="fas fa-arrow-right text-2xl text-cyan-500"></i>
+            <div class="bg-white dark:bg-neutral-700 p-4 rounded-lg">
+              <div class="text-3xl mb-2">📝</div>
+              <p class="text-sm font-medium">Speech-to-Text</p>
+            </div>
+            <i class="fas fa-arrow-right text-2xl text-cyan-500"></i>
+            <div class="bg-white dark:bg-neutral-700 p-4 rounded-lg">
+              <div class="text-3xl mb-2">🔍</div>
+              <p class="text-sm font-medium">RAG Search</p>
+            </div>
+            <i class="fas fa-arrow-right text-2xl text-cyan-500"></i>
+            <div class="bg-white dark:bg-neutral-700 p-4 rounded-lg">
+              <div class="text-3xl mb-2">🤖</div>
+              <p class="text-sm font-medium">LLM Response</p>
+            </div>
+            <i class="fas fa-arrow-right text-2xl text-cyan-500"></i>
+            <div class="bg-white dark:bg-neutral-700 p-4 rounded-lg">
+              <div class="text-3xl mb-2">🔊</div>
+              <p class="text-sm font-medium">Text-to-Speech</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plataformas -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-phone-alt text-cyan-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Plataformas de Voice AI</h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl">
+          <div class="text-5xl mb-4">📞</div>
+          <h3 class="font-bold text-xl mb-2 text-blue-700 dark:text-blue-300">Retell AI</h3>
+          <p class="text-neutral-600 dark:text-neutral-400 mb-4">Plataforma de phone agents com baixa latencia. Integra com Google Calendar, CRMs e N8N via webhooks.</p>
+          <ul class="text-sm text-neutral-500 dark:text-neutral-400 space-y-1">
+            <li>• Latencia < 500ms</li>
+            <li>• Numeros de telefone dedicados</li>
+            <li>• Transferencia para humanos</li>
+          </ul>
+        </div>
+
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl">
+          <div class="text-5xl mb-4">🎙️</div>
+          <h3 class="font-bold text-xl mb-2 text-purple-700 dark:text-purple-300">ElevenLabs</h3>
+          <p class="text-neutral-600 dark:text-neutral-400 mb-4">Sintese de voz ultra-realista. Vozes clonadas, multilingue, streaming de audio.</p>
+          <ul class="text-sm text-neutral-500 dark:text-neutral-400 space-y-1">
+            <li>• Vozes customizadas</li>
+            <li>• 29+ idiomas</li>
+            <li>• API de streaming</li>
+          </ul>
+        </div>
+
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl">
+          <div class="text-5xl mb-4">🤖</div>
+          <h3 class="font-bold text-xl mb-2 text-green-700 dark:text-green-300">VAPI</h3>
+          <p class="text-neutral-600 dark:text-neutral-400 mb-4">Voice AI assistants com integracao nativa N8N. Ideal para WordPress e e-commerce.</p>
+          <ul class="text-sm text-neutral-500 dark:text-neutral-400 space-y-1">
+            <li>• Integracao WooCommerce</li>
+            <li>• Guardrails inclusos</li>
+            <li>• Fallback para humanos</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Arquitetura -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-project-diagram text-teal-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Arquitetura Voice RAG no N8N</h2>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-gradient-to-r from-cyan-50 to-teal-50 dark:from-cyan-900/20 dark:to-teal-900/20 p-6 rounded-xl border-l-4 border-cyan-500">
+          <h3 class="text-xl font-bold text-cyan-800 dark:text-cyan-300 mb-2"><i class="fas fa-webhook mr-2"></i>1. Webhook de Voz</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Retell/VAPI envia webhook quando usuario fala. Payload inclui transcricao, session_id e metadata.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-cyan-50 to-teal-50 dark:from-cyan-900/20 dark:to-teal-900/20 p-6 rounded-xl border-l-4 border-cyan-500">
+          <h3 class="text-xl font-bold text-cyan-800 dark:text-cyan-300 mb-2"><i class="fas fa-search mr-2"></i>2. RAG Search</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Transcricao vira query no vector store. Busca chunks relevantes da base de conhecimento.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-cyan-50 to-teal-50 dark:from-cyan-900/20 dark:to-teal-900/20 p-6 rounded-xl border-l-4 border-cyan-500">
+          <h3 class="text-xl font-bold text-cyan-800 dark:text-cyan-300 mb-2"><i class="fas fa-robot mr-2"></i>3. LLM com Contexto</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">GPT-4 ou Gemini gera resposta conversacional usando chunks + historico da conversa.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-cyan-50 to-teal-50 dark:from-cyan-900/20 dark:to-teal-900/20 p-6 rounded-xl border-l-4 border-cyan-500">
+          <h3 class="text-xl font-bold text-cyan-800 dark:text-cyan-300 mb-2"><i class="fas fa-volume-up mr-2"></i>4. Text-to-Speech</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Resposta e convertida em audio via ElevenLabs e enviada de volta para o caller.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-cyan-50 to-teal-50 dark:from-cyan-900/20 dark:to-teal-900/20 p-6 rounded-xl border-l-4 border-cyan-500">
+          <h3 class="text-xl font-bold text-cyan-800 dark:text-cyan-300 mb-2"><i class="fas fa-shield-alt mr-2"></i>5. Guardrails</h3>
+          <p class="text-neutral-600 dark:text-neutral-400">Validacao de respostas para evitar informacoes incorretas. Escalacao automatica para humanos quando necessario.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Casos de Uso -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-headset text-cyan-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Casos de Uso</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <div class="text-4xl mb-4">📞</div>
+          <h3 class="font-bold text-lg mb-2">Suporte ao Cliente 24/7</h3>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Atendimento telefonico automatizado para FAQs, status de pedidos, informacoes de produtos.</p>
+        </div>
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <div class="text-4xl mb-4">📅</div>
+          <h3 class="font-bold text-lg mb-2">Agendamento por Telefone</h3>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Marcar consultas, reservas, reunioes com integracao direta ao Google Calendar.</p>
+        </div>
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <div class="text-4xl mb-4">🛒</div>
+          <h3 class="font-bold text-lg mb-2">E-Commerce Voice</h3>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Suporte pre e pos-venda para WooCommerce/Shopify com acesso ao catalogo via RAG.</p>
+        </div>
+        <div class="bg-neutral-50 dark:bg-neutral-700 p-6 rounded-xl">
+          <div class="text-4xl mb-4">🏥</div>
+          <h3 class="font-bold text-lg mb-2">Healthcare Triage</h3>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Triagem inicial de pacientes com base em protocolos medicos armazenados no RAG.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navegacao -->
+    <div class="flex justify-between">
+      <a href="multimodal-rag.html" class="bg-neutral-600 hover:bg-neutral-700 text-white px-8 py-4 rounded-xl font-bold transition-colors">
+        <i class="fas fa-arrow-left mr-2"></i>Anterior: Multimodal RAG
+      </a>
+      <a href="self-updating-rag.html" class="bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-4 rounded-xl font-bold transition-colors">
+        Proximo: Self-Updating RAG<i class="fas fa-arrow-right ml-2"></i>
+      </a>
+    </div>
+  </section>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    } else {
+      themeToggleDarkIcon.classList.remove('hidden');
+    }
+    themeToggleBtn.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html>

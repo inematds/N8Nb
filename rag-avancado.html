@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trilha RAG Avancado | N8N Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { darkMode: 'class' }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .module-card { transition: all 0.3s ease; }
+        .module-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .gradient-rag-advanced { background: linear-gradient(135deg, #dc2626 0%, #ea580c 50%, #f59e0b 100%); }
+        .workflow-img { transition: transform 0.3s ease; }
+        .workflow-img:hover { transform: scale(1.02); }
+    </style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+
+    <!-- Header -->
+    <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="text-2xl font-bold text-red-600 dark:text-red-400 flex items-center gap-2">
+                    <span class="text-xl">←</span>
+                    <span class="text-3xl">🔥</span>
+                    <span>N8N Academy</span>
+                </a>
+                <span class="text-neutral-400 mx-2">-</span>
+                <a href="https://inema.club" target="_blank" class="text-lg font-bold text-cyan-400 hover:text-cyan-300 transition-colors">INEMA.CLUB</a>
+                <div class="flex items-center gap-4">
+                    <span class="px-4 py-2 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 rounded-full text-sm font-bold">
+                        <i class="fas fa-fire mr-1"></i> RAG Avancado
+                    </span>
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-600">
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="gradient-rag-advanced py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+            <div class="text-7xl mb-6">🔥</div>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
+                Trilha RAG Avancado
+            </h1>
+            <p class="text-xl sm:text-2xl mb-6 text-white/90 max-w-3xl mx-auto">
+                Arquiteturas de producao: Agentic, Multimodal, Voice, Self-Updating e Multi-Agent RAG
+            </p>
+            <div class="flex gap-4 justify-center flex-wrap">
+                <span class="px-5 py-2.5 bg-white/20 rounded-lg backdrop-blur-sm font-medium">
+                    <i class="fas fa-brain mr-2"></i>6 Arquiteturas
+                </span>
+                <span class="px-5 py-2.5 bg-white/20 rounded-lg backdrop-blur-sm font-medium">
+                    <i class="fas fa-microphone mr-2"></i>Voice AI
+                </span>
+                <span class="px-5 py-2.5 bg-white/20 rounded-lg backdrop-blur-sm font-medium">
+                    <i class="fas fa-image mr-2"></i>Multimodal
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Intro Section -->
+    <section class="bg-white dark:bg-neutral-800 py-12 shadow-md">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div>
+                    <div class="text-4xl font-bold text-red-600 dark:text-red-400 mb-2">PRO</div>
+                    <div class="text-neutral-600 dark:text-neutral-400 font-medium">Nivel Avancado</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-orange-600 dark:text-orange-400 mb-2">6</div>
+                    <div class="text-neutral-600 dark:text-neutral-400 font-medium">Arquiteturas Enterprise</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-amber-600 dark:text-amber-400 mb-2">224+</div>
+                    <div class="text-neutral-600 dark:text-neutral-400 font-medium">Workflows de Referencia</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pre-requisitos -->
+    <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-2xl p-8 border border-red-200 dark:border-red-800">
+            <h2 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+                <i class="fas fa-exclamation-triangle text-amber-500 mr-2"></i>Pre-requisitos
+            </h2>
+            <p class="text-neutral-700 dark:text-neutral-300 mb-4">
+                Esta trilha assume que voce ja domina os conceitos da <strong>Trilha RAG basica</strong>.
+                Se ainda nao completou, recomendamos fazer primeiro:
+            </p>
+            <div class="flex flex-wrap gap-4 mt-6">
+                <a href="rag.html" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>Ir para Trilha RAG Basica
+                </a>
+            </div>
+            <div class="grid md:grid-cols-2 gap-4 mt-6">
+                <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg">
+                    <h3 class="font-bold text-green-600 mb-2"><i class="fas fa-check-circle mr-1"></i> Voce Precisa Saber</h3>
+                    <ul class="text-sm text-neutral-600 dark:text-neutral-400 space-y-1">
+                        <li>• Simple RAG com embeddings</li>
+                        <li>• Reranking com Cohere</li>
+                        <li>• Vector stores (Pinecone/Supabase)</li>
+                        <li>• Agentes com memoria</li>
+                    </ul>
+                </div>
+                <div class="bg-white dark:bg-neutral-800 p-4 rounded-lg">
+                    <h3 class="font-bold text-red-600 mb-2"><i class="fas fa-fire mr-1"></i> O Que Vai Aprender</h3>
+                    <ul class="text-sm text-neutral-600 dark:text-neutral-400 space-y-1">
+                        <li>• Agentes que decidem fontes de dados</li>
+                        <li>• RAG com imagens e OCR</li>
+                        <li>• Interfaces de voz e telefone</li>
+                        <li>• Atualizacao automatica de docs</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modulos -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+
+        <!-- Modulo 1: Agentic RAG -->
+        <div class="module-card bg-white dark:bg-neutral-800 rounded-2xl shadow-xl overflow-hidden">
+            <div class="md:flex">
+                <div class="md:w-1/2 p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 px-3 py-1 rounded-full text-sm font-bold">Modulo 1</span>
+                        <span class="bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-3 py-1 rounded-full text-sm font-semibold">Autonomia</span>
+                    </div>
+                    <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+                        <i class="fas fa-robot text-red-500 mr-2"></i>Agentic RAG
+                    </h2>
+                    <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+                        Agentes que decidem autonomamente qual fonte de dados usar: vector store,
+                        SQL database, arquivos brutos ou APIs externas, baseado na query do usuario.
+                    </p>
+
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-red-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Agente decide dinamicamente entre multiplas fontes</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-red-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Tool calling para vector search, SQL queries e file reads</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-red-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Classificacao automatica de intencao da query</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-red-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Reducao de custo com roteamento inteligente</span>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <a href="conteudo/rag-avancado/agentic-rag.html" class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-book-open mr-2"></i>Ver Detalhes
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 bg-neutral-100 dark:bg-neutral-900 p-6 flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-8xl mb-4">🤖</div>
+                        <p class="text-neutral-600 dark:text-neutral-400 text-sm">Agente Autonomo</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modulo 2: Multimodal RAG -->
+        <div class="module-card bg-white dark:bg-neutral-800 rounded-2xl shadow-xl overflow-hidden">
+            <div class="md:flex md:flex-row-reverse">
+                <div class="md:w-1/2 p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400 px-3 py-1 rounded-full text-sm font-bold">Modulo 2</span>
+                        <span class="bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 px-3 py-1 rounded-full text-sm font-semibold">Multimidia</span>
+                    </div>
+                    <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+                        <i class="fas fa-images text-pink-500 mr-2"></i>Multimodal RAG
+                    </h2>
+                    <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+                        Processe texto e imagens em paralelo. Use OCR com Mistral para extrair
+                        informacoes de PDFs escaneados, graficos e diagramas tecnicos.
+                    </p>
+
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-pink-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Processamento paralelo de texto + imagens</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-pink-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">OCR com Mistral para PDFs complexos</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-pink-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Image embeddings com Cohere Embed v4</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-pink-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Ideal para manuais tecnicos e documentos visuais</span>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <a href="conteudo/rag-avancado/multimodal-rag.html" class="bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-book-open mr-2"></i>Ver Detalhes
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 bg-neutral-100 dark:bg-neutral-900 p-6 flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-8xl mb-4">🖼️</div>
+                        <p class="text-neutral-600 dark:text-neutral-400 text-sm">Texto + Imagens</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modulo 3: Voice RAG -->
+        <div class="module-card bg-white dark:bg-neutral-800 rounded-2xl shadow-xl overflow-hidden">
+            <div class="md:flex">
+                <div class="md:w-1/2 p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 px-3 py-1 rounded-full text-sm font-bold">Modulo 3</span>
+                        <span class="bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 px-3 py-1 rounded-full text-sm font-semibold">Voz</span>
+                    </div>
+                    <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+                        <i class="fas fa-microphone text-cyan-500 mr-2"></i>Voice RAG
+                    </h2>
+                    <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+                        Interfaces de voz e telefone com RAG. Use Retell AI, ElevenLabs ou VAPI
+                        para criar agentes de suporte por telefone com conhecimento contextual.
+                    </p>
+
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-cyan-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Integracao com Retell AI para phone agents</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-cyan-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">ElevenLabs para sintese de voz natural</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-cyan-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Transcricao em tempo real com AssemblyAI</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-cyan-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Guardrails para respostas seguras</span>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <a href="conteudo/rag-avancado/voice-rag.html" class="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-book-open mr-2"></i>Ver Detalhes
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 bg-neutral-100 dark:bg-neutral-900 p-6 flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-8xl mb-4">🎙️</div>
+                        <p class="text-neutral-600 dark:text-neutral-400 text-sm">Phone Agents</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modulo 4: Self-Updating RAG -->
+        <div class="module-card bg-white dark:bg-neutral-800 rounded-2xl shadow-xl overflow-hidden">
+            <div class="md:flex md:flex-row-reverse">
+                <div class="md:w-1/2 p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 px-3 py-1 rounded-full text-sm font-bold">Modulo 4</span>
+                        <span class="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 px-3 py-1 rounded-full text-sm font-semibold">Sync</span>
+                    </div>
+                    <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+                        <i class="fas fa-sync text-green-500 mr-2"></i>Self-Updating RAG
+                    </h2>
+                    <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+                        Sistema RAG que detecta mudancas nos documentos fonte e atualiza
+                        automaticamente o vector store. Sempre sincronizado com Google Drive.
+                    </p>
+
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-green-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Watch Google Drive para mudancas em arquivos</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-green-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Delete + re-ingest automatico de docs modificados</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-green-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Hash comparison para evitar re-processamento</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-green-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Logs de sincronizacao para auditoria</span>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <a href="conteudo/rag-avancado/self-updating-rag.html" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-book-open mr-2"></i>Ver Detalhes
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 bg-neutral-100 dark:bg-neutral-900 p-6 flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-8xl mb-4">🔄</div>
+                        <p class="text-neutral-600 dark:text-neutral-400 text-sm">Auto-Sync</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modulo 5: Multi-Agent RAG -->
+        <div class="module-card bg-white dark:bg-neutral-800 rounded-2xl shadow-xl overflow-hidden">
+            <div class="md:flex">
+                <div class="md:w-1/2 p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 px-3 py-1 rounded-full text-sm font-bold">Modulo 5</span>
+                        <span class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full text-sm font-semibold">Orquestracao</span>
+                    </div>
+                    <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+                        <i class="fas fa-users-cog text-violet-500 mr-2"></i>Multi-Agent RAG
+                    </h2>
+                    <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+                        Multiplos agentes especializados trabalhando juntos. Um orquestrador
+                        delega para agentes de retrieval, analysis e response generation.
+                    </p>
+
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-violet-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Arquitetura Orchestrator com sub-agentes</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-violet-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Agente especialista em retrieval</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-violet-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Agente especialista em analise/synthesis</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-violet-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Processamento paralelo e agregacao</span>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <a href="conteudo/rag-avancado/multi-agent-rag.html" class="bg-violet-500 hover:bg-violet-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-book-open mr-2"></i>Ver Detalhes
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 bg-neutral-100 dark:bg-neutral-900 p-6 flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-8xl mb-4">👥</div>
+                        <p class="text-neutral-600 dark:text-neutral-400 text-sm">Multi-Agentes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modulo 6: RAG Evaluation -->
+        <div class="module-card bg-white dark:bg-neutral-800 rounded-2xl shadow-xl overflow-hidden">
+            <div class="md:flex md:flex-row-reverse">
+                <div class="md:w-1/2 p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 px-3 py-1 rounded-full text-sm font-bold">Modulo 6</span>
+                        <span class="bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 px-3 py-1 rounded-full text-sm font-semibold">Qualidade</span>
+                    </div>
+                    <h2 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+                        <i class="fas fa-chart-line text-amber-500 mr-2"></i>RAG Evaluation
+                    </h2>
+                    <p class="text-neutral-600 dark:text-neutral-400 mb-6">
+                        Metricas de qualidade para seu RAG: relevancia de documentos, groundedness,
+                        accuracy e human feedback loop para melhoria continua.
+                    </p>
+
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-amber-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Metrica de relevancia de documentos</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-amber-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Groundedness score (resposta baseada em fontes)</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-amber-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">Human-in-the-Loop feedback</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check text-amber-500 mt-1"></i>
+                            <span class="text-neutral-700 dark:text-neutral-300 text-sm">RLHF para melhoria continua</span>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <a href="conteudo/rag-avancado/rag-evaluation.html" class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-book-open mr-2"></i>Ver Detalhes
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 bg-neutral-100 dark:bg-neutral-900 p-6 flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-8xl mb-4">📊</div>
+                        <p class="text-neutral-600 dark:text-neutral-400 text-sm">Metricas & QA</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Comparativo -->
+    <section class="bg-white dark:bg-neutral-800 py-16">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-neutral-900 dark:text-neutral-100 mb-12">
+                <i class="fas fa-balance-scale text-red-500 mr-2"></i>Quando Usar Cada Arquitetura?
+            </h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead class="bg-red-100 dark:bg-red-900/30">
+                        <tr>
+                            <th class="text-left p-4 font-bold text-neutral-900 dark:text-neutral-100">Arquitetura</th>
+                            <th class="text-left p-4 font-bold text-neutral-900 dark:text-neutral-100">Melhor Para</th>
+                            <th class="text-left p-4 font-bold text-neutral-900 dark:text-neutral-100">Complexidade</th>
+                            <th class="text-left p-4 font-bold text-neutral-900 dark:text-neutral-100">Custo</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-neutral-200 dark:divide-neutral-700">
+                        <tr>
+                            <td class="p-4 font-semibold text-red-600">Agentic RAG</td>
+                            <td class="p-4 text-neutral-600 dark:text-neutral-400">Multiplas fontes de dados, queries complexas</td>
+                            <td class="p-4"><span class="bg-orange-100 text-orange-700 px-2 py-1 rounded text-xs">Alta</span></td>
+                            <td class="p-4"><span class="bg-orange-100 text-orange-700 px-2 py-1 rounded text-xs">$$$</span></td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-pink-600">Multimodal RAG</td>
+                            <td class="p-4 text-neutral-600 dark:text-neutral-400">Documentos com imagens, manuais tecnicos</td>
+                            <td class="p-4"><span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs">Muito Alta</span></td>
+                            <td class="p-4"><span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs">$$$$</span></td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-cyan-600">Voice RAG</td>
+                            <td class="p-4 text-neutral-600 dark:text-neutral-400">Suporte telefonico, atendimento 24/7</td>
+                            <td class="p-4"><span class="bg-orange-100 text-orange-700 px-2 py-1 rounded text-xs">Alta</span></td>
+                            <td class="p-4"><span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs">$$$$</span></td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-green-600">Self-Updating</td>
+                            <td class="p-4 text-neutral-600 dark:text-neutral-400">Docs que mudam frequentemente</td>
+                            <td class="p-4"><span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs">Media</span></td>
+                            <td class="p-4"><span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs">$$</span></td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-violet-600">Multi-Agent</td>
+                            <td class="p-4 text-neutral-600 dark:text-neutral-400">Enterprise, tarefas complexas</td>
+                            <td class="p-4"><span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs">Muito Alta</span></td>
+                            <td class="p-4"><span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs">$$$$$</span></td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-amber-600">RAG Evaluation</td>
+                            <td class="p-4 text-neutral-600 dark:text-neutral-400">Producao, compliance, QA</td>
+                            <td class="p-4"><span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs">Media</span></td>
+                            <td class="p-4"><span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs">$$</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation -->
+    <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex flex-col md:flex-row gap-4 justify-center">
+            <a href="rag.html" class="bg-purple-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-purple-700 transition text-center">
+                <i class="fas fa-arrow-left mr-2"></i>Trilha RAG Basica
+            </a>
+            <a href="index.html" class="bg-neutral-700 text-white px-8 py-4 rounded-xl font-bold hover:bg-neutral-600 transition text-center">
+                <i class="fas fa-home mr-2"></i>Voltar ao Inicio
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-neutral-900 dark:bg-black text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-neutral-400">N8N Academy - Dominando automacoes com IA</p>
+            <p class="text-sm text-neutral-500 mt-2">6 arquiteturas RAG avancadas para producao enterprise</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Dark Mode Toggle
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+        if (localStorage.getItem('color-theme') === 'dark' ||
+            (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            themeToggleLightIcon.classList.remove('hidden');
+        } else {
+            themeToggleDarkIcon.classList.remove('hidden');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+        });
+    </script>
+
+</body>
+</html>

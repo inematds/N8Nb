@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RAG Evaluation - Metricas e QA | N8N Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    .code-block { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: 0.75rem; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.7; }
+  </style>
+</head>
+<body class="bg-neutral-50 dark:bg-neutral-900">
+  <nav class="sticky top-0 z-50 bg-white dark:bg-neutral-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="../../rag-avancado.html" class="text-2xl font-bold text-amber-600 dark:text-amber-400 flex items-center gap-2">
+          <span>←</span><span class="text-3xl"><i class="fas fa-chart-line"></i></span><span>RAG Evaluation</span>
+        </a>
+        <a href="https://inema.club" target="_blank" class="text-sm font-bold text-cyan-400 hover:text-cyan-300 transition-colors mr-3">INEMA.CLUB</a>
+        <button id="theme-toggle" class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700">
+          <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 py-24">
+    <div class="max-w-7xl mx-auto px-4 text-center text-white">
+      <div class="text-8xl mb-8"><i class="fas fa-chart-line"></i></div>
+      <h1 class="text-6xl font-bold mb-6">RAG Evaluation</h1>
+      <p class="text-3xl mb-4 text-white/90">Metricas de Qualidade e QA</p>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto">Meca relevancia, groundedness, accuracy e implemente human feedback loop</p>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 py-12">
+    <!-- Por que avaliar -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-question-circle text-amber-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Por Que Avaliar seu RAG?</h2>
+      </div>
+
+      <div class="prose dark:prose-invert max-w-none">
+        <p class="text-xl text-neutral-600 dark:text-neutral-400 mb-6">
+          Um RAG em producao precisa de metricas. Sem avaliacao, voce nao sabe se esta retornando chunks relevantes,
+          se as respostas sao fundamentadas nos documentos, ou se os usuarios estao satisfeitos.
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-6 mt-8">
+          <div class="bg-red-50 dark:bg-red-900/20 p-6 rounded-xl border border-red-200 dark:border-red-800 text-center">
+            <div class="text-5xl mb-4">❌</div>
+            <h3 class="font-bold text-red-700 dark:text-red-300 mb-2">Sem Avaliacao</h3>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">"Parece que funciona" nao e metrica</p>
+          </div>
+          <div class="bg-yellow-50 dark:bg-yellow-900/20 p-6 rounded-xl border border-yellow-200 dark:border-yellow-800 text-center">
+            <div class="text-5xl mb-4">⚠️</div>
+            <h3 class="font-bold text-yellow-700 dark:text-yellow-300 mb-2">Avaliacao Manual</h3>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Nao escala, subjetiva, inconsistente</p>
+          </div>
+          <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl border border-green-200 dark:border-green-800 text-center">
+            <div class="text-5xl mb-4">✅</div>
+            <h3 class="font-bold text-green-700 dark:text-green-300 mb-2">Avaliacao Automatica</h3>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400">Metricas objetivas, continua, escalavel</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Metricas -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-tachometer-alt text-orange-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Metricas Principais</h2>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border-l-4 border-blue-500">
+          <h3 class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-2"><i class="fas fa-bullseye mr-2"></i>Relevance Score</h3>
+          <p class="text-neutral-600 dark:text-neutral-400 mb-3">Mede se os chunks retornados sao relevantes para a query. Use um LLM para avaliar cada chunk de 0-10.</p>
+          <div class="code-block text-sm">
+Prompt: "Rate 0-10 how relevant this chunk is to the query:<br>
+Query: {{ query }}<br>
+Chunk: {{ chunk }}<br>
+Output: { score: number, reason: string }"
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border-l-4 border-green-500">
+          <h3 class="text-xl font-bold text-green-800 dark:text-green-300 mb-2"><i class="fas fa-check-double mr-2"></i>Groundedness Score</h3>
+          <p class="text-neutral-600 dark:text-neutral-400 mb-3">Verifica se a resposta e fundamentada nos chunks. Detecta "alucinacoes" onde o LLM inventa informacoes.</p>
+          <div class="code-block text-sm">
+Prompt: "Check if this answer is grounded in the context:<br>
+Context: {{ chunks }}<br>
+Answer: {{ response }}<br>
+Output: { grounded: boolean, ungrounded_claims: [] }"
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 p-6 rounded-xl border-l-4 border-purple-500">
+          <h3 class="text-xl font-bold text-purple-800 dark:text-purple-300 mb-2"><i class="fas fa-clipboard-check mr-2"></i>Answer Accuracy</h3>
+          <p class="text-neutral-600 dark:text-neutral-400 mb-3">Compara resposta com ground truth (quando disponivel). Util para FAQs e perguntas com respostas conhecidas.</p>
+          <div class="code-block text-sm">
+Metrics:<br>
+- Exact Match: response == expected<br>
+- BLEU Score: n-gram overlap<br>
+- Semantic Similarity: embedding cosine
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 p-6 rounded-xl border-l-4 border-amber-500">
+          <h3 class="text-xl font-bold text-amber-800 dark:text-amber-300 mb-2"><i class="fas fa-users mr-2"></i>User Satisfaction</h3>
+          <p class="text-neutral-600 dark:text-neutral-400 mb-3">Feedback direto do usuario: thumbs up/down, ratings, comentarios.</p>
+          <div class="code-block text-sm">
+Collect after response:<br>
+- Was this helpful? [Yes/No]<br>
+- Rate 1-5 stars<br>
+- What was missing?
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HITL -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-user-check text-red-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Human-in-the-Loop (HITL)</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="font-bold text-xl mb-4 text-amber-700 dark:text-amber-300">Feedback Loop</h3>
+          <div class="space-y-4">
+            <div class="bg-neutral-100 dark:bg-neutral-700 p-4 rounded-lg">
+              <h4 class="font-bold mb-2">1. Coleta de Feedback</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">Usuario indica se resposta foi util. Armazena: query, response, chunks, rating.</p>
+            </div>
+            <div class="bg-neutral-100 dark:bg-neutral-700 p-4 rounded-lg">
+              <h4 class="font-bold mb-2">2. Analise de Padroes</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">Identifica queries com baixo rating. Agrupa por topico ou tipo de erro.</p>
+            </div>
+            <div class="bg-neutral-100 dark:bg-neutral-700 p-4 rounded-lg">
+              <h4 class="font-bold mb-2">3. Ajuste do Sistema</h4>
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">Adiciona exemplos ao prompt, ajusta chunking, melhora retrieval.</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-xl mb-4 text-red-700 dark:text-red-300">RLHF (Reinforcement Learning)</h3>
+          <div class="bg-red-50 dark:bg-red-900/20 p-6 rounded-xl">
+            <p class="text-neutral-600 dark:text-neutral-400 mb-4">Use feedback para treinar um reward model ou ajustar prompts:</p>
+            <div class="code-block text-sm">
+Dataset from feedback:<br>
+- Good responses (rating >= 4)<br>
+- Bad responses (rating <= 2)<br>
+<br>
+Train reward model or<br>
+Fine-tune prompt examples
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pipeline de Avaliacao -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-cogs text-amber-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Pipeline de Avaliacao no N8N</h2>
+      </div>
+
+      <div class="bg-amber-50 dark:bg-amber-900/20 p-8 rounded-xl border border-amber-200 dark:border-amber-800">
+        <div class="grid md:grid-cols-5 gap-4 text-center">
+          <div class="bg-white dark:bg-neutral-700 p-4 rounded-lg">
+            <div class="text-3xl mb-2">💬</div>
+            <p class="text-sm font-medium">Query + Response</p>
+          </div>
+          <div class="flex items-center justify-center">
+            <i class="fas fa-arrow-right text-2xl text-amber-500"></i>
+          </div>
+          <div class="bg-white dark:bg-neutral-700 p-4 rounded-lg">
+            <div class="text-3xl mb-2">🤖</div>
+            <p class="text-sm font-medium">LLM Evaluator</p>
+          </div>
+          <div class="flex items-center justify-center">
+            <i class="fas fa-arrow-right text-2xl text-amber-500"></i>
+          </div>
+          <div class="bg-white dark:bg-neutral-700 p-4 rounded-lg">
+            <div class="text-3xl mb-2">📊</div>
+            <p class="text-sm font-medium">Dashboard</p>
+          </div>
+        </div>
+
+        <div class="mt-8">
+          <h4 class="font-bold mb-4">Workflow de Avaliacao:</h4>
+          <div class="code-block text-sm">
+1. Schedule Trigger (hourly)<br>
+2. Query logs table for unscored responses<br>
+3. For each: call LLM with evaluation prompt<br>
+4. Store scores in eval_results table<br>
+5. Alert if avg_score < threshold<br>
+6. Weekly report to Slack/Email
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="bg-white dark:bg-neutral-800 rounded-3xl shadow-2xl p-12 mb-12">
+      <div class="flex items-center mb-8">
+        <span class="text-6xl mr-6"><i class="fas fa-chart-bar text-orange-500"></i></span>
+        <h2 class="text-4xl font-bold text-neutral-900 dark:text-neutral-100">Metricas para Dashboard</h2>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-6">
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl text-center">
+          <div class="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">8.2</div>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Avg Relevance Score</p>
+        </div>
+        <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl text-center">
+          <div class="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">94%</div>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Groundedness Rate</p>
+        </div>
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl text-center">
+          <div class="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">4.1</div>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Avg User Rating</p>
+        </div>
+        <div class="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl text-center">
+          <div class="text-4xl font-bold text-amber-600 dark:text-amber-400 mb-2">1.2s</div>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">Avg Response Time</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navegacao -->
+    <div class="flex justify-between">
+      <a href="multi-agent-rag.html" class="bg-neutral-600 hover:bg-neutral-700 text-white px-8 py-4 rounded-xl font-bold transition-colors">
+        <i class="fas fa-arrow-left mr-2"></i>Anterior: Multi-Agent RAG
+      </a>
+      <a href="../../rag-avancado.html" class="bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-xl font-bold transition-colors">
+        Voltar para Trilha<i class="fas fa-arrow-right ml-2"></i>
+      </a>
+    </div>
+  </section>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    } else {
+      themeToggleDarkIcon.classList.remove('hidden');
+    }
+    themeToggleBtn.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html>
