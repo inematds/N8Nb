@@ -1,0 +1,372 @@
+traduza
+
+ Configuração Simples do RAG
+
+
+Data Ingestion & Vectorization Flow
+
+Trigger on file upload: Accepts documents via n8n upload interface or webhook from custom front-ends.
+
+Binary data processing: Detects MIME type and extracts raw text automatically.
+
+Recursive text splitting: Breaks documents into optimal chunk sizes for embedding.
+
+OpenAI embedding generation: Converts chunks to vectors using embedding-small model.
+
+Pinecone vector storage: Uploads vectorized chunks to designated index with metadata.
+
+Intelligent Retrieval & Response Flow
+
+Chat interface trigger: Listens for queries via n8n chat, webhook, WhatsApp, or Telegram.
+
+Query vectorization: Converts question into matching embedding format.
+
+Semantic search: Queries Pinecone for most relevant chunks based on similarity scoring.
+
+Context-aware AI response: Feeds retrieved chunks + query to GPT-4 with 10-message memory window.
+
+Response delivery: Returns answer through original communication channel.
+
+Business Case / Use Case
+
+Solution: Transform static documents into an intelligent, conversational knowledge base—query internal documentation through natural language without manual searching.
+
+Value Proposition
+
+Instant Knowledge Access: Get accurate answers in seconds versus hours of manual file searching.
+
+Reduced Support Burden: Deflect repetitive questions to AI, cutting support costs 40-60%.
+
+Always-Current Responses: Auto-indexes updated documents without retraining models.
+
+Scalable Foundation: Extends easily with tools, multi-modal inputs, or advanced reasoning.
+
+Ideal Buyers / Industries
+
+Customer Support Teams: 24/7 self-service for extensive help docs and FAQs.
+
+Professional Services: Quick reference for massive case files, legal precedents, client documents.
+
+Healthcare Organizations: HIPAA-compliant access to protocols, research, patient education.
+
+Internal IT & HR: Automate employee questions on policies, benefits, onboarding, tech docs.
+
+Educational Institutions: Instant student access to course materials, syllabi, research papers.
+
+SaaS Product Teams: In-app AI assistants for product documentation and API references.
+
+Manufacturing & Operations: Rapid access to equipment manuals, safety procedures, compliance docs.
+
+Recursos
+Configuração Simples do RAG
+
+
+resuma sobre o q é a solucao
+
+0:02 Okay, so just to overview our very simple rag solution here, this is going to be a really good workflow if you want something that is just kind of foundational and you can build on it for any of your clients.
+0:15 So for this one, we have two separate flows here. For the first one, this is going to be the flow that ingests and vectorizes your data.
+0:25 Uh, it will then load it to a pine cone vector store using a very simple open AI embedding model. For the retriever flow, the agent escapes a message, it checks the pine cone vector store pulls out any embeddings that are close to the query, and then respond.
+0:48 It has a simple memory, so it can remember a context window of 10, and you can change that as well.
+0:56 To test this, when you get it, you'll go ahead and execute the workflow, and it'll ask you to upload a file, and you'll choose a file, and then submit it.
+1:07 All right, now, though, through how you can set this up, if you're wanting to build out on it, or you can use it for one of your own clients or one of your own products.
+1:14 First, you might want to start by determining how you want to upload your data, or how you might want to speak to your agent.
+1:23 For testing purposes, it's really good to use this upload file and the chat message that's native within NADN. And the reason for that is it really allows you to make sure that the rest of the workflow works pretty well.
+1:38 But it's good to keep in mind to know what you might want to use to upload and to chat with.
+1:46 A really good option for this would just be using webhooks, so if you create a front-end with something like Lovable or Bolt, you can configure the webbook in there to send file data versus just your normal JSON pageable.
+2:05 You can configure that and then make sure that the data is coming in and make sure that it's being uploaded properly.
+2:13 Webbook is also a good option for the chat message or you can use something that has a chat feature something like WhatsApp or Telegram to hook up to NADN and use that as the feminine of your child.
+2:27 For the vector storage, it really is up to you. NADN supports all kinds of vector storage apps, so you can own things like fine cone or super base, MongoDB, pulse grass, and you can even use their vector your store tool within NADN to test some of your features.
+2:51 A lot of people choose Pine Tone because it's easier to use, easy as it works really well with NADN. When you first sign up for Pine Tone, you're typically given an API key right away, then you save that and copy it, save it some more secure, or you can get them here in the API keys tab.
+3:12 Loosen to be eight. API keys, I believe on the replay and you can create quite a few. And then when you're setting up your index, you'll just want to make sure that you have the house and the embedding model.
+3:23 Then, to copy your key and go back into any then, where ask for credentials, we'll just create a new one, and then we'll paste your yet to there, and then choose the index that you create for your project.
+3:39 When you choose the embedding model, as if this one would be open AI for our cases because this at my index up with that.
+3:48 And then I set it up with the emitting small. You want to be sure that those two match. And now choosing a default data loader, which will take in the binary data from the file, detect the mod type and then use the recursive text butter to split it into to be proper trunk sizes.
+4:10 Then the data loader work with the and then you're coming to set up your agent. You'll want to make sure that that one is using the same account and looking at the same database or indexing.
+4:34 You can choose how many are retrieved when it does the search. This checkout model is used for the the agent itself.
+4:44 This one is not used for the embedding. So we use the same embedding node that would be used for the vectorization just to make sure that it's the same embedding model.
+4:54 Adjust the memory as needed and then you should be all set. You can build out a couple of different things onto this.
+5:01 For example, adding tools to your AI agent depending on your Yukon. Changing how the data is received of course, changing how it's returned back to the user, that is all things that we can adjust within here, but this is just, if I said before, a dead foundational way to start using ragged rear clients
+5:20 . If you have any questions, let us know in the community, and we'd be happy to help.
+
+
+
+==========
+traduza
+
+Reclassificação do Assistente RAG
+
+
+Data Ingestion & Vectorization Flow
+
+Google Drive monitoring: Watches folder for new documents and extracts text content automatically.
+
+OpenAI embedding generation: Converts document chunks to vectors using specified embedding model.
+
+Supabase vector storage: Uploads embedded chunks with matching dimension configuration.
+
+Re-Ranked Retrieval & Response Flow
+
+Chat interface trigger: Receives queries via n8n native chat (configurable for webhook/messaging apps).
+
+Initial semantic search: Pulls top N chunks (e.g., 20) from Supabase based on embedding similarity.
+
+Cohere re-ranking: Processes retrieved chunks through Cohere re-ranker to score true relevance to query.
+
+Top result filtering: Returns only highest-ranked subset (e.g., top 10) to reduce noise and improve precision.
+
+AI agent response: Feeds re-ranked context to chat model with 20-message memory window.
+
+Consistent embedding models: Uses identical embedding across ingestion and retrieval for accuracy.
+
+Business Case / Use Case
+
+Solution: A precision-focused RAG system that performs two-stage retrieval—first semantic search, then intelligent re-ranking—to eliminate marginally relevant results and deliver only the most accurate context.
+
+Value Proposition
+
+Higher Precision Answers: Re-ranking filters semantic search noise, returning truly relevant chunks versus loosely related ones.
+
+Cost Efficiency: Processes fewer tokens by eliminating low-quality context, reducing API costs 30-50%.
+
+Faster Response Times: Smaller, higher-quality context windows mean quicker processing and lower latency.
+
+Better Signal-to-Noise: Eliminates false positives from keyword overlap in large knowledge bases.
+
+Ideal Buyers / Industries
+
+Enterprise Knowledge Management: Large organizations with 10,000+ documents where semantic search returns too many marginal matches.
+
+Technical Support Teams: Product documentation with similar terminology across features requiring precise differentiation.
+
+Legal & Compliance: Contract databases where keyword overlap creates false positives but context precision is critical.
+
+Healthcare Information Systems: Medical databases where similar symptoms/treatments need accurate disambiguation.
+
+E-Commerce Platforms: Product catalogs with overlapping descriptions requiring precise matching to user queries.
+
+Academic Research Databases: University libraries needing precise paper recommendations from massive archives.
+
+Recursos
+Reclassificação do Agente RAG
+
+resuma a finalidade 
+
+0:00 Alright, so we're gonna go through this workflow, has a re-ranking agent. Uh, I'm gonna do a quick overview of what it is and why it's useful, and then we'll go through how you can edit it, or your own use case or for, uh, use.
+0:15 It might take some building out depending on your use case, but, uh, you can use this foundationally if you want to use a re-ranking agent.
+0:24 So, first off, a re-ranking agent is one that will, search using embeddings in a vectorized database, and then it will re-rank those results and return only the top number that you choose results for better responses and more accurate interactions.
+0:46 For our case here, we're going to use just a use case of a document being uploaded to a Google Drive folder.
+0:52 and then that document being embedded in a super-based vector store. And then in agent, this one is using the chat feature that's needed to NADN, which you can replace this with a webhook or with another chat-enabled app like Telegram or WhatsApp.
+1:11 And then it searches that same super-based vector database and then re-ranks it using a call here re-ranker node. So when it comes to vector embeddings and retrieving relevant answers, what a typical rag agent will do is it will take the top number of embeddings that are closest to the query that it 
+1:36 is using to search. So let's say you search house, it will do a semantic search and pull the 20 closest embeddings to the word house.
+1:45 What a re-ranker will do is it will take those embeddings and rank them by closest to furthest and then return the number that you want.
+1:54 So you can first pull 20 that are closest, re-rank them, and then return the 10 that are absolutely closest to the word house.
+2:03 In order to edit this for your own use case, you might want to set up a super-based database if you want to use super-based.
+2:10 and they then support other vector storage solutions as well, like pine cone, post grass, MongoDB, and you others here that they haven't used, or you can use their simple vector store just for testing and then decide later on which you might want to use.
+2:28 You'll also want to use an embedding model. For this case I used OpenAI, but you can also use, you can use any of their other embedding models.
+2:37 They also use a cohere embedding, but they also use Gemini and Lama and some other ones, depending on your preference.
+2:45 The other thing you'll want to take into consideration is your document ingestion. So for this case, I'm using a Google Drive.
+2:53 So it's watching any new files created in that drive, extracting the text, and then embedding those into by database. Tending on what your client may want or what you typically use, you can switch these out or any number of nodes, but this is just what you can start with.
+3:13 I can do a quick run here just so that we can see how it works. All right, so I just executed it.
+3:19 I found a dummy PDF that I loaded into my Google Drive, extracted the text, and then use the embedding model to return embeddings for the information, and then back that up to my super base data storage.
+3:36 You want to make sure as you're setting up your vector store that you're using the same embedding models as you're setting up your vector store, you may want to pay attention to any embedding models.
+3:47 If you're using specific embedding model, you want to make sure that you're copying the dimensions here when you're setting this up.
+3:54 Good thing about super base is when you set it up, it can also, it has a feature where it can detect the dimensions coming through so it can fit the embedding models that you use, but that may take a little extra research on your part.
+4:07 Just remember to keep that in mind as you're setting this. For the retrieval process, you'll want to make sure that you're using the same embedding models for both ingestion and for retrieval.
+4:18 And set up the chat model that you want to use as well as the memory. This one has 20, which you can make it less or more depending on your use case.
+4:28 And then you'll want to set up your cohere account as well. Cohere makes it pretty simple to find your API key.
+4:34 You just go to the dashboard and then go here to API keys. And then you can create one and create a trial key or create a production key.
+4:43 In super base, if you go to the settings, the project settings, after you go into your project and then you go into API keys on the side, This is where you can create a new API key so that you can hook up to NADEM.
+4:56 It will take some additional configuration to make sure that your database is ready to be used in NADEM. It can find some documentation on that or if you need help with it, let us know.
+5:08 Okay, now that we set all that up, we can do a quick search. And now, see, it gave us some information about the dummy PDF that I uploaded if we take a look here.
+5:24 It's searched using the query contract, give out the embeddings, and then till here I went through and re-rank those answers and return them back to the agent.
+5:35 Alright, if you need any help configuring this one or some idea on how you can adjust it for quiet use, let us know and stay tuned for other rag templates that you can use and sell on your own.
+
+================
+
+traduza
+
+ Assistente RAG de Contexto Híbrido
+
+
+Data Ingestion & Vectorization Flow
+
+Google Drive monitoring: Watches folder for new documents and extracts text content automatically.
+
+OpenAI embedding generation: Converts document chunks to vectors using text-embedding-large model.
+
+Supabase vector storage: Uploads embedded chunks with row indexing for sequential retrieval.
+
+Hybrid Retrieval & Response Flow
+
+Chat interface trigger: Receives queries via n8n native chat (configurable for webhook/messaging apps).
+
+Semantic search execution: Agent invokes vector content tool (sub-workflow) to query Supabase for relevant chunks.
+
+Context expansion: JavaScript extracts 2 rows before and 2 after each retrieved chunk for surrounding context.
+
+Context aggregation: Combines semantically relevant chunks + neighboring text into unified context block.
+
+Gemini chat processing: Feeds expanded context to Gemini model (chosen for large context window).
+
+Fallback model: Automatically switches to backup model if primary times out or hits token limits.
+
+Business Case / Use Case
+
+Solution: A RAG system that retrieves not just semantically relevant chunks, but also surrounding context—delivering more accurate answers for complex queries where nuance and sequential information matter.
+
+Value Proposition
+
+Higher Answer Accuracy: Contextual "before and after" chunks reduce misinterpretation from isolated text fragments.
+
+Better Narrative Understanding: Maintains document flow and relationships between concepts that pure semantic search misses.
+
+Intelligent Fallback: Auto-switches models to prevent workflow failures from oversized context windows.
+
+Flexible Context Control: Adjust retrieval depth (rows before/after) based on accuracy vs. cost tradeoffs.
+
+Ideal Buyers / Industries
+
+Legal & Compliance Teams: Contracts, policies, and regulations where surrounding clauses are critical to interpretation.
+
+Technical Documentation: API docs, system manuals where step sequences and prerequisites matter.
+
+Medical Research: Clinical studies and treatment protocols requiring full context around findings and contraindications.
+
+Financial Services: Loan agreements, investment prospectuses where terms reference other sections.
+
+Academic Research: Scholarly papers where arguments build on previous paragraphs and citations.
+
+Customer Support (Complex Products): Troubleshooting guides where multi-step processes require sequential context.
+
+Recursos
+Contexto Híbrido RAG
+
+
+resuma o objetivo da solucao 
+
+0:00 Okay, so we're gonna go through a another rag workflow that you can potentially use for yourself or for a client.
+0:08 This is a hybrid context rag workflow. The reason why it's high rate is because it will take two different chunks of information here, put them together, give them to your agent for the response.
+0:22 If you think of a typical RAG agent workflow, you take your data, you ingest it into a vector store database, and then when you go to chat with that data, your agent will conduct a semantic search, where it will find key pieces, key chunks of text from your ingested data and return those trunks of text
+0:49 to the agent for the agent to go through it and provide response. The benefit of using a context rag agent is that it will not only find that chunk of relevant information, it will also pull the pieces before and after it to combine it with some additional context, giving the agent more context to provide
+1:14 a potentially more accurate response. The problem with context agents is that they take in a lot of context, meaning your agent will need more tokens to process that response, making it potentially more expensive, making it a longer processing time, things like that.
+1:37 But depending on your use case, it could be very valuable to get that context of what's before and after the embedded chunk.
+1:45 So really quick to walk through what we've built here is you first have your ingestion workflow. This is using Google Drive to ingest documents, extract text, and then embed that text into a super base vector store then the query pipeline is a chat message being received and this is the native chat module
+2:08 to n8n which you can edit yourself or use something with webhook or a different messaging system but for this workflow it receives a message the agent will then use this vector content tool to first conduct a semantic search so it executes and here it will go to the SuperBase Factor Store, use an embedding
+2:33 model with the user's query and pull out semantically relevant chunks of information. Then using some code and JavaScript we We will determine the rows that are two before and two after, giving us additional rows around the chunk that is returned in the semantic search.
+2:58 And then we'll combine that text together here in this bridge to return back to our agent so that it can give us a response with additional context, giving us more accurate response to our query.
+3:12 A couple of things you want to make sure that you have here is a chat model. So I chose the Gemini chat because of the larger context window.
+3:22 And then a fallback model, which is something that's enabled in the agents within NADM. The reason you might want that is because if the context is taking too long or there's a little too much, it can fall back to another model to avoid airing out while you're executing your workflow.
+3:40 of. So a couple of things that you'll need to edit and fix when you come in here is first of all how you want to ingest your documents.
+3:51 Google Drive may work for some, but it may not work for everyone, so you want to make sure to edit that for your client needs, choosing your vector store.
+4:00 So I have a super base set up here, but you may want to use something like Pine Cone or Postgres, depending on your use case as well.
+4:09 And then choosing your embedding model. For our case here, I went with the text embedding large from OpenAI, but you can use other models within here as well, like Gemini, or Olaumum, depending on what your preference is on.
+4:23 You might then want to determine how much context you want to retrieve. So for my texting purposes originally, I had it limit at four and then pulling two rows before and after.
+4:36 So if you think about 4 row coming back plus 4 for each one, then you actually can rows of data being returned back to our agent instead of just 4.
+4:47 So making sure that you have all of your API keys here and which one means to set up the workflow for your customer, you should be ready to kill.
+4:56 This one might take a little extra testing just to make sure that you're not repeating too much context where that you have all of your error handling setup, but we can do a quick test of what the ingestion might look like and what the chat might look like.
+5:12 I'm using a query about a contract for my test here. I have the other tool setup in a separate workflow in n8n And so what I did here is it used the tool, it brought back context as well as text content from the semantic search and it gave me a clear answer.
+5:37 When you are setting this up, like I said, you have to copy this sub workflow into a separate workflow and make sure that the naming convention matches whatever you give your agent here.
+5:47 So I copied this entire workflow into a separate file in my NADN instance, and I renamed it vector content tool.
+5:57 And then you should be good to go because the agent will be looking for that tool. And then you'll just choose the workflow from your list of workflows in your NADN instant.
+6:08 After you get that all set up, you should be ready to test. Adjust the context windows as needed to make sure that you have your database in SuperBase all set up and if you need any help, just let us know.
+
+=================
+
+traduza
+
+Assistente RAG de grafos
+
+
+Data Ingestion & Vectorization Flow
+
+Schema-aware data input: Agent receives test data plus table definitions (documents, FAQs, procedures) with relationship mappings.
+
+LLM data classification: Reviews incoming data against schemas to determine correct table assignment.
+
+JSON parsing & validation: Extracts structured data and validates against predefined schema rules.
+
+OpenAI embedding generation: Converts title + content into vectors via HTTP request.
+
+Intelligent routing: Directs data to appropriate Supabase table based on classification (documents/FAQs/procedures).
+
+Relationship preservation: Stores foreign key IDs (related_faq_id, related_procedure_id) in metadata for graph traversal.
+
+Graph Retrieval & Response Flow
+
+Multi-table semantic search: Agent queries three separate vector stores (one per data type) simultaneously.
+
+Initial vector retrieval: Returns relevant chunks with embedded relationship IDs in metadata.
+
+Relationship traversal: Uses returned IDs to fetch directly connected records from related tables.
+
+Dual search strategy: Combines semantic search for primary results + direct ID queries for linked context.
+
+Context aggregation: Merges semantically relevant data with relationally connected information for comprehensive answers.
+
+Business Case / Use Case
+
+Solution: A graph-based RAG system that understands relationships between different data types—delivering answers that combine semantically relevant content with directly related information across interconnected tables.
+
+Value Proposition
+
+Contextual Completeness: Automatically includes related documents, FAQs, and procedures versus isolated chunks.
+
+Structured Knowledge Navigation: Follows explicit relationships between data types like a human would connect information.
+
+Reduced Hallucination: Leverages defined relationships instead of inferring connections, improving accuracy.
+
+Scalable Data Architecture: Handles complex, multi-entity knowledge bases that simple vector search can't navigate.
+
+Ideal Buyers / Industries
+
+Enterprise IT & Support: Documentation systems where guides, troubleshooting steps, and FAQs reference each other.
+
+Healthcare Systems: Medical records linking diagnoses, treatment protocols, medications, and patient histories.
+
+Compliance & Regulatory: Audit systems connecting policies, procedures, incidents, and corrective actions.
+
+Product Development: Engineering docs relating specifications, test procedures, issues, and design decisions.
+
+Legal Services: Case management linking contracts, precedents, filings, and related correspondence.
+
+Educational Platforms: Course materials connecting lectures, assignments, prerequisites, and resources.
+
+Recursos
+Agente RAG de grafos
+
+
+sobre o que é o fluxo
+
+0:01 Okay, so we're gonna walk through a fairly simplified graph rag agent, uh, that using super base as the vector storage, really quick, we can cover what graph rag is a little bit more complicated than your typical rag agent.
+0:20 What a graph rag agent will typically use is a graph of information. So it can see all certain pieces of each table, let's say, are connected to each other.
+0:35 This can sometimes be referred to as an ontology but it's also just understanding the way that different sets of data connect to each other.
+0:46 In our example here, we have an agent that has access to three different tables so it has access to documents, FAQs, and procedures.
+0:56 What you might find in each one of these tables are different properties. So for instance, the document has a title, it has content, it has a category, author, status, et cetera.
+1:09 What it might also have is these related IDs. So it might have a related data FAQID, a related procedure ID, and some additional metadata.
+1:22 What this allows us to do is to relate these directly to the other tables. So a document object, for instance, this one, might relate to an FAQ using an ID.
+1:35 I don't have any setup here because I used dummy data to test this, but there might be an ID here that says FAQID.
+1:44 that relates to the primary key ID column of the FAQ's object. So in the FAQ's table, this ID is what would be in that related FAQ's ID column.
+2:00 And then you might have the source documents IT which would relate to the other one while as a related procedures ID.
+2:09 So, this one would relate to the ID column and the procedures table. And this is how these different objects or data sites would be related to each other.
+2:22 Now, the tricky part is in getting the agent to understand what those relationships might be. For our example here, we passed it a couple of variables.
+2:33 So this was first, I passed it some test data, and then I passed it some information about each table. So over table one, we have the name documents, and an explanation of what the schema is, as well as the actual schema.
+2:50 So this will follow each of those columns that you see there, or that you saw there in the data set in SuperBase.
+2:58 This is passed to our agent every single time, so that it can understand how to ingest whatever comes through the pipeline here.
+3:07 Once it does that, we ask another LLM step to review the information that was provided that needed to be ingested and provide and double check this schema that comes out of it.
+3:21 So that we're able to parse out that JSON and then have an embedding module take in that text. So for this one, we include the title in the content to be embedded and backed up into our soup base vector store.
+3:38 So this step in the ingestion really relies on having the agent understand the relationships, gaskemas, and how to classify the data that comes through.
+3:51 And once it's able to do that, it passes which table it belongs to to this router. So it either will put out documents, FAQs, or procedures.
+4:02 And the router will send it to whichever super base table it belongs to. We use a couple of different methods.
+4:10 So for the content parser, we just parse the JSON that comes through this LLM step. For the FAQ step, we use a split out because it will return multiple FAQs.
+4:24 So if we split those all out, embed the question and the answer together, and back that up to our vector store.
+4:34 For our query agent, we have, first of all, three different ones for the documents, the FAQs and the procedures for the semantic search, and then on it returns the relationships to the annotables, it then gets those from those tables by filtering procedure instead of semantic search.
+4:58 You can see that in our system message here where we give it to separate search strategies. So we give it the semantic search strategy, outline what each of those data sets contain, and then the direct query.
+5:16 So after we do the vector search, we use traverse relationships to query the documents by IDs returned from those searches.
+5:26 And those IDs will be found in the metadata that's returned to the agent. So again, this is really simplified version of what a graph rag can do.
+5:35 Usually, you'll need to configure these tables exactly to your use case, and then adjust the data classification as needed, which you'll also need to do is keep in mind how you want your documents to be ingested and processed.
+5:53 I used a lot of dummy data when I was creating this so it really gives you the freedom to adjust how you want those documents processed if you want them uploaded or if you want to watch a drive folder or dropbox or something like that and then you can have an agent either pre-process it or you can have
+6:13 this agent pre-process it and route it to the appropriate data set. To edit this for your own client you'll just need to make sure that first of all, we use the embedding HTTP request because we weren't using an agent to vectorize the data.
+6:29 You can, if you want to, this was just a simplified version, but you want to make sure that you have your OpenAI key set up or whichever LL I'm decided to go with, as well as your Superbase API key connection and create the tables that you think you'll need.
+6:47 This is really adjust a jumping-off point for you to create your own graph agent and set up the data the way that would work best for you.
+6:58 I included a couple of sampleable SQL commands that you can use in SuperBase to create your tables and an overview of how this system works and a couple things that you want to check before you continue creating this for a client.
+7:13 If you have any questions or meet any support, please let us know, we'll be around, and let us know what other types of reagents you would want to see.
